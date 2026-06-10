@@ -30,6 +30,8 @@ const EbookStore       = lazy(() => import('./pages/ebooks/EbookStore'))
 const EquityTierSelector = lazy(() => import('./pages/equity/EquityTierSelector'))
 const SchoolCircle     = lazy(() => import('./pages/circles/SchoolCircle'))
 const SisterhoodCircle = lazy(() => import('./pages/circles/SisterhoodCircle'))
+
+const AccessibilityMode = lazy(() => import('./pages/accessibility/AccessibilityMode'))
 const LiveImpactTracker = lazy(() => import('./pages/impact/LiveImpactTracker'))
 
 // ── Stub for pages not built yet ─────────────────────────────────
@@ -171,6 +173,9 @@ export default function App() {
                 <Route path="/equity"              element={<EquityTierSelector />} />
                 <Route path="/circles/school"      element={<SchoolCircle />} />
                 <Route path="/circles/sisterhood"  element={<SisterhoodCircle />} />
+                
+                <Route path="/accessibility"  element={<AccessibilityMode />} />
+                <Route path="/donate"         element={<Stub title="Donation Page 💛" />} />
                 <Route path="/impact"              element={<LiveImpactTracker />} />
 
                 {/* Misc */}
