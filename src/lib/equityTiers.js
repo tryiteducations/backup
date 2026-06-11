@@ -100,27 +100,7 @@ export const EQUITY_TIERS = {
       ],
       instructions: 'Upload your Transgender Identity Card issued via the National SMILE Portal.',
     },
-  },
-  AGRARIAN_DISTRESS: {
-    id: 'agrarian_distress',
-    name: 'Agrarian Distress Tier',
-    emoji: '🌾',
-    tagline: 'From the fields to the halls of opportunity',
-    discount: 100,
-    isFree: true,
-    color: '#15803D',
-    lightColor: '#DCFCE7',
-    description: 'For families impacted by severe rural farming crises or regional natural disasters.',
-    beneficiaries: 'Farming crisis families · Natural disaster survivors',
-    verification: {
-      type: 'document_upload',
-      options: [
-        { label: 'Revenue Department Distress Card', field: 'distress_card', type: 'file_upload' },
-        { label: 'Cooperative Farm Loan Waiver Slip', field: 'loan_waiver', type: 'file_upload' },
-      ],
-      instructions: "Upload your Revenue Department distress documentation or farm loan waiver certificate.",
-    },
-  },
+  }, // <-- Fixed here
   ACTIVE_MILITARY: {
     id: 'active_military',
     name: 'Active Military Families',
@@ -182,7 +162,7 @@ export const EQUITY_TIERS = {
       instructions: 'Upload a certified declaration signed by your Government Institution Head or a Gazetted Officer.',
     },
   },
-}
+}; // <-- Properly closes the main object
 
 export const FREE_TIERS = Object.values(EQUITY_TIERS).filter(t => t.isFree).map(t => t.id)
 export const DISCOUNTED_TIERS = Object.values(EQUITY_TIERS).filter(t => !t.isFree).map(t => t.id)
