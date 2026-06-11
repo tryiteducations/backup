@@ -45,6 +45,15 @@ const ScholarshipHub = lazy(() => import('./pages/scholarships/ScholarshipHub'))
 const PricingPage    = lazy(() => import('./pages/pricing/PricingPage'))
 const WalletPage     = lazy(() => import('./pages/wallet/WalletPage'))
 const FamilyHub      = lazy(() => import('./pages/family/FamilyHub'))
+
+const ExamDetail     = lazy(() => import('./pages/exams/ExamDetail'))
+const RoadmapPage    = lazy(() => import('./pages/roadmap/RoadmapPage'))
+const GamesHub       = lazy(() => import('./pages/games/GamesHub'))
+const MathBlitz      = lazy(() => import('./pages/games/MathBlitz'))
+const Tournaments    = lazy(() => import('./pages/tournaments/Tournaments'))
+const ExamAlerts     = lazy(() => import('./pages/exam-alerts/ExamAlerts'))
+const StudyPlanner   = lazy(() => import('./pages/classroom/StudyPlanner'))
+const ParentDashboard = lazy(() => import('./pages/parent/ParentDashboard'))
 const LiveImpactTracker = lazy(() => import('./pages/impact/LiveImpactTracker'))
 
 // ── Stub for pages not built yet ─────────────────────────────────
@@ -109,7 +118,16 @@ export default function App() {
 
                 {/* Exams */}
                 <Route path="/exams"                    element={<AllExams />} />
-                <Route path="/exams/:examId"             element={<Stub title="Exam Detail" />} />
+                
+                <Route path="/exams/:examId"        element={<ExamDetail />} />
+                <Route path="/roadmap/:examId"       element={<RoadmapPage />} />
+                <Route path="/games"                 element={<GamesHub />} />
+                <Route path="/games/math-blitz"      element={<MathBlitz />} />
+                <Route path="/tournaments"           element={<Tournaments />} />
+                <Route path="/exam-alerts"           element={<ExamAlerts />} />
+                <Route path="/classroom/planner"     element={<StudyPlanner />} />
+                <Route path="/parent/dashboard"      element={<ParentDashboard />} />
+                {/* remaining pages */}
                 <Route path="/exams/:examId/universe"   element={<Stub title="Exam Universe 🌌" />} />
 
                 {/* Guru Hub */}
