@@ -1,3 +1,4 @@
+import StickyAccessibilityBar from '../accessibility/StickyAccessibilityBar'
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import Sidebar from './Sidebar'
@@ -45,5 +46,6 @@ export default function AppLayout({ children }) {
         {children}
       </main>
     </div>
+      <StickyAccessibilityBar/>
   )
 }

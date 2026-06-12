@@ -1,3 +1,4 @@
+
 #!/bin/bash
 # TryIT — Final Wiring: WhatsApp+Telegram sync + Session restore + Full audit
 ROOT="${1:-/workspaces/Tatu}"

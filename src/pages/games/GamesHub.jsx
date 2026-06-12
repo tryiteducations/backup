@@ -4,8 +4,8 @@ import AppLayout from '../../components/layout/AppLayout'
 
 const GAMES = [
   { id:'math-blitz',  emoji:'⚡', name:'Math Blitz',    desc:'Solve 10 questions in 60 seconds',      coins:'5–50',  tag:'Most Popular', color:'#EF4444' },
-  { id:'word-rush',   emoji:'📝', name:'Word Rush',     desc:'Spot the correct spelling first',        coins:'5–30',  tag:'English',      color:'#3B82F6' },
-  { id:'gk-burst',    emoji:'🌏', name:'GK Burst',      desc:'10 GK questions. 30 seconds each.',      coins:'10–40', tag:'GK',           color:'#10B981' },
+  { id:'word-rush',   emoji:'📝', name:'Word Rush', playable:true,     desc:'Spot the correct spelling first',        coins:'5–30',  tag:'English',      color:'#3B82F6' },
+  { id:'gk-burst',    emoji:'🌏', name:'GK Burst', playable:true,      desc:'10 GK questions. 30 seconds each.',      coins:'10–40', tag:'GK',           color:'#10B981' },
   { id:'logic-grid',  emoji:'🧩', name:'Logic Grid',    desc:'Fill the number grid using clues',       coins:'15–60', tag:'Reasoning',    color:'#8B5CF6' },
   { id:'rank-rush',   emoji:'🏆', name:'Rank Rush',     desc:'Beat 5 opponents in a timed challenge',  coins:'20–100',tag:'Multiplayer',  color:'#F59E0B' },
   { id:'daily-duel',  emoji:'🎯', name:'Daily Duel',    desc:'One opponent. 5 questions. Winner takes all.', coins:'25–75',tag:'Daily',  color:'#D4AF37' },
@@ -31,7 +31,7 @@ export default function GamesHub() {
 
       <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(min(100%,280px),1fr))', gap:14 }}>
         {GAMES.map(g=>(
-          <div key={g.id} onClick={()=>g.id==='math-blitz'?navigate('/games/math-blitz'):setActive(g.id)}
+          <div key={g.id} onClick={()=>g.id==='math-blitz'?navigate('/games/math-blitz'):g.id==='word-rush'?navigate('/games/word-rush'):g.id==='gk-burst'?navigate('/games/gk-burst'):setActive(g.id)}
             style={{ background:'#fff', borderRadius:20, padding:20, border:`1.5px solid ${active===g.id?g.color:'#E2E8F0'}`, cursor:'pointer', transition:'all 0.2s', boxShadow:'0 2px 10px rgba(0,0,0,0.04)' }}
             onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-3px)'; e.currentTarget.style.borderColor=g.color}}
             onMouseLeave={e=>{e.currentTarget.style.transform='none'; e.currentTarget.style.borderColor='#E2E8F0'}}>
@@ -45,7 +45,7 @@ export default function GamesHub() {
             <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'#1E3A5F', fontSize:16, marginBottom:6 }}>{g.name}</h3>
             <p style={{ color:'#64748B', fontSize:13, marginBottom:14 }}>{g.desc}</p>
             <button style={{ width:'100%', padding:'10px', borderRadius:12, border:'none', background:`linear-gradient(135deg,${g.color},${g.color}CC)`, color:'#fff', fontFamily:'Poppins,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer' }}>
-              {g.id==='math-blitz'?'Play Now →':'Coming Soon'}
+              {['math-blitz','word-rush','gk-burst'].includes(g.id)?'Play Now →':'Coming Soon'}
             </button>
           </div>
         ))}

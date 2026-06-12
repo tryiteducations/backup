@@ -8,13 +8,14 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-    <!-- CSP: allow scripts from our domains + Razorpay + Google Fonts -->
+    <!-- CSP: allow scripts from our domains + Razorpay + CDN + Google Fonts -->
     <meta http-equiv="Content-Security-Policy" content="
       default-src 'self';
       script-src  'self' 'unsafe-inline' 'unsafe-eval'
                   https://checkout.razorpay.com
                   https://static.cloudflareinsights.com
-                  https://www.googletagmanager.com;
+                  https://www.googletagmanager.com
+                  https://cdn.razorpay.com;
       style-src   'self' 'unsafe-inline' https://fonts.googleapis.com;
       font-src    'self' https://fonts.gstatic.com data:;
       img-src     'self' data: blob: https:;
@@ -46,7 +47,23 @@
 
     <!-- Razorpay -->
     <script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
-  </head>
+    <style>
+    :root {
+      --color-primary:#1E3A5F;--color-primary-dark:#0F2140;
+      --color-accent:#D4AF37;--color-accent-light:#E8C44A;
+      --color-bg:#F8FAFC;--color-surface:#FFFFFF;
+      --color-text:#1E293B;--color-text-light:#64748B;
+      --color-border:#E2E8F0;--color-success:#22C55E;
+      --color-error:#EF4444;--color-warning:#F59E0B;
+      --card-bg:#FFFFFF;--card-text:#1E293B;--card-accent:#D4AF37;
+      --id-card-bg:linear-gradient(135deg,#1E3A5F,#0F2140);
+      --id-card-text:#FFFFFF;--id-card-id:#D4AF37;
+      --id-card-border:rgba(212,175,55,0.4);--glow:none;
+    }
+    * { transition: background-color 0.2s, color 0.2s; box-sizing: border-box; }
+    body { background: var(--color-bg); color: var(--color-text); }
+  </style>
+</head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>

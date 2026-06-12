@@ -54,6 +54,7 @@ const Tournaments    = lazy(() => import('./pages/tournaments/Tournaments'))
 const ExamAlerts     = lazy(() => import('./pages/exam-alerts/ExamAlerts'))
 const StudyPlanner   = lazy(() => import('./pages/classroom/StudyPlanner'))
 const ParentDashboard = lazy(() => import('./pages/parent/ParentDashboard'))
+const CommunityHall = lazy(() => import('./pages/community/CommunityHall'))
 const LiveImpactTracker = lazy(() => import('./pages/impact/LiveImpactTracker'))
 
 // ── Stub for pages not built yet ─────────────────────────────────
@@ -209,6 +210,13 @@ export default function App() {
 
                 {/* Admin */}
                 <Route path="/admin/login"     element={<AdminLogin />} />
+                
+                <Route path="/admin/login"         element={<AdminLogin />} />
+                <Route path="/centre/login"         element={<CentreLogin />} />
+                <Route path="/games/word-rush"      element={<WordRush />} />
+                <Route path="/games/gk-burst"       element={<GKBurst />} />
+                <Route path="/settings/themes"      element={<ThemeSelector />} />
+                <Route path="/mentor-hub/cashback"  element={<MentorCashback />} />
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
                 {/* Journey + Ebooks */}
@@ -222,6 +230,7 @@ export default function App() {
                 
                 <Route path="/accessibility"  element={<AccessibilityMode />} />
                 <Route path="/donate"         element={<Stub title="Donation Page 💛" />} />
+                <Route path="/community" element={<CommunityHall />} />
                 <Route path="/impact"              element={<LiveImpactTracker />} />
 
                 {/* Misc */}

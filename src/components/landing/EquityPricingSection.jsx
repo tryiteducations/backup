@@ -59,17 +59,6 @@ const TIERS = [
     group:      'free',
   },
   {
-    category:   'Agrarian Distress',
-    sub:        'Farmer Crisis Families / Natural Disaster Survivors',
-    emoji:      '🌾',
-    price:      '100% FREE',
-    priceColor: '#22C55E',
-    tag:        'FREE FOR LIFE',
-    tagBg:      '#DCFCE7', tagColor:'#15803D',
-    doc:        'Revenue Department Distress Certificate  OR  Cooperative Farm Loan Waiver Slip',
-    group:      'free',
-  },
-  {
     category:   'Active Military Families',
     sub:        'Currently Serving Defence Personnel & Dependents',
     emoji:      '🪖',

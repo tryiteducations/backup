@@ -1,81 +1,50 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import LogoAnimated from '../components/LogoAnimated'
 
 export default function Splash() {
   const navigate = useNavigate()
-  const [tagline, setTagline] = useState(false)
-  const [fadeOut, setFadeOut] = useState(false)
+  const [phase, setPhase] = useState(0) // 0=logo, 1=tagline, 2=done
 
-  const done = () => {
-    setTagline(true)
-    setTimeout(() => setFadeOut(true),  1200)
-    setTimeout(() => navigate('/landing'), 1900)
-  }
+  useEffect(() => {
+    // Check if already logged in
+    const email = localStorage.getItem('tryit_email')
+    const onboarded = localStorage.getItem('onboarding_done')
+
+    const t1 = setTimeout(() => setPhase(1), 700)
+    const t2 = setTimeout(() => setPhase(2), 1800)
+    const t3 = setTimeout(() => {
+      if (email && onboarded) navigate('/dashboard', { replace:true })
+      else if (email)         navigate('/onboarding', { replace:true })
+      else                    navigate('/landing',  { replace:true })
+    }, 2400)
+
+    return () => [t1,t2,t3].forEach(clearTimeout)
+  }, [navigate])
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      display: 'flex', flexDirection: 'column',
-      alignItems: 'center', justifyContent: 'center',
-      background: 'linear-gradient(135deg,#071428,#0F2140,#1E3A5F)',
-      opacity: fadeOut ? 0 : 1,
-      transition: 'opacity 0.7s ease',
-      position: 'relative', overflow: 'hidden',
-    }}>
-      {/* Background rings */}
-      {[300, 520, 740].map((s, i) => (
-        <div key={i} style={{
-          position: 'absolute', width: s, height: s, borderRadius: '50%',
-          border: `1px solid rgba(212,175,55,${0.08 - i * 0.02})`,
-          animation: `ring ${3 + i}s ease-in-out ${i * 0.4}s infinite`,
-          pointerEvents: 'none',
-        }} />
-      ))}
-
+    <div style={{ minHeight:'100vh', background:'linear-gradient(135deg,#071428,#0F2140)', display:'flex', alignItems:'center', justifyContent:'center', flexDirection:'column' }}>
       {/* Animated logo */}
-      <div style={{ position: 'relative', zIndex: 10 }}>
-        <LogoAnimated size="splash" mode="auto" dark={true} onComplete={done} />
+      <div style={{ textAlign:'center', opacity:phase>=0?1:0, transform:phase>=0?'scale(1)':'scale(0.8)', transition:'all 0.6s cubic-bezier(0.34,1.56,0.64,1)' }}>
+        <div style={{ fontSize:64, marginBottom:8, animation:'logoFloat 2s ease-in-out infinite' }}>⚡</div>
+        <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900, fontSize:44, color:'#fff', letterSpacing:-1 }}>
+          TRY<span style={{ color:'#D4AF37' }}>IT</span>
+        </p>
+        <p style={{ color:'rgba(255,255,255,0.35)', fontSize:10, letterSpacing:'6px', marginTop:4 }}>EDUCATIONS</p>
       </div>
 
       {/* Tagline */}
-      <p style={{
-        fontFamily: 'Inter, sans-serif', fontStyle: 'italic',
-        color: 'rgba(212,175,55,0.9)', fontSize: 15,
-        letterSpacing: '1.5px', textAlign: 'center',
-        marginTop: 20, zIndex: 10,
-        opacity: tagline ? 1 : 0,
-        transform: `translateY(${tagline ? 0 : 10}px)`,
-        transition: 'all 0.6s ease',
-      }}>
+      <p style={{ color:'rgba(255,255,255,0.55)', fontSize:14, marginTop:28, fontFamily:'Poppins,sans-serif', fontWeight:500, opacity:phase>=1?1:0, transform:phase>=1?'translateY(0)':'translateY(12px)', transition:'all 0.5s ease 0.3s' }}>
         Your Exam. Your Rank. Your Success.
       </p>
 
-      {/* Loading dots */}
-      <div style={{
-        position: 'absolute', bottom: 50,
-        display: 'flex', gap: 10, zIndex: 10,
-        opacity: tagline ? 1 : 0,
-        transition: 'opacity 0.4s ease 0.3s',
-      }}>
-        {[0, 1, 2].map(i => (
-          <div key={i} style={{
-            width: 7, height: 7, borderRadius: '50%',
-            background: 'rgba(212,175,55,0.6)',
-            animation: `dot 1.2s ease-in-out ${i * 0.2}s infinite`,
-          }} />
-        ))}
+      {/* Loading bar */}
+      <div style={{ width:120, height:2, background:'rgba(255,255,255,0.1)', borderRadius:1, marginTop:48, overflow:'hidden', opacity:phase>=1?1:0, transition:'opacity 0.5s' }}>
+        <div style={{ height:'100%', background:'linear-gradient(90deg,#D4AF37,#E8C44A)', borderRadius:1, animation:'splashBar 1.6s ease-in-out 0.5s forwards', width:'0%' }}/>
       </div>
 
       <style>{`
-        @keyframes ring {
-          0%,100% { transform: scale(1); opacity: 0.6; }
-          50%      { transform: scale(1.05); opacity: 0.3; }
-        }
-        @keyframes dot {
-          0%,100% { transform: translateY(0); opacity: 0.5; }
-          50%      { transform: translateY(-8px); opacity: 1; }
-        }
+        @keyframes logoFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+        @keyframes splashBar { 0%{width:0%} 100%{width:100%} }
       `}</style>
     </div>
   )

@@ -9,7 +9,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
     <!-- CSP: allow scripts from our domains + Razorpay + Google Fonts -->
-<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline' 'unsafe-eval' https://checkout.razorpay.com https://cdn.razorpay.com https://static.cloudflareinsights.com https://www.googletagmanager.com">
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+      script-src  'self' 'unsafe-inline' 'unsafe-eval'
+                  https://checkout.razorpay.com
+                  https://static.cloudflareinsights.com
+                  https://www.googletagmanager.com;
       style-src   'self' 'unsafe-inline' https://fonts.googleapis.com;
       font-src    'self' https://fonts.gstatic.com data:;
       img-src     'self' data: blob: https:;
@@ -41,9 +46,9 @@
 
     <!-- Razorpay -->
     <script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
-    <script type="module" crossorigin src="/assets/index-CkGODiNf.js"></script>
+    <script type="module" crossorigin src="/assets/index-CVQs03A3.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/vendor-xzc8WtQc.js">
-    <link rel="stylesheet" crossorigin href="/assets/index-D8dAR8dP.css">
+    <link rel="stylesheet" crossorigin href="/assets/index-0irQHhJm.css">
   </head>
   <body>
     <div id="root"></div>

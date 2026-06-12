@@ -1,4 +1,5 @@
-// TARGET_FILE: src/pages/Onboarding.jsx
+import { useAuth } from '../context/AuthContext'
+import { earnCoins } from '../lib/coinVault'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -592,14 +593,37 @@ function FamilyOnboarding({ onDone }) {
 // ══════════════════════════════════════════════════════════════════
 export default function Onboarding() {
   const navigate = useNavigate()
+  const { updateUser } = useAuth()   // ✅ add this
   const role = localStorage.getItem('tryit_role') || 'student'
-
-  const finish = () => {
-    localStorage.setItem('onboarding_done', '1')
-    const routes = { student:'/dashboard', mentor:'/mentor-hub', institution:'/centre/dashboard', family:'/family' }
-    navigate(routes[role] || '/dashboard')
+const finish = () => {
+  const userRole = localStorage.getItem('tryit_role') || role
+  
+  // ✅ Update AuthContext so the app knows the correct role
+  updateUser({ role: userRole })
+  
+  localStorage.setItem('onboarding_done', '1')
+  earnCoins({ source:'onboarding_complete', amount:50, description:'Welcome to TryIT! 🎉 +50 coins' })
+  
+  const routeMap = {
+    student: '/dashboard',
+    mentor: '/mentor-hub',
+    institution: '/centre/dashboard',
+    institute: '/centre/dashboard',
+    family: '/family'
   }
-
+  
+  const targetPath = routeMap[userRole] || '/dashboard'
+  navigate(targetPath)
+}
+ 
+  const targetPath = routeMap[userRole]
+  if (targetPath) {
+    navigate(targetPath)
+  } else {
+    console.warn('Unknown role:', userRole, 'fallback to /dashboard')
+    navigate('/dashboard')
+  }
+}
   return (
     <div style={{ minHeight:'100vh', background:'linear-gradient(135deg,#071428,#0F2140)', display:'flex', alignItems:'flex-start', justifyContent:'center', padding:'24px 16px 40px', overflowY:'auto' }}>
       <div style={{ width:'100%', maxWidth:520, marginTop:20 }}>

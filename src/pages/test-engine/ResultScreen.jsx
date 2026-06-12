@@ -1,142 +1,208 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import AppLayout from '../../components/layout/AppLayout'
-
-const SUBS = [
-  { name:'Reasoning', acc:85, trend:'up'   },
-  { name:'Maths',     acc:80, trend:'up'   },
-  { name:'English',   acc:65, trend:'down' },
-  { name:'GK',        acc:78, trend:'up'   },
-  { name:'Science',   acc:50, trend:'down' },
-]
+import { useAuth } from '../../context/AuthContext'
+import { useCoins } from '../../context/CoinContext'
+import { processTestResult, DEDUCTION_RULES, getBalance } from '../../lib/coinVault'
 
 export default function ResultScreen() {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const { answers = {}, correct = 7, total = 10, timeUsed = 1200 } = location.state || {}
-  const wrong   = Object.keys(answers).length - correct
-  const skipped = total - Object.keys(answers).length
-  const pct = Math.round((correct / total) * 100)
+  const navigate  = useNavigate()
+  const location  = useLocation()
+  const { user }  = useAuth()
+  const { balance } = useCoins()
+  const [result,  setResult]  = useState(null)
+  const [animate, setAnimate] = useState(false)
 
-  const [rank,     setRank]     = useState(9999)
-  const [animated, setAnimated] = useState(false)
-  const ref = useRef(null)
-
-  useEffect(() => {
-    const t = setTimeout(() => {
-      const dur = 2000, target = 1243, start = performance.now()
-      const step = (now) => {
-        const p = Math.min((now - start) / dur, 1)
-        const e = 1 - Math.pow(1 - p, 4)
-        setRank(Math.round(9999 - e * (9999 - target)))
-        if (p < 1) requestAnimationFrame(step)
-      }
-      requestAnimationFrame(step)
-    }, 600)
-    return () => clearTimeout(t)
-  }, [])
+  const data = location.state || {
+    score:78, correct:39, incorrect:8, skipped:3,
+    total:50, examName:'SSC CGL Mock', time:'42:18',
+    examType:'default', subject:'Mixed',
+  }
 
   useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setAnimated(true); obs.disconnect() } }, { threshold: 0.3 })
-    if (ref.current) obs.observe(ref.current)
-    return () => obs.disconnect()
+    async function processResult() {
+      const r = await processTestResult({
+        score:      data.score,
+        examName:   data.examName,
+        examType:   data.examType || 'default',
+        userId:     user?.id,
+      })
+      setResult(r)
+      setTimeout(() => setAnimate(true), 300)
+    }
+    processResult()
   }, [])
 
-  const fmt = (s) => `${String(Math.floor(s / 60)).padStart(2,'0')}:${String(s % 60).padStart(2,'0')}`
-  const r = 52, circ = 2 * Math.PI * r
-  const ringColor = pct >= 75 ? '#22C55E' : pct >= 50 ? '#D4AF37' : '#EF4444'
+  const pct      = data.score
+  const passed   = result?.passed ?? pct >= 70
+  const grade    = pct>=90?'A+':pct>=80?'A':pct>=70?'B':pct>=60?'C':'F'
+  const gradeColor = pct>=70?'#22C55E':pct>=60?'#F59E0B':'#EF4444'
 
   return (
-    <AppLayout>
-      <div className="max-w-3xl mx-auto">
+    <div style={{ minHeight:'100vh', background:'#F8FAFC', padding:'20px 16px' }}>
+      <div style={{ maxWidth:560, margin:'0 auto' }}>
 
         {/* Score card */}
-        <div ref={ref} className="clay-dark rounded-3xl p-8 mb-6 text-center relative overflow-hidden">
-          <div className="absolute top-4 right-4 glass-gold px-3 py-1.5 rounded-xl animate-bounce-in">
-            <span className="text-[#D4AF37] font-bold text-sm">+30 🪙 earned!</span>
+        <div style={{
+          background: passed
+            ? 'linear-gradient(135deg,#1E3A5F,#0F2140)'
+            : 'linear-gradient(135deg,#7F1D1D,#991B1B)',
+          borderRadius:28, padding:28, marginBottom:16,
+          border: `1.5px solid ${passed?'rgba(212,175,55,0.3)':'rgba(239,68,68,0.3)'}`,
+          textAlign:'center', position:'relative', overflow:'hidden',
+        }}>
+          {/* Grade circle */}
+          <div style={{ width:96, height:96, borderRadius:'50%',
+            background: passed?'rgba(212,175,55,0.15)':'rgba(239,68,68,0.15)',
+            border:`3px solid ${gradeColor}`, display:'flex', flexDirection:'column',
+            alignItems:'center', justifyContent:'center', margin:'0 auto 16px' }}>
+            <span style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
+              color:gradeColor, fontSize:32, lineHeight:1 }}>{grade}</span>
           </div>
 
-          <h2 className="text-white text-2xl font-bold font-poppins mb-6">Test Completed! 🎉</h2>
-
-          {/* Ring */}
-          <div className="flex justify-center mb-6">
-            <div className="relative w-36 h-36">
-              <svg viewBox="0 0 120 120" className="w-full h-full -rotate-90">
-                <circle cx="60" cy="60" r={r} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="10" />
-                <circle cx="60" cy="60" r={r} fill="none" stroke={ringColor} strokeWidth="10"
-                  strokeLinecap="round" strokeDasharray={circ}
-                  strokeDashoffset={animated ? circ * (1 - pct / 100) : circ}
-                  style={{ transition: 'stroke-dashoffset 1.5s ease 0.3s' }} />
-              </svg>
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-3xl font-extrabold text-white font-poppins">{pct}%</span>
-                <span className="text-white/60 text-xs">Score</span>
-              </div>
-            </div>
-          </div>
-
-          {/* 4 stats */}
-          <div className="grid grid-cols-4 gap-3 mb-6">
-            {[['✅', correct,'Correct'],['❌', wrong,'Wrong'],['⏭️', skipped,'Skipped'],['⏱️', fmt(timeUsed),'Time']].map(([icon, val, label]) => (
-              <div key={label} className="bg-white/5 rounded-2xl p-3">
-                <p className="text-xl mb-1">{icon}</p>
-                <p className="text-xl font-bold text-white font-poppins">{val}</p>
-                <p className="text-white/50 text-xs">{label}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Rank */}
-          <div className="bg-white/5 rounded-2xl p-4">
-            <p className="text-white/60 text-sm mb-1">All India Rank</p>
-            <p className="text-5xl font-black text-[#D4AF37] font-poppins">#{rank.toLocaleString()}</p>
-            <p className="text-white/50 text-xs mt-1">SSC CGL · Today's Mock</p>
-            <div className="mt-3">
-              <div className="flex justify-between text-xs mb-1">
-                <span className="text-white/40">You scored higher than</span>
-                <span className="text-white/70 font-bold">87% of test takers</span>
-              </div>
-              <div className="w-full bg-white/10 rounded-full h-2.5">
-                <div className="bg-[#D4AF37] h-2.5 rounded-full transition-all duration-1000"
-                  style={{ width: animated ? '87%' : '0%' }} />
-              </div>
-            </div>
-            <p className="text-white/40 text-xs mt-2">TN: #127 · Coimbatore: #8</p>
-          </div>
+          <p style={{ color:'rgba(255,255,255,0.6)', fontSize:13, marginBottom:4 }}>{data.examName}</p>
+          <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
+            color:'#fff', fontSize:52, lineHeight:1, marginBottom:8 }}>
+            {pct.toFixed(1)}%
+          </p>
+          <p style={{ color: passed?'#4ADE80':'#FCA5A5', fontSize:16, fontWeight:700 }}>
+            {passed ? '✅ Passed! Great work!' : `❌ Below ${result?.minPct || 70}% minimum`}
+          </p>
         </div>
 
-        {/* Subject breakdown */}
-        <div className="clay rounded-3xl p-6 mb-6">
-          <h3 className="font-bold text-[#1E3A5F] text-lg font-poppins mb-4">Subject Performance</h3>
-          {SUBS.map(s => (
-            <div key={s.name} className="flex items-center gap-3 mb-3">
-              <span className="text-slate-600 text-sm w-20 flex-shrink-0">{s.name}</span>
-              <div className="flex-1 bg-slate-100 rounded-full h-2.5">
-                <div className={`h-2.5 rounded-full transition-all duration-1000 ${s.acc >= 80 ? 'bg-green-500' : s.acc >= 70 ? 'bg-[#D4AF37]' : 'bg-amber-500'}`}
-                  style={{ width: animated ? `${s.acc}%` : '0%' }} />
-              </div>
-              <span className="text-sm font-bold text-[#1E3A5F] w-10 text-right">{s.acc}%</span>
-              <span className={`text-xs font-bold ${s.trend === 'up' ? 'text-green-500' : 'text-red-500'}`}>
-                {s.trend === 'up' ? '↑' : '↓'}
-              </span>
+        {/* COIN RESULT — earn or deduction */}
+        {result && (
+          <div style={{
+            background: result.passed?'#DCFCE7':'#FEE2E2',
+            border: `1.5px solid ${result.passed?'#22C55E':'#EF4444'}`,
+            borderRadius:20, padding:18, marginBottom:16,
+            display:'flex', alignItems:'center', gap:14,
+          }}>
+            <span style={{ fontSize:40 }}>🪙</span>
+            <div style={{ flex:1 }}>
+              {result.passed ? (
+                <>
+                  <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
+                    color:'#15803D', fontSize:22 }}>
+                    +{result.earnedCoins} coins earned!
+                  </p>
+                  <p style={{ color:'#166534', fontSize:13, marginTop:2 }}>
+                    Scored above {result.minPct}% minimum · Balance: {result.balance} 🪙
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
+                    color:'#991B1B', fontSize:22 }}>
+                    -{result.deducted} coins deducted
+                  </p>
+                  <p style={{ color:'#991B1B', fontSize:13, marginTop:2 }}>
+                    Scored below {result.minPct}% minimum · Balance: {result.balance} 🪙
+                  </p>
+                  {result.balance < -100 && (
+                    <p style={{ color:'#DC2626', fontSize:12, fontWeight:700, marginTop:6 }}>
+                      ⚠️ Balance very low. Earn coins or buy a pack to continue.
+                    </p>
+                  )}
+                </>
+              )}
+            </div>
+            {!result.passed && (
+              <button onClick={()=>navigate('/wallet')}
+                style={{ background:'#EF4444', border:'none', borderRadius:12,
+                  padding:'8px 14px', color:'#fff', fontFamily:'Poppins,sans-serif',
+                  fontWeight:700, fontSize:12, cursor:'pointer', flexShrink:0 }}>
+                Buy Coins
+              </button>
+            )}
+          </div>
+        )}
+
+        {/* Stats grid */}
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(2,1fr)',
+          gap:10, marginBottom:16 }}>
+          {[
+            ['✅',data.correct,   'Correct',   '#22C55E'],
+            ['❌',data.incorrect, 'Incorrect', '#EF4444'],
+            ['⏭️',data.skipped,   'Skipped',   '#F59E0B'],
+            ['⏱️',data.time,      'Time',      '#8B5CF6'],
+          ].map(([e,v,l,c])=>(
+            <div key={l} style={{ background:'#fff', borderRadius:18,
+              padding:'14px 12px', textAlign:'center',
+              border:'1.5px solid #E2E8F0', boxShadow:'0 2px 8px rgba(0,0,0,0.04)' }}>
+              <p style={{ fontSize:24 }}>{e}</p>
+              <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
+                color:c, fontSize:24 }}>{v}</p>
+              <p style={{ color:'#94A3B8', fontSize:12 }}>{l}</p>
             </div>
           ))}
         </div>
 
-        {/* Actions */}
-        <div className="grid grid-cols-2 gap-3 mb-3">
-          <button onClick={() => navigate('/test-engine/review', { state: { answers } })} className="btn-gold py-4 rounded-2xl font-bold">
-            Review Answers
-          </button>
-          <button onClick={() => navigate('/test-engine')} className="btn-navy py-4 rounded-2xl font-bold">
-            Take Another
-          </button>
+        {/* Rank improvement */}
+        <div style={{ background:'#fff', borderRadius:20, padding:18,
+          marginBottom:16, border:'1.5px solid #E2E8F0' }}>
+          <div style={{ display:'flex', justifyContent:'space-between',
+            alignItems:'center', flexWrap:'wrap', gap:8 }}>
+            <div>
+              <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700,
+                color:'#1E3A5F', fontSize:16 }}>All-India Rank</p>
+              <p style={{ color:'#94A3B8', fontSize:12 }}>Updated after this test</p>
+            </div>
+            <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+              <div style={{ textAlign:'center' }}>
+                <p style={{ color:'#94A3B8', fontSize:11 }}>Before</p>
+                <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800,
+                  color:'#64748B', fontSize:18 }}>#{user?.rank?.toLocaleString() || '1,243'}</p>
+              </div>
+              <span style={{ color:'#D4AF37', fontSize:24 }}>→</span>
+              <div style={{ textAlign:'center' }}>
+                <p style={{ color:'#94A3B8', fontSize:11 }}>After</p>
+                <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800,
+                  color:passed?'#22C55E':'#EF4444', fontSize:18 }}>
+                  #{passed
+                    ? ((user?.rank || 1243) - Math.floor(pct/5)).toLocaleString()
+                    : ((user?.rank || 1243) + Math.floor((100-pct)/5)).toLocaleString()}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-        <button onClick={() => { navigator.clipboard?.writeText(`I scored ${pct}% on TryIT Educations! Rank #${rank}. tryiteducations.net`) }}
-          className="w-full border-2 border-slate-200 text-slate-600 py-3.5 rounded-2xl font-bold hover:border-[#D4AF37] transition-colors">
-          📤 Share Result
-        </button>
+
+        {/* Actions */}
+        <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
+          <button onClick={()=>navigate('/test-engine/review', { state:data })}
+            style={{ padding:14, borderRadius:14, border:'none',
+              background:'linear-gradient(135deg,#1E3A5F,#0F2140)',
+              color:'#D4AF37', fontFamily:'Poppins,sans-serif',
+              fontWeight:700, fontSize:15, cursor:'pointer' }}>
+            📖 Review Answers
+          </button>
+          <div style={{ display:'flex', gap:10 }}>
+            <button onClick={()=>navigate('/test-engine')}
+              style={{ flex:1, padding:13, borderRadius:14,
+                border:'1.5px solid #E2E8F0', background:'#fff',
+                color:'#64748B', fontFamily:'Poppins,sans-serif',
+                fontWeight:600, fontSize:14, cursor:'pointer' }}>
+              Try Again
+            </button>
+            <button onClick={()=>navigate('/dashboard')}
+              style={{ flex:1, padding:13, borderRadius:14, border:'none',
+                background:'linear-gradient(135deg,#D4AF37,#E8C44A)',
+                color:'#1E3A5F', fontFamily:'Poppins,sans-serif',
+                fontWeight:700, fontSize:14, cursor:'pointer' }}>
+              Dashboard →
+            </button>
+          </div>
+          {!result?.passed && (
+            <button onClick={()=>navigate('/wallet')}
+              style={{ padding:13, borderRadius:14, border:'none',
+                background:'linear-gradient(135deg,#EF4444,#DC2626)',
+                color:'#fff', fontFamily:'Poppins,sans-serif',
+                fontWeight:700, fontSize:14, cursor:'pointer' }}>
+              🪙 Buy Coins to Continue
+            </button>
+          )}
+        </div>
       </div>
-    </AppLayout>
+    </div>
   )
 }

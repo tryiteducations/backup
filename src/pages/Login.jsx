@@ -26,18 +26,33 @@ export default function Login() {
   }, [step])
 
   const goIn = (emailAddr) => {
-    const e = (emailAddr || email).trim().toLowerCase()
-    localStorage.setItem('tryit_role',  role)
-    localStorage.setItem('tryit_email', e)
-    if (coupon.trim()) localStorage.setItem('applied_coupon', coupon.trim().toUpperCase())
-    try {
-      const grants = JSON.parse(localStorage.getItem('tryit_pro_grants')||'[]')
-      const grant  = grants.find(g => g.email.toLowerCase()===e && new Date(g.expiresAt)>new Date())
-      if (grant) localStorage.setItem('tryit_active_grant', JSON.stringify(grant))
-    } catch {}
-    const done = localStorage.getItem('onboarding_done')
-    navigate(done ? '/dashboard' : '/onboarding')
+  const e = (emailAddr || email).trim().toLowerCase()
+  localStorage.setItem('tryit_role',  role)
+  localStorage.setItem('tryit_email', e)
+  if (coupon.trim()) localStorage.setItem('applied_coupon', coupon.trim().toUpperCase())
+  try {
+    const grants = JSON.parse(localStorage.getItem('tryit_pro_grants')||'[]')
+    const grant  = grants.find(g => g.email.toLowerCase()===e && new Date(g.expiresAt)>new Date())
+    if (grant) localStorage.setItem('tryit_active_grant', JSON.stringify(grant))
+  } catch {}
+  const done = localStorage.getItem('onboarding_done')
+  
+  if (!done) {
+    navigate('/onboarding')
+    return
   }
+  
+  // Role → Dashboard path mapping (same as in Onboarding.jsx)
+  const routeMap = {
+    student: '/dashboard',
+    mentor: '/mentor-hub',
+    institution: '/centre/dashboard',
+    institute: '/centre/dashboard',   // alias if needed
+    family: '/family'
+  }
+  const target = routeMap[role] || '/dashboard'
+  navigate(target)
+}
 
   const googleLogin = () => goIn('google.user@gmail.com')
 
