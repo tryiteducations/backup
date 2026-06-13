@@ -1,12 +1,6 @@
-node_modules/
-.cache/
+﻿node_modules/
 dist/
-build/
-# Build caches
-.cache/
-node_modules/.cache/
-dist/
-node_modules/
-*.log
-*.tmp
 .env.local
+.DS_Store
+*.log
+src_today_backup/
