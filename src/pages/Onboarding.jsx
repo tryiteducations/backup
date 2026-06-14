@@ -573,7 +573,13 @@ export default function Onboarding() {
     const email = user?.email || localStorage.getItem('tryit_email')
     localStorage.setItem(onboardingKey(email), '1')
 
-    navigate('/dashboard')
+  const ROLE_HOME = {
+  student: '/dashboard',
+  mentor: '/mentor-hub',
+  institution: '/centre/dashboard',
+  family: '/family',
+}
+navigate(ROLE_HOME[user?.role] || '/dashboard')
   }
 
   function handleNext() {
