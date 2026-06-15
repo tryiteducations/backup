@@ -29,7 +29,7 @@ export default function InstitutionSection() {
 
   return (
     <section id="institutions" style={{ padding:'72px 20px',
-      background:'linear-gradient(180deg,#F8FAFC,#EFF6FF)' }}>
+      background:'linear-gradient(180deg, var(--color-bg, #F8FAFC), var(--color-surface, #FFFFFF))' }}>
       <div style={{ maxWidth:1100, margin:'0 auto' }}>
 
         <div style={{ textAlign:'center', marginBottom:48 }}>
@@ -37,18 +37,18 @@ export default function InstitutionSection() {
             background:'rgba(30,58,95,0.08)', border:'1px solid rgba(30,58,95,0.18)',
             borderRadius:20, padding:'7px 18px', marginBottom:16 }}>
             <span>🏫</span>
-            <span style={{ color:'#1E3A5F', fontSize:12, fontWeight:700,
+            <span style={{ color:'var(--color-text, #1E3A5F)', fontSize:12, fontWeight:700,
               fontFamily:'Poppins,sans-serif', letterSpacing:'1px' }}>
               FOR COACHING CENTRES & SCHOOLS
             </span>
           </div>
           <h2 style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
-            fontSize:'clamp(24px,4vw,42px)', color:'#1E3A5F',
+            fontSize:'clamp(24px,4vw,42px)', color:'var(--color-text, #1E3A5F)',
             marginBottom:12, lineHeight:1.2 }}>
             No More Saturdays Wasted on<br/>
-            <span style={{ color:'#D4AF37' }}>Manual Test Papers</span>
+            <span style={{ color:'var(--color-accent, #D4AF37)' }}>Manual Test Papers</span>
           </h2>
-          <p style={{ fontFamily:'Inter,sans-serif', color:'#64748B',
+          <p style={{ fontFamily:'Inter,sans-serif', color:'var(--color-text-light, #64748B)',
             fontSize:'clamp(14px,2vw,17px)', maxWidth:600, margin:'0 auto' }}>
             Your students take weekend tests on TryIT — from their own phones.
             You get instant results. They get All-India ranked.
@@ -62,9 +62,9 @@ export default function InstitutionSection() {
           gap:14, marginBottom:56 }}>
           {STEPS.map((s,i) => (
             <div key={i} onClick={() => setActive(i)} style={{
-              background: active===i ? 'linear-gradient(135deg,#1E3A5F,#0F2140)' : '#fff',
-              borderRadius:20, padding:'18px 16px', cursor:'pointer',
-              border: `2px solid ${active===i ? '#D4AF37' : '#E2E8F0'}`,
+              background: active===i ? 'linear-gradient(135deg, var(--color-primary, #1E3A5F), var(--color-primary-dark, #0F2140))' : 'var(--color-surface, #FFFFFF)',
+                borderRadius:20, padding:'18px 16px', cursor:'pointer',
+                border: `2px solid ${active===i ? 'var(--color-accent, #D4AF37)' : 'var(--color-border, #E2E8F0)'}`,
               transition:'all 0.25s',
               boxShadow: active===i ? '0 12px 32px rgba(30,58,95,0.2)' : '0 2px 8px rgba(0,0,0,0.04)',
               transform: active===i ? 'translateY(-4px)' : 'none',
@@ -73,14 +73,14 @@ export default function InstitutionSection() {
                 alignItems:'center', marginBottom:10 }}>
                 <span style={{ fontSize:26 }}>{s.emoji}</span>
                 <span style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
-                  fontSize:10, color: active===i ? 'rgba(212,175,55,0.5)' : '#CBD5E1',
+                  fontSize:10, color: active===i ? 'rgba(212,175,55,0.5)' : 'var(--color-muted, #CBD5E1)',
                   letterSpacing:'1px' }}>STEP {s.step}</span>
               </div>
               <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700,
-                color: active===i ? '#D4AF37' : '#1E3A5F',
+                color: active===i ? 'var(--color-accent, #D4AF37)' : 'var(--color-text, #1E3A5F)',
                 fontSize:13, marginBottom:6 }}>{s.title}</p>
               <p style={{ fontFamily:'Inter,sans-serif', fontSize:12,
-                color: active===i ? 'rgba(255,255,255,0.65)' : '#64748B',
+                color: active===i ? 'rgba(255,255,255,0.75)' : 'var(--color-text-light, #64748B)',
                 lineHeight:1.6 }}>{s.desc}</p>
             </div>
           ))}
@@ -89,7 +89,7 @@ export default function InstitutionSection() {
         {/* Benefits */}
         <div style={{ marginBottom:48 }}>
           <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800,
-            color:'#1E3A5F', fontSize:'clamp(18px,3vw,26px)',
+            color:'var(--color-primary-dark, #1E3A5F)', fontSize:'clamp(18px,3vw,26px)',
             textAlign:'center', marginBottom:28 }}>
             Why 1,000+ Centres Are Switching to TryIT
           </h3>
@@ -98,12 +98,12 @@ export default function InstitutionSection() {
             gap:14 }}>
             {BENEFITS.map((b,i) => (
               <div key={i} style={{ background:'#fff', borderRadius:18, padding:20,
-                border:'1.5px solid #E2E8F0',
+                border:'1.5px solid var(--color-border, #E2E8F0)',
                 boxShadow:'0 2px 8px rgba(0,0,0,0.04)' }}>
                 <span style={{ fontSize:28, display:'block', marginBottom:8 }}>{b.emoji}</span>
                 <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700,
-                  color:'#1E3A5F', fontSize:14, marginBottom:6 }}>{b.title}</p>
-                <p style={{ fontFamily:'Inter,sans-serif', color:'#64748B',
+                  color:'var(--color-primary-dark, #1E3A5F)', fontSize:14, marginBottom:6 }}>{b.title}</p>
+                <p style={{ fontFamily:'Inter,sans-serif', color:'var(--color-muted, #64748B)',
                   fontSize:12, lineHeight:1.65 }}>{b.desc}</p>
               </div>
             ))}
@@ -111,7 +111,7 @@ export default function InstitutionSection() {
         </div>
 
         {/* Monday Payout box */}
-        <div style={{ background:'linear-gradient(135deg,#1E3A5F,#0F2140)',
+        <div style={{ background:'linear-gradient(135deg, var(--color-primary, #1E3A5F), var(--color-primary-dark, #0F2140))',
           borderRadius:24, padding:'36px 28px', marginBottom:28,
           border:'1.5px solid rgba(212,175,55,0.3)',
           display:'grid',
@@ -123,18 +123,18 @@ export default function InstitutionSection() {
               border:'1px solid rgba(212,175,55,0.3)',
               borderRadius:20, padding:'6px 14px', marginBottom:14 }}>
               <span>💰</span>
-              <span style={{ color:'#D4AF37', fontSize:10, fontWeight:800,
+              <span style={{ color:'var(--color-accent, #D4AF37)', fontSize:10, fontWeight:800,
                 letterSpacing:'2px', fontFamily:'Poppins,sans-serif' }}>
                 EVERY MONDAY. WITHOUT FAIL.
               </span>
             </div>
             <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
-              color:'#fff', fontSize:'clamp(20px,3vw,32px)',
+              color:'var(--color-surface, #FFFFFF)', fontSize:'clamp(20px,3vw,32px)',
               lineHeight:1.2, marginBottom:12 }}>
               Each Student in Your Centre<br/>
-              <span style={{ color:'#D4AF37' }}>Earns You Every Week</span>
+              <span style={{ color:'var(--color-accent, #D4AF37)' }}>Earns You Every Week</span>
             </h3>
-            <p style={{ fontFamily:'Inter,sans-serif', color:'rgba(255,255,255,0.6)',
+            <p style={{ fontFamily:'Inter,sans-serif', color:'rgba(255,255,255,0.7)',
               fontSize:'clamp(13px,1.8vw,15px)', lineHeight:1.75 }}>
               No caps. No limits. 10 students or 10,000 — the payout scales.
               Direct UPI transfer every Monday morning. Build a passive income
@@ -153,8 +153,8 @@ export default function InstitutionSection() {
                 borderRadius:16, padding:'16px 12px', textAlign:'center' }}>
                 <span style={{ fontSize:22, display:'block', marginBottom:4 }}>{s.emoji}</span>
                 <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800,
-                  color:'#D4AF37', fontSize:'clamp(13px,2vw,18px)' }}>{s.val}</p>
-                <p style={{ color:'rgba(255,255,255,0.4)', fontSize:10, marginTop:2 }}>{s.label}</p>
+                  color:'var(--color-accent, #D4AF37)', fontSize:'clamp(13px,2vw,18px)' }}>{s.val}</p>
+                <p style={{ color:'rgba(255,255,255,0.5)', fontSize:10, marginTop:2 }}>{s.label}</p>
               </div>
             ))}
           </div>
@@ -162,14 +162,14 @@ export default function InstitutionSection() {
 
         <div style={{ textAlign:'center' }}>
           <button onClick={() => navigate('/centre/login')} style={{
-            background:'linear-gradient(135deg,#D4AF37,#E8C84A)', border:'none',
+            background:'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))', border:'none',
             borderRadius:16, padding:'clamp(13px,2vw,17px) clamp(32px,4vw,52px)',
             fontFamily:'Poppins,sans-serif', fontWeight:800,
-            fontSize:'clamp(15px,2.5vw,19px)', color:'#1E3A5F', cursor:'pointer',
+            fontSize:'clamp(15px,2.5vw,19px)', color:'var(--color-primary-dark, #1E3A5F)', cursor:'pointer',
             boxShadow:'0 8px 24px rgba(212,175,55,0.3)' }}>
             Register Your Centre Free →
           </button>
-          <p style={{ color:'#94A3B8', fontSize:12, marginTop:10 }}>
+          <p style={{ color:'var(--color-muted, #94A3B8)', fontSize:12, marginTop:10 }}>
             No registration fee · First payout within 7 days of first student test
           </p>
         </div>

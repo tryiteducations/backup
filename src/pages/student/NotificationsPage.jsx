@@ -27,31 +27,31 @@ export default function NotificationsPage() {
       <div style={{ maxWidth:600, margin:'0 auto' }}>
         <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:20 }}>
           <div>
-            <h1 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'#1E3A5F', fontSize:22, margin:'0 0 2px' }}>🔔 Notifications</h1>
-            {unread > 0 && <p style={{ color:'#D4AF37', fontSize:13, margin:0 }}>{unread} unread</p>}
+            <h1 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'var(--color-primary, #1E3A5F)', fontSize:22, margin:'0 0 2px' }}>🔔 Notifications</h1>
+            {unread > 0 && <p style={{ color:'var(--color-accent, #D4AF37)', fontSize:13, margin:0 }}>{unread} unread</p>}
           </div>
           {unread > 0 && (
-            <button onClick={markAll} style={{ background:'#F1F5F9', border:'none', borderRadius:10, padding:'8px 14px', fontSize:12, fontWeight:600, color:'#475569', cursor:'pointer' }}>Mark all read</button>
+            <button onClick={markAll} style={{ background:'var(--color-bg-muted-2, #F1F5F9)', border:'none', borderRadius:10, padding:'8px 14px', fontSize:12, fontWeight:600, color:'#475569', cursor:'pointer' }}>Mark all read</button>
           )}
         </div>
 
         {notifs.length === 0 ? (
-          <div style={{ textAlign:'center', padding:60, background:'#fff', borderRadius:18, border:'1.5px solid #E2E8F0' }}>
+          <div style={{ textAlign:'center', padding:60, background:'#fff', borderRadius:18, border:'1.5px solid var(--color-border, #E2E8F0)' }}>
             <p style={{ fontSize:40, marginBottom:8 }}>🎉</p>
-            <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'#1E3A5F' }}>You're all caught up!</p>
+            <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'var(--color-primary, #1E3A5F)' }}>You're all caught up!</p>
           </div>
         ) : (
           <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
             {notifs.map(n=>(
               <div key={n.id} onClick={()=>markOne(n.id)}
-                style={{ background: n.read?'#fff':'#FFFBEB', borderRadius:14, border:`1.5px solid ${n.read?'#E2E8F0':'#FDE68A'}`, padding:'14px 16px', display:'flex', gap:12, cursor:'pointer', alignItems:'flex-start' }}>
+                style={{ background: n.read?'#fff':'#FFFBEB', borderRadius:14, border:`1.5px solid ${n.read?'var(--color-border, #E2E8F0)':'#FDE68A'}`, padding:'14px 16px', display:'flex', gap:12, cursor:'pointer', alignItems:'flex-start' }}>
                 <span style={{ fontSize:24, flexShrink:0 }}>{n.icon}</span>
                 <div style={{ flex:1 }}>
-                  <p style={{ fontWeight: n.read?600:800, color:'#1E3A5F', fontSize:14, margin:'0 0 2px' }}>{n.title}</p>
-                  <p style={{ color:'#64748B', fontSize:13, margin:'0 0 4px' }}>{n.body}</p>
+                  <p style={{ fontWeight: n.read?600:800, color:'var(--color-primary, #1E3A5F)', fontSize:14, margin:'0 0 2px' }}>{n.title}</p>
+                  <p style={{ color:'var(--color-muted, #64748B)', fontSize:13, margin:'0 0 4px' }}>{n.body}</p>
                   <p style={{ color:'#94A3B8', fontSize:11, margin:0 }}>{n.time}</p>
                 </div>
-                {!n.read && <div style={{ width:8, height:8, borderRadius:'50%', background:'#D4AF37', flexShrink:0, marginTop:4 }}/>}
+                {!n.read && <div style={{ width:8, height:8, borderRadius:'50%', background:'var(--color-accent, #D4AF37)', flexShrink:0, marginTop:4 }}/>}
               </div>
             ))}
           </div>

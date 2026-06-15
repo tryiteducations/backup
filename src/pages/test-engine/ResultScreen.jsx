@@ -57,7 +57,7 @@ export default function ResultScreen() {
     <div className="min-h-screen bg-[#F8FAFC]" style={{ fontFamily: 'Inter, sans-serif' }}>
 
       {/* Hero result section */}
-      <div className={`py-12 px-4 text-center ${isGreat ? 'bg-gradient-to-br from-[#064E3B] to-[#1E3A5F]' : 'bg-gradient-to-br from-[#1E3A5F] to-[#0F2140]'}`}>
+      <div className={`py-12 px-4 text-center ${isGreat ? 'bg-gradient-to-br from-[#064E3B] to-[var(--color-primary, #1E3A5F)]' : 'bg-gradient-to-br from-[var(--color-primary, #1E3A5F)] to-[var(--color-primary-dark, #0F2140)]'}`}>
         {isGreat && (
           <div className="text-4xl mb-3 animate-bounce">🎉</div>
         )}
@@ -69,8 +69,8 @@ export default function ResultScreen() {
         )}
 
         {/* Score circle */}
-        <div className="inline-flex flex-col items-center justify-center w-36 h-36 rounded-full bg-white/10 border-4 border-[#D4AF37] my-6 mx-auto">
-          <span className={`text-4xl font-black ${isGreat ? 'text-[#E8C84A]' : 'text-white'}`}>
+        <div className="inline-flex flex-col items-center justify-center w-36 h-36 rounded-full bg-white/10 border-4 border-[var(--color-accent, #D4AF37)] my-6 mx-auto">
+          <span className={`text-4xl font-black ${isGreat ? 'text-[var(--color-accent-light, #E8C84A)]' : 'text-white'}`}>
             {percentage}%
           </span>
           <span className={`text-lg font-bold ${gradeColor.replace('text-', 'text-')} text-white/80`}>{grade}</span>
@@ -83,7 +83,7 @@ export default function ResultScreen() {
         {/* Coins & XP earned */}
         <div className="flex items-center justify-center gap-4 mt-6">
           <div className="bg-white/10 rounded-xl px-4 py-2 text-center">
-            <div className="text-[#D4AF37] font-bold text-xl">+{coinsEarned}</div>
+            <div className="text-[var(--color-accent, #D4AF37)] font-bold text-xl">+{coinsEarned}</div>
             <div className="text-white/70 text-xs">Coins Earned</div>
           </div>
           <div className="bg-white/10 rounded-xl px-4 py-2 text-center">
@@ -104,7 +104,7 @@ export default function ResultScreen() {
         {/* Subject Breakdown */}
         {Object.keys(subjectBreakdown).length > 1 && (
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
-            <h2 className="font-bold text-[#1E3A5F] mb-4">Subject Breakdown</h2>
+            <h2 className="font-bold text-[var(--color-primary, #1E3A5F)] mb-4">Subject Breakdown</h2>
             <div className="space-y-3">
               {Object.entries(subjectBreakdown).map(([subject, data]) => {
                 const pct = Math.round((data.correct / data.total) * 100)
@@ -148,13 +148,13 @@ export default function ResultScreen() {
         <div className="space-y-3">
           <button
             onClick={() => navigate('/test-engine/review', { state: { questions, answers, config } })}
-            className="w-full py-3.5 bg-[#1E3A5F] text-white font-semibold rounded-2xl hover:bg-[#0F2140] transition"
+            className="w-full py-3.5 bg-[var(--color-primary, #1E3A5F)] text-white font-semibold rounded-2xl hover:bg-[var(--color-primary-dark, #0F2140)] transition"
           >
             📋 Review Answers
           </button>
           <button
             onClick={() => navigate('/test-engine', { state: { preset: config } })}
-            className="w-full py-3.5 bg-[#D4AF37] text-white font-semibold rounded-2xl hover:bg-[#E8C84A] transition"
+            className="w-full py-3.5 bg-[var(--color-accent, #D4AF37)] text-white font-semibold rounded-2xl hover:bg-[var(--color-accent-light, #E8C84A)] transition"
           >
             🔄 Retake Test
           </button>

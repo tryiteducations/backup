@@ -52,14 +52,14 @@ export default function Leaderboard() {
       <div className="bg-white rounded-2xl shadow-md p-5 sm:p-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
           <div>
-            <h2 className="font-display text-2xl font-extrabold text-[#1E3A5F] mb-1">🇮🇳 All-India Ranking</h2>
+            <h2 className="font-display text-2xl font-extrabold text-[var(--color-primary, #1E3A5F)] mb-1">🇮🇳 All-India Ranking</h2>
             <p className="text-slate-500">See how you stack up nationwide.</p>
           </div>
           <div className="flex gap-3">
             <select
               value={examFilter}
               onChange={(e) => setExamFilter(e.target.value)}
-              className="px-3 py-2 rounded-2xl border border-slate-200 text-sm bg-white focus:border-[#D4AF37] outline-none"
+              className="px-3 py-2 rounded-2xl border border-slate-200 text-sm bg-white focus:border-[var(--color-accent, #D4AF37)] outline-none"
             >
               {examOptions.map((opt) => (
                 <option key={opt} value={opt}>{opt}</option>
@@ -68,7 +68,7 @@ export default function Leaderboard() {
             <select
               value={stateFilter}
               onChange={(e) => setStateFilter(e.target.value)}
-              className="px-3 py-2 rounded-2xl border border-slate-200 text-sm bg-white focus:border-[#D4AF37] outline-none"
+              className="px-3 py-2 rounded-2xl border border-slate-200 text-sm bg-white focus:border-[var(--color-accent, #D4AF37)] outline-none"
             >
               {STATES.map((s) => (
                 <option key={s} value={s}>{s}</option>
@@ -98,10 +98,10 @@ export default function Leaderboard() {
               <tbody>
                 {filtered.map((row) => (
                   <tr key={row.rank} className="border-b border-slate-50">
-                    <td className="py-3 pr-4 font-extrabold text-[#1E3A5F]">#{row.rank}</td>
+                    <td className="py-3 pr-4 font-extrabold text-[var(--color-primary, #1E3A5F)]">#{row.rank}</td>
                     <td className="py-3 pr-4">
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-[#1E3A5F] text-white flex items-center justify-center text-xs font-bold">
+                        <div className="w-8 h-8 rounded-full bg-[var(--color-primary, #1E3A5F)] text-white flex items-center justify-center text-xs font-bold">
                           {row.initials}
                         </div>
                         <span className="font-bold text-slate-700">{row.name}</span>
@@ -110,11 +110,11 @@ export default function Leaderboard() {
                     <td className="py-3 pr-4 text-slate-500">{row.state}</td>
                     <td className="py-3 pr-4 text-slate-500">{row.exam}</td>
                     <td className="py-3 pr-4">
-                      <span className="text-xs font-bold px-2 py-1 rounded-full bg-[#1E3A5F]/5 text-[#1E3A5F]">
+                      <span className="text-xs font-bold px-2 py-1 rounded-full bg-[var(--color-primary, #1E3A5F)]/5 text-[var(--color-primary, #1E3A5F)]">
                         {row.levelEmoji} {row.levelTitle}
                       </span>
                     </td>
-                    <td className="py-3 pr-4 text-right font-extrabold text-[#D4AF37]">{row.score.toLocaleString()}</td>
+                    <td className="py-3 pr-4 text-right font-extrabold text-[var(--color-accent, #D4AF37)]">{row.score.toLocaleString()}</td>
                   </tr>
                 ))}
               </tbody>
@@ -125,17 +125,17 @@ export default function Leaderboard() {
         {/* Your rank */}
         <div className="mt-6 sticky bottom-0">
           {isUserRanked ? (
-            <div className="bg-[#1E3A5F] rounded-2xl p-4 flex items-center justify-between text-white">
+            <div className="bg-[var(--color-primary, #1E3A5F)] rounded-2xl p-4 flex items-center justify-between text-white">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-[#D4AF37] text-[#1E3A5F] flex items-center justify-center text-xs font-extrabold">
+                <div className="w-9 h-9 rounded-full bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)] flex items-center justify-center text-xs font-extrabold">
                   {user.initials}
                 </div>
                 <div>
                   <p className="font-bold">{user.name} (You)</p>
-                  <p className="text-xs text-[#E8C84A]">{user.levelEmoji} {user.levelTitle}</p>
+                  <p className="text-xs text-[var(--color-accent-light, #E8C84A)]">{user.levelEmoji} {user.levelTitle}</p>
                 </div>
               </div>
-              <p className="font-extrabold text-[#D4AF37]">Rank #{user.rank}</p>
+              <p className="font-extrabold text-[var(--color-accent, #D4AF37)]">Rank #{user.rank}</p>
             </div>
           ) : (
             <div className="bg-[#FDF6E3] rounded-2xl p-4 text-center">

@@ -10,6 +10,7 @@ export default function LogoAnimated({ size = 'md', mode = 'auto', dark = true, 
   // Design-time widths (used as viewBox coordinate system —
   // internal math stays identical to V4, only RENDERED size changes)
   const SIZES = {
+    xs:     { width: 90,  clamp: 'clamp(64px, 18vw, 90px)'  },
     sm:     { width: 110, clamp: 'clamp(90px, 28vw, 110px)'  },
     md:     { width: 160, clamp: 'clamp(120px, 38vw, 160px)' },
     lg:     { width: 220, clamp: 'clamp(160px, 50vw, 220px)' },
@@ -20,7 +21,7 @@ export default function LogoAnimated({ size = 'md', mode = 'auto', dark = true, 
   const W = cfg.width
   // ── More height to give EDUCATIONS breathing room below ──
   const H = Math.round(W * 0.82)
-  const NAVY = dark ? '#FFFFFF' : '#1E3A5F'
+  const NAVY = dark ? '#FFFFFF' : 'var(--color-primary, #1E3A5F)'
 
   const sunCX = W * 0.595
   const sunCY = H * 0.255
@@ -35,17 +36,12 @@ export default function LogoAnimated({ size = 'md', mode = 'auto', dark = true, 
     const t5 = setTimeout(() => setPhase('done'),  1320)
     const t6 = setTimeout(() => {
       onComplete?.()
-      if (mode === 'loop') setPhase('hidden')
+      if (mode === 'loop') {
+        setPhase('rays')
+      }
     }, 2200)
     return () => [t1,t2,t3,t4,t5,t6].forEach(clearTimeout)
   }, [mode, onComplete])
-
-  useEffect(() => {
-    if (mode === 'loop' && phase === 'hidden') {
-      const t = setTimeout(() => setPhase('rays'), 600)
-      return () => clearTimeout(t)
-    }
-  }, [phase, mode])
 
   const show = (p) => {
     const order = ['rays','arrow','text','lines','done']
@@ -86,11 +82,11 @@ export default function LogoAnimated({ size = 'md', mode = 'auto', dark = true, 
           <linearGradient id="gGold" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%"   stopColor="#B8860B"/>
             <stop offset="45%"  stopColor="#F5D76E"/>
-            <stop offset="100%" stopColor="#D4AF37"/>
+            <stop offset="100%" stopColor="var(--color-accent, #D4AF37)"/>
           </linearGradient>
           <linearGradient id="gNavy" x1="0%" y1="0%" x2="0%" y2="100%">
             <stop offset="0%"   stopColor={dark ? '#FFFFFF' : '#2A5298'}/>
-            <stop offset="100%" stopColor={dark ? '#C8DCFF' : '#1E3A5F'}/>
+            <stop offset="100%" stopColor={dark ? '#C8DCFF' : 'var(--color-primary, #1E3A5F)'}/>
           </linearGradient>
           <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
             <feGaussianBlur stdDeviation="2" result="b"/>
@@ -138,7 +134,7 @@ export default function LogoAnimated({ size = 'md', mode = 'auto', dark = true, 
         {/* ── SIGNAL RINGS ──────────────────────────────────────── */}
         {isDone && [0,1,2].map(i => (
           <circle key={`ring${i}`} cx={sunCX} cy={sunCY} r={sunR}
-            fill="none" stroke="#D4AF37" strokeWidth={2}
+            fill="none" stroke="var(--color-accent, #D4AF37)" strokeWidth={2}
             style={{ animation: `sigRing 2.2s ease-out ${i * 0.73}s infinite`,
               transformOrigin: `${sunCX}px ${sunCY}px` }}
           />
@@ -153,7 +149,7 @@ export default function LogoAnimated({ size = 'md', mode = 'auto', dark = true, 
               y1={sunCY + Math.sin(rad) * sunR * 1.9}
               x2={sunCX + Math.cos(rad) * sunR * 3.6}
               y2={sunCY + Math.sin(rad) * sunR * 3.6}
-              stroke="#D4AF37" strokeWidth={1.6} strokeLinecap="round"
+              stroke="var(--color-accent, #D4AF37)" strokeWidth={1.6} strokeLinecap="round"
               style={{ animation: `sigRay 2.2s ease-out ${i * 0.28}s infinite`,
                 transformOrigin: `${sunCX}px ${sunCY}px` }}
             />

@@ -16,24 +16,24 @@ export default function Settings() {
 
   return (
     <AppLayout>
-      <h1 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'#1E3A5F', fontSize:28, marginBottom:24 }}>⚙️ Settings</h1>
+      <h1 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'var(--color-primary, #1E3A5F)', fontSize:28, marginBottom:24 }}>⚙️ Settings</h1>
 
       {/* Account */}
-      <div style={{ background:'#fff', borderRadius:20, padding:20, marginBottom:14, border:'1.5px solid #E2E8F0', boxShadow:'0 2px 10px rgba(0,0,0,0.04)' }}>
-        <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'#1E3A5F', marginBottom:16 }}>👤 Account</p>
+      <div style={{ background:'#fff', borderRadius:20, padding:20, marginBottom:14, border:'1.5px solid var(--color-border, #E2E8F0)', boxShadow:'0 2px 10px rgba(0,0,0,0.04)' }}>
+        <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'var(--color-primary, #1E3A5F)', marginBottom:16 }}>👤 Account</p>
         <div style={{ display:'flex', alignItems:'center', gap:14, padding:'12px 0', borderBottom:'1px solid #F8FAFC' }}>
-          <span style={{ color:'#64748B', fontSize:14, flex:1 }}>Email</span>
+          <span style={{ color:'var(--color-muted, #64748B)', fontSize:14, flex:1 }}>Email</span>
           <div style={{ display:'flex', alignItems:'center', gap:8 }}>
             <span style={{ color:'#1E293B', fontSize:14, fontWeight:600 }}>{user?.email}</span>
-            <span style={{ background:'#F1F5F9', color:'#64748B', fontSize:10, padding:'2px 8px', borderRadius:20 }}>🔒 Locked</span>
+            <span style={{ background:'var(--color-bg-muted-2, #F1F5F9)', color:'var(--color-muted, #64748B)', fontSize:10, padding:'2px 8px', borderRadius:20 }}>🔒 Locked</span>
           </div>
         </div>
         <div style={{ display:'flex', alignItems:'center', gap:14, padding:'12px 0', borderBottom:'1px solid #F8FAFC' }}>
-          <span style={{ color:'#64748B', fontSize:14, flex:1 }}>TryIT ID</span>
+          <span style={{ color:'var(--color-muted, #64748B)', fontSize:14, flex:1 }}>TryIT ID</span>
           <span style={{ color:'#1E293B', fontSize:13, fontFamily:'monospace', fontWeight:600 }}>{user?.userId}</span>
         </div>
         <div style={{ display:'flex', alignItems:'center', gap:14, padding:'12px 0' }}>
-          <span style={{ color:'#64748B', fontSize:14, flex:1 }}>Role</span>
+          <span style={{ color:'var(--color-muted, #64748B)', fontSize:14, flex:1 }}>Role</span>
           <span style={{ background:'#EDE9FE', color:'#7C3AED', fontSize:12, fontWeight:700, padding:'3px 10px', borderRadius:20 }}>
             {localStorage.getItem('tryit_role') || 'student'}
           </span>
@@ -41,11 +41,11 @@ export default function Settings() {
       </div>
 
       {/* Language */}
-      <div style={{ background:'#fff', borderRadius:20, padding:20, marginBottom:14, border:'1.5px solid #E2E8F0', boxShadow:'0 2px 10px rgba(0,0,0,0.04)' }}>
-        <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'#1E3A5F', marginBottom:14 }}>🌐 Language & Tone</p>
+      <div style={{ background:'#fff', borderRadius:20, padding:20, marginBottom:14, border:'1.5px solid var(--color-border, #E2E8F0)', boxShadow:'0 2px 10px rgba(0,0,0,0.04)' }}>
+        <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'var(--color-primary, #1E3A5F)', marginBottom:14 }}>🌐 Language & Tone</p>
         <select value={lang} onChange={e=>{ setLang(e.target.value); localStorage.setItem('app_lang_tone',e.target.value) }}
-          style={{ width:'100%', padding:'11px 14px', borderRadius:12, border:'1.5px solid #E2E8F0', fontSize:14, fontFamily:'Poppins,sans-serif', outline:'none' }}
-          onFocus={e=>e.target.style.borderColor='#D4AF37'} onBlur={e=>e.target.style.borderColor='#E2E8F0'}>
+          style={{ width:'100%', padding:'11px 14px', borderRadius:12, border:'1.5px solid var(--color-border, #E2E8F0)', fontSize:14, fontFamily:'Poppins,sans-serif', outline:'none' }}
+          onFocus={e=>e.target.style.borderColor='var(--color-accent, #D4AF37)'} onBlur={e=>e.target.style.borderColor='var(--color-border, #E2E8F0)'}>
           <optgroup label="Neutral">
             <option value="en">English (neutral)</option>
           </optgroup>
@@ -70,8 +70,8 @@ export default function Settings() {
       </div>
 
       {/* Notifications */}
-      <div style={{ background:'#fff', borderRadius:20, padding:20, marginBottom:14, border:'1.5px solid #E2E8F0', boxShadow:'0 2px 10px rgba(0,0,0,0.04)' }}>
-        <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'#1E3A5F', marginBottom:14 }}>🔔 Notifications</p>
+      <div style={{ background:'#fff', borderRadius:20, padding:20, marginBottom:14, border:'1.5px solid var(--color-border, #E2E8F0)', boxShadow:'0 2px 10px rgba(0,0,0,0.04)' }}>
+        <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'var(--color-primary, #1E3A5F)', marginBottom:14 }}>🔔 Notifications</p>
         {[
           { key:'examAlerts',      label:'Exam Deadline Alerts',    desc:'Application dates, result notifications' },
           { key:'streakReminder',  label:'Daily Streak Reminder',   desc:'Keep your study streak alive' },
@@ -87,7 +87,7 @@ export default function Settings() {
             </div>
             <button role="switch" aria-checked={notif[n.key]}
               onClick={() => setNotif(p=>({...p,[n.key]:!p[n.key]}))}
-              style={{ width:46, height:26, borderRadius:13, border:'none', cursor:'pointer', background:notif[n.key]?'#1E3A5F':'#E2E8F0', position:'relative', transition:'background 0.2s', flexShrink:0 }}>
+              style={{ width:46, height:26, borderRadius:13, border:'none', cursor:'pointer', background:notif[n.key]?'var(--color-primary, #1E3A5F)':'var(--color-border, #E2E8F0)', position:'relative', transition:'background 0.2s', flexShrink:0 }}>
               <div style={{ width:20, height:20, borderRadius:'50%', background:'#fff', position:'absolute', top:3, left:notif[n.key]?23:3, transition:'left 0.2s', boxShadow:'0 1px 3px rgba(0,0,0,0.2)' }}/>
             </button>
           </div>
@@ -96,13 +96,13 @@ export default function Settings() {
 
       {/* Subscription */}
       <div style={{ background:'linear-gradient(135deg,rgba(30,58,95,0.06),rgba(212,175,55,0.04))', borderRadius:20, padding:20, marginBottom:14, border:'1.5px solid rgba(212,175,55,0.2)' }}>
-        <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'#1E3A5F', marginBottom:12 }}>💳 Subscription</p>
+        <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'var(--color-primary, #1E3A5F)', marginBottom:12 }}>💳 Subscription</p>
         <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:8 }}>
           <div>
-            <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'#1E3A5F', fontSize:16 }}>⚡ TryIT Pro</p>
-            <p style={{ color:'#64748B', fontSize:13 }}>Active · Renews July 10, 2026</p>
+            <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'var(--color-primary, #1E3A5F)', fontSize:16 }}>⚡ TryIT Pro</p>
+            <p style={{ color:'var(--color-muted, #64748B)', fontSize:13 }}>Active · Renews July 10, 2026</p>
           </div>
-          <button onClick={() => navigate('/pro')} style={{ background:'linear-gradient(135deg,#D4AF37,#E8C84A)', border:'none', borderRadius:12, padding:'9px 20px', color:'#1E3A5F', fontFamily:'Poppins,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer' }}>
+          <button onClick={() => navigate('/pro')} style={{ background:'linear-gradient(135deg,var(--color-accent, #D4AF37),var(--color-accent-light, #E8C84A))', border:'none', borderRadius:12, padding:'9px 20px', color:'var(--color-primary, #1E3A5F)', fontFamily:'Poppins,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer' }}>
             Manage Plan
           </button>
         </div>
@@ -117,7 +117,7 @@ export default function Settings() {
         </button>
       </div>
 
-      <button onClick={save} style={{ width:'100%', padding:14, borderRadius:14, border:'none', background: saved?'#22C55E':'linear-gradient(135deg,#1E3A5F,#0F2140)', fontFamily:'Poppins,sans-serif', fontWeight:800, fontSize:16, color:'#fff', cursor:'pointer' }}>
+      <button onClick={save} style={{ width:'100%', padding:14, borderRadius:14, border:'none', background: saved?'var(--color-success, #22C55E)':'linear-gradient(135deg,var(--color-primary, #1E3A5F),var(--color-primary-dark, #0F2140))', fontFamily:'Poppins,sans-serif', fontWeight:800, fontSize:16, color:'#fff', cursor:'pointer' }}>
         {saved ? '✅ Saved!' : 'Save Settings'}
       </button>
     </AppLayout>

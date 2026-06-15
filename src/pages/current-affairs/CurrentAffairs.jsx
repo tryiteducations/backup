@@ -183,7 +183,7 @@ export default function CurrentAffairs() {
       <div className="max-w-3xl mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-[#1E3A5F]" style={{ fontFamily: 'Poppins, sans-serif' }}>
+            <h1 className="text-2xl font-bold text-[var(--color-primary, #1E3A5F)]" style={{ fontFamily: 'Poppins, sans-serif' }}>
               Current Affairs
             </h1>
             <p className="text-gray-400 text-sm mt-0.5">Earn +5 coins for each article you read</p>
@@ -199,8 +199,8 @@ export default function CurrentAffairs() {
               onClick={() => setActiveCategory(cat)}
               className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
                 activeCategory === cat
-                  ? 'bg-[#1E3A5F] text-white'
-                  : 'bg-white border border-gray-200 text-gray-600 hover:border-[#1E3A5F] hover:text-[#1E3A5F]'
+                  ? 'bg-[var(--color-primary, #1E3A5F)] text-white'
+                  : 'bg-white border border-gray-200 text-gray-600 hover:border-[var(--color-primary, #1E3A5F)] hover:text-[var(--color-primary, #1E3A5F)]'
               }`}
             >
               {cat}
@@ -228,7 +228,7 @@ export default function CurrentAffairs() {
               <div
                 key={article.id}
                 className={`bg-white rounded-2xl border transition-all ${
-                  isOpen ? 'border-[#D4AF37] shadow-md' : 'border-gray-100 shadow-sm'
+                  isOpen ? 'border-[var(--color-accent, #D4AF37)] shadow-md' : 'border-gray-100 shadow-sm'
                 }`}
               >
                 <button
@@ -243,13 +243,13 @@ export default function CurrentAffairs() {
                           {article.category}
                         </span>
                         {isRead && (
-                          <span className="text-xs font-semibold text-[#D4AF37]">
+                          <span className="text-xs font-semibold text-[var(--color-accent, #D4AF37)]">
                             ✓ Read · +5 coins earned
                           </span>
                         )}
                       </div>
                       <h3
-                        className="font-bold text-[#1E3A5F] text-base leading-snug"
+                        className="font-bold text-[var(--color-primary, #1E3A5F)] text-base leading-snug"
                         style={{ fontFamily: 'Poppins, sans-serif' }}
                       >
                         {article.title}
@@ -268,7 +268,7 @@ export default function CurrentAffairs() {
                   <div className="px-5 pb-5 border-t border-gray-100 pt-4">
                     <p className="text-gray-600 leading-relaxed">{article.summary}</p>
                     {!isRead && (
-                      <div className="mt-3 text-xs text-[#D4AF37] font-semibold">
+                      <div className="mt-3 text-xs text-[var(--color-accent, #D4AF37)] font-semibold">
                         🪙 +5 coins added to your wallet!
                       </div>
                     )}

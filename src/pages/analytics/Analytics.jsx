@@ -16,8 +16,8 @@ const WEAK_TOPICS = [
 ]
 
 const TIME_BREAKDOWN = [
-  { subject: 'Quantitative Aptitude', hours: 4.5, color: '#1E3A5F', pct: 36 },
-  { subject: 'Reasoning', hours: 3.0, color: '#D4AF37', pct: 24 },
+  { subject: 'Quantitative Aptitude', hours: 4.5, color: 'var(--color-primary, #1E3A5F)', pct: 36 },
+  { subject: 'Reasoning', hours: 3.0, color: 'var(--color-accent, #D4AF37)', pct: 24 },
   { subject: 'General Studies', hours: 2.5, color: '#064E3B', pct: 20 },
   { subject: 'English', hours: 2.0, color: '#4C1D95', pct: 16 },
   { subject: 'Current Affairs', hours: 0.5, color: '#7C2D12', pct: 4 },
@@ -51,20 +51,20 @@ function SVGLineChart({ data, labels }) {
         if (y < pad.top || y > pad.top + innerH) return null
         return (
           <g key={v}>
-            <line x1={pad.left} x2={pad.left + innerW} y1={y} y2={y} stroke="#F1F5F9" strokeWidth="1" />
+            <line x1={pad.left} x2={pad.left + innerW} y1={y} y2={y} stroke="var(--color-bg-muted-2, #F1F5F9)" strokeWidth="1" />
             <text x={pad.left - 6} y={y + 4} fontSize="10" fill="#94A3B8" textAnchor="end">{v}</text>
           </g>
         )
       })}
       {/* Area fill */}
-      <path d={areaD} fill="#1E3A5F" fillOpacity="0.07" />
+      <path d={areaD} fill="var(--color-primary, #1E3A5F)" fillOpacity="0.07" />
       {/* Line */}
-      <path d={pathD} fill="none" stroke="#1E3A5F" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={pathD} fill="none" stroke="var(--color-primary, #1E3A5F)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
       {/* Points */}
       {points.map((p, i) => (
         <g key={i}>
-          <circle cx={p.x} cy={p.y} r={4} fill="#D4AF37" stroke="white" strokeWidth="2" />
-          <text x={p.x} y={p.y - 10} fontSize="10" fill="#1E3A5F" textAnchor="middle" fontWeight="600">
+          <circle cx={p.x} cy={p.y} r={4} fill="var(--color-accent, #D4AF37)" stroke="white" strokeWidth="2" />
+          <text x={p.x} y={p.y - 10} fontSize="10" fill="var(--color-primary, #1E3A5F)" textAnchor="middle" fontWeight="600">
             {p.v}%
           </text>
         </g>
@@ -106,7 +106,7 @@ export default function Analytics() {
         {/* Section 1: Subject Accuracy */}
         <section>
           <h2
-            className="text-xl font-bold text-[#1E3A5F] mb-1"
+            className="text-xl font-bold text-[var(--color-primary, #1E3A5F)] mb-1"
             style={{ fontFamily: 'Poppins, sans-serif' }}
           >
             Subject Accuracy
@@ -138,7 +138,7 @@ export default function Analytics() {
                     >
                       {sub.trend === 'up' ? '↑' : sub.trend === 'down' ? '↓' : '→'}
                     </span>
-                    <span className="text-sm font-bold text-[#1E3A5F]">{sub.accuracy}%</span>
+                    <span className="text-sm font-bold text-[var(--color-primary, #1E3A5F)]">{sub.accuracy}%</span>
                   </div>
                 </div>
                 <div className="w-full bg-gray-100 rounded-full h-2.5">
@@ -150,7 +150,7 @@ export default function Analytics() {
                         sub.accuracy >= 70
                           ? '#064E3B'
                           : sub.accuracy >= 50
-                          ? '#D4AF37'
+                          ? 'var(--color-accent, #D4AF37)'
                           : '#7C2D12',
                     }}
                   />
@@ -163,7 +163,7 @@ export default function Analytics() {
         {/* Section 2: Score Trend */}
         <section>
           <h2
-            className="text-xl font-bold text-[#1E3A5F] mb-1"
+            className="text-xl font-bold text-[var(--color-primary, #1E3A5F)] mb-1"
             style={{ fontFamily: 'Poppins, sans-serif' }}
           >
             Score Trend
@@ -179,7 +179,7 @@ export default function Analytics() {
               </p>
               <button
                 onClick={() => navigate('/test-engine')}
-                className="bg-[#1E3A5F] text-white px-6 py-2.5 rounded-2xl font-semibold text-sm hover:bg-[#0F2140] transition-all"
+                className="bg-[var(--color-primary, #1E3A5F)] text-white px-6 py-2.5 rounded-2xl font-semibold text-sm hover:bg-[var(--color-primary-dark, #0F2140)] transition-all"
               >
                 Take a Test →
               </button>
@@ -202,7 +202,7 @@ export default function Analytics() {
         {/* Section 3: Time Spent */}
         <section>
           <h2
-            className="text-xl font-bold text-[#1E3A5F] mb-1"
+            className="text-xl font-bold text-[var(--color-primary, #1E3A5F)] mb-1"
             style={{ fontFamily: 'Poppins, sans-serif' }}
           >
             Time Spent
@@ -237,7 +237,7 @@ export default function Analytics() {
         {/* Section 4: Weak Topics */}
         <section>
           <h2
-            className="text-xl font-bold text-[#1E3A5F] mb-1"
+            className="text-xl font-bold text-[var(--color-primary, #1E3A5F)] mb-1"
             style={{ fontFamily: 'Poppins, sans-serif' }}
           >
             Weak Topics
@@ -253,7 +253,7 @@ export default function Analytics() {
               </p>
               <button
                 onClick={() => navigate('/test-engine')}
-                className="bg-[#1E3A5F] text-white px-6 py-2.5 rounded-2xl font-semibold text-sm hover:bg-[#0F2140] transition-all"
+                className="bg-[var(--color-primary, #1E3A5F)] text-white px-6 py-2.5 rounded-2xl font-semibold text-sm hover:bg-[var(--color-primary-dark, #0F2140)] transition-all"
               >
                 Take a Test →
               </button>
@@ -268,7 +268,7 @@ export default function Analytics() {
                   <div className="flex items-center gap-3">
                     <span className="text-2xl">{t.emoji}</span>
                     <div>
-                      <p className="font-semibold text-[#1E3A5F] text-sm">{t.name}</p>
+                      <p className="font-semibold text-[var(--color-primary, #1E3A5F)] text-sm">{t.name}</p>
                       <p className="text-xs text-gray-400">{t.subject}</p>
                     </div>
                   </div>
@@ -284,7 +284,7 @@ export default function Analytics() {
                     </span>
                     <button
                       onClick={() => navigate('/test-engine')}
-                      className="text-xs font-semibold text-[#1E3A5F] hover:text-[#D4AF37] transition-all whitespace-nowrap"
+                      className="text-xs font-semibold text-[var(--color-primary, #1E3A5F)] hover:text-[var(--color-accent, #D4AF37)] transition-all whitespace-nowrap"
                     >
                       Practice →
                     </button>

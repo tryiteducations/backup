@@ -40,15 +40,15 @@ export default function VisualSyncWrapper({ children, captionText = '' }) {
         role="complementary"
         style={{
           position:'fixed', bottom:90, right:16,
-          width:180, background:'#0F2140',
-          border:'2px solid #D4AF37', borderRadius:20,
+          width:180, background:'var(--color-primary-dark, #0F2140)',
+          border:'2px solid var(--color-accent, #D4AF37)', borderRadius:20,
           overflow:'hidden', zIndex:5000,
           boxShadow:'0 8px 30px rgba(0,0,0,0.4)',
         }}
       >
-        <div style={{ background:'#D4AF37', padding:'6px 12px',
+        <div style={{ background:'var(--color-accent, #D4AF37)', padding:'6px 12px',
           fontFamily:'Poppins,sans-serif', fontWeight:700,
-          fontSize:10, color:'#1E3A5F', letterSpacing:'1px' }}>
+          fontSize:10, color:'var(--color-primary, #1E3A5F)', letterSpacing:'1px' }}>
           🤟 ISL INTERPRETER
         </div>
         <div style={{ padding:12, textAlign:'center' }}>
@@ -56,7 +56,7 @@ export default function VisualSyncWrapper({ children, captionText = '' }) {
             borderRadius:12, display:'flex', alignItems:'center', justifyContent:'center',
             color:'rgba(255,255,255,0.4)', fontSize:11 }}>
             {captionText
-              ? <span style={{ color:'#D4AF37', fontSize:13 }}>🤟 Signing...</span>
+              ? <span style={{ color:'var(--color-accent, #D4AF37)', fontSize:13 }}>🤟 Signing...</span>
               : <span>Waiting for audio...</span>
             }
           </div>
@@ -78,7 +78,7 @@ export default function VisualSyncWrapper({ children, captionText = '' }) {
             background:'rgba(0,0,0,0.92)',
             color:'#FFFFFF', fontSize:16, fontWeight:600,
             padding:'14px 24px', lineHeight:1.5,
-            borderTop:'2px solid #D4AF37',
+            borderTop:'2px solid var(--color-accent, #D4AF37)',
             minHeight:60, zIndex:4999,
           }}
         >
@@ -97,16 +97,16 @@ export default function VisualSyncWrapper({ children, captionText = '' }) {
             background:'#fff', borderRadius:20,
             padding:20, textAlign:'center',
             boxShadow:'0 20px 60px rgba(0,0,0,0.3)',
-            zIndex:6000, border:'3px solid #D4AF37',
+            zIndex:6000, border:'3px solid var(--color-accent, #D4AF37)',
           }}
         >
           <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800,
-            color:'#1E3A5F', fontSize:14, marginBottom:8 }}>
-            Key Term: <span style={{ color:'#D4AF37' }}>{flashcard.term}</span>
+            color:'var(--color-primary, #1E3A5F)', fontSize:14, marginBottom:8 }}>
+            Key Term: <span style={{ color:'var(--color-accent, #D4AF37)' }}>{flashcard.term}</span>
           </p>
-          <div style={{ width:160, height:120, background:'#1E3A5F', borderRadius:12,
+          <div style={{ width:160, height:120, background:'var(--color-primary, #1E3A5F)', borderRadius:12,
             display:'flex', alignItems:'center', justifyContent:'center',
-            color:'#D4AF37', fontSize:40 }}>
+            color:'var(--color-accent, #D4AF37)', fontSize:40 }}>
             🤟
           </div>
           <p style={{ color:'#94A3B8', fontSize:11, marginTop:8 }}>ISL Sign for "{flashcard.term}"</p>

@@ -30,13 +30,13 @@ function Content({ tierId, tierName }) {
     return (
       <div className="max-w-lg mx-auto p-4 text-center space-y-4 pt-10">
         <div className="text-6xl">✅</div>
-        <h2 className="text-2xl font-bold text-[#1E3A5F]">Application Submitted!</h2>
+        <h2 className="text-2xl font-bold text-[var(--color-primary, #1E3A5F)]">Application Submitted!</h2>
         <div className="bg-emerald-50 rounded-2xl p-5 text-left space-y-2">
           <p className="text-sm text-emerald-800 font-semibold">What happens next:</p>
           <p className="text-sm text-emerald-700">Our team will verify your documents within <strong>3–5 business days</strong>. Your account will be automatically upgraded once approved — no action needed from you.</p>
           <p className="text-sm text-emerald-700">You'll receive a notification at your registered email.</p>
         </div>
-        <button onClick={() => navigate('/dashboard')} className="w-full py-3 bg-[#D4AF37] text-[#0F2140] font-bold rounded-2xl hover:bg-[#E8C84A] transition">
+        <button onClick={() => navigate('/dashboard')} className="w-full py-3 bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary-dark, #0F2140)] font-bold rounded-2xl hover:bg-[var(--color-accent-light, #E8C84A)] transition">
           Back to Dashboard
         </button>
       </div>
@@ -57,11 +57,11 @@ function Content({ tierId, tierName }) {
       )}
 
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-4">
-        <h2 className="font-bold text-[#1E3A5F]">Required Documents</h2>
+        <h2 className="font-bold text-[var(--color-primary, #1E3A5F)]">Required Documents</h2>
         <ul className="space-y-1.5">
           {req.docs.map(d => (
             <li key={d} className="flex items-start gap-2 text-sm text-gray-700">
-              <span className="text-[#D4AF37] font-bold shrink-0">•</span>{d}
+              <span className="text-[var(--color-accent, #D4AF37)] font-bold shrink-0">•</span>{d}
             </li>
           ))}
         </ul>
@@ -75,7 +75,7 @@ function Content({ tierId, tierName }) {
             placeholder="e.g. Meena Devi"
             value={form.name}
             onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-            className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
+            className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent, #D4AF37)]"
           />
         </div>
         <div>
@@ -85,7 +85,7 @@ function Content({ tierId, tierName }) {
             placeholder="Enter your document number"
             value={form.docNumber}
             onChange={e => setForm(f => ({ ...f, docNumber: e.target.value }))}
-            className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
+            className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent, #D4AF37)]"
           />
         </div>
         <div>
@@ -94,7 +94,7 @@ function Content({ tierId, tierName }) {
             type="file"
             accept=".pdf,.jpg,.jpeg,.png"
             onChange={e => setForm(f => ({ ...f, file: e.target.files[0] }))}
-            className="w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#FDF6E3] file:text-[#D4AF37]"
+            className="w-full text-sm text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#FDF6E3] file:text-[var(--color-accent, #D4AF37)]"
           />
         </div>
       </div>
@@ -102,7 +102,7 @@ function Content({ tierId, tierName }) {
       <button
         onClick={handleSubmit}
         disabled={!form.name || !form.docNumber}
-        className="w-full py-3 bg-[#D4AF37] disabled:bg-gray-200 disabled:text-gray-400 text-[#0F2140] font-bold rounded-2xl hover:bg-[#E8C84A] transition"
+        className="w-full py-3 bg-[var(--color-accent, #D4AF37)] disabled:bg-gray-200 disabled:text-gray-400 text-[var(--color-primary-dark, #0F2140)] font-bold rounded-2xl hover:bg-[var(--color-accent-light, #E8C84A)] transition"
       >
         Submit for Verification
       </button>
@@ -125,11 +125,11 @@ export default function EquityVerification() {
   }
   return (
     <div className="min-h-screen bg-[#F8FAFC]">
-      <div className="bg-[#1E3A5F] px-6 py-4 flex items-center justify-between">
-        <span className="text-[#D4AF37] font-black text-xl">TryIT</span>
+      <div className="bg-[var(--color-primary, #1E3A5F)] px-6 py-4 flex items-center justify-between">
+        <span className="text-[var(--color-accent, #D4AF37)] font-black text-xl">TryIT</span>
         <a href="/equity" className="text-white text-sm opacity-70 hover:opacity-100">← Back</a>
       </div>
-      <h1 className="text-2xl font-bold text-[#1E3A5F] text-center mt-8 mb-6">Equity Verification</h1>
+      <h1 className="text-2xl font-bold text-[var(--color-primary, #1E3A5F)] text-center mt-8 mb-6">Equity Verification</h1>
       <Content tierId={tierId} tierName={tierName} />
     </div>
   )

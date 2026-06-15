@@ -64,7 +64,7 @@ export default function LanguageSelector({ compact = false }) {
           borderRadius: 10, padding: '6px 10px',
           background: 'rgba(255,255,255,0.9)',
           fontFamily: 'Poppins,sans-serif', fontWeight: 600,
-          fontSize: 12, color: '#1E3A5F', cursor: 'pointer', outline: 'none',
+          fontSize: 12, color: 'var(--color-primary, #1E3A5F)', cursor: 'pointer', outline: 'none',
         }}
       >
         {LANGUAGE_GROUPS.map(group => (
@@ -93,7 +93,7 @@ export default function LanguageSelector({ compact = false }) {
           style={{
             border: 'none', outline: 'none', background: 'transparent',
             fontFamily: 'Poppins,sans-serif', fontWeight: 600,
-            fontSize: 13, color: '#1E3A5F', cursor: 'pointer', minWidth: 140,
+            fontSize: 13, color: 'var(--color-primary, #1E3A5F)', cursor: 'pointer', minWidth: 140,
           }}
         >
           {LANGUAGE_GROUPS.map(group => (

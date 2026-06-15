@@ -94,7 +94,7 @@ const EXAM_PATHS = [
     tags: ['govt', 'leadership', 'service'],
     desc: 'India\'s most prestigious exam for IAS, IPS, IFS officers. Shape national policy.',
     category: 'govt_central',
-    color: '#1E3A5F',
+    color: 'var(--color-primary, #1E3A5F)',
   },
   {
     id: 'banking',
@@ -130,7 +130,7 @@ const EXAM_PATHS = [
     tags: ['defence'],
     desc: 'Serve the nation in Army, Navy, or Air Force as a commissioned officer.',
     category: 'defence',
-    color: '#1E3A5F',
+    color: 'var(--color-primary, #1E3A5F)',
   },
   {
     id: 'ssc',
@@ -226,7 +226,7 @@ export default function CareerCompass() {
         {step === 0 && (
           <div className="text-center">
             <div className="text-6xl mb-4">🧭</div>
-            <h1 className="text-3xl font-bold text-[#1E3A5F] mb-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
+            <h1 className="text-3xl font-bold text-[var(--color-primary, #1E3A5F)] mb-3" style={{ fontFamily: 'Poppins, sans-serif' }}>
               Career Compass
             </h1>
             <p className="text-gray-600 mb-2 text-lg">
@@ -235,7 +235,7 @@ export default function CareerCompass() {
             <p className="text-sm text-gray-400 mb-8">Takes about 2 minutes · No wrong answers</p>
             <button
               onClick={handleStart}
-              className="bg-[#D4AF37] hover:bg-[#E8C84A] text-[#1E3A5F] font-bold px-8 py-3 rounded-2xl text-lg transition-all shadow-lg hover:shadow-xl"
+              className="bg-[var(--color-accent, #D4AF37)] hover:bg-[var(--color-accent-light, #E8C84A)] text-[var(--color-primary, #1E3A5F)] font-bold px-8 py-3 rounded-2xl text-lg transition-all shadow-lg hover:shadow-xl"
             >
               Find My Path →
             </button>
@@ -252,9 +252,9 @@ export default function CareerCompass() {
                   key={i}
                   className={`h-2 rounded-full transition-all duration-300 ${
                     i < step - 1
-                      ? 'bg-[#D4AF37] w-6'
+                      ? 'bg-[var(--color-accent, #D4AF37)] w-6'
                       : i === step - 1
-                      ? 'bg-[#1E3A5F] w-8'
+                      ? 'bg-[var(--color-primary, #1E3A5F)] w-8'
                       : 'bg-gray-200 w-2'
                   }`}
                 />
@@ -263,7 +263,7 @@ export default function CareerCompass() {
 
             <p className="text-sm text-gray-400 text-center mb-2">Question {step} of 8</p>
             <h2
-              className="text-2xl font-bold text-[#1E3A5F] text-center mb-6"
+              className="text-2xl font-bold text-[var(--color-primary, #1E3A5F)] text-center mb-6"
               style={{ fontFamily: 'Poppins, sans-serif' }}
             >
               {currentQ.question}
@@ -276,8 +276,8 @@ export default function CareerCompass() {
                   onClick={() => setSelected(opt)}
                   className={`w-full text-left px-5 py-4 rounded-2xl border-2 transition-all font-medium text-gray-700 ${
                     selected === opt
-                      ? 'border-[#D4AF37] bg-[#FDF6E3] text-[#1E3A5F]'
-                      : 'border-gray-200 bg-white hover:border-[#1E3A5F] hover:bg-[#F8FAFC]'
+                      ? 'border-[var(--color-accent, #D4AF37)] bg-[#FDF6E3] text-[var(--color-primary, #1E3A5F)]'
+                      : 'border-gray-200 bg-white hover:border-[var(--color-primary, #1E3A5F)] hover:bg-[#F8FAFC]'
                   }`}
                 >
                   {opt.label}
@@ -290,7 +290,7 @@ export default function CareerCompass() {
               disabled={!selected}
               className={`mt-6 w-full py-3 rounded-2xl font-bold text-lg transition-all ${
                 selected
-                  ? 'bg-[#1E3A5F] text-white hover:bg-[#0F2140] shadow-lg'
+                  ? 'bg-[var(--color-primary, #1E3A5F)] text-white hover:bg-[var(--color-primary-dark, #0F2140)] shadow-lg'
                   : 'bg-gray-100 text-gray-400 cursor-not-allowed'
               }`}
             >
@@ -305,7 +305,7 @@ export default function CareerCompass() {
             <div className="text-center mb-8">
               <div className="text-5xl mb-3">🎯</div>
               <h2
-                className="text-2xl font-bold text-[#1E3A5F] mb-2"
+                className="text-2xl font-bold text-[var(--color-primary, #1E3A5F)] mb-2"
                 style={{ fontFamily: 'Poppins, sans-serif' }}
               >
                 Your Top Exam Paths
@@ -326,12 +326,12 @@ export default function CareerCompass() {
                         <span className="text-3xl">{exam.emoji}</span>
                         <div>
                           {i === 0 && (
-                            <span className="text-xs font-semibold text-[#D4AF37] uppercase tracking-wide">
+                            <span className="text-xs font-semibold text-[var(--color-accent, #D4AF37)] uppercase tracking-wide">
                               Best Match
                             </span>
                           )}
                           <h3
-                            className="font-bold text-[#1E3A5F] text-lg leading-tight"
+                            className="font-bold text-[var(--color-primary, #1E3A5F)] text-lg leading-tight"
                             style={{ fontFamily: 'Poppins, sans-serif' }}
                           >
                             {exam.name}
@@ -345,7 +345,7 @@ export default function CareerCompass() {
                       className={`mt-4 w-full py-2.5 rounded-xl font-semibold text-sm transition-all ${
                         added[exam.id]
                           ? 'bg-green-50 text-green-700 border border-green-200'
-                          : 'bg-[#1E3A5F] text-white hover:bg-[#0F2140]'
+                          : 'bg-[var(--color-primary, #1E3A5F)] text-white hover:bg-[var(--color-primary-dark, #0F2140)]'
                       }`}
                     >
                       {added[exam.id] ? '✓ Added to My Exams' : '+ Add to My Exams'}
@@ -357,7 +357,7 @@ export default function CareerCompass() {
 
             <button
               onClick={handleRetake}
-              className="w-full py-3 rounded-2xl border-2 border-gray-200 text-gray-500 font-semibold hover:border-[#1E3A5F] hover:text-[#1E3A5F] transition-all"
+              className="w-full py-3 rounded-2xl border-2 border-gray-200 text-gray-500 font-semibold hover:border-[var(--color-primary, #1E3A5F)] hover:text-[var(--color-primary, #1E3A5F)] transition-all"
             >
               Retake the Quiz
             </button>

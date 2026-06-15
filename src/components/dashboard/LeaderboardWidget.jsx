@@ -21,13 +21,13 @@ export default function LeaderboardWidget() {
         {FILTERS.map(f => (
           <button key={f} onClick={() => setFilter(f)}
             className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap flex-shrink-0 transition-all
-              ${filter === f ? 'bg-[#D4AF37] text-[#1E3A5F]' : 'bg-white/10 text-white/70 hover:bg-white/20'}`}>
+              ${filter === f ? 'bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)]' : 'bg-white/10 text-white/70 hover:bg-white/20'}`}>
             {f}
           </button>
         ))}
       </div>
       <div className="text-center mb-4">
-        <p className="text-5xl font-extrabold text-[#D4AF37] font-poppins leading-none">#{user?.rank.toLocaleString()}</p>
+        <p className="text-5xl font-extrabold text-[var(--color-accent, #D4AF37)] font-poppins leading-none">#{user?.rank.toLocaleString()}</p>
         <p className="text-white/60 text-sm mt-1">{filter}</p>
         <p className="text-white/40 text-xs mt-1">TN: #127 · Coimbatore: #8</p>
       </div>
@@ -39,12 +39,12 @@ export default function LeaderboardWidget() {
               <p className="text-white text-sm font-semibold truncate">{r.name}</p>
               <p className="text-white/40 text-xs">{r.state}</p>
             </div>
-            <span className="text-[#D4AF37] text-sm font-bold">{r.score}</span>
+            <span className="text-[var(--color-accent, #D4AF37)] text-sm font-bold">{r.score}</span>
           </div>
         ))}
       </div>
       <p className="text-green-400 text-xs font-semibold text-center mb-3">↑ Moved up 142 positions this week</p>
-      <button onClick={() => navigate('/leaderboard')} className="text-[#D4AF37] text-sm font-semibold hover:underline w-full text-center">
+      <button onClick={() => navigate('/leaderboard')} className="text-[var(--color-accent, #D4AF37)] text-sm font-semibold hover:underline w-full text-center">
         See Full Leaderboard →
       </button>
     </div>

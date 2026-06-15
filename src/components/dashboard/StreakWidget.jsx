@@ -9,9 +9,9 @@ export default function StreakWidget() {
 
   return (
     <div className="clay rounded-3xl p-6">
-      <h3 className="font-bold text-[#1E3A5F] text-lg font-poppins mb-4">🔥 Study Streak</h3>
+      <h3 className="font-bold text-[var(--color-primary, #1E3A5F)] text-lg font-poppins mb-4">🔥 Study Streak</h3>
       <div className="flex flex-col items-center gap-2 mb-5">
-        <span className="text-6xl font-extrabold text-[#D4AF37] font-poppins leading-none">{user?.streak}</span>
+        <span className="text-6xl font-extrabold text-[var(--color-accent, #D4AF37)] font-poppins leading-none">{user?.streak}</span>
         <p className="text-slate-500 text-sm">consecutive days</p>
       </div>
       <div className="flex gap-1.5 justify-between mb-4">
@@ -20,8 +20,12 @@ export default function StreakWidget() {
           const today = i === todayIdx
           return (
             <div key={i} className="flex flex-col items-center gap-1 flex-1">
-              <div className={`w-full aspect-square rounded-xl flex items-center justify-center text-xs font-bold transition-all
-                ${today ? 'bg-[#1E3A5F] text-white ring-2 ring-[#D4AF37]' : done ? 'bg-[#D4AF37] text-[#1E3A5F]' : 'bg-slate-100 text-slate-400'}`}>
+              <div className="w-full aspect-square rounded-xl flex items-center justify-center text-xs font-bold transition-all"
+                style={{
+                  background: today ? 'var(--color-primary, #1E3A5F)' : done ? 'var(--color-accent, #D4AF37)' : 'var(--color-bg, #F8FAFC)',
+                  color: today ? 'var(--color-surface, #FFFFFF)' : done ? 'var(--color-primary, #1E3A5F)' : 'var(--color-text-light, #94A3B8)',
+                  border: today ? '2px solid var(--color-accent, #D4AF37)' : '1px solid rgba(148,163,184,0.16)',
+                }}>
                 {done && !today ? '✓' : d}
               </div>
               <span className="text-xs text-slate-400">{d}</span>
@@ -30,7 +34,7 @@ export default function StreakWidget() {
         })}
       </div>
       <button onClick={() => showToast('info', `Streak freeze used! ${user?.streakFreezes - 1} left.`)}
-        className="w-full text-center text-sm font-semibold text-[#D4AF37] hover:underline">
+        className="w-full text-center text-sm font-semibold text-[var(--color-accent, #D4AF37)] hover:underline">
         ❄️ Use Streak Freeze ({user?.streakFreezes} left)
       </button>
     </div>

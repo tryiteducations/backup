@@ -20,9 +20,8 @@ export default function MentorHub() {
   const { user, loading } = useAuth()
   const navigate = useNavigate()
   if (loading) return (
-    <div style={{minHeight:'100vh',display:'flex',alignItems:'center',
-      justifyContent:'center',background:'linear-gradient(135deg,#1E3A5F,#0F2140)'}}>
-      <p style={{color:'#D4AF37',fontFamily:'Poppins,sans-serif',fontSize:18}}>Loading...</p>
+    <div style={{minHeight:'100vh',display:'flex',alignItems:'center',justifyContent:'center',background:'linear-gradient(135deg, var(--color-primary, #1E3A5F), var(--color-primary-dark, #0F2140))'}}>
+      <p style={{color:'var(--color-accent, #D4AF37)',fontFamily:'Poppins,sans-serif',fontSize:18}}>Loading...</p>
     </div>
   )
   if (!user) return null
@@ -32,7 +31,7 @@ export default function MentorHub() {
       <div className="max-w-2xl mx-auto space-y-6 p-4">
 
         {/* Welcome */}
-        <div className="bg-gradient-to-r from-[#064E3B] to-[#047857] rounded-2xl p-5 text-white">
+        <div className="rounded-2xl p-5" style={{ background:'linear-gradient(135deg, var(--color-primary-dark, #0F2140), var(--color-primary, #1E3A5F))', color:'var(--color-surface, #FFFFFF)' }}>
           <p className="text-sm opacity-70">Welcome back, Mentor</p>
           <p className="text-2xl font-bold">{user.name} 🎓</p>
           {user.mentorSubjects && (
@@ -47,10 +46,10 @@ export default function MentorHub() {
             { label: 'Coins Earned',     value: user.coins ?? 0,      emoji: '🪙' },
             { label: 'Students Helped',  value: 0,                    emoji: '👨‍🎓' },
           ].map(s => (
-            <div key={s.label} className="bg-white rounded-2xl border border-gray-100 p-4 text-center shadow-sm">
+            <div key={s.label} className="rounded-2xl border p-4 text-center shadow-sm" style={{ background:'var(--color-surface, #FFFFFF)', borderColor:'var(--color-border, #E2E8F0)' }}>
               <p className="text-2xl">{s.emoji}</p>
-              <p className="text-2xl font-black text-[#1E3A5F]">{s.value}</p>
-              <p className="text-xs text-gray-500 mt-0.5">{s.label}</p>
+              <p className="text-2xl font-black" style={{ color:'var(--heading-color, var(--color-text, #1E3A5F))' }}>{s.value}</p>
+              <p className="text-xs mt-0.5" style={{ color:'var(--subtext-color, #64748B)' }}>{s.label}</p>
             </div>
           ))}
         </div>
@@ -61,30 +60,31 @@ export default function MentorHub() {
             <button
               key={l.label}
               onClick={() => navigate(l.path)}
-              className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 text-left hover:shadow-md hover:border-[#D4AF37] transition"
+              className="rounded-2xl border shadow-sm p-4 text-left hover:shadow-md transition"
+              style={{ background:'var(--color-surface, #FFFFFF)', borderColor:'var(--color-border, #E2E8F0)', color:'var(--heading-color, var(--color-text, #1E3A5F))' }}
             >
               <span className="text-2xl">{l.emoji}</span>
-              <p className="font-bold text-[#1E3A5F] mt-2 text-sm">{l.label}</p>
-              <p className="text-gray-400 text-xs">{l.desc}</p>
+              <p className="font-bold mt-2 text-sm" style={{ color:'var(--heading-color, var(--color-text, #1E3A5F))' }}>{l.label}</p>
+              <p className="text-xs" style={{ color:'var(--subtext-color, #64748B)' }}>{l.desc}</p>
             </button>
           ))}
         </div>
 
         {/* Recent doubts */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
-          <div className="p-5 border-b border-gray-100 flex items-center justify-between">
-            <h2 className="font-bold text-[#1E3A5F]">Recent Doubts You Can Help</h2>
-            <button onClick={() => navigate('/guru-hub')} className="text-[#D4AF37] text-xs font-semibold hover:underline">See all →</button>
+        <div className="rounded-2xl shadow-sm" style={{ background:'var(--color-surface, #FFFFFF)', border:'1px solid var(--color-border, #E2E8F0)' }}>
+          <div className="p-5 flex items-center justify-between" style={{ borderBottom:'1px solid var(--color-border, #E2E8F0)' }}>
+            <h2 className="font-bold" style={{ color:'var(--heading-color, var(--color-text, #1E3A5F))' }}>Recent Doubts You Can Help</h2>
+            <button onClick={() => navigate('/guru-hub')} className="text-xs font-semibold hover:underline" style={{ color:'var(--color-accent, #D4AF37)' }}>See all →</button>
           </div>
-          <ul className="divide-y divide-gray-50">
+          <ul className="divide-y" style={{ borderColor:'var(--color-bg, #F8FAFC)' }}>
             {SAMPLE_DOUBTS.map(d => (
-              <li key={d.id} className="p-4 flex items-start gap-3 hover:bg-gray-50 cursor-pointer transition" onClick={() => navigate('/guru-hub')}>
+              <li key={d.id} className="p-4 flex items-start gap-3 hover:bg-slate-50 cursor-pointer transition" onClick={() => navigate('/guru-hub')}>
                 <div className="flex-1">
-                  <span className="text-xs font-semibold text-[#064E3B] bg-emerald-50 px-2 py-0.5 rounded-full">{d.subject}</span>
-                  <p className="text-sm text-gray-700 mt-1 line-clamp-2">{d.question}</p>
-                  <p className="text-xs text-gray-400 mt-0.5">{d.time}</p>
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full" style={{ background:'rgba(212,175,55,0.12)', color:'var(--color-accent, #D4AF37)' }}>{d.subject}</span>
+                  <p className="text-sm mt-1 line-clamp-2" style={{ color:'var(--heading-color, var(--color-text, #1E3A5F))' }}>{d.question}</p>
+                  <p className="text-xs mt-0.5" style={{ color:'var(--subtext-color, #64748B)' }}>{d.time}</p>
                 </div>
-                <span className="text-xs font-bold text-[#D4AF37] whitespace-nowrap">+{d.coins} 🪙</span>
+                <span className="text-xs font-bold whitespace-nowrap" style={{ color:'var(--color-accent, #D4AF37)' }}>+{d.coins} 🪙</span>
               </li>
             ))}
           </ul>

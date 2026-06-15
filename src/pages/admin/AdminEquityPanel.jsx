@@ -24,37 +24,37 @@ export default function AdminEquityPanel() {
 
   return (
     <div style={{ minHeight:'100vh', background:'#F8FAFC' }}>
-      <div style={{ background:'linear-gradient(135deg,#1E3A5F,#0F2140)', padding:'20px 32px', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+      <div style={{ background:'linear-gradient(135deg,var(--color-primary, #1E3A5F),var(--color-primary-dark, #0F2140))', padding:'20px 32px', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
         <div>
-          <button onClick={()=>navigate('/admin/dashboard')} style={{ background:'none', border:'none', color:'rgba(255,255,255,0.6)', cursor:'pointer', fontSize:13, marginBottom:4, display:'block' }}>← Back to Admin</button>
-          <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900, color:'#D4AF37', fontSize:22, margin:0 }}>⚖️ Equity Panel</p>
+          <button onClick={()=>navigate('/admin/dashboard')} style={{ background:'none', border:'none', color:'rgba(var(--color-surface-rgb, 255,255,255), 0.6)', cursor:'pointer', fontSize:13, marginBottom:4, display:'block' }}>← Back to Admin</button>
+          <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900, color:'var(--color-accent, #D4AF37)', fontSize:22, margin:0 }}>⚖️ Equity Panel</p>
         </div>
       </div>
 
       <div style={{ padding:'24px 32px' }}>
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))', gap:14, marginBottom:28 }}>
           {tiers.map(t=>(
-            <div key={t.id} style={{ background:'#fff', borderRadius:16, padding:16, border:'1.5px solid #E2E8F0' }}>
+            <div key={t.id} style={{ background:'#fff', borderRadius:16, padding:16, border:'1.5px solid var(--color-border, #E2E8F0)' }}>
               <p style={{ fontSize:28, margin:'0 0 6px' }}>{t.emoji}</p>
-              <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'#1E3A5F', fontSize:13, margin:'0 0 2px' }}>{t.name}</p>
-              <p style={{ fontSize:11, color: t.type==='Free for Life'?'#22C55E':'#D4AF37', fontWeight:700, margin:'0 0 6px' }}>{t.type}</p>
-              <p style={{ fontSize:20, fontWeight:900, color:'#1E3A5F', margin:0 }}>{t.count}</p>
+              <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'var(--color-primary, #1E3A5F)', fontSize:13, margin:'0 0 2px' }}>{t.name}</p>
+              <p style={{ fontSize:11, color: t.type==='Free for Life'?'var(--color-success, #22C55E)':'var(--color-accent, #D4AF37)', fontWeight:700, margin:'0 0 6px' }}>{t.type}</p>
+              <p style={{ fontSize:20, fontWeight:900, color:'var(--color-primary, #1E3A5F)', margin:0 }}>{t.count}</p>
               <p style={{ fontSize:11, color:'#94A3B8', margin:0 }}>verified users</p>
             </div>
           ))}
         </div>
 
-        <div style={{ background:'#fff', borderRadius:18, border:'1.5px solid #E2E8F0', overflow:'hidden' }}>
-          <div style={{ padding:'16px 20px', borderBottom:'1px solid #E2E8F0' }}>
-            <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'#1E3A5F', fontSize:16, margin:0 }}>Pending Verifications</p>
+        <div style={{ background:'#fff', borderRadius:18, border:'1.5px solid var(--color-border, #E2E8F0)', overflow:'hidden' }}>
+          <div style={{ padding:'16px 20px', borderBottom:'1px solid var(--color-border, #E2E8F0)' }}>
+            <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'var(--color-primary, #1E3A5F)', fontSize:16, margin:0 }}>Pending Verifications</p>
           </div>
           {pendingVerifications.length === 0 ? (
             <div style={{ padding:40, textAlign:'center', color:'#94A3B8' }}>No pending verifications</div>
           ) : pendingVerifications.map(v=>(
-            <div key={v.id} style={{ padding:'14px 20px', borderBottom:'1px solid #F1F5F9', display:'flex', alignItems:'center', gap:14, flexWrap:'wrap' }}>
+            <div key={v.id} style={{ padding:'14px 20px', borderBottom:'1px solid var(--color-bg-muted-2, #F1F5F9)', display:'flex', alignItems:'center', gap:14, flexWrap:'wrap' }}>
               <div style={{ flex:1, minWidth:140 }}>
-                <p style={{ fontWeight:700, color:'#1E3A5F', fontSize:13, margin:'0 0 2px' }}>{v.name}</p>
-                <p style={{ fontSize:12, color:'#64748B', margin:0 }}>{v.tier} · {v.doc}</p>
+                <p style={{ fontWeight:700, color:'var(--color-primary, #1E3A5F)', fontSize:13, margin:'0 0 2px' }}>{v.name}</p>
+                <p style={{ fontSize:12, color:'var(--color-muted, #64748B)', margin:0 }}>{v.tier} · {v.doc}</p>
               </div>
               <p style={{ fontSize:12, color:'#94A3B8', margin:0 }}>{v.date}</p>
               <div style={{ display:'flex', gap:8 }}>

@@ -9,8 +9,8 @@ const BADGES = [
     name: 'First Shot',
     desc: 'Completed your very first test',
     unlock: (u) => u.testsCompleted >= 1,
-    color: '#1E3A5F',
-    bg: '#EFF6FF',
+    color: 'var(--color-primary, #1E3A5F)',
+    bg: 'var(--color-bg-muted, #EFF6FF)',
   },
   {
     id: 'streak_3',
@@ -99,7 +99,7 @@ const BADGES = [
     name: 'First Guru Answer',
     desc: 'Answered your first question on Guru Hub',
     unlock: (u) => u.guruPoints >= 5,
-    color: '#D4AF37',
+    color: 'var(--color-accent, #D4AF37)',
     bg: '#FDF6E3',
   },
   {
@@ -108,7 +108,7 @@ const BADGES = [
     name: 'Baahuveer of Knowledge',
     desc: 'Earned 100+ Guru Points helping others',
     unlock: (u) => u.guruPoints >= 100,
-    color: '#D4AF37',
+    color: 'var(--color-accent, #D4AF37)',
     bg: '#FDF6E3',
   },
   {
@@ -117,8 +117,8 @@ const BADGES = [
     name: 'Coin Collector',
     desc: 'Accumulated 500 coins',
     unlock: (u) => u.coins >= 500,
-    color: '#1E3A5F',
-    bg: '#EFF6FF',
+    color: 'var(--color-primary, #1E3A5F)',
+    bg: 'var(--color-bg-muted, #EFF6FF)',
   },
   {
     id: 'pro_member',
@@ -126,7 +126,7 @@ const BADGES = [
     name: 'Pro Member',
     desc: 'Upgraded to TryIT Pro',
     unlock: (u) => u.isPro,
-    color: '#D4AF37',
+    color: 'var(--color-accent, #D4AF37)',
     bg: '#FDF6E3',
   },
   {
@@ -158,10 +158,10 @@ export default function Achievements() {
         {/* Progress header */}
         <div
           className="rounded-2xl p-6 mb-8 flex flex-col sm:flex-row items-center gap-6"
-          style={{ background: 'linear-gradient(135deg, #1E3A5F 0%, #0F2140 100%)' }}
+          style={{ background: 'linear-gradient(135deg, var(--color-primary, #1E3A5F) 0%, var(--color-primary-dark, #0F2140) 100%)' }}
         >
           <div className="text-center sm:text-left flex-1">
-            <p className="text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-1">
+            <p className="text-[var(--color-accent, #D4AF37)] text-xs font-bold uppercase tracking-widest mb-1">
               Your Progress
             </p>
             <h1
@@ -182,7 +182,7 @@ export default function Achievements() {
               <circle
                 cx="40" cy="40" r="32"
                 fill="none"
-                stroke="#D4AF37"
+                stroke="var(--color-accent, #D4AF37)"
                 strokeWidth="8"
                 strokeLinecap="round"
                 strokeDasharray={`${(unlockedCount / totalCount) * 201} 201`}
@@ -198,7 +198,7 @@ export default function Achievements() {
         {unlockedCount > 0 && (
           <div className="mb-8">
             <h2
-              className="text-lg font-bold text-[#1E3A5F] mb-4"
+              className="text-lg font-bold text-[var(--color-primary, #1E3A5F)] mb-4"
               style={{ fontFamily: 'Poppins, sans-serif' }}
             >
               ✅ Earned
@@ -238,7 +238,7 @@ export default function Achievements() {
           {evaluated.filter((b) => !b.unlocked).length === 0 ? (
             <div className="text-center py-12">
               <div className="text-5xl mb-3">🌟</div>
-              <p className="text-[#D4AF37] font-bold text-xl">All achievements unlocked!</p>
+              <p className="text-[var(--color-accent, #D4AF37)] font-bold text-xl">All achievements unlocked!</p>
               <p className="text-gray-500 text-sm mt-2">You are an absolute legend.</p>
             </div>
           ) : (
@@ -269,9 +269,9 @@ export default function Achievements() {
 
         {/* Empty state for fresh user */}
         {unlockedCount === 0 && (
-          <div className="mt-8 bg-[#FDF6E3] border border-[#D4AF37] border-opacity-30 rounded-2xl p-6 text-center">
+          <div className="mt-8 bg-[#FDF6E3] border border-[var(--color-accent, #D4AF37)] border-opacity-30 rounded-2xl p-6 text-center">
             <div className="text-4xl mb-2">🚀</div>
-            <p className="font-semibold text-[#1E3A5F]">Your journey starts now!</p>
+            <p className="font-semibold text-[var(--color-primary, #1E3A5F)]">Your journey starts now!</p>
             <p className="text-gray-500 text-sm mt-1">
               Take your first test to unlock your first badge.
             </p>

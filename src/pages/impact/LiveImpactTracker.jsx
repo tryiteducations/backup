@@ -27,7 +27,7 @@ const IMPACT_TIERS = [
   { id:'martyrs_families',      label:"Martyrs' Families",       emoji:'🎖️', color:'#B45309', isFree:true  },
   { id:'transgender_youth',     label:'Transgender Youth',       emoji:'🏳️‍⚧️', color:'#0369A1', isFree:true  },
   { id:'agrarian_distress',     label:'Agrarian Distress Families', emoji:'🌾', color:'#15803D', isFree:true  },
-  { id:'military_families',     label:'Active Military Families', emoji:'🪖', color:'#1E3A5F', isFree:false },
+  { id:'military_families',     label:'Active Military Families', emoji:'🪖', color:'var(--color-primary, #1E3A5F)', isFree:false },
   { id:'health_workers',        label:"ASHA/Anganwadi Families",  emoji:'🏥', color:'#DC2626', isFree:false },
   { id:'first_generation',      label:'First-Generation Learners',emoji:'🌟', color:'#6D28D9', isFree:false },
 ]
@@ -78,7 +78,7 @@ export default function LiveImpactTracker() {
 
       {/* Hero */}
       <div style={{
-        background:'linear-gradient(135deg,#1E3A5F 0%,#0F2140 40%,#071428 100%)',
+        background:'linear-gradient(135deg,var(--color-primary, #1E3A5F) 0%,var(--color-primary-dark, #0F2140) 40%,#071428 100%)',
         padding:'60px 24px 40px', textAlign:'center', position:'relative', overflow:'hidden',
       }}>
         {/* Live pulse ring */}
@@ -90,9 +90,9 @@ export default function LiveImpactTracker() {
         <div style={{ display:'inline-flex', alignItems:'center', gap:8,
           background:'rgba(34,197,94,0.15)', border:'1px solid rgba(34,197,94,0.3)',
           borderRadius:20, padding:'6px 16px', marginBottom:20 }}>
-          <div style={{ width:8, height:8, borderRadius:'50%', background:'#22C55E',
+          <div style={{ width:8, height:8, borderRadius:'50%', background:'var(--color-success, #22C55E)',
             animation:'pulseDot 1.5s ease-in-out infinite' }} />
-          <span style={{ color:'#22C55E', fontSize:12, fontWeight:700, letterSpacing:'1px' }}>
+          <span style={{ color:'var(--color-success, #22C55E)', fontSize:12, fontWeight:700, letterSpacing:'1px' }}>
             LIVE IMPACT TRACKER
           </span>
         </div>
@@ -100,7 +100,7 @@ export default function LiveImpactTracker() {
         <h1 style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
           fontSize:'clamp(28px,5vw,52px)', color:'#fff', marginBottom:12 }}>
           Education is<br/>
-          <span style={{ color:'#D4AF37' }}>Changing Lives</span>
+          <span style={{ color:'var(--color-accent, #D4AF37)' }}>Changing Lives</span>
         </h1>
         <p style={{ color:'rgba(255,255,255,0.65)', fontSize:16, maxWidth:580,
           margin:'0 auto 32px', lineHeight:1.7 }}>
@@ -129,7 +129,7 @@ export default function LiveImpactTracker() {
             }}>
               <div style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
                 fontSize:'clamp(26px,4vw,40px)',
-                color: s.highlight ? '#D4AF37' : '#fff' }}>
+                color: s.highlight ? 'var(--color-accent, #D4AF37)' : '#fff' }}>
                 <CountUp target={s.val} />{s.suffix}
               </div>
               <div style={{ color:'rgba(255,255,255,0.5)', fontSize:12, marginTop:4 }}>
@@ -165,7 +165,7 @@ export default function LiveImpactTracker() {
               <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:12 }}>
                 <span style={{ fontSize:28 }}>{tier.emoji}</span>
                 <span style={{
-                  background: tier.isFree ? '#22C55E' : '#D4AF37',
+                  background: tier.isFree ? 'var(--color-success, #22C55E)' : 'var(--color-accent, #D4AF37)',
                   color: '#fff',
                   fontSize:9, fontWeight:800, padding:'3px 8px',
                   borderRadius:20, letterSpacing:'0.5px',
@@ -205,7 +205,7 @@ export default function LiveImpactTracker() {
           <div style={{ display:'flex', alignItems:'flex-start', gap:20, flexWrap:'wrap' }}>
             <div style={{ flex:1, minWidth:280 }}>
               <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800,
-                color:'#D4AF37', fontSize:20, marginBottom:8 }}>
+                color:'var(--color-accent, #D4AF37)', fontSize:20, marginBottom:8 }}>
                 📋 Corporate CSR Partnership
               </h3>
               <p style={{ color:'rgba(255,255,255,0.7)', fontSize:14, lineHeight:1.7, marginBottom:16 }}>
@@ -231,7 +231,7 @@ export default function LiveImpactTracker() {
               <div style={{ background:'rgba(212,175,55,0.1)', borderRadius:16,
                 padding:20, border:'1px solid rgba(212,175,55,0.2)', marginBottom:12 }}>
                 <div style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
-                  color:'#D4AF37', fontSize:32 }}>
+                  color:'var(--color-accent, #D4AF37)', fontSize:32 }}>
                   ₹50L+
                 </div>
                 <div style={{ color:'rgba(255,255,255,0.5)', fontSize:12, marginTop:4 }}>
@@ -239,10 +239,10 @@ export default function LiveImpactTracker() {
                 </div>
               </div>
               <button style={{
-                background:'linear-gradient(135deg,#D4AF37,#E8C84A)',
+                background:'linear-gradient(135deg,var(--color-accent, #D4AF37),var(--color-accent-light, #E8C84A))',
                 border:'none', borderRadius:14, padding:'12px 24px',
                 fontFamily:'Poppins,sans-serif', fontWeight:700, fontSize:14,
-                color:'#1E3A5F', cursor:'pointer', width:'100%',
+                color:'var(--color-primary, #1E3A5F)', cursor:'pointer', width:'100%',
               }}>
                 Download CSR Report →
               </button>

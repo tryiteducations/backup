@@ -14,9 +14,9 @@ const SAMPLE_LEADERBOARD = [
 ];
 
 const RANK_STYLES = {
-  1: 'bg-gradient-to-r from-[#D4AF37] to-[#E8C84A] text-[#1E3A5F]',
+  1: 'bg-gradient-to-r from-[var(--color-accent, #D4AF37)] to-[var(--color-accent-light, #E8C84A)] text-[var(--color-primary, #1E3A5F)]',
   2: 'bg-gradient-to-r from-slate-300 to-slate-200 text-slate-700',
-  3: 'bg-gradient-to-r from-[#CD7F32]/40 to-[#E8C84A]/40 text-[#7C2D12]',
+  3: 'bg-gradient-to-r from-[#CD7F32]/40 to-[var(--color-accent-light, #E8C84A)]/40 text-[#7C2D12]',
 };
 
 export default function HallLeaderboard() {
@@ -28,7 +28,7 @@ export default function HallLeaderboard() {
   return (
     <AppLayout title="Global Hall Leaderboard">
       <div className="bg-white rounded-2xl shadow-md p-5 sm:p-6">
-        <h2 className="font-display text-2xl font-extrabold text-[#1E3A5F] mb-1">🏆 Global Leaderboard</h2>
+        <h2 className="font-display text-2xl font-extrabold text-[var(--color-primary, #1E3A5F)] mb-1">🏆 Global Leaderboard</h2>
         <p className="text-slate-500 mb-6">Top performers across all Halls — updated weekly.</p>
 
         <div className="overflow-x-auto">
@@ -54,16 +54,16 @@ export default function HallLeaderboard() {
                       </span>
                     </td>
                     <td className="py-3 pr-4 font-bold text-slate-700">
-                      {row.name} {isMe && <span className="text-[#D4AF37]">(You)</span>}
+                      {row.name} {isMe && <span className="text-[var(--color-accent, #D4AF37)]">(You)</span>}
                     </td>
                     <td className="py-3 pr-4 text-slate-500">{row.state}</td>
                     <td className="py-3 pr-4 text-slate-500">{row.hall}</td>
                     <td className="py-3 pr-4">
-                      <span className="text-xs font-bold px-2 py-1 rounded-full bg-[#1E3A5F]/5 text-[#1E3A5F]">
+                      <span className="text-xs font-bold px-2 py-1 rounded-full bg-[var(--color-primary, #1E3A5F)]/5 text-[var(--color-primary, #1E3A5F)]">
                         {row.levelEmoji} {row.levelTitle}
                       </span>
                     </td>
-                    <td className="py-3 pr-4 text-right font-extrabold text-[#D4AF37]">{row.score.toLocaleString()}</td>
+                    <td className="py-3 pr-4 text-right font-extrabold text-[var(--color-accent, #D4AF37)]">{row.score.toLocaleString()}</td>
                   </tr>
                 );
               })}

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth, onboardingKey } from '../context/AuthContext'
 import Logo from '../components/Logo'
 
-// ─── Static data ────────────────────────────────────────────────────────────
+// --- Static data ---
 
 const INDIA_STATES = [
   'Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh',
@@ -42,7 +42,7 @@ const INSTITUTION_TYPES = ['Coaching Centre','School','College','Online Platform
 
 const RELATIONS = ['Parent','Guardian','Grandparent','Sibling','Other']
 
-// ─── Fallback exams in case fetch fails ─────────────────────────────────────
+// ----- Fallback exams in case fetch fails -----
 const FALLBACK_EXAMS = [
   { id:'ssc-cgl',    name:'SSC CGL',         category:'SSC',     level:'Graduate' },
   { id:'ssc-chsl',   name:'SSC CHSL',        category:'SSC',     level:'12th Pass' },
@@ -61,7 +61,7 @@ const FALLBACK_EXAMS = [
   { id:'cds',        name:'CDS',             category:'Defence', level:'Graduate' },
 ]
 
-// ─── Helpers ────────────────────────────────────────────────────────────────
+// ----- Helpers -----
 
 function groupBy(arr, key) {
   return arr.reduce((acc, item) => {
@@ -78,10 +78,10 @@ function ProgressBar({ current, total }) {
         <span>Step {current} of {total}</span>
         <span>{Math.round((current / total) * 100)}%</span>
       </div>
-      <div className="w-full h-2 rounded-full" style={{ background: '#E2E8F0' }}>
+      <div className="w-full h-2 rounded-full" style={{ background: 'var(--color-border, #E2E8F0)' }}>
         <div
           className="h-2 rounded-full transition-all duration-500"
-          style={{ width: `${(current / total) * 100}%`, background: 'linear-gradient(90deg, #D4AF37, #E8C84A)' }}
+          style={{ width: `${(current / total) * 100}%`, background: 'linear-gradient(90deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))' }}
         />
       </div>
     </div>
@@ -91,8 +91,8 @@ function ProgressBar({ current, total }) {
 function StepTitle({ title, subtitle }) {
   return (
     <div className="mb-5">
-      <h2 className="text-xl font-bold" style={{ color: '#1E3A5F', fontFamily: 'Poppins, sans-serif' }}>{title}</h2>
-      {subtitle && <p className="text-sm mt-1" style={{ color: '#64748B', fontFamily: 'Inter, sans-serif' }}>{subtitle}</p>}
+      <h2 className="text-xl font-bold" style={{ color: 'var(--color-primary, #1E3A5F)', fontFamily: 'Poppins, sans-serif' }}>{title}</h2>
+      {subtitle && <p className="text-sm mt-1" style={{ color: 'var(--color-muted, #64748B)', fontFamily: 'Inter, sans-serif' }}>{subtitle}</p>}
     </div>
   )
 }
@@ -104,9 +104,9 @@ function ToggleChip({ label, selected, onClick }) {
       onClick={onClick}
       className="px-3 py-1.5 rounded-full text-sm font-medium border-2 transition-all"
       style={{
-        borderColor: selected ? '#D4AF37' : '#E2E8F0',
+        borderColor: selected ? 'var(--color-accent, #D4AF37)' : 'var(--color-border, #E2E8F0)',
         background: selected ? '#FFFBF0' : '#fff',
-        color: selected ? '#1E3A5F' : '#64748B',
+        color: selected ? 'var(--color-primary, #1E3A5F)' : 'var(--color-muted, #64748B)',
         fontFamily: 'Inter, sans-serif',
       }}
     >
@@ -117,16 +117,16 @@ function ToggleChip({ label, selected, onClick }) {
 
 function FieldLabel({ children }) {
   return (
-    <label className="block text-xs font-semibold mb-1.5 uppercase tracking-wide" style={{ color: '#1E3A5F', fontFamily: 'Inter, sans-serif' }}>
+    <label className="block text-xs font-semibold mb-1.5 uppercase tracking-wide" style={{ color: 'var(--color-primary, #1E3A5F)', fontFamily: 'Inter, sans-serif' }}>
       {children}
     </label>
   )
 }
 
 const inputStyle = {
-  borderColor: '#E2E8F0',
+  borderColor: 'var(--color-border, #E2E8F0)',
   background: '#fff',
-  color: '#1E3A5F',
+  color: 'var(--color-primary, #1E3A5F)',
   fontFamily: 'Inter, sans-serif',
 }
 
@@ -141,8 +141,8 @@ function TextInput({ label, value, onChange, placeholder, type = 'text', optiona
         placeholder={placeholder}
         className="w-full rounded-xl border-2 px-4 py-2.5 text-sm outline-none transition-all"
         style={inputStyle}
-        onFocus={e => e.target.style.borderColor = '#D4AF37'}
-        onBlur={e => e.target.style.borderColor = '#E2E8F0'}
+        onFocus={e => e.target.style.borderColor = 'var(--color-accent, #D4AF37)'}
+        onBlur={e => e.target.style.borderColor = 'var(--color-border, #E2E8F0)'}
       />
     </div>
   )
@@ -156,18 +156,18 @@ function SelectInput({ label, value, onChange, options, placeholder, optional })
         value={value}
         onChange={e => onChange(e.target.value)}
         className="w-full rounded-xl border-2 px-4 py-2.5 text-sm outline-none transition-all appearance-none"
-        style={{ ...inputStyle, borderColor: value ? '#D4AF37' : '#E2E8F0' }}
-        onFocus={e => e.target.style.borderColor = '#D4AF37'}
-        onBlur={e => e.target.style.borderColor = value ? '#D4AF37' : '#E2E8F0'}
+        style={{ ...inputStyle, borderColor: value ? 'var(--color-accent, #D4AF37)' : 'var(--color-border, #E2E8F0)' }}
+        onFocus={e => e.target.style.borderColor = 'var(--color-accent, #D4AF37)'}
+        onBlur={e => e.target.style.borderColor = value ? 'var(--color-accent, #D4AF37)' : 'var(--color-border, #E2E8F0)'}
       >
-        <option value="">{placeholder || 'Select…'}</option>
+        <option value="">{placeholder || 'Select...'}</option>
         {options.map(o => <option key={o} value={o}>{o}</option>)}
       </select>
     </div>
   )
 }
 
-// ─── Step components ─────────────────────────────────────────────────────────
+// --- Step components ---
 
 function StudentStep1({ data, setData }) {
   return (
@@ -184,7 +184,7 @@ function StudentStep2({ data, setData }) {
   return (
     <div className="space-y-4">
       <StepTitle title="Where are you based?" subtitle="We'll show you state-specific exam notifications." />
-      <SelectInput label="State / UT" value={data.state || ''} onChange={v => setData(d => ({...d, state: v}))} options={INDIA_STATES} placeholder="Select state…" />
+      <SelectInput label="State / UT" value={data.state || ''} onChange={v => setData(d => ({...d, state: v}))} options={INDIA_STATES} placeholder="Select state..." />
       <TextInput label="City" value={data.city || ''} onChange={v => setData(d => ({...d, city: v}))} placeholder="Your city" optional />
     </div>
   )
@@ -220,18 +220,18 @@ function StudentStep3({ data, setData, exams }) {
         <input
           value={search}
           onChange={e => setSearch(e.target.value)}
-          placeholder="Search exams…"
+          placeholder="Search exams..."
           className="w-full rounded-xl border-2 pl-9 pr-4 py-2.5 text-sm outline-none transition-all"
           style={inputStyle}
-          onFocus={e => e.target.style.borderColor = '#D4AF37'}
-          onBlur={e => e.target.style.borderColor = '#E2E8F0'}
+          onFocus={e => e.target.style.borderColor = 'var(--color-accent, #D4AF37)'}
+          onBlur={e => e.target.style.borderColor = 'var(--color-border, #E2E8F0)'}
         />
       </div>
 
       {selected.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-4">
           {selected.map(e => (
-            <span key={e.id} className="flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold" style={{ background: '#FFFBF0', border: '1.5px solid #D4AF37', color: '#1E3A5F' }}>
+            <span key={e.id} className="flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold" style={{ background: '#FFFBF0', border: '1.5px solid var(--color-accent, #D4AF37)', color: 'var(--color-primary, #1E3A5F)' }}>
               {e.name}
               <button onClick={() => toggle(e)} className="hover:opacity-60">✕</button>
             </span>
@@ -257,9 +257,9 @@ function StudentStep3({ data, setData, exams }) {
                     onClick={() => !disabled && toggle(exam)}
                     className="px-3 py-1.5 rounded-xl text-sm border-2 transition-all"
                     style={{
-                      borderColor: isSel ? '#D4AF37' : '#E2E8F0',
+                      borderColor: isSel ? 'var(--color-accent, #D4AF37)' : 'var(--color-border, #E2E8F0)',
                       background: isSel ? '#FFFBF0' : disabled ? '#F8FAFC' : '#fff',
-                      color: isSel ? '#1E3A5F' : disabled ? '#CBD5E1' : '#475569',
+                      color: isSel ? 'var(--color-primary, #1E3A5F)' : disabled ? '#CBD5E1' : '#475569',
                       fontFamily: 'Inter, sans-serif',
                       cursor: disabled ? 'not-allowed' : 'pointer',
                     }}
@@ -348,8 +348,8 @@ function MentorStep1({ data, setData }) {
           placeholder="e.g. 5"
           className="w-full rounded-xl border-2 px-4 py-2.5 text-sm outline-none transition-all"
           style={inputStyle}
-          onFocus={e => e.target.style.borderColor = '#D4AF37'}
-          onBlur={e => e.target.style.borderColor = '#E2E8F0'}
+          onFocus={e => e.target.style.borderColor = 'var(--color-accent, #D4AF37)'}
+          onBlur={e => e.target.style.borderColor = 'var(--color-border, #E2E8F0)'}
         />
       </div>
     </div>
@@ -458,14 +458,14 @@ function FamilyStep2({ data, setData }) {
         placeholder="child@example.com"
         optional
       />
-      <p className="text-xs px-3 py-2 rounded-lg" style={{ background: '#EFF6FF', color: '#1D4ED8', fontFamily: 'Inter, sans-serif' }}>
+      <p className="text-xs px-3 py-2 rounded-lg" style={{ background: 'var(--color-bg-muted, #EFF6FF)', color: '#1D4ED8', fontFamily: 'Inter, sans-serif' }}>
         You can also connect later from Settings → Family.
       </p>
     </div>
   )
 }
 
-// ─── Main component ──────────────────────────────────────────────────────────
+// ----- Main component -----
 
 export default function Onboarding() {
   const navigate = useNavigate()
@@ -599,12 +599,12 @@ export default function Onboarding() {
   return (
     <div
       className="min-h-screen flex items-center justify-center px-4 py-10"
-      style={{ background: 'linear-gradient(135deg, #0F2140 0%, #1E3A5F 55%, #162d4a 100%)' }}
+      style={{ background: 'linear-gradient(135deg, var(--color-primary-dark, #0F2140) 0%, var(--color-primary, #1E3A5F) 55%, #162d4a 100%)' }}
     >
       {/* Subtle background rings */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute rounded-full opacity-10" style={{ width: 700, height: 700, top: '50%', left: '50%', transform: 'translate(-50%, -60%)', border: '1.5px solid #D4AF37' }} />
-        <div className="absolute rounded-full opacity-5"  style={{ width: 420, height: 420, top: '50%', left: '50%', transform: 'translate(-50%, -55%)', border: '1.5px solid #D4AF37' }} />
+        <div className="absolute rounded-full opacity-10" style={{ width: 700, height: 700, top: '50%', left: '50%', transform: 'translate(-50%, -60%)', border: '1.5px solid var(--color-accent, #D4AF37)' }} />
+        <div className="absolute rounded-full opacity-5"  style={{ width: 420, height: 420, top: '50%', left: '50%', transform: 'translate(-50%, -55%)', border: '1.5px solid var(--color-accent, #D4AF37)' }} />
       </div>
 
       <div className="relative w-full max-w-lg">
@@ -612,7 +612,7 @@ export default function Onboarding() {
           {/* Header */}
           <div className="flex flex-col items-center mb-6">
             <Logo dark={false} height={40} />
-            <p className="mt-2 text-xs font-medium tracking-widest uppercase" style={{ color: '#D4AF37', fontFamily: 'Poppins, sans-serif' }}>
+            <p className="mt-2 text-xs font-medium tracking-widest uppercase" style={{ color: 'var(--color-accent, #D4AF37)', fontFamily: 'Poppins, sans-serif' }}>
               Setting up your profile
             </p>
           </div>
@@ -627,8 +627,8 @@ export default function Onboarding() {
                 key={i}
                 className="flex-1 min-w-0 text-center text-xs px-2 py-1 rounded-lg truncate"
                 style={{
-                  background: i < step ? '#FFFBF0' : i === step ? '#1E3A5F' : '#F1F5F9',
-                  color: i < step ? '#D4AF37' : i === step ? '#fff' : '#94A3B8',
+                  background: i < step ? '#FFFBF0' : i === step ? 'var(--color-primary, #1E3A5F)' : 'var(--color-bg-muted-2, #F1F5F9)',
+                  color: i < step ? 'var(--color-accent, #D4AF37)' : i === step ? '#fff' : '#94A3B8',
                   fontFamily: 'Inter, sans-serif',
                   fontWeight: i === step ? 600 : 400,
                   fontSize: '0.7rem',
@@ -645,12 +645,12 @@ export default function Onboarding() {
           </div>
 
           {/* Navigation */}
-          <div className="flex items-center justify-between mt-6 pt-4" style={{ borderTop: '1px solid #E2E8F0' }}>
+          <div className="flex items-center justify-between mt-6 pt-4" style={{ borderTop: '1px solid var(--color-border, #E2E8F0)' }}>
             <button
               type="button"
               onClick={handleBack}
               className="flex items-center gap-1 text-sm font-medium transition-opacity hover:opacity-70"
-              style={{ color: '#64748B', fontFamily: 'Inter, sans-serif' }}
+              style={{ color: 'var(--color-muted, #64748B)', fontFamily: 'Inter, sans-serif' }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="M12 5l-7 7 7 7"/></svg>
               Back
@@ -673,8 +673,8 @@ export default function Onboarding() {
                 disabled={finishing}
                 className="rounded-xl px-6 py-2.5 font-semibold text-sm transition-all hover:shadow-md disabled:opacity-60"
                 style={{
-                  background: 'linear-gradient(135deg, #D4AF37, #E8C84A)',
-                  color: '#0F2140',
+                  background: 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))',
+                  color: 'var(--color-primary-dark, #0F2140)',
                   fontFamily: 'Poppins, sans-serif',
                 }}
               >

@@ -32,7 +32,7 @@ export default function UploadEbook() {
       <AppLayout title="Upload Ebook">
         <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-md p-10 text-center">
           <div className="text-5xl mb-4">✅</div>
-          <h2 className="font-display text-2xl font-extrabold text-[#1E3A5F] mb-2">Submitted!</h2>
+          <h2 className="font-display text-2xl font-extrabold text-[var(--color-primary, #1E3A5F)] mb-2">Submitted!</h2>
           <p className="text-slate-500">
             Your ebook <span className="font-bold text-slate-700">"{title}"</span> is under review.
             We'll notify you once it's live in the Ebook Store.
@@ -45,7 +45,7 @@ export default function UploadEbook() {
   return (
     <AppLayout title="Upload Ebook">
       <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-md p-6 sm:p-8">
-        <h2 className="font-display text-2xl font-extrabold text-[#1E3A5F] mb-1">Share Your Ebook ⬆️</h2>
+        <h2 className="font-display text-2xl font-extrabold text-[var(--color-primary, #1E3A5F)] mb-1">Share Your Ebook ⬆️</h2>
         <p className="text-slate-500 mb-6">Help fellow aspirants — submit for review and reach thousands of learners.</p>
 
         <div className="space-y-5">
@@ -56,7 +56,7 @@ export default function UploadEbook() {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Mastering Quantitative Aptitude"
-              className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/30 outline-none"
+              className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-[var(--color-accent, #D4AF37)] focus:ring-2 focus:ring-[var(--color-accent, #D4AF37)]/30 outline-none"
             />
           </div>
 
@@ -67,7 +67,7 @@ export default function UploadEbook() {
               value={author}
               onChange={(e) => setAuthor(e.target.value)}
               placeholder="Author name"
-              className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/30 outline-none"
+              className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-[var(--color-accent, #D4AF37)] focus:ring-2 focus:ring-[var(--color-accent, #D4AF37)]/30 outline-none"
             />
           </div>
 
@@ -79,7 +79,7 @@ export default function UploadEbook() {
                   key={tag}
                   onClick={() => toggleTag(tag)}
                   className={`text-xs font-bold px-3 py-1.5 rounded-full border-2 transition-all ${
-                    tags.includes(tag) ? 'bg-[#1E3A5F] text-white border-[#1E3A5F]' : 'border-slate-200 text-slate-500'
+                    tags.includes(tag) ? 'bg-[var(--color-primary, #1E3A5F)] text-white border-[var(--color-primary, #1E3A5F)]' : 'border-slate-200 text-slate-500'
                   }`}
                 >
                   {tag}
@@ -95,7 +95,7 @@ export default function UploadEbook() {
               onChange={(e) => setDescription(e.target.value)}
               placeholder="What will readers learn from this ebook?"
               rows={4}
-              className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/30 outline-none resize-none"
+              className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-[var(--color-accent, #D4AF37)] focus:ring-2 focus:ring-[var(--color-accent, #D4AF37)]/30 outline-none resize-none"
             />
           </div>
 
@@ -106,7 +106,7 @@ export default function UploadEbook() {
               min="0"
               value={price}
               onChange={(e) => setPrice(Number(e.target.value))}
-              className="w-32 px-4 py-3 rounded-2xl border border-slate-200 focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/30 outline-none"
+              className="w-32 px-4 py-3 rounded-2xl border border-slate-200 focus:border-[var(--color-accent, #D4AF37)] focus:ring-2 focus:ring-[var(--color-accent, #D4AF37)]/30 outline-none"
             />
           </div>
 
@@ -131,7 +131,7 @@ export default function UploadEbook() {
           <button
             onClick={handleSubmit}
             disabled={!title.trim() || !author.trim() || tags.length === 0}
-            className="w-full py-3 rounded-2xl bg-[#D4AF37] text-[#1E3A5F] font-bold shadow-md hover:bg-[#E8C84A] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 rounded-2xl bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)] font-bold shadow-md hover:bg-[var(--color-accent-light, #E8C84A)] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Submit for Review
           </button>

@@ -18,34 +18,34 @@ export default function CentreMentorPanel() {
   return (
     <AppLayout title="Mentor Panel">
       <div className="mb-6">
-        <h1 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'#1E3A5F', fontSize:22 }}>🧑‍🏫 Mentor Panel</h1>
-        <p style={{ color:'#64748B', fontSize:14 }}>Manage mentors assigned to your centre</p>
+        <h1 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'var(--heading-color, var(--color-text, #1E3A5F))', fontSize:22 }}>🧑‍🏫 Mentor Panel</h1>
+        <p style={{ color:'var(--subtext-color, #64748B)', fontSize:14 }}>Manage mentors assigned to your centre</p>
       </div>
 
       {mentors.length === 0 ? (
-        <div style={{ textAlign:'center', padding:60, background:'#fff', borderRadius:18, border:'1.5px dashed #E2E8F0' }}>
+        <div style={{ textAlign:'center', padding:60, background:'var(--color-surface, #FFFFFF)', borderRadius:18, border:'1.5px dashed var(--color-border, #E2E8F0)' }}>
           <p style={{ fontSize:40, marginBottom:8 }}>🧑‍🏫</p>
-          <p style={{ color:'#94A3B8' }}>No mentors assigned yet</p>
+          <p style={{ color:'var(--subtext-color, #64748B)' }}>No mentors assigned yet</p>
         </div>
       ) : (
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(260px,1fr))', gap:16 }}>
           {mentors.map(m=>(
-            <div key={m.id} style={{ background:'#fff', borderRadius:18, border:'1.5px solid #E2E8F0', padding:20 }}>
+            <div key={m.id} style={{ background:'var(--color-surface, #FFFFFF)', borderRadius:18, border:'1.5px solid var(--color-border, #E2E8F0)', padding:20 }}>
               <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:12 }}>
-                <div style={{ width:44, height:44, borderRadius:'50%', background:'linear-gradient(135deg,#1E3A5F,#0F2140)', color:'#D4AF37', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:800, fontSize:14 }}>
+                <div style={{ width:44, height:44, borderRadius:'50%', background:'linear-gradient(135deg, var(--color-primary-dark, #0F2140), var(--color-primary, #1E3A5F))', color:'var(--color-accent, #D4AF37)', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:800, fontSize:14 }}>
                   {m.name.slice(0,2)}
                 </div>
                 <div>
-                  <p style={{ fontWeight:700, color:'#1E3A5F', fontSize:14, margin:'0 0 2px' }}>{m.name}</p>
-                  <p style={{ color:'#64748B', fontSize:12, margin:0 }}>{m.subject}</p>
+                  <p style={{ fontWeight:700, color:'var(--heading-color, var(--color-text, #1E3A5F))', fontSize:14, margin:'0 0 2px' }}>{m.name}</p>
+                  <p style={{ color:'var(--subtext-color, #64748B)', fontSize:12, margin:0 }}>{m.subject}</p>
                 </div>
               </div>
               <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr 1fr', gap:8, textAlign:'center' }}>
                 {[['Students',m.students,'👥'],['Sessions',m.sessions,'📚'],['Rating',m.rating,'⭐']].map(([label,val,emoji])=>(
-                  <div key={label} style={{ background:'#F8FAFC', borderRadius:10, padding:8 }}>
+                  <div key={label} style={{ background:'var(--color-bg, #F8FAFC)', borderRadius:10, padding:8 }}>
                     <p style={{ fontSize:16, margin:'0 0 2px' }}>{emoji}</p>
-                    <p style={{ fontWeight:800, color:'#1E3A5F', fontSize:14, margin:0 }}>{val}</p>
-                    <p style={{ color:'#94A3B8', fontSize:10, margin:0 }}>{label}</p>
+                    <p style={{ fontWeight:800, color:'var(--heading-color, var(--color-text, #1E3A5F))', fontSize:14, margin:0 }}>{val}</p>
+                    <p style={{ color:'var(--subtext-color, #64748B)', fontSize:10, margin:0 }}>{label}</p>
                   </div>
                 ))}
               </div>

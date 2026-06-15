@@ -30,7 +30,7 @@ export default function SevenLayerExplanation({ question, isCorrect }) {
         style={{
           display: 'flex', alignItems: 'center', gap: 8,
           background: expanded
-            ? 'linear-gradient(135deg,#1E3A5F,#0F2140)'
+            ? 'linear-gradient(135deg,var(--color-primary, #1E3A5F),var(--color-primary-dark, #0F2140))'
             : 'rgba(30,58,95,0.08)',
           border: '1.5px solid rgba(30,58,95,0.2)',
           borderRadius: 12, padding: '10px 16px',
@@ -41,11 +41,11 @@ export default function SevenLayerExplanation({ question, isCorrect }) {
       >
         <span style={{
           fontFamily: 'Poppins,sans-serif', fontWeight: 700,
-          fontSize: 13, color: expanded ? '#D4AF37' : '#1E3A5F',
+          fontSize: 13, color: expanded ? 'var(--color-accent, #D4AF37)' : 'var(--color-primary, #1E3A5F)',
         }}>
           📚 Show 7-Layer Explanation
         </span>
-        <span style={{ color: expanded ? '#D4AF37' : '#1E3A5F', fontSize: 16 }}>
+        <span style={{ color: expanded ? 'var(--color-accent, #D4AF37)' : 'var(--color-primary, #1E3A5F)', fontSize: 16 }}>
           {expanded ? '▲' : '▼'}
         </span>
       </button>
@@ -73,15 +73,15 @@ export default function SevenLayerExplanation({ question, isCorrect }) {
                       background: openLayer === layer.key
                         ? 'rgba(212,175,55,0.1)'
                         : i % 2 === 0 ? '#FAFBFC' : '#FFFFFF',
-                      border: 'none', borderBottom: '1px solid #F1F5F9',
+                      border: 'none', borderBottom: '1px solid var(--color-bg-muted-2, #F1F5F9)',
                       cursor: 'pointer',
                     }}
                   >
                     <span style={{ fontFamily: 'Poppins,sans-serif', fontWeight: 600,
-                      fontSize: 13, color: '#1E3A5F' }}>
+                      fontSize: 13, color: 'var(--color-primary, #1E3A5F)' }}>
                       {layer.icon} {layer.label}
                     </span>
-                    <span style={{ color: '#D4AF37', fontWeight: 700, fontSize: 14 }}>
+                    <span style={{ color: 'var(--color-accent, #D4AF37)', fontWeight: 700, fontSize: 14 }}>
                       {openLayer === layer.key ? '▲' : '▼'}
                     </span>
                   </button>
@@ -98,7 +98,7 @@ export default function SevenLayerExplanation({ question, isCorrect }) {
                           background: 'rgba(212,175,55,0.05)',
                           fontFamily: 'Inter,sans-serif', fontSize: 14,
                           color: '#334155', lineHeight: 1.7,
-                          borderBottom: '1px solid #F1F5F9',
+                          borderBottom: '1px solid var(--color-bg-muted-2, #F1F5F9)',
                           whiteSpace: 'pre-line',
                         }}>
                           {expl[layer.key] || 'Explanation not available in this language yet.'}

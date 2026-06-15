@@ -3,16 +3,16 @@
 // Note: All 5 mandatory languages loaded in questionsWith7Layers.js
 // te-anna (Telugu), kn-anna (Kannada) added there
 export const LEVELS = [
-  { level:1,  title:'The Fierce One',  emoji:'🔥', minXP:0,     maxXP:500,   color:'#EF4444' },
+  { level:1,  title:'The Fierce One',  emoji:'🔥', minXP:0,     maxXP:500,   color:'var(--color-error, #EF4444)' },
   { level:2,  title:'The Fighter',     emoji:'⚔️', minXP:500,   maxXP:1500,  color:'#F97316' },
   { level:3,  title:'The Riser',       emoji:'📈', minXP:1500,  maxXP:3000,  color:'#EAB308' },
-  { level:4,  title:'The Gold Miner',  emoji:'⛏️', minXP:3000,  maxXP:6000,  color:'#D4AF37' },
-  { level:5,  title:'The Grinder',     emoji:'💪', minXP:6000,  maxXP:10000, color:'#22C55E' },
-  { level:6,  title:'Baahuveer',       emoji:'🦁', minXP:10000, maxXP:16000, color:'#D4AF37' },
+  { level:4,  title:'The Gold Miner',  emoji:'⛏️', minXP:3000,  maxXP:6000,  color:'var(--color-accent, #D4AF37)' },
+  { level:5,  title:'The Grinder',     emoji:'💪', minXP:6000,  maxXP:10000, color:'var(--color-success, #22C55E)' },
+  { level:6,  title:'Baahuveer',       emoji:'🦁', minXP:10000, maxXP:16000, color:'var(--color-accent, #D4AF37)' },
   { level:7,  title:'Thalavan',        emoji:'👑', minXP:16000, maxXP:24000, color:'#8B5CF6' },
   { level:8,  title:'The Unstoppable', emoji:'⚡', minXP:24000, maxXP:35000, color:'#06B6D4' },
-  { level:9,  title:'The Legend',      emoji:'🌟', minXP:35000, maxXP:50000, color:'#D4AF37' },
-  { level:10, title:'The Absolute',    emoji:'🏆', minXP:50000, maxXP:99999, color:'#D4AF37' },
+  { level:9,  title:'The Legend',      emoji:'🌟', minXP:35000, maxXP:50000, color:'var(--color-accent, #D4AF37)' },
+  { level:10, title:'The Absolute',    emoji:'🏆', minXP:50000, maxXP:99999, color:'var(--color-accent, #D4AF37)' },
 ]
 
 export const getLevelInfo = (xp) =>
@@ -37,9 +37,9 @@ export const ID_TEMPLATES = [
   {
     id:'royal-gold',
     name:'Royal Gold',
-    bg:'linear-gradient(135deg,#1E3A5F 0%,#0F2140 50%,#1E3A5F 100%)',
-    border:'#D4AF37',
-    accent:'#D4AF37',
+    bg:'linear-gradient(135deg,var(--color-primary, #1E3A5F) 0%,var(--color-primary-dark, #0F2140) 50%,var(--color-primary, #1E3A5F) 100%)',
+    border:'var(--color-accent, #D4AF37)',
+    accent:'var(--color-accent, #D4AF37)',
     textPrimary:'#FFFFFF',
     textSecondary:'rgba(212,175,55,0.85)',
     shine:true,
@@ -49,8 +49,8 @@ export const ID_TEMPLATES = [
     id:'legend',
     name:'The Legend',
     bg:'linear-gradient(135deg,#0A0A0A 0%,#1a1a2e 50%,#0A0A0A 100%)',
-    border:'#D4AF37',
-    accent:'#D4AF37',
+    border:'var(--color-accent, #D4AF37)',
+    accent:'var(--color-accent, #D4AF37)',
     textPrimary:'#FFFFFF',
     textSecondary:'rgba(212,175,55,0.8)',
     shine:true,
@@ -81,7 +81,7 @@ export const ID_TEMPLATES = [
   {
     id:'champion',
     name:'Champion',
-    bg:'linear-gradient(135deg,#92400E 0%,#78350F 30%,#D4AF37 60%,#92400E 100%)',
+    bg:'linear-gradient(135deg,#92400E 0%,#78350F 30%,var(--color-accent, #D4AF37) 60%,#92400E 100%)',
     border:'#FDE68A',
     accent:'#FDE68A',
     textPrimary:'#1C1917',
@@ -257,7 +257,7 @@ export const PLATFORM_FEATURES = [
     subtitle:'Mock · PYQ · Speed Drill · Custom',
     desc:'Real exam pattern questions with All India ranking after every test. Full analysis of weak areas, subject-wise breakdown, and projected score.',
     badge:'P1 Feature',
-    color:'#1E3A5F',
+    color:'var(--color-primary, #1E3A5F)',
     stats:'2.4M tests taken',
   },
   {
@@ -297,7 +297,7 @@ export const PLATFORM_FEATURES = [
     subtitle:'5 Cinematic Templates',
     desc:'Royal Gold, The Legend, Warrior, Scholar, Champion — 5 premium templates with 3D flip animation. Share your rank and exam on Instagram, WhatsApp.',
     badge:'🔥 Viral',
-    color:'#D4AF37',
+    color:'var(--color-accent, #D4AF37)',
     stats:'Share your journey',
   },
   {
@@ -307,7 +307,7 @@ export const PLATFORM_FEATURES = [
     subtitle:'Study Squad · Battles · Leaderboard',
     desc:'Form study groups up to 10. Challenge rival halls. Group streak keeps everyone accountable. National Hall Leaderboard every week.',
     badge:'Social',
-    color:'#1E3A5F',
+    color:'var(--color-primary, #1E3A5F)',
     stats:'Hall battles every week',
   },
   {
@@ -357,7 +357,7 @@ export const PLATFORM_FEATURES = [
     subtitle:'Pomodoro · Ambient Sounds',
     desc:'25-minute deep study sessions with Rain, Forest, Cafe or Silence ambience. Sessions logged, coins earned, streak maintained.',
     badge:'Productivity',
-    color:'#0F2140',
+    color:'var(--color-primary-dark, #0F2140)',
     stats:'Earn coins while studying',
   },
   {
@@ -367,7 +367,7 @@ export const PLATFORM_FEATURES = [
     subtitle:'Free Money for Your Education',
     desc:'800+ scholarships — Central, State, Private, Merit, Need-based. Deadline alerts so you never miss free funding for your studies.',
     badge:'Free Money',
-    color:'#D4AF37',
+    color:'var(--color-accent, #D4AF37)',
     stats:'800+ scholarships tracked',
   },
 ]

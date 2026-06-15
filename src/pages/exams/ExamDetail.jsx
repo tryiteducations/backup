@@ -75,9 +75,9 @@ export default function ExamDetail() {
       <AppLayout title="Exam Not Found">
         <div className="flex flex-col items-center justify-center py-24 text-center">
           <div className="text-5xl mb-4">🔍</div>
-          <h2 className="text-xl font-bold text-[#1E3A5F] mb-2">Exam not found</h2>
+          <h2 className="text-xl font-bold text-[var(--color-primary, #1E3A5F)] mb-2">Exam not found</h2>
           <p className="text-gray-500 text-sm mb-5">This exam may have been removed or the link is incorrect.</p>
-          <button onClick={() => navigate('/exams')} className="px-5 py-2 bg-[#1E3A5F] text-white rounded-xl text-sm font-semibold hover:bg-[#0F2140] transition">
+          <button onClick={() => navigate('/exams')} className="px-5 py-2 bg-[var(--color-primary, #1E3A5F)] text-white rounded-xl text-sm font-semibold hover:bg-[var(--color-primary-dark, #0F2140)] transition">
             Back to All Exams
           </button>
         </div>
@@ -90,7 +90,7 @@ export default function ExamDetail() {
       <div className="max-w-4xl mx-auto px-4 py-6">
 
         {/* Hero card */}
-        <div className="bg-gradient-to-r from-[#1E3A5F] to-[#0F2140] rounded-2xl p-6 mb-6 text-white">
+        <div className="bg-gradient-to-r from-[var(--color-primary, #1E3A5F)] to-[var(--color-primary-dark, #0F2140)] rounded-2xl p-6 mb-6 text-white">
           <div className="flex items-start gap-4">
             <span className="text-5xl">{exam.emoji || '📋'}</span>
             <div className="flex-1 min-w-0">
@@ -104,7 +104,7 @@ export default function ExamDetail() {
                   <span className="bg-white/20 px-3 py-1 rounded-full text-xs font-medium capitalize">{exam.category.replace('_', ' ')}</span>
                 )}
                 {exam.vacancies && (
-                  <span className="bg-[#D4AF37]/90 text-[#1E3A5F] px-3 py-1 rounded-full text-xs font-bold">{exam.vacancies} Vacancies</span>
+                  <span className="bg-[var(--color-accent, #D4AF37)]/90 text-[var(--color-primary, #1E3A5F)] px-3 py-1 rounded-full text-xs font-bold">{exam.vacancies} Vacancies</span>
                 )}
               </div>
             </div>
@@ -114,7 +114,7 @@ export default function ExamDetail() {
           <div className="flex flex-wrap gap-3 mt-5">
             <button
               onClick={() => navigate('/test-engine', { state: { examId: exam.id, examName: exam.name } })}
-              className="flex-1 min-w-[140px] bg-[#D4AF37] hover:bg-[#E8C84A] text-[#1E3A5F] font-bold py-2.5 px-5 rounded-xl text-sm transition"
+              className="flex-1 min-w-[140px] bg-[var(--color-accent, #D4AF37)] hover:bg-[var(--color-accent-light, #E8C84A)] text-[var(--color-primary, #1E3A5F)] font-bold py-2.5 px-5 rounded-xl text-sm transition"
             >
               🚀 Start Practicing
             </button>
@@ -124,7 +124,7 @@ export default function ExamDetail() {
               className={`flex-1 min-w-[140px] font-semibold py-2.5 px-5 rounded-xl text-sm transition border-2 ${
                 added
                   ? 'border-emerald-400 text-emerald-300 cursor-default'
-                  : 'border-white text-white hover:bg-white hover:text-[#1E3A5F]'
+                  : 'border-white text-white hover:bg-white hover:text-[var(--color-primary, #1E3A5F)]'
               }`}
             >
               {added ? '✅ Added to My Exams' : '➕ Add to My Exams'}
@@ -146,8 +146,8 @@ export default function ExamDetail() {
               onClick={() => setActiveTab(tab.id)}
               className={`flex-1 min-w-[80px] py-2 px-3 rounded-lg text-xs font-semibold transition ${
                 activeTab === tab.id
-                  ? 'bg-white text-[#1E3A5F] shadow'
-                  : 'text-gray-500 hover:text-[#1E3A5F]'
+                  ? 'bg-white text-[var(--color-primary, #1E3A5F)] shadow'
+                  : 'text-gray-500 hover:text-[var(--color-primary, #1E3A5F)]'
               }`}
             >
               {tab.label}
@@ -160,7 +160,7 @@ export default function ExamDetail() {
 
           {activeTab === 'overview' && (
             <div>
-              <h2 className="text-lg font-bold text-[#1E3A5F] mb-4">About This Exam</h2>
+              <h2 className="text-lg font-bold text-[var(--color-primary, #1E3A5F)] mb-4">About This Exam</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                 {[
                   { label: 'Conducting Body', value: exam.body || '—' },
@@ -171,7 +171,7 @@ export default function ExamDetail() {
                 ].map(item => (
                   <div key={item.label} className="bg-[#F8FAFC] rounded-xl p-4">
                     <p className="text-xs text-gray-400 mb-1">{item.label}</p>
-                    <p className="font-semibold text-[#1E3A5F] text-sm capitalize">{item.value}</p>
+                    <p className="font-semibold text-[var(--color-primary, #1E3A5F)] text-sm capitalize">{item.value}</p>
                   </div>
                 ))}
               </div>
@@ -183,12 +183,12 @@ export default function ExamDetail() {
 
           {activeTab === 'syllabus' && (
             <div>
-              <h2 className="text-lg font-bold text-[#1E3A5F] mb-1">Syllabus</h2>
+              <h2 className="text-lg font-bold text-[var(--color-primary, #1E3A5F)] mb-1">Syllabus</h2>
               <p className="text-xs text-gray-400 mb-5">Indicative syllabus — refer to official notification for latest updates</p>
               <div className="space-y-4">
                 {SAMPLE_SYLLABUS.map((sec, i) => (
                   <div key={i} className="border border-gray-100 rounded-xl p-4">
-                    <h3 className="font-semibold text-[#1E3A5F] text-sm mb-3">{sec.section}</h3>
+                    <h3 className="font-semibold text-[var(--color-primary, #1E3A5F)] text-sm mb-3">{sec.section}</h3>
                     <div className="flex flex-wrap gap-2">
                       {sec.topics.map(t => (
                         <span key={t} className="text-xs bg-[#F8FAFC] border border-gray-200 text-gray-600 px-3 py-1 rounded-full">{t}</span>
@@ -202,12 +202,12 @@ export default function ExamDetail() {
 
           {activeTab === 'pattern' && (
             <div>
-              <h2 className="text-lg font-bold text-[#1E3A5F] mb-1">Exam Pattern</h2>
+              <h2 className="text-lg font-bold text-[var(--color-primary, #1E3A5F)] mb-1">Exam Pattern</h2>
               <p className="text-xs text-gray-400 mb-5">Sample structure — actual pattern may vary per notification</p>
               <div className="space-y-4">
                 {SAMPLE_PATTERN.map((p, i) => (
                   <div key={i} className="rounded-xl border border-gray-100 overflow-hidden">
-                    <div className="bg-[#1E3A5F] text-white px-4 py-2.5">
+                    <div className="bg-[var(--color-primary, #1E3A5F)] text-white px-4 py-2.5">
                       <h3 className="font-bold text-sm">{p.paper}</h3>
                     </div>
                     <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y sm:divide-y-0 divide-gray-100">
@@ -219,7 +219,7 @@ export default function ExamDetail() {
                       ].map(item => (
                         <div key={item.label} className="p-3 text-center">
                           <p className="text-xs text-gray-400">{item.label}</p>
-                          <p className="font-bold text-[#1E3A5F]">{item.val}</p>
+                          <p className="font-bold text-[var(--color-primary, #1E3A5F)]">{item.val}</p>
                         </div>
                       ))}
                     </div>
@@ -235,7 +235,7 @@ export default function ExamDetail() {
           {activeTab === 'cutoffs' && (
             <div className="flex flex-col items-center justify-center py-10 text-center">
               <div className="text-4xl mb-3">📊</div>
-              <h3 className="font-bold text-[#1E3A5F] text-base mb-2">Cutoffs Coming Soon</h3>
+              <h3 className="font-bold text-[var(--color-primary, #1E3A5F)] text-base mb-2">Cutoffs Coming Soon</h3>
               <p className="text-sm text-gray-500 max-w-xs">
                 Official cutoff data will be updated after each notification and result announcement.
               </p>
@@ -247,17 +247,17 @@ export default function ExamDetail() {
 
           {activeTab === 'resources' && (
             <div>
-              <h2 className="text-lg font-bold text-[#1E3A5F] mb-4">Study Resources</h2>
+              <h2 className="text-lg font-bold text-[var(--color-primary, #1E3A5F)] mb-4">Study Resources</h2>
               <div className="space-y-3">
                 {[
                   { icon: '📄', label: 'PDF Study Materials', desc: 'Topic-wise notes and question banks', action: () => navigate('/classroom/pdf') },
                   { icon: '🎯', label: 'Practice Tests', desc: 'Full-length and topic-wise mocks', action: () => navigate('/test-engine') },
                   { icon: '📺', label: 'Video Lessons', desc: 'Concept explanations by experts', action: () => navigate('/classroom') },
                 ].map(item => (
-                  <button key={item.label} onClick={item.action} className="w-full flex items-center gap-4 p-4 rounded-xl border border-gray-100 hover:border-[#D4AF37] hover:bg-amber-50 transition text-left">
+                  <button key={item.label} onClick={item.action} className="w-full flex items-center gap-4 p-4 rounded-xl border border-gray-100 hover:border-[var(--color-accent, #D4AF37)] hover:bg-amber-50 transition text-left">
                     <span className="text-2xl">{item.icon}</span>
                     <div>
-                      <p className="font-semibold text-[#1E3A5F] text-sm">{item.label}</p>
+                      <p className="font-semibold text-[var(--color-primary, #1E3A5F)] text-sm">{item.label}</p>
                       <p className="text-xs text-gray-400">{item.desc}</p>
                     </div>
                     <span className="ml-auto text-gray-300">→</span>
@@ -269,7 +269,7 @@ export default function ExamDetail() {
 
           {activeTab === 'community' && (
             <div>
-              <h2 className="text-lg font-bold text-[#1E3A5F] mb-4">Community Discussions</h2>
+              <h2 className="text-lg font-bold text-[var(--color-primary, #1E3A5F)] mb-4">Community Discussions</h2>
               <div className="bg-[#F8FAFC] rounded-xl p-5 text-center mb-4">
                 <div className="text-3xl mb-2">💬</div>
                 <p className="text-sm text-gray-500 mb-3">
@@ -277,7 +277,7 @@ export default function ExamDetail() {
                 </p>
                 <button
                   onClick={() => navigate(`/guru-hub?exam=${exam.id}`)}
-                  className="px-5 py-2 bg-[#1E3A5F] text-white rounded-xl text-sm font-semibold hover:bg-[#0F2140] transition"
+                  className="px-5 py-2 bg-[var(--color-primary, #1E3A5F)] text-white rounded-xl text-sm font-semibold hover:bg-[var(--color-primary-dark, #0F2140)] transition"
                 >
                   Open Guru Hub for {exam.name}
                 </button>

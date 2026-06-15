@@ -52,7 +52,7 @@ const SAMPLE_DOUBTS = [
     id: 'doubt-004',
     userName: 'Mohammed Zaid',
     initials: 'MZ',
-    avatarColor: '#1E3A5F',
+    avatarColor: 'var(--color-primary, #1E3A5F)',
     examTag: 'TNPSC Group 2',
     subject: 'Current Affairs',
     title: 'PM Gati Shakti vs National Logistics Policy — what\'s the difference?',
@@ -108,7 +108,7 @@ const SAMPLE_DOUBTS = [
     id: 'doubt-008',
     userName: 'Vikram Balaji',
     initials: 'VB',
-    avatarColor: '#1E3A5F',
+    avatarColor: 'var(--color-primary, #1E3A5F)',
     examTag: 'SSC CGL',
     subject: 'English',
     title: 'Para-jumbles strategy — how to identify the opening sentence reliably?',
@@ -139,7 +139,7 @@ export default function GuruHub() {
         <div style={{ marginBottom: 28 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
             <div>
-              <h1 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 26, color: '#1E3A5F', margin: 0 }}>
+              <h1 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 26, color: 'var(--color-primary, #1E3A5F)', margin: 0 }}>
                 🧑‍🏫 Guru Hub
               </h1>
               <p style={{ fontFamily: 'Inter, sans-serif', color: '#64748b', fontSize: 14, margin: '4px 0 0' }}>
@@ -149,14 +149,14 @@ export default function GuruHub() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               {/* Guru Points Badge */}
               <div style={{
-                background: 'linear-gradient(135deg, #1E3A5F, #0F2140)',
+                background: 'linear-gradient(135deg, var(--color-primary, #1E3A5F), var(--color-primary-dark, #0F2140))',
                 borderRadius: 12,
                 padding: '8px 16px',
                 display: 'flex', alignItems: 'center', gap: 8,
               }}>
                 <span style={{ fontSize: 18 }}>⭐</span>
                 <div>
-                  <div style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 16, color: '#D4AF37', lineHeight: 1 }}>
+                  <div style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 16, color: 'var(--color-accent, #D4AF37)', lineHeight: 1 }}>
                     {user.guruPoints ?? 0}
                   </div>
                   <div style={{ fontFamily: 'Inter, sans-serif', fontSize: 10, color: '#94a3b8', letterSpacing: '0.04em' }}>
@@ -168,10 +168,10 @@ export default function GuruHub() {
               <button
                 onClick={() => navigate('/guru-hub/my-doubts')}
                 style={{
-                  background: 'transparent', border: '1.5px solid #1E3A5F',
+                  background: 'transparent', border: '1.5px solid var(--color-primary, #1E3A5F)',
                   borderRadius: 10, padding: '8px 14px',
                   fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 13,
-                  color: '#1E3A5F', cursor: 'pointer',
+                  color: 'var(--color-primary, #1E3A5F)', cursor: 'pointer',
                 }}
               >
                 My Doubts
@@ -181,7 +181,7 @@ export default function GuruHub() {
 
           {/* Earn badge */}
           <div style={{
-            marginTop: 16, background: '#FEF9EC', border: '1px solid #E8C84A',
+            marginTop: 16, background: '#FEF9EC', border: '1px solid var(--color-accent-light, #E8C84A)',
             borderRadius: 10, padding: '10px 16px',
             display: 'flex', alignItems: 'center', gap: 8,
             fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#92400e',
@@ -200,9 +200,9 @@ export default function GuruHub() {
               style={{
                 padding: '6px 14px',
                 borderRadius: 20,
-                border: activeFilter === f ? '2px solid #D4AF37' : '1.5px solid #e2e8f0',
-                background: activeFilter === f ? '#1E3A5F' : '#fff',
-                color: activeFilter === f ? '#D4AF37' : '#475569',
+                border: activeFilter === f ? '2px solid var(--color-accent, #D4AF37)' : '1.5px solid #e2e8f0',
+                background: activeFilter === f ? 'var(--color-primary, #1E3A5F)' : '#fff',
+                color: activeFilter === f ? 'var(--color-accent, #D4AF37)' : '#475569',
                 fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 13,
                 cursor: 'pointer', transition: 'all 0.18s',
               }}
@@ -216,7 +216,7 @@ export default function GuruHub() {
         {filtered.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '60px 20px' }}>
             <div style={{ fontSize: 48, marginBottom: 12 }}>🔍</div>
-            <div style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 18, color: '#1E3A5F', marginBottom: 8 }}>
+            <div style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 18, color: 'var(--color-primary, #1E3A5F)', marginBottom: 8 }}>
               No doubts in this subject yet
             </div>
             <p style={{ fontFamily: 'Inter, sans-serif', color: '#64748b', marginBottom: 20 }}>
@@ -225,8 +225,8 @@ export default function GuruHub() {
             <button
               onClick={() => navigate('/guru-hub/post-doubt')}
               style={{
-                background: '#D4AF37', border: 'none', borderRadius: 10,
-                padding: '10px 24px', color: '#1E3A5F',
+                background: 'var(--color-accent, #D4AF37)', border: 'none', borderRadius: 10,
+                padding: '10px 24px', color: 'var(--color-primary, #1E3A5F)',
                 fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 14, cursor: 'pointer',
               }}
             >
@@ -247,13 +247,13 @@ export default function GuruHub() {
         onClick={() => navigate('/guru-hub/post-doubt')}
         style={{
           position: 'fixed', bottom: 28, right: 28,
-          background: 'linear-gradient(135deg, #D4AF37, #E8C84A)',
+          background: 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))',
           border: 'none', borderRadius: 16,
           padding: '14px 22px',
           display: 'flex', alignItems: 'center', gap: 8,
           boxShadow: '0 8px 28px rgba(212,175,55,0.45)',
           fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 14,
-          color: '#1E3A5F', cursor: 'pointer',
+          color: 'var(--color-primary, #1E3A5F)', cursor: 'pointer',
           zIndex: 50,
         }}
       >
@@ -279,7 +279,7 @@ function DoubtCard({ doubt, onClick }) {
       }}
       onMouseEnter={e => {
         e.currentTarget.style.boxShadow = '0 4px 20px rgba(30,58,95,0.10)'
-        e.currentTarget.style.borderColor = '#D4AF37'
+        e.currentTarget.style.borderColor = 'var(--color-accent, #D4AF37)'
       }}
       onMouseLeave={e => {
         e.currentTarget.style.boxShadow = 'none'
@@ -317,14 +317,14 @@ function DoubtCard({ doubt, onClick }) {
             </span>
             <span style={{ color: '#cbd5e1', fontSize: 12 }}>·</span>
             <span style={{
-              background: '#EFF6FF', color: '#1d4ed8',
+              background: 'var(--color-bg-muted, #EFF6FF)', color: '#1d4ed8',
               borderRadius: 6, padding: '1px 8px',
               fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 11,
             }}>
               {doubt.examTag}
             </span>
             <span style={{
-              background: '#F1F5F9', color: '#475569',
+              background: 'var(--color-bg-muted-2, #F1F5F9)', color: '#475569',
               borderRadius: 6, padding: '1px 8px',
               fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 11,
             }}>
@@ -338,7 +338,7 @@ function DoubtCard({ doubt, onClick }) {
           {/* Title */}
           <div style={{
             fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 14,
-            color: '#1E3A5F', marginBottom: 6,
+            color: 'var(--color-primary, #1E3A5F)', marginBottom: 6,
             whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
           }}>
             {doubt.title}

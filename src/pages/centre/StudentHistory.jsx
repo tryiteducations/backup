@@ -25,30 +25,30 @@ export default function StudentHistory() {
     ? Math.round(results.reduce((a,r)=>a+r.score,0)/results.length) : 0
 
   return (
-    <div style={{ minHeight:'100vh', background:'#F8FAFC', padding:20 }}>
+    <div style={{ minHeight:'100vh', background:'var(--color-bg, #F8FAFC)', padding:20 }}>
       <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:20 }}>
         <button onClick={()=>navigate('/centre/dashboard')}
-          style={{ background:'none', border:'none', fontSize:22, cursor:'pointer' }}>←</button>
-        <h1 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'#1E3A5F', fontSize:22 }}>
+          style={{ background:'none', border:'none', fontSize:22, cursor:'pointer', color:'var(--heading-color, var(--color-text, #1E3A5F))' }}>←</button>
+        <h1 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'var(--heading-color, var(--color-text, #1E3A5F))', fontSize:22 }}>
           Student History
         </h1>
       </div>
 
       <div style={{ display:'grid', gridTemplateColumns:'280px 1fr', gap:20 }}>
         {/* Student list */}
-        <div style={{ background:'#fff', borderRadius:20, overflow:'hidden', boxShadow:'0 2px 12px rgba(0,0,0,0.05)' }}>
-          <div style={{ background:'#1E3A5F', padding:'12px 16px' }}>
-            <p style={{ color:'#D4AF37', fontWeight:700, fontFamily:'Poppins,sans-serif', fontSize:13 }}>
+        <div style={{ background:'var(--color-surface, #FFFFFF)', borderRadius:20, overflow:'hidden', boxShadow:'0 2px 12px rgba(0,0,0,0.05)' }}>
+          <div style={{ background:'var(--color-primary, #1E3A5F)', padding:'12px 16px' }}>
+            <p style={{ color:'var(--color-accent, #D4AF37)', fontWeight:700, fontFamily:'Poppins,sans-serif', fontSize:13 }}>
               All Students
             </p>
           </div>
           {STUDENTS.map(s => (
             <div key={s.id} onClick={()=>setSelected(s)}
-              style={{ padding:'14px 16px', borderBottom:'1px solid #F1F5F9', cursor:'pointer',
-                background: selected?.id===s.id ? 'rgba(212,175,55,0.1)' : '#fff',
-                borderLeft: selected?.id===s.id ? '4px solid #D4AF37' : 'none' }}>
-              <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:600, color:'#1E3A5F' }}>{s.name}</p>
-              <p style={{ color:'#94A3B8', fontSize:12 }}>Avg: {s.avg}% · 🔥{s.streak}d</p>
+              style={{ padding:'14px 16px', borderBottom:'1px solid var(--color-bg-muted-2, #F1F5F9)', cursor:'pointer',
+                background: selected?.id===s.id ? 'rgba(var(--color-accent-rgb, 212,175,55),0.12)' : 'var(--color-surface, #FFFFFF)',
+                borderLeft: selected?.id===s.id ? '4px solid var(--color-accent, #D4AF37)' : 'none' }}>
+              <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:600, color:'var(--heading-color, var(--color-text, #1E3A5F))' }}>{s.name}</p>
+              <p style={{ color:'var(--subtext-color, #94A3B8)', fontSize:12 }}>Avg: {s.avg}% · 🔥{s.streak}d</p>
             </div>
           ))}
         </div>
@@ -56,64 +56,64 @@ export default function StudentHistory() {
         {/* History */}
         <div>
           {!selected ? (
-            <div style={{ background:'#fff', borderRadius:20, padding:40,
+            <div style={{ background:'var(--color-surface, #FFFFFF)', borderRadius:20, padding:40,
               textAlign:'center', boxShadow:'0 2px 12px rgba(0,0,0,0.05)' }}>
               <p style={{ fontSize:40 }}>👈</p>
-              <p style={{ color:'#94A3B8' }}>Select a student to see their history</p>
+              <p style={{ color:'var(--subtext-color, #94A3B8)' }}>Select a student to see their history</p>
             </div>
           ) : (
             <>
               {/* Mini stats */}
               <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:12, marginBottom:16 }}>
                 {[['📝',results.length,'Tests Taken'],['📊',`${avg}%`,'Avg Score'],['🔥',selected.streak,'Day Streak']].map(([e,v,l])=>(
-                  <div key={l} style={{ background:'#fff', borderRadius:16, padding:14,
+                  <div key={l} style={{ background:'var(--color-surface, #FFFFFF)', borderRadius:16, padding:14,
                     textAlign:'center', boxShadow:'0 2px 8px rgba(0,0,0,0.04)' }}>
                     <p style={{ fontSize:22 }}>{e}</p>
-                    <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'#D4AF37', fontSize:18 }}>{v}</p>
-                    <p style={{ color:'#94A3B8', fontSize:11 }}>{l}</p>
+                    <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'var(--color-accent, #D4AF37)', fontSize:18 }}>{v}</p>
+                    <p style={{ color:'var(--subtext-color, #94A3B8)', fontSize:11 }}>{l}</p>
                   </div>
                 ))}
               </div>
 
               {/* Score trend */}
-              <div style={{ background:'#fff', borderRadius:20, padding:20,
+              <div style={{ background:'var(--color-surface, #FFFFFF)', borderRadius:20, padding:20,
                 boxShadow:'0 2px 12px rgba(0,0,0,0.05)', marginBottom:16 }}>
-                <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'#1E3A5F', marginBottom:12 }}>
+                <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'var(--heading-color, var(--color-text, #1E3A5F))', marginBottom:12 }}>
                   Score Trend
                 </p>
                 <div style={{ display:'flex', alignItems:'flex-end', gap:8, height:80 }}>
                   {results.map((r,i) => (
                     <div key={i} style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', gap:4 }}>
-                      <span style={{ fontSize:10, color:'#94A3B8' }}>{r.score}%</span>
+                      <span style={{ fontSize:10, color:'var(--subtext-color, #94A3B8)' }}>{r.score}%</span>
                       <div style={{
                         width:'100%', borderRadius:'6px 6px 0 0',
                         height:`${(r.score/100)*70}px`,
-                        background: r.score>=80?'#22C55E':r.score>=70?'#D4AF37':'#EF4444',
+                        background: r.score>=80?'var(--color-success, #22C55E)':r.score>=70?'var(--color-accent, #D4AF37)':'var(--color-error, #EF4444)',
                         minHeight:8,
                       }} />
-                      <span style={{ fontSize:9, color:'#94A3B8' }}>{r.date.slice(5)}</span>
+                      <span style={{ fontSize:9, color:'var(--subtext-color, #94A3B8)' }}>{r.date.slice(5)}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Tests table */}
-              <div style={{ background:'#fff', borderRadius:20, overflow:'hidden',
+              <div style={{ background:'var(--color-surface, #FFFFFF)', borderRadius:20, overflow:'hidden',
                 boxShadow:'0 2px 12px rgba(0,0,0,0.05)' }}>
                 {results.map((r,i) => (
                   <div key={i} style={{ display:'flex', alignItems:'center', gap:12,
-                    padding:'13px 18px', borderBottom:'1px solid #F1F5F9' }}>
+                    padding:'13px 18px', borderBottom:'1px solid var(--color-bg-muted-2, #F1F5F9)' }}>
                     <div style={{ flex:1 }}>
-                      <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:600, color:'#1E3A5F', fontSize:14 }}>
+                      <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:600, color:'var(--heading-color, var(--color-text, #1E3A5F))', fontSize:14 }}>
                         {r.testName}
                       </p>
-                      <p style={{ color:'#94A3B8', fontSize:12 }}>{r.date} · {r.subject}</p>
+                      <p style={{ color:'var(--subtext-color, #94A3B8)', fontSize:12 }}>{r.date} · {r.subject}</p>
                     </div>
                     <div style={{ textAlign:'right' }}>
-                      <p style={{ fontWeight:800, color: r.score>=70?'#22C55E':'#EF4444', fontSize:15 }}>
+                      <p style={{ fontWeight:800, color: r.score>=70?'var(--color-success, #22C55E)':'var(--color-error, #EF4444)', fontSize:15 }}>
                         {r.score}%
                       </p>
-                      <p style={{ color:'#94A3B8', fontSize:12 }}>Rank #{r.rank}/{r.total}</p>
+                      <p style={{ color:'var(--subtext-color, #94A3B8)', fontSize:12 }}>Rank #{r.rank}/{r.total}</p>
                     </div>
                   </div>
                 ))}

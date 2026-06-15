@@ -3,8 +3,8 @@ import { createContext, useContext, useState, useCallback } from 'react'
 const ToastCtx = createContext({})
 
 const COLORS = {
-  success: '#22C55E', error: '#EF4444',
-  info: '#1E3A5F', warning: '#F59E0B', coin: '#D4AF37',
+  success: 'var(--color-success, #22C55E)', error: 'var(--color-error, #EF4444)',
+  info: 'var(--color-primary, #1E3A5F)', warning: '#F59E0B', coin: 'var(--color-accent, #D4AF37)',
 }
 const ICONS = {
   success:'✅', error:'❌', info:'ℹ️', warning:'⚠️', coin:'🪙',

@@ -48,12 +48,12 @@ function StatItem({ stat }) {
 
   return (
     <div ref={ref} className="flex flex-col items-center gap-1 px-6 py-4">
-      <span className="font-poppins font-extrabold text-[#D4AF37] leading-none"
-        style={{ fontSize: 'clamp(32px,4vw,48px)' }}>
+      <span className="font-poppins font-extrabold leading-none"
+        style={{ fontSize: 'clamp(32px,4vw,48px)', color: 'var(--color-accent, #D4AF37)' }}>
         {/* ── EXPLICIT TERNARY — never use `isNum && value` which renders "0" ── */}
         {isNum ? `${count.toLocaleString()}${stat.suffix}` : stat.display}
       </span>
-      <span className="text-white/70 text-sm text-center leading-tight">{stat.label}</span>
+      <span className="text-sm text-center leading-tight" style={{ color: 'rgba(var(--color-surface-rgb,255,255,255),0.7)' }}>{stat.label}</span>
     </div>
   )
 }
@@ -61,9 +61,9 @@ function StatItem({ stat }) {
 export default function StatsStrip() {
   return (
     <section id="stats" className="py-10"
-      style={{ background: 'linear-gradient(135deg,#1E3A5F,#0F2140)' }}>
+      style={{ background: 'linear-gradient(135deg, var(--color-primary, #1E3A5F), var(--color-primary-dark, #0F2140))' }}>
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex flex-wrap justify-center divide-x divide-white/10">
+        <div className="flex flex-wrap justify-center" style={{ borderLeft: '1px solid rgba(var(--color-surface-rgb,255,255,255),0.06)', borderRight: '1px solid rgba(var(--color-surface-rgb,255,255,255),0.06)' }}>
           {STATS.map((stat, i) => (
             <StatItem key={i} stat={stat} />
           ))}

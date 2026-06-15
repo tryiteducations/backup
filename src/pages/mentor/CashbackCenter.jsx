@@ -21,7 +21,7 @@ export default function CashbackCenter() {
       <div className="max-w-2xl mx-auto space-y-6 p-4">
 
         {/* Pending cashback */}
-        <div className="bg-gradient-to-br from-[#D4AF37] to-[#E8C84A] rounded-2xl p-6 text-[#0F2140] shadow-lg">
+        <div className="bg-gradient-to-br from-[var(--color-accent, #D4AF37)] to-[var(--color-accent-light, #E8C84A)] rounded-2xl p-6 text-[var(--color-primary-dark, #0F2140)] shadow-lg">
           <p className="text-sm opacity-75">Pending Cashback</p>
           <p className="text-5xl font-black mt-1">₹0.00</p>
           <p className="text-sm mt-2 opacity-75">Refer students who upgrade to Pro to start earning.</p>
@@ -29,14 +29,14 @@ export default function CashbackCenter() {
 
         {/* Qualification progress */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-3">
-          <h2 className="font-bold text-[#1E3A5F]">Monthly Qualification Window</h2>
+          <h2 className="font-bold text-[var(--color-primary, #1E3A5F)]">Monthly Qualification Window</h2>
           <div className="flex justify-between text-sm text-gray-500 mb-1">
             <span>Day {qualProgress} of 30</span>
-            <span className="font-semibold text-[#D4AF37]">{Math.round((qualProgress/30)*100)}%</span>
+            <span className="font-semibold text-[var(--color-accent, #D4AF37)]">{Math.round((qualProgress/30)*100)}%</span>
           </div>
           <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
             <div
-              className="h-full bg-[#D4AF37] rounded-full transition-all"
+              className="h-full bg-[var(--color-accent, #D4AF37)] rounded-full transition-all"
               style={{ width: `${(qualProgress/30)*100}%` }}
             />
           </div>
@@ -49,7 +49,7 @@ export default function CashbackCenter() {
         {/* Payout history */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
           <div className="p-5 border-b border-gray-100">
-            <h2 className="font-bold text-[#1E3A5F]">Payout History</h2>
+            <h2 className="font-bold text-[var(--color-primary, #1E3A5F)]">Payout History</h2>
           </div>
           <div className="text-center py-10 text-gray-400 px-6">
             <p className="text-3xl mb-2">💳</p>
@@ -60,10 +60,10 @@ export default function CashbackCenter() {
 
         {/* How it works */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-3">
-          <h2 className="font-bold text-[#1E3A5F]">How Cashback Works</h2>
+          <h2 className="font-bold text-[var(--color-primary, #1E3A5F)]">How Cashback Works</h2>
           {HOW_IT_WORKS.map(h => (
             <div key={h.step} className="flex gap-3 items-start">
-              <span className="w-6 h-6 rounded-full bg-[#D4AF37] text-[#0F2140] text-xs font-black flex items-center justify-center shrink-0">{h.step}</span>
+              <span className="w-6 h-6 rounded-full bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary-dark, #0F2140)] text-xs font-black flex items-center justify-center shrink-0">{h.step}</span>
               <p className="text-sm text-gray-600">{h.text}</p>
             </div>
           ))}

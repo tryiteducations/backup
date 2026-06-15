@@ -21,19 +21,19 @@ export default function HallHub() {
     <AppLayout title="The Hall">
       <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h2 className="font-display text-2xl font-extrabold text-[#1E3A5F]">Find Your Tribe 🏛️</h2>
+          <h2 className="font-display text-2xl font-extrabold text-[var(--color-primary, #1E3A5F)]">Find Your Tribe 🏛️</h2>
           <p className="text-slate-500 mt-1">Join a Hall, study together, and battle for glory.</p>
         </div>
         <div className="flex gap-3">
           <button
             onClick={() => navigate('/hall/leaderboard')}
-            className="px-4 py-2 rounded-2xl border-2 border-[#1E3A5F] text-[#1E3A5F] font-bold hover:bg-[#1E3A5F] hover:text-white transition-all"
+            className="px-4 py-2 rounded-2xl border-2 border-[var(--color-primary, #1E3A5F)] text-[var(--color-primary, #1E3A5F)] font-bold hover:bg-[var(--color-primary, #1E3A5F)] hover:text-white transition-all"
           >
             🏆 Global Leaderboard
           </button>
           <button
             onClick={() => navigate('/hall/create')}
-            className="px-4 py-2 rounded-2xl bg-[#D4AF37] text-[#1E3A5F] font-bold shadow-md hover:bg-[#E8C84A] transition-all"
+            className="px-4 py-2 rounded-2xl bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)] font-bold shadow-md hover:bg-[var(--color-accent-light, #E8C84A)] transition-all"
           >
             + Create a Hall
           </button>
@@ -46,7 +46,7 @@ export default function HallHub() {
           <p className="text-slate-600 mb-4">No Halls yet — be the first to start one!</p>
           <button
             onClick={() => navigate('/hall/create')}
-            className="px-5 py-2 rounded-2xl bg-[#1E3A5F] text-white font-bold"
+            className="px-5 py-2 rounded-2xl bg-[var(--color-primary, #1E3A5F)] text-white font-bold"
           >
             Create a Hall →
           </button>
@@ -65,7 +65,7 @@ export default function HallHub() {
                   {hall.examFocus}
                 </span>
               </div>
-              <h3 className="font-display font-extrabold text-lg text-[#1E3A5F]">{hall.name}</h3>
+              <h3 className="font-display font-extrabold text-lg text-[var(--color-primary, #1E3A5F)]">{hall.name}</h3>
               <p className="text-sm text-slate-500 mt-1">{hall.members.toLocaleString()} members</p>
             </div>
           ))}

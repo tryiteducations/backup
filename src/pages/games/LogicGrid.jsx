@@ -156,8 +156,8 @@ export default function LogicGrid() {
           padding: '24px 32px', margin: '24px auto', maxWidth: 320,
           display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'center',
         }}>
-          <div style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 900, fontSize: 40, color: '#D4AF37' }}>+{coinsEarned}</div>
-          <div style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.6)' }}>COINS EARNED</div>
+          <div style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 900, fontSize: 40, color: 'var(--color-accent, #D4AF37)' }}>+{coinsEarned}</div>
+          <div style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: 'rgba(var(--color-surface-rgb, 255,255,255), 0.6)' }}>COINS EARNED</div>
           <div style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, color: 'rgba(255,255,255,0.75)', marginTop: 4 }}>
             ⏱ Completed in {fmtTime(elapsed)}
           </div>
@@ -185,7 +185,7 @@ export default function LogicGrid() {
       {/* HUD */}
       <div style={{ width: '100%', maxWidth: 480, margin: '0 auto 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span style={hudLabel}>{puzzle.label}</span>
-        <span style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 22, color: '#D4AF37' }}>
+        <span style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 22, color: 'var(--color-accent, #D4AF37)' }}>
           ⏱ {fmtTime(elapsed)}
         </span>
         <span style={hudLabel}>{errors.length > 0 ? `${errors.length} error${errors.length > 1 ? 's' : ''}` : '✓ Looking good'}</span>
@@ -196,7 +196,7 @@ export default function LogicGrid() {
         {/* Column sums — top */}
         <div style={{ display: 'flex', marginBottom: 6, paddingLeft: 36 }}>
           {puzzle.colSums.map((sum, c) => (
-            <div key={c} style={{ width: 56, textAlign: 'center', fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 13, color: '#D4AF37' }}>
+            <div key={c} style={{ width: 56, textAlign: 'center', fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 13, color: 'var(--color-accent, #D4AF37)' }}>
               Σ{sum}
             </div>
           ))}
@@ -205,7 +205,7 @@ export default function LogicGrid() {
         {puzzle.solution.map((_, r) => (
           <div key={r} style={{ display: 'flex', alignItems: 'center', marginBottom: 6 }}>
             {/* Row sum — left */}
-            <div style={{ width: 36, fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 13, color: '#D4AF37', textAlign: 'right', paddingRight: 8 }}>
+            <div style={{ width: 36, fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 13, color: 'var(--color-accent, #D4AF37)', textAlign: 'right', paddingRight: 8 }}>
               Σ{puzzle.rowSums[r]}
             </div>
             {/* Cells */}
@@ -226,7 +226,7 @@ export default function LogicGrid() {
                     marginRight: c < 3 ? 6 : 0,
                     textAlign: 'center',
                     fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 22,
-                    color: isFixed ? '#fff' : isError ? '#fca5a5' : '#D4AF37',
+                    color: isFixed ? '#fff' : isError ? '#fca5a5' : 'var(--color-accent, #D4AF37)',
                     background: isFixed
                       ? 'rgba(255,255,255,0.15)'
                       : isError
@@ -279,7 +279,7 @@ function BackBtn({ onClick }) {
   return <button onClick={onClick} style={{ position: 'absolute', top: 20, left: 20, background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 10, padding: '8px 16px', fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 13, color: '#fff', cursor: 'pointer' }}>← Games</button>
 }
 function GoldBtn({ onClick, children }) {
-  return <button onClick={onClick} style={{ background: 'linear-gradient(135deg, #D4AF37, #E8C84A)', border: 'none', borderRadius: 14, padding: '14px 28px', fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 15, color: '#1E3A5F', cursor: 'pointer', boxShadow: '0 6px 20px rgba(212,175,55,0.4)', marginTop: 8 }}>{children}</button>
+  return <button onClick={onClick} style={{ background: 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))', border: 'none', borderRadius: 14, padding: '14px 28px', fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 15, color: 'var(--color-primary, #1E3A5F)', cursor: 'pointer', boxShadow: '0 6px 20px rgba(212,175,55,0.4)', marginTop: 8 }}>{children}</button>
 }
 function OutlineBtn({ onClick, children }) {
   return <button onClick={onClick} style={{ background: 'transparent', border: '2px solid rgba(255,255,255,0.3)', borderRadius: 14, padding: '14px 28px', fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 15, color: '#fff', cursor: 'pointer', marginTop: 8 }}>{children}</button>

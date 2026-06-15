@@ -81,9 +81,9 @@ export function filterByDifficulty(questions, targetDifficulty, examId, studentP
  * getDifficultyLabel — human readable
  */
 export function getDifficultyLabel(d) {
-  if (d <= 2) return { label: 'Beginner',    color: '#22C55E', emoji: '🟢' }
+  if (d <= 2) return { label: 'Beginner',    color: 'var(--color-success, #22C55E)', emoji: '🟢' }
   if (d <= 4) return { label: 'Easy',        color: '#84CC16', emoji: '🟡' }
   if (d <= 6) return { label: 'Medium',      color: '#F59E0B', emoji: '🟠' }
-  if (d <= 8) return { label: 'Hard',        color: '#EF4444', emoji: '🔴' }
+  if (d <= 8) return { label: 'Hard',        color: 'var(--color-error, #EF4444)', emoji: '🔴' }
   return               { label: 'Expert',    color: '#7C3AED', emoji: '🟣' }
 }

@@ -272,12 +272,12 @@ export default function ActiveTest() {
   const selected = selectedAnswers[currentQ.id]
 
   const optionStyle = (opt) => {
-    if (!selected) return 'border-gray-200 bg-white hover:border-[#1E3A5F] cursor-pointer'
+    if (!selected) return 'border-gray-200 bg-white hover:border-[var(--color-primary, #1E3A5F)] cursor-pointer'
     if (isPractice && showFeedback) {
       if (opt === currentQ.correct_answer) return 'border-green-500 bg-green-50 text-green-800'
       if (opt === selected && opt !== currentQ.correct_answer) return 'border-red-400 bg-red-50 text-red-700'
     }
-    if (opt === selected) return 'border-[#1E3A5F] bg-[#1E3A5F] text-white'
+    if (opt === selected) return 'border-[var(--color-primary, #1E3A5F)] bg-[var(--color-primary, #1E3A5F)] text-white'
     return 'border-gray-200 bg-white text-gray-500'
   }
 
@@ -285,7 +285,7 @@ export default function ActiveTest() {
     <div className="min-h-screen bg-[#F8FAFC] flex flex-col" style={{ fontFamily: 'Inter, sans-serif' }}>
 
       {/* Top bar */}
-      <div className="bg-[#1E3A5F] text-white px-4 py-3 flex items-center justify-between">
+      <div className="bg-[var(--color-primary, #1E3A5F)] text-white px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <span className="text-sm font-semibold">
             Q {currentIndex + 1} / {questions.length}
@@ -308,7 +308,7 @@ export default function ActiveTest() {
             onClick={handleFlag}
             className={`text-xs px-3 py-1.5 rounded-lg border transition ${
               isFlagged
-                ? 'bg-yellow-400 text-[#1E3A5F] border-yellow-400'
+                ? 'bg-yellow-400 text-[var(--color-primary, #1E3A5F)] border-yellow-400'
                 : 'border-white/30 hover:bg-white/10'
             }`}
           >
@@ -326,7 +326,7 @@ export default function ActiveTest() {
       {/* Progress bar */}
       <div className="h-1.5 bg-gray-200">
         <div
-          className="h-full bg-[#D4AF37] transition-all duration-300"
+          className="h-full bg-[var(--color-accent, #D4AF37)] transition-all duration-300"
           style={{ width: `${progressPct}%` }}
         />
       </div>
@@ -336,7 +336,7 @@ export default function ActiveTest() {
 
         {/* Difficulty badge */}
         <div className="flex items-center gap-2">
-          <span className="text-xs font-semibold bg-[#1E3A5F]/10 text-[#1E3A5F] px-2 py-0.5 rounded-full">
+          <span className="text-xs font-semibold bg-[var(--color-primary, #1E3A5F)]/10 text-[var(--color-primary, #1E3A5F)] px-2 py-0.5 rounded-full">
             {currentQ.difficulty}
           </span>
           <span className="text-xs text-gray-400 capitalize">{currentQ.topic_id.replace(/-/g, ' ')}</span>
@@ -388,7 +388,7 @@ export default function ActiveTest() {
           )}
           <button
             onClick={() => handleNext()}
-            className="flex-1 py-2.5 bg-[#1E3A5F] text-white font-semibold rounded-xl hover:bg-[#0F2140] transition"
+            className="flex-1 py-2.5 bg-[var(--color-primary, #1E3A5F)] text-white font-semibold rounded-xl hover:bg-[var(--color-primary-dark, #0F2140)] transition"
           >
             {isLast ? 'Finish Test' : 'Next →'}
           </button>

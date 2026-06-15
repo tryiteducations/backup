@@ -168,13 +168,13 @@ export default function ExamAlerts() {
         {/* Header */}
         <div className="flex items-start justify-between flex-wrap gap-3 mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-[#1E3A5F] mb-1">Exam Alerts 🔔</h1>
+            <h1 className="text-2xl font-bold text-[var(--color-primary, #1E3A5F)] mb-1">Exam Alerts 🔔</h1>
             <p className="text-gray-500 text-sm">Never miss an application deadline</p>
           </div>
           {subscribedCount > 0 && (
-            <div className="flex items-center gap-2 bg-[#D4AF37]/10 border border-[#D4AF37]/30 px-4 py-2 rounded-xl">
-              <span className="text-[#D4AF37] text-lg">🔔</span>
-              <span className="text-sm font-semibold text-[#1E3A5F]">
+            <div className="flex items-center gap-2 bg-[var(--color-accent, #D4AF37)]/10 border border-[var(--color-accent, #D4AF37)]/30 px-4 py-2 rounded-xl">
+              <span className="text-[var(--color-accent, #D4AF37)] text-lg">🔔</span>
+              <span className="text-sm font-semibold text-[var(--color-primary, #1E3A5F)]">
                 Tracking {subscribedCount} exam{subscribedCount > 1 ? 's' : ''}
               </span>
             </div>
@@ -189,8 +189,8 @@ export default function ExamAlerts() {
               onClick={() => setActiveCategory(key)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${
                 activeCategory === key
-                  ? 'bg-[#1E3A5F] text-white border-[#1E3A5F] shadow'
-                  : 'bg-white text-gray-600 border-gray-200 hover:border-[#D4AF37] hover:text-[#1E3A5F]'
+                  ? 'bg-[var(--color-primary, #1E3A5F)] text-white border-[var(--color-primary, #1E3A5F)] shadow'
+                  : 'bg-white text-gray-600 border-gray-200 hover:border-[var(--color-accent, #D4AF37)] hover:text-[var(--color-primary, #1E3A5F)]'
               }`}
             >
               {label}
@@ -202,8 +202,8 @@ export default function ExamAlerts() {
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
             <div className="text-5xl mb-3">🔕</div>
-            <h3 className="text-lg font-semibold text-[#1E3A5F] mb-2">No alerts in this category</h3>
-            <button onClick={() => setActiveCategory('all')} className="px-5 py-2 bg-[#D4AF37] text-white rounded-xl text-sm font-semibold">
+            <h3 className="text-lg font-semibold text-[var(--color-primary, #1E3A5F)] mb-2">No alerts in this category</h3>
+            <button onClick={() => setActiveCategory('all')} className="px-5 py-2 bg-[var(--color-accent, #D4AF37)] text-white rounded-xl text-sm font-semibold">
               View All Alerts
             </button>
           </div>
@@ -217,7 +217,7 @@ export default function ExamAlerts() {
                 <div
                   key={alert.id}
                   className={`bg-white rounded-2xl shadow-sm border transition-all ${
-                    isSub ? 'border-[#D4AF37] ring-1 ring-[#D4AF37]/20' : 'border-gray-100'
+                    isSub ? 'border-[var(--color-accent, #D4AF37)] ring-1 ring-[var(--color-accent, #D4AF37)]/20' : 'border-gray-100'
                   }`}
                 >
                   <div className="p-5">
@@ -226,7 +226,7 @@ export default function ExamAlerts() {
                       <div className="flex items-center gap-3">
                         <span className="text-3xl">{alert.emoji}</span>
                         <div>
-                          <h3 className="font-bold text-[#1E3A5F] text-base leading-tight">{alert.name}</h3>
+                          <h3 className="font-bold text-[var(--color-primary, #1E3A5F)] text-base leading-tight">{alert.name}</h3>
                           <div className="flex items-center gap-2 mt-1">
                             <span className={`flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full ${status.color}`}>
                               <span className={`w-1.5 h-1.5 rounded-full ${status.dot}`} />
@@ -244,8 +244,8 @@ export default function ExamAlerts() {
                         onClick={() => toggleSubscribe(alert.id)}
                         className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
                           isSub
-                            ? 'bg-[#D4AF37] text-white shadow'
-                            : 'bg-gray-100 text-gray-600 hover:bg-[#1E3A5F] hover:text-white'
+                            ? 'bg-[var(--color-accent, #D4AF37)] text-white shadow'
+                            : 'bg-gray-100 text-gray-600 hover:bg-[var(--color-primary, #1E3A5F)] hover:text-white'
                         }`}
                       >
                         {isSub ? '🔔 Tracking' : '🔕 Track'}
@@ -262,7 +262,7 @@ export default function ExamAlerts() {
                       ].map(item => (
                         <div key={item.label} className="bg-[#F8FAFC] rounded-xl p-3">
                           <p className="text-xs text-gray-400 mb-0.5">{item.label}</p>
-                          <p className="text-xs font-semibold text-[#1E3A5F]">{item.value}</p>
+                          <p className="text-xs font-semibold text-[var(--color-primary, #1E3A5F)]">{item.value}</p>
                         </div>
                       ))}
                     </div>
@@ -279,7 +279,7 @@ export default function ExamAlerts() {
                     <div className="mt-3 pt-3 border-t border-gray-50 flex justify-end">
                       <button
                         onClick={() => navigate(`/exams/${alert.examId}`)}
-                        className="text-xs text-[#1E3A5F] font-semibold hover:text-[#D4AF37] transition"
+                        className="text-xs text-[var(--color-primary, #1E3A5F)] font-semibold hover:text-[var(--color-accent, #D4AF37)] transition"
                       >
                         View Exam Profile →
                       </button>

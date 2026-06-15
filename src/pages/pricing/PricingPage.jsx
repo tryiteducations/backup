@@ -1,104 +1,124 @@
 // src/pages/pricing/PricingPage.jsx
 import { useNavigate } from 'react-router-dom'
-import AppLayout from '../../components/layout/AppLayout'
 import { useAuth } from '../../context/AuthContext'
 
-const PRICING = [
-  { key: 'trial_pass',    label: 'Trial Pass',       price_inr: 19,   description: '3-day full access — try every Pro feature risk-free.' },
-  { key: 'pro_monthly',   label: 'Pro Monthly',      price_inr: 99,   description: 'Unlimited tests, all themes, ad-free — billed monthly.' },
-  { key: 'pro_yearly',    label: 'Pro Yearly',       price_inr: 699,  description: 'Best value — save ₹489 vs monthly. Everything in Pro.' },
-  { key: 'coin_pack_100', label: '100 Coins',        price_inr: 9,    description: 'Boost your wallet for hints, games, and more.' },
-  { key: 'coin_pack_500', label: '500 Coins',        price_inr: 39,   description: 'Great for active learners who play daily.' },
-  { key: 'coin_pack_1200',label: '1,200 Coins',      price_inr: 79,   description: 'Power pack — never run low mid-session.' },
-  { key: 'coin_pack_3000',label: '3,000 Coins',      price_inr: 149,  description: 'Ultimate stash for serious grinders.' },
+const PLANS = [
+  { label:'Trial Pass',  price:'Rs.19',  desc:'3-day full access. Try every Pro feature.',  badge:null },
+  { label:'Pro Monthly', price:'Rs.99',  desc:'Unlimited tests, all themes, ad-free.',       badge:null },
+  { label:'Pro Yearly',  price:'Rs.699', desc:'Best value. Save Rs.489 vs monthly.',         badge:'BEST VALUE' },
 ]
-
-const PRO_BENEFITS = [
-  '♾️ Unlimited practice + mock tests',
-  '🎨 All 25 premium themes unlocked',
-  '🚫 100% ad-free experience',
-  '📊 Advanced analytics & weak-area reports',
-  '📖 Mentor eBooks & GuruBooks access',
-  '🔔 Priority doubt resolution in Guru Hub',
-  '🏆 Exclusive Pro leaderboard ranking',
-  '📱 Offline mode (download tests)',
+const COINS = [
+  { label:'100 Coins',   price:'Rs.9',   desc:'Boost your wallet for hints and games.' },
+  { label:'500 Coins',   price:'Rs.39',  desc:'Great for active daily learners.' },
+  { label:'1200 Coins',  price:'Rs.79',  desc:'Power pack - never run low.' },
+  { label:'3000 Coins',  price:'Rs.149', desc:'Ultimate stash for serious grinders.' },
+]
+const BENEFITS = [
+  'Unlimited practice and mock tests',
+  'All 25 premium themes unlocked',
+  '100% ad-free experience',
+  'Advanced analytics and weak-area reports',
+  'Priority doubt resolution in Guru Hub',
+  'Exclusive Pro leaderboard ranking',
+  'Mentor eBooks and GuruBooks access',
+  'Offline mode - download tests',
 ]
 
 export default function PricingPage() {
+  const navigate = useNavigate()
   const { user } = useAuth()
-  if (!user) return null
-
-  const plans = PRICING.filter(p => !p.key.startsWith('coin'))
-  const coins  = PRICING.filter(p =>  p.key.startsWith('coin'))
 
   return (
-    <AppLayout title="Pro & Pricing">
-      <div className="max-w-4xl mx-auto space-y-8 p-4">
-
-        {/* Launch banner */}
-        <div className="bg-gradient-to-r from-[#D4AF37] to-[#E8C84A] rounded-2xl p-5 flex items-center gap-4 shadow-lg">
-          <span className="text-4xl">🎉</span>
-          <div>
-            <p className="font-bold text-[#0F2140] text-lg">You're on Pro — free during our launch period!</p>
-            <p className="text-[#1E3A5F] text-sm mt-0.5">Enjoy all features at no charge. Paid plans activate after our launch window ends (we'll give you 30 days' notice).</p>
-          </div>
+    <div style={{ minHeight:'100vh', background:'var(--color-bg, #F8FAFC)', color:'var(--color-text, #1E3A5F)' }}>
+      <div style={{ maxWidth:900, margin:'0 auto', padding:'36px 20px 60px' }}>
+        <div style={{ background:'linear-gradient(135deg, var(--color-gold, #D4AF37), var(--color-gold-light, #E8C84A))',
+          borderRadius:20, padding:'28px 32px', marginBottom:28, color:'var(--color-navy, #1E3A5F)' }}>
+          <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900, fontSize:22, marginBottom:8 }}>
+            {user ? 'You are on Pro - free during our launch period!' : 'Explore TryIT Pro plans'}
+          </p>
+          <p style={{ fontSize:14, opacity:0.9, marginBottom: user ? 0 : 14 }}>
+            {user
+              ? 'Enjoy all features at no charge. Paid plans activate after our launch window ends.'
+              : 'Login to compare plans, unlock themes, and go ad-free.'}
+          </p>
+          {!user && (
+            <button
+              onClick={() => navigate('/login')}
+              style={{
+                marginTop: 16,
+                background: 'var(--color-navy, #1E3A5F)',
+                color: 'var(--color-gold, #D4AF37)',
+                border: 'none',
+                borderRadius: 14,
+                padding: '12px 24px',
+                fontWeight: 700,
+                cursor: 'pointer',
+              }}
+            >
+              Login to continue
+            </button>
+          )}
         </div>
 
-        {/* Pro benefits */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-          <h2 className="text-xl font-bold text-[#1E3A5F] mb-4">What's included in Pro</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {PRO_BENEFITS.map(b => (
-              <div key={b} className="flex items-center gap-2 text-gray-700 text-sm">
-                <span>{b}</span>
+        <div style={{ background:'var(--color-surface, #FFFFFF)', borderRadius:20,
+          border:'1.5px solid rgba(226,232,240,0.9)', padding:24, marginBottom:28, color:'var(--color-text, #1E3A5F)' }}>
+          <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800,
+            fontSize:18, marginBottom:16 }}>What is included in Pro</p>
+          <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(240px,1fr))', gap:10 }}>
+            {BENEFITS.map(b => (
+              <div key={b} style={{ display:'flex', alignItems:'center', gap:8 }}>
+                <span style={{ color:'var(--color-navy, #1E3A5F)', fontWeight:700 }}>✔</span>
+                <span style={{ fontSize:14, color:'var(--color-muted, #64748B)' }}>{b}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Plans */}
-        <div>
-          <h2 className="text-xl font-bold text-[#1E3A5F] mb-4">Subscription Plans</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {plans.map(plan => (
-              <div key={plan.key} className={`relative rounded-2xl border-2 p-5 shadow-sm flex flex-col gap-3 ${plan.key === 'pro_yearly' ? 'border-[#D4AF37] bg-[#FDF6E3]' : 'border-gray-200 bg-white'}`}>
-                {plan.key === 'pro_yearly' && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#D4AF37] text-[#0F2140] text-xs font-bold px-3 py-0.5 rounded-full">BEST VALUE</span>
-                )}
-                <div>
-                  <p className="font-bold text-[#1E3A5F] text-lg">{plan.label}</p>
-                  <p className="text-3xl font-black text-[#D4AF37]">₹{plan.price_inr}</p>
-                  <p className="text-gray-500 text-xs mt-1">{plan.description}</p>
-                </div>
-                <button disabled className="mt-auto w-full py-2 rounded-xl bg-gray-200 text-gray-400 font-semibold text-sm cursor-not-allowed">
-                  Coming Soon
-                </button>
-              </div>
-            ))}
-          </div>
+        <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800,
+          fontSize:18, marginBottom:16 }}>Subscription Plans</p>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(220px,1fr))',
+          gap:16, marginBottom:32 }}>
+          {PLANS.map(p => (
+            <div key={p.label} style={{ background:'var(--color-surface, #FFFFFF)', borderRadius:20, padding:20,
+              border: p.badge ? '2px solid var(--color-gold, #D4AF37)' : '1.5px solid rgba(226,232,240,0.9)',
+              position:'relative', color:'var(--color-text, #1E3A5F)' }}>
+              {p.badge && (
+                <span style={{ position:'absolute', top:-10, right:16,
+                  background:'var(--color-gold, #D4AF37)', color:'var(--color-navy, #1E3A5F)', fontSize:10,
+                  fontWeight:800, padding:'3px 10px', borderRadius:20 }}>{p.badge}</span>
+              )}
+              <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800,
+                fontSize:15, marginBottom:4 }}>{p.label}</p>
+              <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
+                color:'var(--color-gold, #D4AF37)', fontSize:28, marginBottom:8 }}>{p.price}</p>
+              <p style={{ fontSize:13, color:'var(--color-muted, #64748B)', marginBottom:16 }}>{p.desc}</p>
+              <button style={{ width:'100%', background:'var(--color-navy, #1E3A5F)', color:'var(--color-gold, #D4AF37)',
+                border:'none', borderRadius:12, padding:'10px 0',
+                fontFamily:'Poppins,sans-serif', fontWeight:700,
+                fontSize:13, cursor:'pointer' }}>Coming Soon</button>
+            </div>
+          ))}
         </div>
 
-        {/* Coin packs */}
-        <div>
-          <h2 className="text-xl font-bold text-[#1E3A5F] mb-1">Coin Packs</h2>
-          <p className="text-gray-500 text-sm mb-4">Use coins for hints, brain games, and exclusive rewards.</p>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {coins.map(pack => (
-              <div key={pack.key} className="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm flex flex-col gap-2">
-                <div className="text-2xl">🪙</div>
-                <p className="font-bold text-[#1E3A5F]">{pack.label}</p>
-                <p className="text-xl font-black text-[#D4AF37]">₹{pack.price_inr}</p>
-                <p className="text-gray-400 text-xs">{pack.description}</p>
-                <button disabled className="mt-auto w-full py-1.5 rounded-xl bg-gray-200 text-gray-400 font-semibold text-xs cursor-not-allowed">
-                  Coming Soon
-                </button>
-              </div>
-            ))}
-          </div>
+        <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800,
+          fontSize:18, marginBottom:16 }}>Coin Packs</p>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(180px,1fr))', gap:12 }}>
+          {COINS.map(c => (
+            <div key={c.label} style={{ background:'var(--color-surface, #FFFFFF)', borderRadius:16,
+              border:'1.5px solid rgba(226,232,240,0.9)', padding:16, color:'var(--color-text, #1E3A5F)' }}>
+              <p style={{ fontSize:24, marginBottom:4 }}>🪙</p>
+              <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800,
+                fontSize:14, marginBottom:2 }}>{c.label}</p>
+              <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
+                color:'var(--color-gold, #D4AF37)', fontSize:20, marginBottom:6 }}>{c.price}</p>
+              <p style={{ fontSize:12, color:'var(--color-muted, #64748B)', marginBottom:12 }}>{c.desc}</p>
+              <button style={{ width:'100%', background:'var(--color-bg, #F8FAFC)', color:'var(--color-muted, #64748B)',
+                border:'1.5px solid rgba(226,232,240,0.9)', borderRadius:10, padding:'8px 0',
+                fontSize:12, fontWeight:600, cursor:'not-allowed' }}>Coming Soon</button>
+            </div>
+          ))}
         </div>
-
-        <p className="text-center text-gray-400 text-xs pb-4">Payments powered by Razorpay · Secure · INR only · No hidden charges</p>
       </div>
-    </AppLayout>
+    </div>
   )
 }

@@ -40,7 +40,7 @@ export function CoinProvider({ children }) {
       {recentMsg && (
         <div style={{
           position:'fixed', bottom:120, right:20, zIndex:9999,
-          background: recentMsg.startsWith('+') ? '#22C55E' : '#EF4444',
+          background: recentMsg.startsWith('+') ? 'var(--color-success, #22C55E)' : 'var(--color-error, #EF4444)',
           color:'#fff', padding:'8px 18px', borderRadius:20,
           fontFamily:'Poppins,sans-serif', fontWeight:800, fontSize:16,
           boxShadow:'0 4px 20px rgba(0,0,0,0.2)',

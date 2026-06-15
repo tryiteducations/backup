@@ -32,19 +32,19 @@ function Content({ isLoggedIn }) {
           <button
             key={tier.id}
             onClick={() => navigate('/equity/verify', { state: { tierId: tier.id, tierName: tier.name } })}
-            className="w-full bg-white rounded-2xl border-2 border-gray-100 p-4 text-left flex items-start gap-4 hover:border-[#D4AF37] hover:shadow-md transition group"
+            className="w-full bg-white rounded-2xl border-2 border-gray-100 p-4 text-left flex items-start gap-4 hover:border-[var(--color-accent, #D4AF37)] hover:shadow-md transition group"
           >
             <span className="text-3xl">{tier.emoji}</span>
             <div className="flex-1">
               <div className="flex items-center gap-2 flex-wrap">
-                <p className="font-bold text-[#1E3A5F] group-hover:text-[#D4AF37] transition">{tier.name}</p>
+                <p className="font-bold text-[var(--color-primary, #1E3A5F)] group-hover:text-[var(--color-accent, #D4AF37)] transition">{tier.name}</p>
                 <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${tier.badge.startsWith('100') ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700'}`}>
                   {tier.badge}
                 </span>
               </div>
               <p className="text-sm text-gray-500 mt-0.5">{tier.desc}</p>
             </div>
-            <span className="text-gray-300 group-hover:text-[#D4AF37] transition text-xl self-center">›</span>
+            <span className="text-gray-300 group-hover:text-[var(--color-accent, #D4AF37)] transition text-xl self-center">›</span>
           </button>
         ))}
       </div>
@@ -69,11 +69,11 @@ export default function EquityTierSelector() {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC]">
-      <div className="bg-[#1E3A5F] px-6 py-4 flex items-center justify-between">
-        <span className="text-[#D4AF37] font-black text-xl">TryIT</span>
+      <div className="bg-[var(--color-primary, #1E3A5F)] px-6 py-4 flex items-center justify-between">
+        <span className="text-[var(--color-accent, #D4AF37)] font-black text-xl">TryIT</span>
         <a href="/landing" className="text-white text-sm opacity-70 hover:opacity-100">← Back</a>
       </div>
-      <h1 className="text-2xl font-bold text-[#1E3A5F] text-center mt-8 mb-2">Equity Access Program</h1>
+      <h1 className="text-2xl font-bold text-[var(--color-primary, #1E3A5F)] text-center mt-8 mb-2">Equity Access Program</h1>
       <p className="text-gray-500 text-sm text-center mb-6">Select your category to apply for free or discounted access</p>
       <Content isLoggedIn={false} />
     </div>

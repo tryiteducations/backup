@@ -16,12 +16,12 @@ const weakest = [...(user?.subjects || [])].sort((a, b) => a.accuracy - b.accura
   return (
     <div ref={ref} className="clay rounded-3xl p-6 sm:col-span-2">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-bold text-[#1E3A5F] text-lg font-poppins">📊 Subject Accuracy</h3>
+        <h3 className="font-bold text-[var(--color-primary, #1E3A5F)] text-lg font-poppins">📊 Subject Accuracy</h3>
         <span className="text-xs text-slate-500">This month</span>
       </div>
       <div className="flex flex-col gap-3">
         {user?.subjects.map(sub => {
-          const color = sub.accuracy >= 80 ? 'bg-green-500' : sub.accuracy >= 70 ? 'bg-[#D4AF37]' : 'bg-amber-500'
+          const color = sub.accuracy >= 80 ? 'bg-green-500' : sub.accuracy >= 70 ? 'bg-[var(--color-accent, #D4AF37)]' : 'bg-amber-500'
           return (
             <div key={sub.name}>
               <div className="flex items-center justify-between mb-1">
@@ -30,7 +30,7 @@ const weakest = [...(user?.subjects || [])].sort((a, b) => a.accuracy - b.accura
                   <span className={`text-xs font-bold ${sub.trend === 'up' ? 'text-green-500' : 'text-red-500'}`}>
                     {sub.trend === 'up' ? '↑' : '↓'}
                   </span>
-                  <span className="text-sm font-bold text-[#1E3A5F]">{sub.accuracy}%</span>
+                  <span className="text-sm font-bold text-[var(--color-primary, #1E3A5F)]">{sub.accuracy}%</span>
                 </div>
               </div>
               <div className="w-full bg-slate-100 rounded-full h-3">
@@ -44,7 +44,7 @@ const weakest = [...(user?.subjects || [])].sort((a, b) => a.accuracy - b.accura
       {weakest && (
         <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
           <p className="text-sm text-slate-500">Weakest: <span className="font-semibold text-red-500">{weakest.name}</span></p>
-          <button className="text-[#D4AF37] text-sm font-semibold hover:underline">Practice {weakest.name} →</button>
+          <button className="text-[var(--color-accent, #D4AF37)] text-sm font-semibold hover:underline">Practice {weakest.name} →</button>
         </div>
       )}
     </div>

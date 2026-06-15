@@ -120,14 +120,14 @@ export default function WordRush() {
       <div style={{ width: '100%', maxWidth: 480, margin: '0 auto 16px', display: 'flex', justifyContent: 'space-between' }}>
         <span style={hudLabel}>Round {rIndex + 1}/10</span>
         <span style={{ ...hudLabel, color: timerColor, fontSize: 22, fontWeight: 800 }}>{timeLeft}s</span>
-        <span style={{ ...hudLabel, color: '#D4AF37' }}>✓ {score}</span>
+        <span style={{ ...hudLabel, color: 'var(--color-accent, #D4AF37)' }}>✓ {score}</span>
       </div>
       {/* Timer bar */}
       <TimerBar pct={(timeLeft / TOTAL_TIME) * 100} color={timerColor} />
 
       {/* Prompt */}
       <div style={{ textAlign: 'center', margin: '28px 0 24px' }}>
-        <div style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, color: 'rgba(255,255,255,0.6)', marginBottom: 8 }}>
+        <div style={{ fontFamily: 'Inter, sans-serif', fontSize: 14, color: 'rgba(var(--color-surface-rgb, 255,255,255), 0.6)', marginBottom: 8 }}>
           Which word is spelled correctly?
         </div>
       </div>
@@ -191,9 +191,9 @@ function BackBtn({ onClick }) {
 function GoldBtn({ onClick, children }) {
   return (
     <button onClick={onClick} style={{
-      background: 'linear-gradient(135deg, #D4AF37, #E8C84A)', border: 'none', borderRadius: 14,
+      background: 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))', border: 'none', borderRadius: 14,
       padding: '14px 32px', fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 16,
-      color: '#1E3A5F', cursor: 'pointer', boxShadow: '0 6px 20px rgba(212,175,55,0.4)', marginTop: 8,
+      color: 'var(--color-primary, #1E3A5F)', cursor: 'pointer', boxShadow: '0 6px 20px rgba(212,175,55,0.4)', marginTop: 8,
     }}>{children}</button>
   )
 }
@@ -234,7 +234,7 @@ function ScoreBoard({ score, total, coins }) {
       </div>
       <div style={{ width: 1, background: 'rgba(255,255,255,0.15)' }} />
       <div style={{ textAlign: 'center' }}>
-        <div style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 900, fontSize: 40, color: '#D4AF37' }}>+{coins}</div>
+        <div style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 900, fontSize: 40, color: 'var(--color-accent, #D4AF37)' }}>+{coins}</div>
         <div style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.5)', marginTop: 4 }}>COINS</div>
       </div>
     </div>

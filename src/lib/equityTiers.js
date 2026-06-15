@@ -108,8 +108,8 @@ export const EQUITY_TIERS = {
     tagline: 'Defending the nation. Advancing your future.',
     discount: 30,
     isFree: false,
-    color: '#1E3A5F',
-    lightColor: '#EFF6FF',
+    color: 'var(--color-primary, #1E3A5F)',
+    lightColor: 'var(--color-bg-muted, #EFF6FF)',
     description: 'For active-duty defense forces and their immediate families.',
     beneficiaries: 'Active duty military · Immediate family members',
     verification: {

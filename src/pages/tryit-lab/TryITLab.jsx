@@ -10,8 +10,8 @@ const LAB_FEATURES = [
     title: 'AI Doubt Solver',
     desc: 'Type any question from any subject — get a step-by-step explanation tailored to your exam pattern, with shortcuts and memory tips.',
     benefit: 'Instant clarity on any concept, anytime.',
-    color: '#1E3A5F',
-    bgColor: '#EFF6FF',
+    color: 'var(--color-primary, #1E3A5F)',
+    bgColor: 'var(--color-bg-muted, #EFF6FF)',
     stage: 'Beta Testing',
   },
   {
@@ -77,12 +77,12 @@ export default function TryITLab() {
         {/* Header */}
         <div
           className="rounded-2xl p-7 mb-8 relative overflow-hidden"
-          style={{ background: 'linear-gradient(135deg, #0F2140 0%, #1E3A5F 60%, #4C1D95 100%)' }}
+          style={{ background: 'linear-gradient(135deg, var(--color-primary-dark, #0F2140) 0%, var(--color-primary, #1E3A5F) 60%, #4C1D95 100%)' }}
         >
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-2">
               <span className="text-4xl">🧪</span>
-              <span className="text-[#D4AF37] text-sm font-bold uppercase tracking-widest">
+              <span className="text-[var(--color-accent, #D4AF37)] text-sm font-bold uppercase tracking-widest">
                 Experimental Zone
               </span>
             </div>
@@ -99,7 +99,7 @@ export default function TryITLab() {
           </div>
           {/* Decorative circles */}
           <div className="absolute -right-8 -top-8 w-40 h-40 rounded-full bg-white opacity-5" />
-          <div className="absolute -right-4 -bottom-12 w-56 h-56 rounded-full bg-[#D4AF37] opacity-5" />
+          <div className="absolute -right-4 -bottom-12 w-56 h-56 rounded-full bg-[var(--color-accent, #D4AF37)] opacity-5" />
         </div>
 
         {/* Feature cards */}
@@ -128,7 +128,7 @@ export default function TryITLab() {
 
                 <div>
                   <h3
-                    className="font-bold text-[#1E3A5F] text-lg mb-1"
+                    className="font-bold text-[var(--color-primary, #1E3A5F)] text-lg mb-1"
                     style={{ fontFamily: 'Poppins, sans-serif' }}
                   >
                     {feature.title}
@@ -147,8 +147,8 @@ export default function TryITLab() {
                   onClick={() => toggleNotify(feature.id)}
                   className={`mt-auto w-full py-2.5 rounded-xl font-semibold text-sm transition-all ${
                     notified[feature.id]
-                      ? 'bg-[#D4AF37] text-[#1E3A5F]'
-                      : 'bg-[#1E3A5F] text-white hover:bg-[#0F2140]'
+                      ? 'bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)]'
+                      : 'bg-[var(--color-primary, #1E3A5F)] text-white hover:bg-[var(--color-primary-dark, #0F2140)]'
                   }`}
                 >
                   {notified[feature.id]

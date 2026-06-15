@@ -30,7 +30,7 @@ export default function CreateHall() {
   return (
     <AppLayout title="Create a Hall">
       <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-md p-6 sm:p-8">
-        <h2 className="font-display text-2xl font-extrabold text-[#1E3A5F] mb-1">Start Your Own Hall 🏛️</h2>
+        <h2 className="font-display text-2xl font-extrabold text-[var(--color-primary, #1E3A5F)] mb-1">Start Your Own Hall 🏛️</h2>
         <p className="text-slate-500 mb-6">Build a community around your exam goal.</p>
 
         <div className="space-y-5">
@@ -41,7 +41,7 @@ export default function CreateHall() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="e.g. CGL Champions Tamil Nadu"
-              className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/30 outline-none"
+              className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-[var(--color-accent, #D4AF37)] focus:ring-2 focus:ring-[var(--color-accent, #D4AF37)]/30 outline-none"
             />
           </div>
 
@@ -52,7 +52,7 @@ export default function CreateHall() {
               onChange={(e) => setDescription(e.target.value)}
               placeholder="What's this Hall about? Who should join?"
               rows={3}
-              className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/30 outline-none resize-none"
+              className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-[var(--color-accent, #D4AF37)] focus:ring-2 focus:ring-[var(--color-accent, #D4AF37)]/30 outline-none resize-none"
             />
           </div>
 
@@ -61,7 +61,7 @@ export default function CreateHall() {
             <select
               value={examFocus}
               onChange={(e) => setExamFocus(e.target.value)}
-              className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-[#D4AF37] focus:ring-2 focus:ring-[#D4AF37]/30 outline-none bg-white"
+              className="w-full px-4 py-3 rounded-2xl border border-slate-200 focus:border-[var(--color-accent, #D4AF37)] focus:ring-2 focus:ring-[var(--color-accent, #D4AF37)]/30 outline-none bg-white"
             >
               {EXAM_FOCUS_OPTIONS.map((opt) => (
                 <option key={opt} value={opt}>{opt}</option>
@@ -75,7 +75,7 @@ export default function CreateHall() {
               <button
                 onClick={() => setPrivacy('public')}
                 className={`flex-1 py-3 rounded-2xl font-bold border-2 transition-all ${
-                  privacy === 'public' ? 'bg-[#1E3A5F] text-white border-[#1E3A5F]' : 'border-slate-200 text-slate-500'
+                  privacy === 'public' ? 'bg-[var(--color-primary, #1E3A5F)] text-white border-[var(--color-primary, #1E3A5F)]' : 'border-slate-200 text-slate-500'
                 }`}
               >
                 🌐 Public
@@ -83,7 +83,7 @@ export default function CreateHall() {
               <button
                 onClick={() => setPrivacy('invite')}
                 className={`flex-1 py-3 rounded-2xl font-bold border-2 transition-all ${
-                  privacy === 'invite' ? 'bg-[#1E3A5F] text-white border-[#1E3A5F]' : 'border-slate-200 text-slate-500'
+                  privacy === 'invite' ? 'bg-[var(--color-primary, #1E3A5F)] text-white border-[var(--color-primary, #1E3A5F)]' : 'border-slate-200 text-slate-500'
                 }`}
               >
                 🔒 Invite-only
@@ -99,7 +99,7 @@ export default function CreateHall() {
                   key={e}
                   onClick={() => setEmoji(e)}
                   className={`text-2xl p-2 rounded-2xl border-2 transition-all ${
-                    emoji === e ? 'border-[#D4AF37] bg-[#FDF6E3]' : 'border-slate-200'
+                    emoji === e ? 'border-[var(--color-accent, #D4AF37)] bg-[#FDF6E3]' : 'border-slate-200'
                   }`}
                 >
                   {e}
@@ -111,7 +111,7 @@ export default function CreateHall() {
           <button
             onClick={handleCreate}
             disabled={!name.trim()}
-            className="w-full py-3 rounded-2xl bg-[#D4AF37] text-[#1E3A5F] font-bold shadow-md hover:bg-[#E8C84A] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 rounded-2xl bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)] font-bold shadow-md hover:bg-[var(--color-accent-light, #E8C84A)] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             🏛️ Create Hall
           </button>

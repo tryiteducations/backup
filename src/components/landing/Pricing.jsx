@@ -36,20 +36,29 @@ export default function PricingPage() {
       <div className="max-w-4xl mx-auto space-y-8 p-4">
 
         {/* Launch banner */}
-        <div className="bg-gradient-to-r from-[#D4AF37] to-[#E8C84A] rounded-2xl p-5 flex items-center gap-4 shadow-lg">
-          <span className="text-4xl">🎉</span>
+        <div style={{
+          background: 'linear-gradient(90deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))',
+          borderRadius: 16,
+          padding: 20,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 16,
+          boxShadow: '0 10px 30px rgba(0,0,0,0.08)'
+        }}>
+          <span style={{ fontSize: '1.25rem' }}>🎉</span>
           <div>
-            <p className="font-bold text-[#0F2140] text-lg">You're on Pro — free during our launch period!</p>
-            <p className="text-[#1E3A5F] text-sm mt-0.5">Enjoy all features at no charge. Paid plans activate after our launch window ends (we'll give you 30 days' notice).</p>
+            <p style={{ fontWeight: 700, color: 'var(--color-primary-dark, #0F2140)', fontSize: '1.125rem' }}>You're on Pro — free during our launch period!</p>
+            <p style={{ color: 'var(--color-primary, #1E3A5F)', fontSize: '0.875rem', marginTop: 4 }}>Enjoy all features at no charge. Paid plans activate after our launch window ends (we'll give you 30 days' notice).</p>
           </div>
         </div>
 
         {/* Pro benefits */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-          <h2 className="text-xl font-bold text-[#1E3A5F] mb-4">What's included in Pro</h2>
+        <div className="rounded-2xl p-6 shadow-sm"
+          style={{ background:'var(--color-surface, #FFFFFF)', border:'1px solid var(--color-border, #E6E9F0)' }}>
+          <h2 className="text-xl font-bold mb-4" style={{ color:'var(--color-text, #1E3A5F)' }}>What's included in Pro</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {PRO_BENEFITS.map(b => (
-              <div key={b} className="flex items-center gap-2 text-gray-700 text-sm">
+              <div key={b} className="flex items-center gap-2 text-sm" style={{ color:'var(--color-text, #1E3A5F)' }}>
                 <span>{b}</span>
               </div>
             ))}
@@ -58,19 +67,24 @@ export default function PricingPage() {
 
         {/* Plans */}
         <div>
-          <h2 className="text-xl font-bold text-[#1E3A5F] mb-4">Subscription Plans</h2>
+          <h2 className="text-xl font-bold mb-4" style={{ color:'var(--color-text, #1E3A5F)' }}>Subscription Plans</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {plans.map(plan => (
-              <div key={plan.key} className={`relative rounded-2xl border-2 p-5 shadow-sm flex flex-col gap-3 ${plan.key === 'pro_yearly' ? 'border-[#D4AF37] bg-[#FDF6E3]' : 'border-gray-200 bg-white'}`}>
+              <div key={plan.key} className="relative rounded-2xl p-5 shadow-sm flex flex-col gap-3"
+                style={{
+                  border: plan.key === 'pro_yearly' ? '2px solid var(--color-accent, #D4AF37)' : '1px solid var(--color-border, #E6E9F0)',
+                  background: plan.key === 'pro_yearly' ? 'var(--color-surface-highlight, rgba(212,175,55,0.12))' : 'var(--color-surface, #FFFFFF)'
+                }}>
                 {plan.key === 'pro_yearly' && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#D4AF37] text-[#0F2140] text-xs font-bold px-3 py-0.5 rounded-full">BEST VALUE</span>
+                  <span style={{ position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)', background: 'var(--color-accent, #D4AF37)', color: 'var(--color-primary-dark, #0F2140)', fontSize: 12, fontWeight: 800, padding: '4px 10px', borderRadius: 999 }}>BEST VALUE</span>
                 )}
                 <div>
-                  <p className="font-bold text-[#1E3A5F] text-lg">{plan.label}</p>
-                  <p className="text-3xl font-black text-[#D4AF37]">₹{plan.price_inr}</p>
-                  <p className="text-gray-500 text-xs mt-1">{plan.description}</p>
+                  <p style={{ fontWeight: 700, color: 'var(--color-primary, #1E3A5F)', fontSize: '1rem' }}>{plan.label}</p>
+                  <p style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--color-accent, #D4AF37)' }}>₹{plan.price_inr}</p>
+                  <p style={{ color: 'var(--color-muted, #6B7280)', fontSize: '0.75rem', marginTop: 6 }}>{plan.description}</p>
                 </div>
-                <button disabled className="mt-auto w-full py-2 rounded-xl bg-gray-200 text-gray-400 font-semibold text-sm cursor-not-allowed">
+                <button disabled className="mt-auto w-full py-2 rounded-xl font-semibold text-sm cursor-not-allowed"
+                  style={{ background: 'var(--color-surface-muted, #F3F4F6)', color: 'var(--color-muted, #9CA3AF)' }}>
                   Coming Soon
                 </button>
               </div>
@@ -80,16 +94,18 @@ export default function PricingPage() {
 
         {/* Coin packs */}
         <div>
-          <h2 className="text-xl font-bold text-[#1E3A5F] mb-1">Coin Packs</h2>
-          <p className="text-gray-500 text-sm mb-4">Use coins for hints, brain games, and exclusive rewards.</p>
+          <h2 className="text-xl font-bold mb-1" style={{ color:'var(--color-text, #1E3A5F)' }}>Coin Packs</h2>
+          <p className="text-sm mb-4" style={{ color:'var(--color-muted, #6B7280)' }}>Use coins for hints, brain games, and exclusive rewards.</p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {coins.map(pack => (
-              <div key={pack.key} className="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm flex flex-col gap-2">
-                <div className="text-2xl">🪙</div>
-                <p className="font-bold text-[#1E3A5F]">{pack.label}</p>
-                <p className="text-xl font-black text-[#D4AF37]">₹{pack.price_inr}</p>
-                <p className="text-gray-400 text-xs">{pack.description}</p>
-                <button disabled className="mt-auto w-full py-1.5 rounded-xl bg-gray-200 text-gray-400 font-semibold text-xs cursor-not-allowed">
+              <div key={pack.key} className="rounded-2xl p-4 shadow-sm flex flex-col gap-2"
+                style={{ background: 'var(--color-surface, #FFFFFF)', border: '1px solid var(--color-border, #E6E9F0)' }}>
+                <div style={{ fontSize: '1.25rem' }}>🪙</div>
+                <p style={{ fontWeight: 700, color: 'var(--color-primary, #1E3A5F)' }}>{pack.label}</p>
+                <p style={{ fontSize: '1.125rem', fontWeight: 900, color: 'var(--color-accent, #D4AF37)' }}>₹{pack.price_inr}</p>
+                <p style={{ color: 'var(--color-muted, #9CA3AF)', fontSize: '0.75rem' }}>{pack.description}</p>
+                <button disabled className="mt-auto w-full py-1.5 rounded-xl font-semibold text-xs cursor-not-allowed"
+                  style={{ background: 'var(--color-surface-muted, #F3F4F6)', color: 'var(--color-muted, #9CA3AF)' }}>
                   Coming Soon
                 </button>
               </div>
@@ -97,7 +113,7 @@ export default function PricingPage() {
           </div>
         </div>
 
-        <p className="text-center text-gray-400 text-xs pb-4">Payments powered by Razorpay · Secure · INR only · No hidden charges</p>
+        <p className="text-center text-xs pb-4" style={{ color:'var(--color-muted, #9CA3AF)' }}>Payments powered by Razorpay · Secure · INR only · No hidden charges</p>
       </div>
     </AppLayout>
   )

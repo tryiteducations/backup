@@ -8,7 +8,7 @@ const MODES = [
     icon:  '👁️',
     label: 'Standard',
     desc:  'Default experience',
-    color: '#1E3A5F',
+    color: 'var(--color-primary, #1E3A5F)',
   },
   {
     id:    A11Y_MODES.AUDIO_COMPANION,
@@ -56,8 +56,8 @@ export default function AccessibilityToggle({ position = 'fixed' }) {
           zIndex: 9000,
           width: 48, height: 48,
           borderRadius: '50%',
-          background: 'linear-gradient(135deg,#1E3A5F,#0F2140)',
-          border: '2px solid #D4AF37',
+          background: 'linear-gradient(135deg,var(--color-primary, #1E3A5F),var(--color-primary-dark, #0F2140))',
+          border: '2px solid var(--color-accent, #D4AF37)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           cursor: 'pointer', fontSize: 20,
           boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
@@ -93,7 +93,7 @@ export default function AccessibilityToggle({ position = 'fixed' }) {
             >
               <div style={{ display:'flex', justifyContent:'space-between', marginBottom:16 }}>
                 <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:700,
-                  color:'#1E3A5F', fontSize:16 }}>
+                  color:'var(--color-primary, #1E3A5F)', fontSize:16 }}>
                   ♿ Accessibility Settings
                 </h3>
                 <button onClick={() => setOpen(false)}
@@ -103,7 +103,7 @@ export default function AccessibilityToggle({ position = 'fixed' }) {
               </div>
 
               {/* Mode selector */}
-              <p style={{ color:'#64748B', fontSize:12, marginBottom:10, fontWeight:600, letterSpacing:'1px' }}>
+              <p style={{ color:'var(--color-muted, #64748B)', fontSize:12, marginBottom:10, fontWeight:600, letterSpacing:'1px' }}>
                 INTERFACE MODE
               </p>
               <div style={{ display:'flex', flexDirection:'column', gap:8, marginBottom:16 }}>
@@ -114,7 +114,7 @@ export default function AccessibilityToggle({ position = 'fixed' }) {
                     style={{
                       display:'flex', alignItems:'center', gap:12,
                       padding:'12px 14px', borderRadius:14,
-                      border:`2px solid ${mode === m.id ? m.color : '#E2E8F0'}`,
+                      border:`2px solid ${mode === m.id ? m.color : 'var(--color-border, #E2E8F0)'}`,
                       background: mode === m.id ? `${m.color}12` : '#F8FAFC',
                       cursor:'pointer', textAlign:'left',
                       transition:'all 0.2s',
@@ -124,7 +124,7 @@ export default function AccessibilityToggle({ position = 'fixed' }) {
                     <span style={{ fontSize:22, flexShrink:0 }}>{m.icon}</span>
                     <div style={{ flex:1, minWidth:0 }}>
                       <div style={{ fontFamily:'Poppins,sans-serif', fontWeight:700,
-                        fontSize:13, color: mode === m.id ? m.color : '#1E3A5F' }}>
+                        fontSize:13, color: mode === m.id ? m.color : 'var(--color-primary, #1E3A5F)' }}>
                         {m.label}
                       </div>
                       <div style={{ fontSize:11, color:'#94A3B8', marginTop:2 }}>{m.desc}</div>
@@ -144,24 +144,24 @@ export default function AccessibilityToggle({ position = 'fixed' }) {
               </div>
 
               {/* Font size */}
-              <p style={{ color:'#64748B', fontSize:12, marginBottom:8, fontWeight:600, letterSpacing:'1px' }}>
+              <p style={{ color:'var(--color-muted, #64748B)', fontSize:12, marginBottom:8, fontWeight:600, letterSpacing:'1px' }}>
                 TEXT SIZE
               </p>
               <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:14 }}>
-                <span style={{ color:'#1E3A5F', fontSize:12, fontWeight:600 }}>A</span>
+                <span style={{ color:'var(--color-primary, #1E3A5F)', fontSize:12, fontWeight:600 }}>A</span>
                 <input type="range" min={14} max={28} value={fontSize}
                   onChange={e => setFontSize(+e.target.value)}
-                  style={{ flex:1, accentColor:'#D4AF37' }}
+                  style={{ flex:1, accentColor:'var(--color-accent, #D4AF37)' }}
                   aria-label={`Text size: ${fontSize}px`}
                 />
-                <span style={{ color:'#1E3A5F', fontSize:18, fontWeight:700 }}>A</span>
-                <span style={{ color:'#D4AF37', fontSize:12, fontWeight:700, minWidth:32 }}>{fontSize}px</span>
+                <span style={{ color:'var(--color-primary, #1E3A5F)', fontSize:18, fontWeight:700 }}>A</span>
+                <span style={{ color:'var(--color-accent, #D4AF37)', fontSize:12, fontWeight:700, minWidth:32 }}>{fontSize}px</span>
               </div>
 
               {/* High contrast */}
               <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
                 <span style={{ fontFamily:'Poppins,sans-serif', fontWeight:600,
-                  color:'#1E3A5F', fontSize:13 }}>
+                  color:'var(--color-primary, #1E3A5F)', fontSize:13 }}>
                   High Contrast
                 </span>
                 <button
@@ -170,7 +170,7 @@ export default function AccessibilityToggle({ position = 'fixed' }) {
                   role="switch"
                   style={{
                     width:44, height:24, borderRadius:12, border:'none',
-                    background: highContrast ? '#1E3A5F' : '#E2E8F0',
+                    background: highContrast ? 'var(--color-primary, #1E3A5F)' : 'var(--color-border, #E2E8F0)',
                     cursor:'pointer', position:'relative', transition:'background 0.2s',
                   }}
                 >

@@ -3,7 +3,6 @@ import { createContext, useContext, useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import localDb from '../lib/localDb'
 
-// ── Fresh-account defaults — Level 1, 0 coins, nothing pre-loaded ──
 const MOCK_USER = {
   id: 'usr-mock-001',
   name: '',
@@ -14,7 +13,7 @@ const MOCK_USER = {
   role: localStorage.getItem('tryit_role') || 'student',
   xp: 0, xpToNext: 500, coins: 0, streak: 0, streakFreezes: 2,
   level: 1, levelTitle: 'The Fierce One', levelEmoji: '🔥',
-  isPro: true, plan: 'pro_trial', // TRIAL: everyone is Pro (Razorpay deferred)
+  isPro: true, plan: 'pro_trial',
   userId: 'TRY-TN-00001-2026', joinDate: 'June 2026',
   rank: null, testsCompleted: 0, avgScore: null,
   studyHours: '0h', guruPoints: 0,
@@ -22,8 +21,7 @@ const MOCK_USER = {
   subjects: [],
 }
 
-const IS_DEV = !import.meta.env.VITE_SUPABASE_URL ||
-               import.meta.env.VITE_SUPABASE_URL.includes('placeholder')
+const IS_DEV = true // Dev mode
 
 const SIGNUP_BONUS = 200
 
@@ -52,7 +50,6 @@ function applyAdminGrant(user, email) {
   return user
 }
 
-// Pick initials from a name like "Arjun Kumar" -> "AK"
 function makeInitials(name, email) {
   if (name && name.trim()) {
     const parts = name.trim().split(/\s+/)
@@ -77,8 +74,6 @@ export function AuthProvider({ children }) {
     if (IS_DEV) {
       const email = localStorage.getItem('tryit_email')
       if (email) {
-        // Restore any locally-saved profile (so coins/xp/streak persist
-        // across reloads), but fall back to fresh MOCK_USER values
         let saved = null
         try { saved = localDb.getProfile?.(email) } catch {}
 
@@ -103,7 +98,6 @@ export function AuthProvider({ children }) {
       return
     }
 
-    // ── Production: real Supabase session ──────────────────────────
     try {
       const { data } = await supabase.auth.getSession()
       if (data?.session?.user) {
@@ -125,13 +119,12 @@ export function AuthProvider({ children }) {
       ...MOCK_USER,
       ...profile,
       initials: makeInitials(profile.name, profile.email),
-      isPro: true, // TRIAL: everyone is Pro (Razorpay deferred)
+      isPro: true,
       plan: profile.plan || 'pro_trial',
     }
     return applyAdminGrant(u, profile.email)
   }
 
-  // ── Auth actions ────────────────────────────────────────────────
   const login = async (email, role = 'student') => {
     const e = (email || '').trim().toLowerCase()
     if (!e) return { error: 'Email required' }
@@ -179,7 +172,6 @@ export function AuthProvider({ children }) {
     })
   }
 
-  // ── Admin "View As" — QA any role with full access ─────────────
   const viewAs = (targetRole) => {
     const fakeEmail = `admin-view-${targetRole}@tryit.internal`
     localStorage.setItem('tryit_admin_impersonating', '1')
@@ -193,7 +185,7 @@ export function AuthProvider({ children }) {
       email: fakeEmail, role: targetRole,
       name: `[Admin View] ${targetRole.charAt(0).toUpperCase() + targetRole.slice(1)}`,
       initials: 'AV', isPro: true, plan: 'pro_trial',
-      coins: 9999, level: 10, levelTitle: 'The Absolute', levelEmoji: '👑',
+      coins: 9999, level: 10, levelTitle: 'The Legend', levelEmoji: '🌟',
       rank: 1, testsCompleted: 50, avgScore: 92,
       exams: targetRole === 'student' ? [
         { id: 'ssc-cgl',  name: 'SSC CGL',  readiness: 80, examDate: 'Aug 2026' },
@@ -204,7 +196,7 @@ export function AuthProvider({ children }) {
         { name: 'Quant',     accuracy: 82, trend: 'up',   emoji: '📐' },
         { name: 'Reasoning', accuracy: 90, trend: 'up',   emoji: '🧠' },
         { name: 'English',   accuracy: 68, trend: 'down', emoji: '📝' },
-        { name: 'GK',        accuracy: 75, trend: 'up',   emoji: '🌏' },
+        { name: 'GK',        accuracy: 75, trend: 'up',   emoji: '🌍' },
       ] : [],
     }
     setUser(viewUser)
@@ -234,4 +226,3 @@ export function AuthProvider({ children }) {
 }
 
 export const useAuth = () => useContext(AuthCtx)
-

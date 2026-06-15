@@ -127,7 +127,7 @@ export default function ScholarshipHub() {
         {/* Banner */}
         <div
           className="rounded-2xl px-6 py-5 mb-8 flex items-start gap-4"
-          style={{ background: 'linear-gradient(135deg, #1E3A5F 0%, #0F2140 100%)' }}
+          style={{ background: 'linear-gradient(135deg, var(--color-primary, #1E3A5F) 0%, var(--color-primary-dark, #0F2140) 100%)' }}
         >
           <span className="text-3xl">🔔</span>
           <div>
@@ -148,8 +148,8 @@ export default function ScholarshipHub() {
               onClick={() => setActiveCategory(cat)}
               className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${
                 activeCategory === cat
-                  ? 'bg-[#1E3A5F] text-white'
-                  : 'bg-white border border-gray-200 text-gray-600 hover:border-[#1E3A5F] hover:text-[#1E3A5F]'
+                  ? 'bg-[var(--color-primary, #1E3A5F)] text-white'
+                  : 'bg-white border border-gray-200 text-gray-600 hover:border-[var(--color-primary, #1E3A5F)] hover:text-[var(--color-primary, #1E3A5F)]'
               }`}
             >
               {cat}
@@ -185,7 +185,7 @@ export default function ScholarshipHub() {
                   onClick={() => toggleNotify(s.id)}
                   className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full transition-all whitespace-nowrap ${
                     notified[s.id]
-                      ? 'bg-[#D4AF37] text-[#1E3A5F]'
+                      ? 'bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)]'
                       : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
                   }`}
                 >
@@ -195,7 +195,7 @@ export default function ScholarshipHub() {
 
               <div>
                 <h3
-                  className="font-bold text-[#1E3A5F] text-base leading-snug"
+                  className="font-bold text-[var(--color-primary, #1E3A5F)] text-base leading-snug"
                   style={{ fontFamily: 'Poppins, sans-serif' }}
                 >
                   {s.name}

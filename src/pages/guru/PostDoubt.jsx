@@ -92,7 +92,7 @@ export default function PostDoubt() {
           padding: '32px 28px',
           boxShadow: '0 4px 24px rgba(30,58,95,0.06)',
         }}>
-          <h1 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 22, color: '#1E3A5F', margin: '0 0 6px' }}>
+          <h1 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 22, color: 'var(--color-primary, #1E3A5F)', margin: '0 0 6px' }}>
             📝 Post a Doubt
           </h1>
           <p style={{ fontFamily: 'Inter, sans-serif', color: '#64748b', fontSize: 13, margin: '0 0 28px' }}>
@@ -127,9 +127,9 @@ export default function PostDoubt() {
                   onClick={() => set('subject', s)}
                   style={{
                     padding: '6px 14px', borderRadius: 20,
-                    border: form.subject === s ? '2px solid #D4AF37' : '1.5px solid #e2e8f0',
-                    background: form.subject === s ? '#1E3A5F' : '#F8FAFC',
-                    color: form.subject === s ? '#D4AF37' : '#475569',
+                    border: form.subject === s ? '2px solid var(--color-accent, #D4AF37)' : '1.5px solid #e2e8f0',
+                    background: form.subject === s ? 'var(--color-primary, #1E3A5F)' : '#F8FAFC',
+                    color: form.subject === s ? 'var(--color-accent, #D4AF37)' : '#475569',
                     fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 12,
                     cursor: 'pointer', transition: 'all 0.15s',
                   }}
@@ -199,7 +199,7 @@ export default function PostDoubt() {
 
           {/* Tip box */}
           <div style={{
-            background: '#FEF9EC', border: '1px solid #E8C84A',
+            background: '#FEF9EC', border: '1px solid var(--color-accent-light, #E8C84A)',
             borderRadius: 10, padding: '10px 16px',
             display: 'flex', gap: 10, marginBottom: 28,
           }}>
@@ -215,11 +215,11 @@ export default function PostDoubt() {
             disabled={submitting}
             style={{
               width: '100%',
-              background: submitting ? '#e2e8f0' : 'linear-gradient(135deg, #D4AF37, #E8C84A)',
+              background: submitting ? '#e2e8f0' : 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))',
               border: 'none', borderRadius: 12,
               padding: '14px',
               fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 16,
-              color: submitting ? '#94a3b8' : '#1E3A5F',
+              color: submitting ? '#94a3b8' : 'var(--color-primary, #1E3A5F)',
               cursor: submitting ? 'not-allowed' : 'pointer',
               transition: 'opacity 0.2s',
               boxShadow: submitting ? 'none' : '0 4px 16px rgba(212,175,55,0.35)',
@@ -240,7 +240,7 @@ function FieldGroup({ label, hint, error, required, children }) {
     <div style={{ marginBottom: 22 }}>
       <label style={{
         display: 'block', fontFamily: 'Inter, sans-serif',
-        fontWeight: 700, fontSize: 13, color: '#1E3A5F', marginBottom: 6,
+        fontWeight: 700, fontSize: 13, color: 'var(--color-primary, #1E3A5F)', marginBottom: 6,
       }}>
         {label} {required && <span style={{ color: '#ef4444' }}>*</span>}
         {hint && <span style={{ fontWeight: 400, color: '#94a3b8', fontSize: 12, marginLeft: 6 }}>{hint}</span>}

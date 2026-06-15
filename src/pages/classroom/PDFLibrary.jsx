@@ -37,7 +37,7 @@ export default function PDFLibrary() {
     <AppLayout title="PDF Library">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>
-          <h2 className="font-display text-2xl font-extrabold text-[#1E3A5F] mb-1">PDF Library 📚</h2>
+          <h2 className="font-display text-2xl font-extrabold text-[var(--color-primary, #1E3A5F)] mb-1">PDF Library 📚</h2>
           <p className="text-slate-500">Notes, previous papers, and study material — free or premium.</p>
         </div>
         <div className="flex gap-3">
@@ -46,12 +46,12 @@ export default function PDFLibrary() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search materials..."
-            className="px-4 py-2 rounded-2xl border border-slate-200 focus:border-[#D4AF37] outline-none w-48"
+            className="px-4 py-2 rounded-2xl border border-slate-200 focus:border-[var(--color-accent, #D4AF37)] outline-none w-48"
           />
           <select
             value={examFilter}
             onChange={(e) => setExamFilter(e.target.value)}
-            className="px-3 py-2 rounded-2xl border border-slate-200 text-sm bg-white focus:border-[#D4AF37] outline-none"
+            className="px-3 py-2 rounded-2xl border border-slate-200 text-sm bg-white focus:border-[var(--color-accent, #D4AF37)] outline-none"
           >
             {examOptions.map((opt) => (
               <option key={opt} value={opt}>{opt}</option>
@@ -79,15 +79,15 @@ export default function PDFLibrary() {
                   {m.tier === 'Premium' ? '⭐ Premium' : '🎉 Free'}
                 </span>
               </div>
-              <h3 className="font-display font-extrabold text-[#1E3A5F] mb-1">{m.title}</h3>
+              <h3 className="font-display font-extrabold text-[var(--color-primary, #1E3A5F)] mb-1">{m.title}</h3>
               <p className="text-sm text-slate-500 mb-3">{m.subject} · {m.exam}</p>
               <div className="flex items-center justify-between">
                 <span className="text-xs text-slate-400">{m.size}</span>
                 <div className="flex gap-2">
-                  <button className="px-3 py-1.5 rounded-2xl border-2 border-[#1E3A5F] text-[#1E3A5F] text-sm font-bold hover:bg-[#1E3A5F] hover:text-white transition-all">
+                  <button className="px-3 py-1.5 rounded-2xl border-2 border-[var(--color-primary, #1E3A5F)] text-[var(--color-primary, #1E3A5F)] text-sm font-bold hover:bg-[var(--color-primary, #1E3A5F)] hover:text-white transition-all">
                     View
                   </button>
-                  <button className="px-3 py-1.5 rounded-2xl bg-[#D4AF37] text-[#1E3A5F] text-sm font-bold hover:bg-[#E8C84A] transition-all">
+                  <button className="px-3 py-1.5 rounded-2xl bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)] text-sm font-bold hover:bg-[var(--color-accent-light, #E8C84A)] transition-all">
                     Download
                   </button>
                 </div>

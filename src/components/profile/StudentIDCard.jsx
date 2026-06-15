@@ -69,7 +69,7 @@ function IDCardFace({ user, template, isFront }) {
           background:`linear-gradient(135deg,${T.accent},${T.accent}88)`,
           display:'flex', alignItems:'center', justifyContent:'center',
           fontFamily:'Poppins,sans-serif', fontWeight:800, fontSize:'22px',
-          color: T.id === 'champion' ? '#1C1917' : '#1E3A5F',
+          color: T.id === 'champion' ? '#1C1917' : 'var(--color-primary, #1E3A5F)',
           border:`2px solid ${T.border}`,
           boxShadow:`0 0 20px ${T.accent}44`,
           flexShrink:0,
@@ -216,9 +216,9 @@ export default function StudentIDCard({ user }) {
             onClick={() => setTemplate(i)}
             style={{
               padding:'6px 14px', borderRadius:'20px',
-              border:`2px solid ${i === activeTemplate ? '#D4AF37' : '#E2E8F0'}`,
-              background: i === activeTemplate ? '#D4AF37' : '#fff',
-              color: i === activeTemplate ? '#1E3A5F' : '#64748B',
+              border:`2px solid ${i === activeTemplate ? 'var(--color-accent, #D4AF37)' : 'var(--color-border, #E2E8F0)'}`,
+              background: i === activeTemplate ? 'var(--color-accent, #D4AF37)' : '#fff',
+              color: i === activeTemplate ? 'var(--color-primary, #1E3A5F)' : 'var(--color-muted, #64748B)',
               fontFamily:'Poppins,sans-serif', fontWeight:600,
               fontSize:'12px', cursor:'pointer', transition:'all 0.2s',
             }}>
@@ -233,10 +233,10 @@ export default function StudentIDCard({ user }) {
           display:'flex', alignItems:'center', justifyContent:'center',
           gap:'8px', width:'100%', maxWidth:'340px',
           margin:'0 auto', padding:'12px',
-          background:'linear-gradient(135deg,#D4AF37,#E8C84A)',
+          background:'linear-gradient(135deg,var(--color-accent, #D4AF37),var(--color-accent-light, #E8C84A))',
           border:'none', borderRadius:'14px',
           fontFamily:'Poppins,sans-serif', fontWeight:700,
-          fontSize:'14px', color:'#1E3A5F', cursor:'pointer',
+          fontSize:'14px', color:'var(--color-primary, #1E3A5F)', cursor:'pointer',
         }}>
         📤 Share My ID Card
       </button>

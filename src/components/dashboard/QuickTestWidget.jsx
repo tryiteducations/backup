@@ -19,7 +19,7 @@ export default function QuickTestWidget() {
         {TYPES.map(t => (
           <button key={t} onClick={() => setType(t)}
             className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all
-              ${type === t ? 'bg-[#D4AF37] text-[#1E3A5F]' : 'bg-white/10 text-white hover:bg-white/20'}`}>
+              ${type === t ? 'bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)]' : 'bg-white/10 text-white hover:bg-white/20'}`}>
             {t}
           </button>
         ))}
@@ -28,7 +28,7 @@ export default function QuickTestWidget() {
         {SUBJECTS.map(s => (
           <button key={s} onClick={() => setSubj(s)}
             className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap flex-shrink-0 transition-all
-              ${subj === s ? 'bg-[#D4AF37] text-[#1E3A5F]' : 'bg-white/10 text-white/80 hover:bg-white/20'}`}>
+              ${subj === s ? 'bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)]' : 'bg-white/10 text-white/80 hover:bg-white/20'}`}>
             {s}
           </button>
         ))}

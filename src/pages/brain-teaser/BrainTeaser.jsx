@@ -126,11 +126,11 @@ export default function BrainTeaser() {
       <div className="max-w-2xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <p className="text-[#D4AF37] text-sm font-bold uppercase tracking-widest mb-1">
+          <p className="text-[var(--color-accent, #D4AF37)] text-sm font-bold uppercase tracking-widest mb-1">
             Daily Challenge
           </p>
           <h1
-            className="text-3xl font-bold text-[#1E3A5F] mb-1"
+            className="text-3xl font-bold text-[var(--color-primary, #1E3A5F)] mb-1"
             style={{ fontFamily: 'Poppins, sans-serif' }}
           >
             Brain Teaser
@@ -143,7 +143,7 @@ export default function BrainTeaser() {
         {/* Today's Teaser Card */}
         <div
           className="rounded-2xl p-8 mb-6 text-center relative overflow-hidden"
-          style={{ background: 'linear-gradient(135deg, #1E3A5F 0%, #0F2140 100%)' }}
+          style={{ background: 'linear-gradient(135deg, var(--color-primary, #1E3A5F) 0%, var(--color-primary-dark, #0F2140) 100%)' }}
         >
           <div className="text-5xl mb-5">{today.emoji}</div>
           <p
@@ -156,21 +156,21 @@ export default function BrainTeaser() {
           {!revealed && !revealing && (
             <button
               onClick={handleAttempt}
-              className="bg-[#D4AF37] hover:bg-[#E8C84A] text-[#1E3A5F] font-bold px-8 py-3 rounded-2xl text-base transition-all shadow-lg hover:shadow-xl"
+              className="bg-[var(--color-accent, #D4AF37)] hover:bg-[var(--color-accent-light, #E8C84A)] text-[var(--color-primary, #1E3A5F)] font-bold px-8 py-3 rounded-2xl text-base transition-all shadow-lg hover:shadow-xl"
             >
               {earnedToday ? 'Reveal Answer' : 'Attempt & Reveal (+10 coins)'}
             </button>
           )}
 
           {revealing && (
-            <div className="flex justify-center items-center gap-2 text-[#D4AF37] text-lg font-semibold animate-pulse">
+            <div className="flex justify-center items-center gap-2 text-[var(--color-accent, #D4AF37)] text-lg font-semibold animate-pulse">
               <span>🤔</span> Thinking…
             </div>
           )}
 
           {revealed && (
             <div className="bg-white bg-opacity-10 rounded-2xl p-5 text-left border border-white border-opacity-20">
-              <p className="text-[#D4AF37] font-bold text-sm uppercase tracking-wide mb-2">
+              <p className="text-[var(--color-accent, #D4AF37)] font-bold text-sm uppercase tracking-wide mb-2">
                 💡 Answer
               </p>
               <p
@@ -184,20 +184,20 @@ export default function BrainTeaser() {
           )}
 
           {earnedToday && !revealed && (
-            <p className="text-[#D4AF37] text-xs mt-3">
+            <p className="text-[var(--color-accent, #D4AF37)] text-xs mt-3">
               ✓ You already earned your coins today
             </p>
           )}
 
           {/* Decorative circles */}
           <div className="absolute -left-8 -bottom-8 w-36 h-36 rounded-full bg-white opacity-5" />
-          <div className="absolute -right-4 -top-6 w-24 h-24 rounded-full bg-[#D4AF37] opacity-10" />
+          <div className="absolute -right-4 -top-6 w-24 h-24 rounded-full bg-[var(--color-accent, #D4AF37)] opacity-10" />
         </div>
 
         {/* Hint */}
         {!revealed && (
           <details className="bg-white rounded-2xl border border-gray-100 shadow-sm px-5 py-4 mb-6 cursor-pointer group">
-            <summary className="font-semibold text-[#1E3A5F] text-sm list-none flex items-center justify-between">
+            <summary className="font-semibold text-[var(--color-primary, #1E3A5F)] text-sm list-none flex items-center justify-between">
               <span>🔍 Need a hint?</span>
               <span className="text-gray-300 group-open:rotate-180 transition-transform">▼</span>
             </summary>
@@ -209,7 +209,7 @@ export default function BrainTeaser() {
         <div>
           <button
             onClick={() => setShowPast(!showPast)}
-            className="w-full text-center text-sm font-semibold text-gray-400 hover:text-[#1E3A5F] transition-all flex items-center justify-center gap-2 py-2"
+            className="w-full text-center text-sm font-semibold text-gray-400 hover:text-[var(--color-primary, #1E3A5F)] transition-all flex items-center justify-center gap-2 py-2"
           >
             📅 {showPast ? 'Hide' : 'Show'} Past Week's Teasers
           </button>
@@ -232,7 +232,7 @@ export default function BrainTeaser() {
                     </p>
                     <div className="bg-[#F8FAFC] rounded-xl p-3">
                       <p className="text-xs text-gray-400 font-semibold mb-0.5">Answer</p>
-                      <p className="text-[#1E3A5F] font-bold text-sm">{t.answer}</p>
+                      <p className="text-[var(--color-primary, #1E3A5F)] font-bold text-sm">{t.answer}</p>
                     </div>
                   </div>
                 )

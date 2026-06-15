@@ -118,7 +118,7 @@ export default function GKBlitz() {
         <span style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 22, color: timerColor }}>
           {timedOut ? "Time's up!" : `${timeLeft}s`}
         </span>
-        <span style={{ ...hudLabel, color: '#D4AF37' }}>✓ {score}</span>
+        <span style={{ ...hudLabel, color: 'var(--color-accent, #D4AF37)' }}>✓ {score}</span>
       </div>
 
       {/* Timer bar */}
@@ -182,7 +182,7 @@ function BackBtn({ onClick }) {
   return <button onClick={onClick} style={{ position: 'absolute', top: 20, left: 20, background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 10, padding: '8px 16px', fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 13, color: '#fff', cursor: 'pointer' }}>← Games</button>
 }
 function GoldBtn({ onClick, children }) {
-  return <button onClick={onClick} style={{ background: 'linear-gradient(135deg, #D4AF37, #E8C84A)', border: 'none', borderRadius: 14, padding: '14px 32px', fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 16, color: '#1E3A5F', cursor: 'pointer', boxShadow: '0 6px 20px rgba(212,175,55,0.4)', marginTop: 8 }}>{children}</button>
+  return <button onClick={onClick} style={{ background: 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))', border: 'none', borderRadius: 14, padding: '14px 32px', fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 16, color: 'var(--color-primary, #1E3A5F)', cursor: 'pointer', boxShadow: '0 6px 20px rgba(212,175,55,0.4)', marginTop: 8 }}>{children}</button>
 }
 function OutlineBtn({ onClick, children }) {
   return <button onClick={onClick} style={{ background: 'transparent', border: '2px solid rgba(255,255,255,0.3)', borderRadius: 14, padding: '14px 32px', fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 16, color: '#fff', cursor: 'pointer', marginTop: 8 }}>{children}</button>
@@ -199,7 +199,7 @@ function ScoreBoard({ score, total, coins }) {
       </div>
       <div style={{ width: 1, background: 'rgba(255,255,255,0.15)' }} />
       <div style={{ textAlign: 'center' }}>
-        <div style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 900, fontSize: 40, color: '#D4AF37' }}>+{coins}</div>
+        <div style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 900, fontSize: 40, color: 'var(--color-accent, #D4AF37)' }}>+{coins}</div>
         <div style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.5)', marginTop: 4 }}>COINS</div>
       </div>
     </div>

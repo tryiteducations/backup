@@ -7,7 +7,7 @@ const TIERS = [
     sub:        'Orphans / Welfare Home Children',
     emoji:      '🌱',
     price:      '100% FREE',
-    priceColor: '#22C55E',
+    priceColor: 'var(--color-success, #22C55E)',
     tag:        'FREE FOR LIFE',
     tagBg:      '#DCFCE7', tagColor:'#15803D',
     doc:        'Master NGO Institutional Code  OR  Death Certificate + Legal Heir Certificate',
@@ -18,7 +18,7 @@ const TIERS = [
     sub:        'Blind · Deaf · Hard of Hearing · Motor Challenged',
     emoji:      '♿',
     price:      '100% FREE',
-    priceColor: '#22C55E',
+    priceColor: 'var(--color-success, #22C55E)',
     tag:        'FREE FOR LIFE',
     tagBg:      '#DCFCE7', tagColor:'#15803D',
     doc:        'Government UDID Card (Unique Disability ID)  OR  Disability Certificate',
@@ -30,7 +30,7 @@ const TIERS = [
     sub:        "Children of Sanitation Workers / Waste Pickers",
     emoji:      '🧹',
     price:      '100% FREE',
-    priceColor: '#22C55E',
+    priceColor: 'var(--color-success, #22C55E)',
     tag:        'FREE FOR LIFE',
     tagBg:      '#DCFCE7', tagColor:'#15803D',
     doc:        'Municipal Corporation ID / Employment Slip  OR  Panchayat Occupation Certificate',
@@ -41,7 +41,7 @@ const TIERS = [
     sub:        'Children / Spouses of Fallen Indian Soldiers',
     emoji:      '🎖️',
     price:      '100% FREE',
-    priceColor: '#22C55E',
+    priceColor: 'var(--color-success, #22C55E)',
     tag:        'FREE FOR LIFE',
     tagBg:      '#DCFCE7', tagColor:'#15803D',
     doc:        'Zila Sainik Board Certificate  OR  Sainik Welfare Department Certificate',
@@ -52,7 +52,7 @@ const TIERS = [
     sub:        'Via National Transgender Welfare Portal (SMILE)',
     emoji:      '🏳️‍⚧️',
     price:      '100% FREE',
-    priceColor: '#22C55E',
+    priceColor: 'var(--color-success, #22C55E)',
     tag:        'FREE FOR LIFE',
     tagBg:      '#DCFCE7', tagColor:'#15803D',
     doc:        'National Transgender Identity Card — issued via the SMILE Portal (MoSJE)',
@@ -63,7 +63,7 @@ const TIERS = [
     sub:        'Farmer Crisis Families / Natural Disaster Survivors',
     emoji:      '🌾',
     price:      '100% FREE',
-    priceColor: '#22C55E',
+    priceColor: 'var(--color-success, #22C55E)',
     tag:        'FREE FOR LIFE',
     tagBg:      '#DCFCE7', tagColor:'#15803D',
     doc:        'Revenue Department Distress Certificate  OR  Cooperative Farm Loan Waiver Slip',
@@ -74,7 +74,7 @@ const TIERS = [
     sub:        'Currently Serving Defence Personnel & Dependents',
     emoji:      '🪖',
     price:      '30% OFF',
-    priceColor: '#D4AF37',
+    priceColor: 'var(--color-accent, #D4AF37)',
     tag:        'LIFELONG DISCOUNT',
     tagBg:      '#FEF3C7', tagColor:'#92400E',
     doc:        'Defence Dependent Card (from unit)  OR  CSD (Canteen Stores) Smart Card',
@@ -85,7 +85,7 @@ const TIERS = [
     sub:        "Children of Grassroots Health & Welfare Workers",
     emoji:      '🏥',
     price:      '30% OFF',
-    priceColor: '#D4AF37',
+    priceColor: 'var(--color-accent, #D4AF37)',
     tag:        'LIFELONG DISCOUNT',
     tagBg:      '#FEF3C7', tagColor:'#92400E',
     doc:        "Mother's Official ASHA / Anganwadi Worker ID  OR  NHM Honorarium Slip",
@@ -137,7 +137,7 @@ export default function EquityPricingSection({ navigate }) {
   return (
     <section style={{
       padding:'72px 20px',
-      background:'linear-gradient(180deg,#F8FAFC 0%,#EFF6FF 100%)',
+      background:'var(--color-bg, #F8FAFC)',
     }}>
       <div style={{ maxWidth:1100, margin:'0 auto' }}>
 
@@ -153,11 +153,11 @@ export default function EquityPricingSection({ navigate }) {
             </span>
           </div>
           <h2 style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
-            fontSize:'clamp(24px,4vw,42px)', color:'#1E3A5F', marginBottom:10 }}>
+            fontSize:'clamp(24px,4vw,42px)', color:'var(--color-primary-dark, #1E3A5F)', marginBottom:10 }}>
             Education for Every Indian
           </h2>
           <p style={{ fontFamily:'Inter,sans-serif', fontSize:'clamp(14px,2vw,16px)',
-            color:'#64748B', maxWidth:600, margin:'0 auto' }}>
+            color:'var(--color-muted, #64748B)', maxWidth:600, margin:'0 auto' }}>
             TryIT's near-zero server cost model lets us offer free and discounted
             access to 11 categories of deserving students. No compromises. Same platform.
           </p>
@@ -174,8 +174,8 @@ export default function EquityPricingSection({ navigate }) {
           ].map(f => (
             <button key={f.id} onClick={()=>setFilter(f.id)} style={{
               padding:'9px 20px', borderRadius:20, border:'none', cursor:'pointer',
-              background: filter===f.id ? '#1E3A5F' : '#fff',
-              color:       filter===f.id ? '#fff'    : '#64748B',
+              background: filter===f.id ? 'var(--color-primary, #1E3A5F)' : 'var(--color-surface, #FFFFFF)',
+              color:       filter===f.id ? 'var(--color-surface, #FFFFFF)'    : 'var(--color-muted, #64748B)',
               fontFamily:'Poppins,sans-serif', fontWeight:700, fontSize:13,
               boxShadow: filter===f.id
                 ? '0 4px 14px rgba(30,58,95,0.3)'
@@ -189,31 +189,31 @@ export default function EquityPricingSection({ navigate }) {
         <div style={{
           background:'#fff', borderRadius:24, overflow:'hidden',
           boxShadow:'0 8px 40px rgba(30,58,95,0.08)',
-          border:'1.5px solid #E2E8F0',
+          border:'1.5px solid var(--color-border, #E2E8F0)',
           display:'none', // overridden by media query below
         }} className="equity-table">
           {/* Table header */}
           <div style={{
-            background:'linear-gradient(135deg,#1E3A5F,#0F2140)',
+            background:'linear-gradient(135deg, var(--color-primary, #1E3A5F), var(--color-primary-dark, #0F2140))',
             display:'grid',
             gridTemplateColumns:'2.5fr 1.2fr 1.5fr 2fr',
             padding:'14px 22px', gap:16, alignItems:'center',
           }}>
             {['Community / Category','TryIT Price','Discount Type','Verification Document'].map(h=>(
-              <span key={h} style={{ color:'#D4AF37', fontSize:11,
+              <span key={h} style={{ color:'var(--color-accent, #D4AF37)', fontSize:11,
                 fontWeight:800, letterSpacing:'1.5px', fontFamily:'Poppins,sans-serif' }}>
                 {h.toUpperCase()}
               </span>
             ))}
           </div>
 
-          {filtered.map((t,i)=>(
+            {filtered.map((t,i)=>(
             <div key={i} style={{
               display:'grid',
               gridTemplateColumns:'2.5fr 1.2fr 1.5fr 2fr',
               padding:'16px 22px', gap:16, alignItems:'center',
-              borderBottom: i<filtered.length-1 ? '1px solid #F1F5F9' : 'none',
-              background: i%2===0 ? '#FAFBFC' : '#fff',
+              borderBottom: i<filtered.length-1 ? '1px solid var(--color-bg-muted, #F1F5F9)' : 'none',
+              background: i%2===0 ? 'var(--color-bg-muted-2, #FAFBFC)' : 'var(--color-surface, #FFFFFF)',
               transition:'background 0.15s',
             }}
             onMouseEnter={e=>e.currentTarget.style.background='rgba(212,175,55,0.05)'}
@@ -224,8 +224,8 @@ export default function EquityPricingSection({ navigate }) {
                 <span style={{ fontSize:26, flexShrink:0 }}>{t.emoji}</span>
                 <div>
                   <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700,
-                    color:'#1E3A5F', fontSize:14 }}>{t.category}</p>
-                  <p style={{ color:'#94A3B8', fontSize:12, marginTop:2 }}>{t.sub}</p>
+                    color:'var(--color-primary-dark, #1E3A5F)', fontSize:14 }}>{t.category}</p>
+                  <p style={{ color:'var(--color-muted, #94A3B8)', fontSize:12, marginTop:2 }}>{t.sub}</p>
                   {t.a11y && (
                     <span style={{ background:'#EDE9FE', color:'#7C3AED',
                       fontSize:9, fontWeight:700, padding:'2px 8px',
@@ -270,7 +270,7 @@ export default function EquityPricingSection({ navigate }) {
               onClick={()=>setExpanded(expanded===i ? null : i)}
               style={{
                 background:'#fff', borderRadius:20,
-                border:`1.5px solid ${expanded===i?t.priceColor:'#E2E8F0'}`,
+                border:`1.5px solid ${expanded===i?t.priceColor:'var(--color-border, #E2E8F0)'}`,
                 overflow:'hidden', cursor:'pointer',
                 boxShadow: expanded===i
                   ? `0 8px 24px ${t.priceColor}22`
@@ -283,7 +283,7 @@ export default function EquityPricingSection({ navigate }) {
                 <span style={{ fontSize:28, flexShrink:0 }}>{t.emoji}</span>
                 <div style={{ flex:1, minWidth:0 }}>
                   <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700,
-                    color:'#1E3A5F', fontSize:14,
+                    color:'var(--color-primary, #1E3A5F)', fontSize:14,
                     overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>
                     {t.category}
                   </p>
@@ -306,7 +306,7 @@ export default function EquityPricingSection({ navigate }) {
               {/* Expanded doc */}
               {expanded===i && (
                 <div style={{ padding:'0 16px 16px',
-                  borderTop:'1px solid #F1F5F9', paddingTop:12 }}>
+                  borderTop:'1px solid var(--color-bg-muted-2, #F1F5F9)', paddingTop:12 }}>
                   {t.a11y && (
                     <div style={{ background:'#EDE9FE', borderRadius:12,
                       padding:'8px 12px', marginBottom:10 }}>
@@ -337,7 +337,7 @@ export default function EquityPricingSection({ navigate }) {
         <div style={{ textAlign:'center', marginTop:32 }}>
           <button onClick={()=>nav('/equity')}
             style={{
-              background:'linear-gradient(135deg,#22C55E,#16A34A)',
+              background:'linear-gradient(135deg,var(--color-success, #22C55E),#16A34A)',
               border:'none', borderRadius:16, padding:'14px 40px',
               fontFamily:'Poppins,sans-serif', fontWeight:700,
               fontSize:16, color:'#fff', cursor:'pointer',

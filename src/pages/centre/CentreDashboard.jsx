@@ -22,11 +22,11 @@ const SAMPLE_STUDENTS = [
 
 function StatCard({ emoji, value, label, hint }) {
   return (
-    <div className="rounded-2xl p-5 flex flex-col gap-1" style={{ background: '#fff', boxShadow: '0 1px 8px rgba(30,58,95,0.07)' }}>
+    <div className="rounded-2xl p-5 flex flex-col gap-1" style={{ background: 'var(--color-surface, #FFFFFF)', boxShadow: '0 1px 8px rgba(30,58,95,0.07)' }}>
       <span className="text-2xl">{emoji}</span>
-      <span className="text-2xl font-bold mt-1" style={{ color: '#1E3A5F', fontFamily: 'Poppins, sans-serif' }}>{value}</span>
-      <span className="text-xs font-medium" style={{ color: '#64748B', fontFamily: 'Inter, sans-serif' }}>{label}</span>
-      {hint && <span className="text-xs mt-1" style={{ color: '#94A3B8', fontFamily: 'Inter, sans-serif' }}>{hint}</span>}
+      <span className="text-2xl font-bold mt-1" style={{ color: 'var(--heading-color, var(--color-text, #1E3A5F))', fontFamily: 'Poppins, sans-serif' }}>{value}</span>
+      <span className="text-xs font-medium" style={{ color: 'var(--subtext-color, #64748B)', fontFamily: 'Inter, sans-serif' }}>{label}</span>
+      {hint && <span className="text-xs mt-1" style={{ color: 'var(--subtext-color, #64748B)', fontFamily: 'Inter, sans-serif' }}>{hint}</span>}
     </div>
   )
 }
@@ -35,13 +35,13 @@ function EmptyState({ icon, title, body, action, onAction }) {
   return (
     <div className="flex flex-col items-center justify-center py-16 gap-3">
       <span className="text-5xl">{icon}</span>
-      <p className="text-base font-semibold" style={{ color: '#1E3A5F', fontFamily: 'Poppins, sans-serif' }}>{title}</p>
-      <p className="text-sm text-center max-w-xs" style={{ color: '#64748B', fontFamily: 'Inter, sans-serif' }}>{body}</p>
+      <p className="text-base font-semibold" style={{ color: 'var(--heading-color, var(--color-text, #1E3A5F))', fontFamily: 'Poppins, sans-serif' }}>{title}</p>
+      <p className="text-sm text-center max-w-xs" style={{ color: 'var(--subtext-color, #64748B)', fontFamily: 'Inter, sans-serif' }}>{body}</p>
       {action && (
         <button
           onClick={onAction}
           className="mt-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all hover:shadow-md"
-          style={{ background: 'linear-gradient(135deg, #D4AF37, #E8C84A)', color: '#0F2140', fontFamily: 'Poppins, sans-serif' }}
+          style={{ background: 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))', color: 'var(--color-primary-dark, #0F2140)', fontFamily: 'Poppins, sans-serif' }}
         >
           {action}
         </button>
@@ -67,9 +67,9 @@ function TestsTab({ tests, onCreateTest }) {
     <div className="overflow-x-auto">
       <table className="w-full text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
         <thead>
-          <tr style={{ borderBottom: '2px solid #E2E8F0' }}>
+          <tr style={{ borderBottom: '2px solid var(--color-border, #E2E8F0)' }}>
             {['Test Name', 'Subject', 'Date', 'Students', 'Avg Score'].map(h => (
-              <th key={h} className="text-left pb-3 pr-4 font-semibold text-xs uppercase tracking-wide" style={{ color: '#94A3B8' }}>{h}</th>
+              <th key={h} className="text-left pb-3 pr-4 font-semibold text-xs uppercase tracking-wide" style={{ color: 'var(--subtext-color, #64748B)' }}>{h}</th>
             ))}
             <th className="pb-3" />
           </tr>
@@ -79,22 +79,22 @@ function TestsTab({ tests, onCreateTest }) {
             <tr
               key={t.id}
               className="transition-colors hover:bg-slate-50"
-              style={{ borderBottom: i < tests.length - 1 ? '1px solid #F1F5F9' : 'none' }}
+              style={{ borderBottom: i < tests.length - 1 ? '1px solid var(--color-bg-muted-2, #F1F5F9)' : 'none' }}
             >
-              <td className="py-3.5 pr-4 font-medium" style={{ color: '#1E3A5F' }}>{t.name}</td>
-              <td className="py-3.5 pr-4" style={{ color: '#475569' }}>{t.subject}</td>
-              <td className="py-3.5 pr-4" style={{ color: '#64748B' }}>{new Date(t.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
+              <td className="py-3.5 pr-4 font-medium" style={{ color: 'var(--heading-color, var(--color-text, #1E3A5F))' }}>{t.name}</td>
+              <td className="py-3.5 pr-4" style={{ color: 'var(--subtext-color, #64748B)' }}>{t.subject}</td>
+              <td className="py-3.5 pr-4" style={{ color: 'var(--subtext-color, #64748B)' }}>{new Date(t.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
               <td className="py-3.5 pr-4">
-                <span className="flex items-center gap-1" style={{ color: '#475569' }}>
+                <span className="flex items-center gap-1" style={{ color: 'var(--subtext-color, #64748B)' }}>
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                   {t.students}
                 </span>
               </td>
               <td className="py-3.5 pr-4">
-                <span className="px-2 py-0.5 rounded-full text-xs font-semibold" style={{ background: '#F0FDF4', color: '#16A34A' }}>{t.avgScore}</span>
+                <span className="px-2 py-0.5 rounded-full text-xs font-semibold" style={{ background: 'var(--color-success-bg, #F0FDF4)', color: 'var(--color-success, #16A34A)' }}>{t.avgScore}</span>
               </td>
               <td className="py-3.5 text-right">
-                <button className="text-xs px-3 py-1 rounded-lg border transition-colors hover:bg-slate-50" style={{ borderColor: '#E2E8F0', color: '#64748B' }}>
+                <button className="text-xs px-3 py-1 rounded-lg border transition-colors hover:bg-slate-50" style={{ borderColor: 'var(--color-border, #E2E8F0)', color: 'var(--subtext-color, #64748B)' }}>
                   View
                 </button>
               </td>
@@ -108,10 +108,10 @@ function TestsTab({ tests, onCreateTest }) {
 
 function ProgressBar({ value }) {
   const pct = Math.min(100, Math.max(0, value))
-  const color = pct >= 70 ? '#16A34A' : pct >= 45 ? '#D4AF37' : '#DC2626'
+  const color = pct >= 70 ? 'var(--color-success, #16A34A)' : pct >= 45 ? 'var(--color-accent, #D4AF37)' : 'var(--color-error, #EF4444)'
   return (
     <div className="flex items-center gap-2">
-      <div className="flex-1 h-1.5 rounded-full" style={{ background: '#E2E8F0' }}>
+      <div className="flex-1 h-1.5 rounded-full" style={{ background: 'var(--color-bg-muted-2, #E2E8F0)' }}>
         <div className="h-1.5 rounded-full transition-all" style={{ width: `${pct}%`, background: color }} />
       </div>
       <span className="text-xs font-medium w-8 text-right" style={{ color, fontFamily: 'Inter, sans-serif' }}>{pct}%</span>
@@ -124,17 +124,17 @@ function StudentsTab({ students, centreCode }) {
     return (
       <div className="flex flex-col items-center justify-center py-16 gap-3">
         <span className="text-5xl">👥</span>
-        <p className="text-base font-semibold" style={{ color: '#1E3A5F', fontFamily: 'Poppins, sans-serif' }}>No students yet</p>
-        <p className="text-sm text-center max-w-xs" style={{ color: '#64748B', fontFamily: 'Inter, sans-serif' }}>
+        <p className="text-base font-semibold" style={{ color: 'var(--heading-color, var(--color-text, #1E3A5F))', fontFamily: 'Poppins, sans-serif' }}>No students yet</p>
+        <p className="text-sm text-center max-w-xs" style={{ color: 'var(--subtext-color, #64748B)', fontFamily: 'Inter, sans-serif' }}>
           Share your Centre code with students so they can join.
         </p>
-        <div className="mt-2 flex items-center gap-2 px-4 py-2.5 rounded-xl" style={{ background: '#FFFBF0', border: '1.5px solid #D4AF37' }}>
-          <span className="text-xs font-medium" style={{ color: '#64748B', fontFamily: 'Inter, sans-serif' }}>Centre code</span>
-          <span className="text-sm font-bold tracking-widest" style={{ color: '#1E3A5F', fontFamily: 'Poppins, sans-serif' }}>{centreCode || 'TRYIT001'}</span>
+        <div className="mt-2 flex items-center gap-2 px-4 py-2.5 rounded-xl" style={{ background: 'rgba(var(--color-accent-rgb, 212,175,55), 0.12)', border: '1.5px solid rgba(var(--color-accent-rgb, 212,175,55), 0.35)' }}>
+          <span className="text-xs font-medium" style={{ color: 'var(--subtext-color, #64748B)', fontFamily: 'Inter, sans-serif' }}>Centre code</span>
+          <span className="text-sm font-bold tracking-widest" style={{ color: 'var(--heading-color, var(--color-text, #1E3A5F))', fontFamily: 'Poppins, sans-serif' }}>{centreCode || 'TRYIT001'}</span>
           <button
             onClick={() => navigator.clipboard?.writeText(centreCode || 'TRYIT001')}
             className="text-xs px-2 py-0.5 rounded-lg transition-colors hover:opacity-70"
-            style={{ background: '#D4AF37', color: '#0F2140', fontFamily: 'Inter, sans-serif' }}
+            style={{ background: 'var(--color-accent, #D4AF37)', color: 'var(--color-primary-dark, #0F2140)', fontFamily: 'Inter, sans-serif' }}
           >
             Copy
           </button>
@@ -147,9 +147,9 @@ function StudentsTab({ students, centreCode }) {
     <div className="overflow-x-auto">
       <table className="w-full text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
         <thead>
-          <tr style={{ borderBottom: '2px solid #E2E8F0' }}>
+          <tr style={{ borderBottom: '2px solid var(--color-border, #E2E8F0)' }}>
             {['Student', 'Email', 'Enrolled Exams', 'Progress'].map(h => (
-              <th key={h} className="text-left pb-3 pr-4 font-semibold text-xs uppercase tracking-wide" style={{ color: '#94A3B8' }}>{h}</th>
+              <th key={h} className="text-left pb-3 pr-4 font-semibold text-xs uppercase tracking-wide" style={{ color: 'var(--color-muted, #94A3B8)' }}>{h}</th>
             ))}
           </tr>
         </thead>
@@ -158,22 +158,22 @@ function StudentsTab({ students, centreCode }) {
             <tr
               key={s.id}
               className="transition-colors hover:bg-slate-50"
-              style={{ borderBottom: i < students.length - 1 ? '1px solid #F1F5F9' : 'none' }}
+              style={{ borderBottom: i < students.length - 1 ? '1px solid var(--color-bg-muted-2, #F1F5F9)' : 'none' }}
             >
               <td className="py-3.5 pr-4">
                 <div className="flex items-center gap-2">
                   <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
-                    style={{ background: '#EFF6FF', color: '#1E3A5F' }}>
+                    style={{ background: 'var(--color-bg-muted, #EFF6FF)', color: 'var(--color-primary, #1E3A5F)' }}>
                     {s.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
                   </div>
-                  <span className="font-medium" style={{ color: '#1E3A5F' }}>{s.name}</span>
+                  <span className="font-medium" style={{ color: 'var(--heading-color, var(--color-text, #1E3A5F))' }}>{s.name}</span>
                 </div>
               </td>
-              <td className="py-3.5 pr-4" style={{ color: '#64748B' }}>{s.email}</td>
+              <td className="py-3.5 pr-4" style={{ color: 'var(--subtext-color, #64748B)' }}>{s.email}</td>
               <td className="py-3.5 pr-4">
                 <div className="flex flex-wrap gap-1">
                   {s.exams.map(ex => (
-                    <span key={ex} className="px-2 py-0.5 rounded-full text-xs" style={{ background: '#F1F5F9', color: '#475569' }}>{ex}</span>
+                    <span key={ex} className="px-2 py-0.5 rounded-full text-xs" style={{ background: 'var(--color-bg-muted-2, #F1F5F9)', color: 'var(--color-muted, #64748B)' }}>{ex}</span>
                   ))}
                 </div>
               </td>
@@ -227,24 +227,24 @@ export default function CentreDashboard() {
 
   return (
     <AppLayout title="Centre Dashboard">
-      <div className="min-h-screen" style={{ background: '#F8FAFC' }}>
+      <div className="min-h-screen" style={{ background: 'var(--color-bg, #F8FAFC)' }}>
 
         {/* ── Header banner ──────────────────────────────────────── */}
         <div
           className="px-6 py-6 sm:px-8"
-          style={{ background: 'linear-gradient(135deg, #0F2140 0%, #1E3A5F 100%)' }}
+          style={{ background: 'linear-gradient(135deg, var(--color-primary-dark, #0F2140) 0%, var(--color-primary, #1E3A5F) 100%)' }}
         >
           <div className="max-w-5xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h1
                 className="text-xl sm:text-2xl font-bold"
-                style={{ color: '#D4AF37', fontFamily: 'Poppins, sans-serif' }}
+                style={{ color: 'var(--color-accent, #D4AF37)', fontFamily: 'Poppins, sans-serif' }}
               >
                 {institutionName}
               </h1>
-              <p className="text-sm mt-0.5" style={{ color: 'rgba(255,255,255,0.65)', fontFamily: 'Inter, sans-serif' }}>
+              <p className="text-sm mt-0.5" style={{ color: 'rgba(255,255,255,0.85)', fontFamily: 'Inter, sans-serif' }}>
                 {studentCount} students
-                {centreRank !== '—' && <> · All India Rank <span style={{ color: '#E8C84A' }}>#{centreRank}</span> Centre</>}
+                {centreRank !== '—' && <> · All India Rank <span style={{ color: 'var(--color-accent-light, #E8C84A)' }}>#{centreRank}</span> Centre</>}
                 {centreRank === '—' && <> · Centre rank unlocks after 10 tests</>}
               </p>
             </div>
@@ -252,8 +252,8 @@ export default function CentreDashboard() {
               onClick={handleCreateTest}
               className="self-start sm:self-auto flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all hover:shadow-lg"
               style={{
-                background: 'linear-gradient(135deg, #D4AF37, #E8C84A)',
-                color: '#0F2140',
+                background: 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))',
+                color: 'var(--color-primary-dark, #0F2140)',
                 fontFamily: 'Poppins, sans-serif',
               }}
               onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-1px)'}
@@ -273,10 +273,10 @@ export default function CentreDashboard() {
           </div>
 
           {/* ── Tabs + content ─────────────────────────────────────── */}
-          <div className="rounded-2xl overflow-hidden" style={{ background: '#fff', boxShadow: '0 1px 8px rgba(30,58,95,0.07)' }}>
+          <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--color-surface, #FFFFFF)', boxShadow: '0 1px 8px rgba(30,58,95,0.07)' }}>
 
             {/* Tab bar */}
-            <div className="flex items-center justify-between px-5 pt-4 pb-0" style={{ borderBottom: '1px solid #E2E8F0' }}>
+            <div className="flex items-center justify-between px-5 pt-4 pb-0" style={{ borderBottom: '1px solid var(--color-border, #E2E8F0)' }}>
               <div className="flex gap-1">
                 {TABS.map(tab => (
                   <button
@@ -284,8 +284,8 @@ export default function CentreDashboard() {
                     onClick={() => setActiveTab(tab.id)}
                     className="px-4 py-2.5 text-sm font-semibold rounded-t-lg transition-all focus:outline-none"
                     style={{
-                      color: activeTab === tab.id ? '#1E3A5F' : '#94A3B8',
-                      borderBottom: activeTab === tab.id ? '2px solid #D4AF37' : '2px solid transparent',
+                      color: activeTab === tab.id ? 'var(--heading-color, var(--color-text, #1E3A5F))' : 'var(--subtext-color, #64748B)',
+                      borderBottom: activeTab === tab.id ? '2px solid var(--color-accent, #D4AF37)' : '2px solid transparent',
                       fontFamily: 'Inter, sans-serif',
                       background: 'transparent',
                       marginBottom: '-1px',
@@ -293,10 +293,10 @@ export default function CentreDashboard() {
                   >
                     {tab.label}
                     {tab.id === 'tests' && tests.length > 0 && (
-                      <span className="ml-1.5 px-1.5 py-0.5 rounded-full text-xs" style={{ background: '#F1F5F9', color: '#475569' }}>{tests.length}</span>
+                      <span className="ml-1.5 px-1.5 py-0.5 rounded-full text-xs" style={{ background: 'var(--color-bg-muted-2, #F1F5F9)', color: 'var(--subtext-color, #64748B)' }}>{tests.length}</span>
                     )}
                     {tab.id === 'students' && students.length > 0 && (
-                      <span className="ml-1.5 px-1.5 py-0.5 rounded-full text-xs" style={{ background: '#F1F5F9', color: '#475569' }}>{students.length}</span>
+                      <span className="ml-1.5 px-1.5 py-0.5 rounded-full text-xs" style={{ background: 'var(--color-bg-muted-2, #F1F5F9)', color: 'var(--subtext-color, #64748B)' }}>{students.length}</span>
                     )}
                   </button>
                 ))}
@@ -307,7 +307,7 @@ export default function CentreDashboard() {
                 <button
                   onClick={handleCreateTest}
                   className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all hover:shadow mb-1"
-                  style={{ background: 'linear-gradient(135deg, #D4AF37, #E8C84A)', color: '#0F2140', fontFamily: 'Poppins, sans-serif' }}
+                  style={{ background: 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))', color: 'var(--color-primary-dark, #0F2140)', fontFamily: 'Poppins, sans-serif' }}
                 >
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                   Create Test
@@ -328,16 +328,16 @@ export default function CentreDashboard() {
 
           {/* ── Centre code footer chip ────────────────────────────── */}
           <div className="flex items-center justify-center gap-3 py-2">
-            <span className="text-xs" style={{ color: '#94A3B8', fontFamily: 'Inter, sans-serif' }}>Your Centre code:</span>
+            <span className="text-xs" style={{ color: 'var(--subtext-color, #64748B)', fontFamily: 'Inter, sans-serif' }}>Your Centre code:</span>
             <div
               className="flex items-center gap-2 px-3 py-1.5 rounded-lg"
-              style={{ background: '#FFFBF0', border: '1.5px solid #E8C84A' }}
+              style={{ background: 'rgba(var(--color-accent-rgb, 212, 175, 55), 0.12)', border: '1.5px solid rgba(var(--color-accent-rgb, 212, 175, 55), 0.35)' }}
             >
-              <span className="text-sm font-bold tracking-widest" style={{ color: '#1E3A5F', fontFamily: 'Poppins, sans-serif' }}>{centreCode}</span>
+              <span className="text-sm font-bold tracking-widest" style={{ color: 'var(--heading-color, var(--color-text, #1E3A5F))', fontFamily: 'Poppins, sans-serif' }}>{centreCode}</span>
               <button
                 onClick={() => navigator.clipboard?.writeText(centreCode)}
                 className="text-xs px-2 py-0.5 rounded-md transition-opacity hover:opacity-70"
-                style={{ background: '#D4AF37', color: '#0F2140', fontFamily: 'Inter, sans-serif' }}
+                style={{ background: 'var(--color-accent, #D4AF37)', color: 'var(--color-primary-dark, #0F2140)', fontFamily: 'Inter, sans-serif' }}
               >
                 Copy
               </button>

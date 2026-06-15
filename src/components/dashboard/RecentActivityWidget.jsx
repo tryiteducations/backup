@@ -1,16 +1,16 @@
 const ACTIVITIES = [
   { dot:'bg-green-500', action:'Completed SSC CGL Mock Test',  detail:'Score: 142/200 · Rank improved ↑47',  time:'2h ago'    },
-  { dot:'bg-[#D4AF37]', action:'7-Day Streak Badge Unlocked 🔥',detail:'Congratulations! Keep going',         time:'Yesterday' },
+  { dot:'bg-[var(--color-accent, #D4AF37)]', action:'7-Day Streak Badge Unlocked 🔥',detail:'Congratulations! Keep going',         time:'Yesterday' },
   { dot:'bg-blue-500',  action:'Answered doubt in Guru Hub',   detail:'+5 Guru Points · ⭐4.8 rating',        time:'Yesterday' },
   { dot:'bg-green-500', action:'Completed Daily Quiz',         detail:'4/5 correct · +50 coins',              time:'2 days ago'},
-  { dot:'bg-[#D4AF37]', action:'Reached Level 4 — Gold Miner', detail:'6,000 XP milestone reached',           time:'3 days ago'},
+  { dot:'bg-[var(--color-accent, #D4AF37)]', action:'Reached Level 4 — Gold Miner', detail:'6,000 XP milestone reached',           time:'3 days ago'},
   { dot:'bg-blue-500',  action:'Joined Hall: IIT Chasers',     detail:'8 members · 7-day group streak',       time:'4 days ago'},
 ]
 
 export default function RecentActivityWidget() {
   return (
     <div className="clay rounded-3xl p-6 col-span-full">
-      <h3 className="font-bold text-[#1E3A5F] text-lg font-poppins mb-4">🕐 Recent Activity</h3>
+      <h3 className="font-bold text-[var(--color-primary, #1E3A5F)] text-lg font-poppins mb-4">🕐 Recent Activity</h3>
       <div className="relative">
         <div className="absolute left-[9px] top-0 bottom-0 w-px bg-slate-200" />
         <div className="flex flex-col">

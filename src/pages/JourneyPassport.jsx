@@ -16,11 +16,11 @@ const JOURNEY_MILESTONES = [
 ]
 
 const STRENGTH_BARS = [
-  { name:'Reasoning', value:90, color:'#22C55E' },
-  { name:'Quant',     value:82, color:'#22C55E' },
-  { name:'GK',        value:75, color:'#D4AF37' },
+  { name:'Reasoning', value:90, color:'var(--color-success, #22C55E)' },
+  { name:'Quant',     value:82, color:'var(--color-success, #22C55E)' },
+  { name:'GK',        value:75, color:'var(--color-accent, #D4AF37)' },
   { name:'English',   value:68, color:'#F59E0B' },
-  { name:'Science',   value:55, color:'#EF4444' },
+  { name:'Science',   value:55, color:'var(--color-error, #EF4444)' },
 ]
 
 const SCHOLARSHIPS = [
@@ -35,10 +35,10 @@ export default function JourneyPassport() {
 
   return (
     <AppLayout>
-      <h1 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'#1E3A5F', fontSize:26, marginBottom:4 }}>
+      <h1 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'var(--color-primary, #1E3A5F)', fontSize:26, marginBottom:4 }}>
         🪪 My Journey Passport
       </h1>
-      <p style={{ color:'#94A3B8', fontSize:14, marginBottom:20 }}>
+      <p style={{ color:'var(--color-text-light, #94A3B8)', fontSize:14, marginBottom:20 }}>
         Your complete learning journey — Class 6 to today and beyond
       </p>
 
@@ -52,8 +52,8 @@ export default function JourneyPassport() {
         {[['timeline','📅 Timeline'],['strengths','💪 Strengths'],['scholarships','🎓 Scholarships']].map(([k,l])=>(
           <button key={k} onClick={()=>setTab(k)} style={{
             padding:'9px 18px', borderRadius:20, border:'none', cursor:'pointer',
-            background: tab===k?'#1E3A5F':'#fff',
-            color: tab===k?'#fff':'#64748B',
+            background: tab===k ? 'var(--color-primary, #1E3A5F)' : 'var(--color-surface, #FFFFFF)',
+            color: tab===k ? 'var(--color-surface, #FFFFFF)' : 'var(--color-text-light, #64748B)',
             fontFamily:'Poppins,sans-serif', fontWeight:600, fontSize:13,
             boxShadow:'0 1px 6px rgba(0,0,0,0.06)',
           }}>{l}</button>
@@ -62,18 +62,18 @@ export default function JourneyPassport() {
 
       {/* Timeline */}
       {tab === 'timeline' && (
-        <div style={{ background:'#fff', borderRadius:20, padding:'8px 20px 20px',
+        <div style={{ background:'var(--color-surface, #FFFFFF)', borderRadius:20, padding:'8px 20px 20px',
           boxShadow:'0 2px 12px rgba(0,0,0,0.05)' }}>
           <div style={{ position:'relative', paddingLeft:28 }}>
             <div style={{ position:'absolute', left:11, top:0, bottom:0,
-              width:2, background:'linear-gradient(to bottom,#1E3A5F,#D4AF37)' }} />
+              width:2, background:'linear-gradient(to bottom, var(--color-primary, #1E3A5F), var(--color-accent, #D4AF37))' }} />
             {JOURNEY_MILESTONES.map((m,i) => (
               <div key={i} style={{ position:'relative', marginBottom:20, paddingTop:4 }}>
                 <div style={{
                   position:'absolute', left:-28, width:22, height:22, borderRadius:'50%',
-                  background: m.isNow ? '#D4AF37' : m.completed ? '#1E3A5F' : '#E2E8F0',
+                  background: m.isNow ? 'var(--color-accent, #D4AF37)' : m.completed ? 'var(--color-primary, #1E3A5F)' : 'var(--color-border, #E2E8F0)',
                   display:'flex', alignItems:'center', justifyContent:'center',
-                  fontSize:11, border:`2px solid ${m.isNow?'#D4AF37':m.completed?'#1E3A5F':'#CBD5E1'}`,
+                  fontSize:11, border:`2px solid ${m.isNow ? 'var(--color-accent, #D4AF37)' : m.completed ? 'var(--color-primary, #1E3A5F)' : 'rgba(148,163,184,0.8)'}`,
                 }}>
                   {m.completed ? '✓' : '○'}
                 </div>
@@ -81,18 +81,18 @@ export default function JourneyPassport() {
                   <div style={{ display:'flex', alignItems:'center', gap:8 }}>
                     <span style={{ fontSize:18 }}>{m.badge}</span>
                     <span style={{ fontFamily:'Poppins,sans-serif', fontWeight:700,
-                      color: m.isNow ? '#D4AF37' : m.completed ? '#1E3A5F' : '#94A3B8', fontSize:15 }}>
+                      color: m.isNow ? 'var(--color-accent, #D4AF37)' : m.completed ? 'var(--color-primary, #1E3A5F)' : 'var(--color-text-light, #94A3B8)', fontSize:15 }}>
                       {m.label}
                     </span>
-                    <span style={{ color:'#94A3B8', fontSize:12 }}>{m.year}</span>
+                    <span style={{ color:'var(--color-text-light, #94A3B8)', fontSize:12 }}>{m.year}</span>
                     {m.isNow && (
-                      <span style={{ background:'#D4AF37', color:'#1E3A5F',
+                      <span style={{ background:'var(--color-accent, #D4AF37)', color:'var(--color-surface, #FFFFFF)',
                         fontSize:9, fontWeight:700, padding:'2px 8px', borderRadius:20 }}>
                         YOU ARE HERE
                       </span>
                     )}
                   </div>
-                  <p style={{ color: m.completed?'#475569':'#CBD5E1', fontSize:13, marginTop:3 }}>
+                  <p style={{ color: m.completed ? 'var(--color-text, #1E293B)' : 'var(--color-border, #CBD5E1)', fontSize:13, marginTop:3 }}>
                     {m.event}
                   </p>
                 </div>
@@ -104,26 +104,26 @@ export default function JourneyPassport() {
 
       {/* Strengths */}
       {tab === 'strengths' && (
-        <div style={{ background:'#fff', borderRadius:20, padding:20,
-          boxShadow:'0 2px 12px rgba(0,0,0,0.05)' }}>
-          <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'#1E3A5F', marginBottom:16 }}>
+        <div style={{ background:'var(--color-surface, #FFFFFF)', borderRadius:20, padding:20,
+          boxShadow:'0 2px 12px rgba(var(--color-text-rgb, 30,58,95),0.08)' }}>
+          <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'var(--color-primary, #1E3A5F)', marginBottom:16 }}>
             Subject Performance
           </h3>
           {STRENGTH_BARS.map(s => (
             <div key={s.name} style={{ marginBottom:14 }}>
               <div style={{ display:'flex', justifyContent:'space-between', marginBottom:6 }}>
-                <span style={{ fontWeight:600, color:'#1E3A5F', fontSize:14 }}>{s.name}</span>
+                <span style={{ fontWeight:600, color:'var(--color-primary, #1E3A5F)', fontSize:14 }}>{s.name}</span>
                 <span style={{ fontWeight:800, color:s.color, fontSize:14 }}>{s.value}%</span>
               </div>
-              <div style={{ width:'100%', height:10, background:'#F1F5F9', borderRadius:5 }}>
+              <div style={{ width:'100%', height:10, background:'var(--color-bg, #F1F5F9)', borderRadius:5 }}>
                 <div style={{ width:`${s.value}%`, height:10, borderRadius:5, background:s.color,
                   transition:'width 1s ease' }} />
               </div>
             </div>
           ))}
-          <div style={{ marginTop:20, background:'#FEF3C7', borderRadius:14, padding:'12px 16px' }}>
-            <p style={{ color:'#92400E', fontWeight:700, fontSize:13 }}>💡 AI Suggestion</p>
-            <p style={{ color:'#92400E', fontSize:13, marginTop:4 }}>
+          <div style={{ marginTop:20, background:'rgba(var(--color-warning-rgb, 245,158,11),0.12)', borderRadius:14, padding:'12px 16px' }}>
+            <p style={{ color:'var(--color-warning, #F59E0B)', fontWeight:700, fontSize:13 }}>💡 AI Suggestion</p>
+            <p style={{ color:'var(--color-warning, #F59E0B)', fontSize:13, marginTop:4 }}>
               Focus on English (68%) — 10% improvement here adds +142 rank positions based on your current profile.
             </p>
           </div>
@@ -134,21 +134,21 @@ export default function JourneyPassport() {
       {tab === 'scholarships' && (
         <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
           {SCHOLARSHIPS.map(s => (
-            <div key={s.name} style={{ background:'#fff', borderRadius:20, padding:18,
+            <div key={s.name} style={{ background:'var(--color-surface, #FFFFFF)', borderRadius:20, padding:18,
               boxShadow:'0 2px 12px rgba(0,0,0,0.05)', display:'flex', alignItems:'center', gap:14 }}>
               <div style={{ fontSize:32 }}>🎓</div>
               <div style={{ flex:1 }}>
-                <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'#1E3A5F' }}>{s.name}</p>
-                <p style={{ color:'#D4AF37', fontWeight:800, fontSize:16 }}>{s.amount}</p>
-                <p style={{ color:'#94A3B8', fontSize:12 }}>Deadline: {s.deadline}</p>
+                <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'var(--color-primary, #1E3A5F)' }}>{s.name}</p>
+                <p style={{ color:'var(--color-accent, #D4AF37)', fontWeight:800, fontSize:16 }}>{s.amount}</p>
+                <p style={{ color:'var(--color-text-light, #94A3B8)', fontSize:12 }}>Deadline: {s.deadline}</p>
               </div>
               <div style={{ textAlign:'center' }}>
-                <div style={{ background:'#DCFCE7', color:'#15803D',
+                <div style={{ background:'rgba(var(--color-success-rgb, 34,197,94),0.12)', color:'var(--color-success, #22C55E)',
                   borderRadius:20, padding:'5px 14px', fontWeight:800, fontSize:14 }}>
                   {s.match} match
                 </div>
-                <button style={{ marginTop:8, background:'none', border:'1px solid #D4AF37',
-                  borderRadius:10, padding:'5px 12px', color:'#D4AF37', cursor:'pointer',
+                <button style={{ marginTop:8, background:'none', border:'1px solid var(--color-accent, #D4AF37)',
+                  borderRadius:10, padding:'5px 12px', color:'var(--color-accent, #D4AF37)', cursor:'pointer',
                   fontFamily:'Poppins,sans-serif', fontWeight:600, fontSize:12 }}>
                   Apply →
                 </button>

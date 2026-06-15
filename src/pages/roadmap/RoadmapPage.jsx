@@ -126,8 +126,8 @@ export default function RoadmapPage() {
       <AppLayout title="Study Roadmap">
         <div className="flex flex-col items-center justify-center py-24 text-center">
           <div className="text-5xl mb-4">🗺️</div>
-          <h2 className="text-xl font-bold text-[#1E3A5F] mb-2">Roadmap not found</h2>
-          <button onClick={() => navigate('/exams')} className="px-5 py-2 bg-[#1E3A5F] text-white rounded-xl text-sm font-semibold">
+          <h2 className="text-xl font-bold text-[var(--color-primary, #1E3A5F)] mb-2">Roadmap not found</h2>
+          <button onClick={() => navigate('/exams')} className="px-5 py-2 bg-[var(--color-primary, #1E3A5F)] text-white rounded-xl text-sm font-semibold">
             Back to Exams
           </button>
         </div>
@@ -143,7 +143,7 @@ export default function RoadmapPage() {
         <div className="flex items-center gap-3 mb-6">
           <span className="text-4xl">{exam.emoji || '🗺️'}</span>
           <div>
-            <h1 className="text-xl font-bold text-[#1E3A5F]">{exam.name} Study Plan</h1>
+            <h1 className="text-xl font-bold text-[var(--color-primary, #1E3A5F)]">{exam.name} Study Plan</h1>
             <p className="text-xs text-gray-400">{plan.length}-week structured roadmap</p>
           </div>
         </div>
@@ -151,12 +151,12 @@ export default function RoadmapPage() {
         {/* Progress bar */}
         <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 mb-6">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-semibold text-[#1E3A5F]">Overall Progress</span>
-            <span className="text-xl font-bold text-[#D4AF37]">{progressPct}%</span>
+            <span className="text-sm font-semibold text-[var(--color-primary, #1E3A5F)]">Overall Progress</span>
+            <span className="text-xl font-bold text-[var(--color-accent, #D4AF37)]">{progressPct}%</span>
           </div>
           <div className="h-3 bg-gray-100 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-[#D4AF37] to-[#E8C84A] rounded-full transition-all duration-500"
+              className="h-full bg-gradient-to-r from-[var(--color-accent, #D4AF37)] to-[var(--color-accent-light, #E8C84A)] rounded-full transition-all duration-500"
               style={{ width: `${progressPct}%` }}
             />
           </div>
@@ -183,12 +183,12 @@ export default function RoadmapPage() {
                 <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
                   <div className="flex items-center gap-3">
                     <span className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
-                      weekComplete ? 'bg-emerald-500 text-white' : 'bg-[#1E3A5F] text-white'
+                      weekComplete ? 'bg-emerald-500 text-white' : 'bg-[var(--color-primary, #1E3A5F)] text-white'
                     }`}>
                       {weekComplete ? '✓' : `W${week.week}`}
                     </span>
                     <div>
-                      <h3 className="font-bold text-[#1E3A5F] text-sm">{week.title}</h3>
+                      <h3 className="font-bold text-[var(--color-primary, #1E3A5F)] text-sm">{week.title}</h3>
                       <p className="text-xs text-gray-400">~{week.hours} hrs · {week.topics.length} topics</p>
                     </div>
                   </div>
@@ -231,13 +231,13 @@ export default function RoadmapPage() {
         <div className="flex gap-3 mt-6">
           <button
             onClick={() => navigate(`/exams/${examId}/universe`)}
-            className="flex-1 py-3 rounded-xl border-2 border-[#1E3A5F] text-[#1E3A5F] font-semibold text-sm hover:bg-[#1E3A5F] hover:text-white transition"
+            className="flex-1 py-3 rounded-xl border-2 border-[var(--color-primary, #1E3A5F)] text-[var(--color-primary, #1E3A5F)] font-semibold text-sm hover:bg-[var(--color-primary, #1E3A5F)] hover:text-white transition"
           >
             🌌 View Universe
           </button>
           <button
             onClick={() => navigate('/test-engine', { state: { examId: exam.id } })}
-            className="flex-1 py-3 rounded-xl bg-[#D4AF37] text-[#1E3A5F] font-bold text-sm hover:bg-[#E8C84A] transition"
+            className="flex-1 py-3 rounded-xl bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)] font-bold text-sm hover:bg-[var(--color-accent-light, #E8C84A)] transition"
           >
             🚀 Practice Tests
           </button>

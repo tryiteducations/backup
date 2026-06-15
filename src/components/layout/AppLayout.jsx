@@ -1,64 +1,38 @@
+﻿// src/components/layout/AppLayout.jsx
 import { useState } from 'react'
-import { useAuth } from '../../context/AuthContext'
 import Sidebar from './Sidebar'
 import Topbar from './Topbar'
+import { useAuth } from '../../context/AuthContext'
+import ImpersonationBanner from '../ImpersonationBanner'
 
-/**
- * AppLayout — the shell for every authenticated page.
- *
- * Props:
- *   title    {string}    Displayed in Topbar and used as page heading context.
- *   children {ReactNode} Page content.
- *
- * Prop contracts (must match exactly):
- *   <Sidebar open={bool} onClose={fn} />
- *   <Topbar  onMenuClick={fn} title={string} />
- *
- * Layout maths:
- *   Sidebar: 260px wide, fixed left, full height (desktop only).
- *   Topbar:  68px tall, fixed top, spans full width.
- *   Main:    offset by sidebar (lg:ml-[260px]) + topbar (pt-[68px]).
- *            On mobile sidebar is an overlay (open=false by default).
- */
-export default function AppLayout({ children, title = '' }) {
-  const { user } = useAuth()
+export default function AppLayout({ children, title = 'Dashboard' }) {
+  const { user, loading } = useAuth()
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  // Double-guard: don't render shell for logged-out states.
-  // Pages using AppLayout also guard, but this prevents flash/errors.
-  if (!user) return null
+  if (loading) return (
+    <div style={{ minHeight:'100vh', display:'flex', alignItems:'center',
+      justifyContent:'center', background:'linear-gradient(135deg, var(--color-primary-dark, #0F2140), var(--color-primary, #1E3A5F))' }}>
+      <p style={{ color:'var(--color-accent, #D4AF37)', fontFamily:'Poppins,sans-serif', fontSize:18, fontWeight:700 }}>
+        Loading...
+      </p>
+    </div>
+  )
+
+  if (!user) { window.location.href = "/login"; return null }
 
   return (
-    <div style={{ minHeight: '100vh', background: '#F8FAFC' }}>
-      {/* ── Sidebar ────────────────────────────────────────────── */}
-      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-
-      {/* ── Topbar ─────────────────────────────────────────────── */}
+    <>
+      <ImpersonationBanner />
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <Topbar onMenuClick={() => setSidebarOpen(true)} title={title} />
-
-      {/* ── Main content ───────────────────────────────────────── */}
-      {/*
-        Desktop: pushed right by 260px sidebar + down by 68px topbar.
-        Mobile:  only pushed down by 68px (sidebar is an overlay).
-        Tailwind classes used where possible; inline fallback ensures
-        correctness even if Tailwind JIT misses dynamic values.
-      */}
       <main
-        className="lg:ml-[260px] pt-[68px]"
-        style={{
-          minHeight: '100vh',
-          background: '#F8FAFC',
-          boxSizing: 'border-box',
-        }}
-      >
-        {/* Max-width cap for very large screens */}
-        <div
-          className="max-w-[1400px] mx-auto p-5 lg:p-6"
-          style={{ width: '100%', boxSizing: 'border-box' }}
-        >
+        className="lg:ml-[260px]"
+        style={{ paddingTop: '68px', minHeight: '100vh', background: 'var(--color-bg, #F8FAFC)', color: 'var(--color-text, #1E3A5F)' }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '24px 20px 40px' }}>
           {children}
         </div>
       </main>
-    </div>
+    </>
   )
 }
+

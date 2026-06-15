@@ -11,9 +11,9 @@ const GAMES = [
     coins: '5–50 coins',
     path: '/games/math-blitz',
     badge: 'Most Popular',
-    badgeColor: '#D4AF37',
-    accent: '#1E3A5F',
-    bg: 'linear-gradient(135deg, #1E3A5F 0%, #0F2140 100%)',
+    badgeColor: 'var(--color-accent, #D4AF37)',
+    accent: 'var(--color-primary, #1E3A5F)',
+    bg: 'linear-gradient(135deg, var(--color-primary, #1E3A5F) 0%, var(--color-primary-dark, #0F2140) 100%)',
     tags: ['Maths', 'Speed'],
   },
   {
@@ -72,7 +72,7 @@ export default function GamesHub() {
 
         {/* Header */}
         <div style={{ marginBottom: 28 }}>
-          <h1 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 26, color: '#1E3A5F', margin: '0 0 4px' }}>
+          <h1 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 26, color: 'var(--color-primary, #1E3A5F)', margin: '0 0 4px' }}>
             🎮 Exam Games
           </h1>
           <p style={{ fontFamily: 'Inter, sans-serif', color: '#64748b', fontSize: 14, margin: 0 }}>
@@ -112,7 +112,7 @@ export default function GamesHub() {
         {/* Coins legend */}
         <div style={{
           marginTop: 32,
-          background: '#FEF9EC', border: '1px solid #E8C84A',
+          background: '#FEF9EC', border: '1px solid var(--color-accent-light, #E8C84A)',
           borderRadius: 12, padding: '12px 18px',
           fontFamily: 'Inter, sans-serif', fontSize: 13, color: '#92400e',
           display: 'flex', alignItems: 'center', gap: 8,
@@ -129,7 +129,7 @@ function StatCard({ emoji, label, value, highlight, emptyMsg }) {
   const display = value != null && value !== 0 && value !== '' ? value : null
   return (
     <div style={{
-      background: highlight ? 'linear-gradient(135deg, #1E3A5F, #0F2140)' : '#fff',
+      background: highlight ? 'linear-gradient(135deg, var(--color-primary, #1E3A5F), var(--color-primary-dark, #0F2140))' : '#fff',
       borderRadius: 14,
       border: highlight ? 'none' : '1.5px solid #e2e8f0',
       padding: '16px 18px',
@@ -138,7 +138,7 @@ function StatCard({ emoji, label, value, highlight, emptyMsg }) {
       <div style={{ fontSize: 20, marginBottom: 4 }}>{emoji}</div>
       <div style={{
         fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 22,
-        color: highlight ? '#D4AF37' : (display ? '#1E3A5F' : '#94a3b8'),
+        color: highlight ? 'var(--color-accent, #D4AF37)' : (display ? 'var(--color-primary, #1E3A5F)' : '#94a3b8'),
         lineHeight: 1.1, marginBottom: 2,
       }}>
         {display ?? emptyMsg ?? '—'}
@@ -212,18 +212,18 @@ function GameCard({ game, onPlay }) {
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <span style={{
-          fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 13, color: '#D4AF37',
+          fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 13, color: 'var(--color-accent, #D4AF37)',
         }}>
           🪙 {game.coins}
         </span>
         <button
           onClick={onPlay}
           style={{
-            background: 'linear-gradient(135deg, #D4AF37, #E8C84A)',
+            background: 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))',
             border: 'none', borderRadius: 10,
             padding: '9px 22px',
             fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 13,
-            color: '#1E3A5F', cursor: 'pointer',
+            color: 'var(--color-primary, #1E3A5F)', cursor: 'pointer',
             boxShadow: '0 4px 12px rgba(212,175,55,0.35)',
           }}
         >

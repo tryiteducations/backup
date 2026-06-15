@@ -14,25 +14,25 @@ export default function CoinsWidget() {
 
   return (
     <div className="clay-gold rounded-3xl p-6">
-      <h3 className="font-bold text-[#1E3A5F] text-lg font-poppins mb-3">🪙 Coins</h3>
+      <h3 className="font-bold text-[var(--color-primary, #1E3A5F)] text-lg font-poppins mb-3">🪙 Coins</h3>
       <div className="flex flex-col items-center gap-1 mb-4">
-        <span className="text-5xl font-extrabold text-[#1E3A5F] font-poppins">{user?.coins.toLocaleString()}</span>
+        <span className="text-5xl font-extrabold text-[var(--color-primary, #1E3A5F)] font-poppins">{user?.coins.toLocaleString()}</span>
         {user?.isPro && (
-          <span className="clay-dark text-[#D4AF37] text-xs font-bold px-3 py-1 rounded-full">⚡ 3× PRO MULTIPLIER</span>
+          <span className="clay-dark text-[var(--color-accent, #D4AF37)] text-xs font-bold px-3 py-1 rounded-full">⚡ 3× PRO MULTIPLIER</span>
         )}
       </div>
       <div className="mb-4">
-        <div className="flex justify-between text-xs text-[#1E3A5F]/70 mb-1">
+        <div className="flex justify-between text-xs text-[var(--color-primary, #1E3A5F)]/70 mb-1">
           <span>This week</span><span>{weekProg}/{weekTarget}</span>
         </div>
-        <div className="w-full bg-[#1E3A5F]/20 rounded-full h-2.5">
-          <div className="bg-[#1E3A5F] h-2.5 rounded-full" style={{ width: `${(weekProg / weekTarget) * 100}%` }} />
+        <div className="w-full bg-[var(--color-primary, #1E3A5F)]/20 rounded-full h-2.5">
+          <div className="bg-[var(--color-primary, #1E3A5F)] h-2.5 rounded-full" style={{ width: `${(weekProg / weekTarget) * 100}%` }} />
         </div>
       </div>
       <div className="space-y-2 mb-4">
         {EARNINGS.map((e, i) => (
           <div key={i} className="flex items-center justify-between text-sm">
-            <span className="text-[#1E3A5F]/80">{e.icon} {e.source}</span>
+            <span className="text-[var(--color-primary, #1E3A5F)]/80">{e.icon} {e.source}</span>
             <span className="font-bold text-green-700">+{e.amount}🪙</span>
           </div>
         ))}

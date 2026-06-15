@@ -106,7 +106,7 @@ export default function MathBlitz() {
   // ── IDLE screen ──────────────────────────────────────────────
   if (gameState === STATE.IDLE) {
     return (
-      <FullScreen bg="linear-gradient(135deg, #1E3A5F 0%, #0F2140 100%)">
+      <FullScreen bg="linear-gradient(135deg, var(--color-primary, #1E3A5F) 0%, var(--color-primary-dark, #0F2140) 100%)">
         <BackBtn onClick={() => navigate('/games')} />
         <div style={{ textAlign: 'center' }}>
           <div style={{ fontSize: 72, marginBottom: 16 }}>⚡</div>
@@ -122,7 +122,7 @@ export default function MathBlitz() {
   // ── DONE screen ──────────────────────────────────────────────
   if (gameState === STATE.DONE) {
     return (
-      <FullScreen bg="linear-gradient(135deg, #1E3A5F 0%, #0F2140 100%)">
+      <FullScreen bg="linear-gradient(135deg, var(--color-primary, #1E3A5F) 0%, var(--color-primary-dark, #0F2140) 100%)">
         <div style={{ textAlign: 'center' }}>
           <div style={{ fontSize: 64, marginBottom: 12 }}>
             {score >= 8 ? '🏆' : score >= 5 ? '🎉' : '💪'}
@@ -143,7 +143,7 @@ export default function MathBlitz() {
   // ── PLAYING screen ───────────────────────────────────────────
   const q = questions[qIndex]
   return (
-    <FullScreen bg="linear-gradient(135deg, #1E3A5F 0%, #0F2140 100%)">
+    <FullScreen bg="linear-gradient(135deg, var(--color-primary, #1E3A5F) 0%, var(--color-primary-dark, #0F2140) 100%)">
       {/* HUD */}
       <div style={{ width: '100%', maxWidth: 480, margin: '0 auto 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 14, color: 'rgba(255,255,255,0.7)' }}>
@@ -152,7 +152,7 @@ export default function MathBlitz() {
         <div style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 24, color: timerColor }}>
           {timeLeft}s
         </div>
-        <div style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 14, color: '#D4AF37' }}>
+        <div style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 14, color: 'var(--color-accent, #D4AF37)' }}>
           ✓ {score}
         </div>
       </div>
@@ -236,10 +236,10 @@ function BackBtn({ onClick }) {
 function GoldBtn({ onClick, children }) {
   return (
     <button onClick={onClick} style={{
-      background: 'linear-gradient(135deg, #D4AF37, #E8C84A)',
+      background: 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))',
       border: 'none', borderRadius: 14, padding: '14px 32px',
       fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 16,
-      color: '#1E3A5F', cursor: 'pointer',
+      color: 'var(--color-primary, #1E3A5F)', cursor: 'pointer',
       boxShadow: '0 6px 20px rgba(212,175,55,0.4)', marginTop: 8,
     }}>
       {children}
@@ -287,7 +287,7 @@ function ScoreBoard({ score, total, coins }) {
       </div>
       <div style={{ width: 1, background: 'rgba(255,255,255,0.15)' }} />
       <div style={{ textAlign: 'center' }}>
-        <div style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 900, fontSize: 40, color: '#D4AF37' }}>
+        <div style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 900, fontSize: 40, color: 'var(--color-accent, #D4AF37)' }}>
           +{coins}
         </div>
         <div style={{ fontFamily: 'Inter, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.5)', marginTop: 4 }}>COINS</div>

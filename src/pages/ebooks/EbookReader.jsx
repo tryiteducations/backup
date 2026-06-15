@@ -48,16 +48,16 @@ export default function EbookReader() {
   return (
     <div className="min-h-screen bg-[#F8FAFC] flex flex-col">
       {/* Header */}
-      <div className="bg-[#1E3A5F] text-white px-4 sm:px-6 py-4 flex items-center justify-between">
+      <div className="bg-[var(--color-primary, #1E3A5F)] text-white px-4 sm:px-6 py-4 flex items-center justify-between">
         <button
           onClick={() => navigate('/ebooks/my')}
-          className="flex items-center gap-2 text-sm font-bold hover:text-[#E8C84A] transition-all"
+          className="flex items-center gap-2 text-sm font-bold hover:text-[var(--color-accent-light, #E8C84A)] transition-all"
         >
           ✕ Exit to Library
         </button>
         <div className="text-center">
           <p className="font-display font-extrabold text-sm sm:text-base">{ebook.title}</p>
-          <p className="text-xs text-[#E8C84A]">{ebook.subject}</p>
+          <p className="text-xs text-[var(--color-accent-light, #E8C84A)]">{ebook.subject}</p>
         </div>
         <div className="flex items-center gap-2">
           <button
@@ -77,7 +77,7 @@ export default function EbookReader() {
 
       {/* Progress bar */}
       <div className="w-full h-1.5 bg-slate-200">
-        <div className="h-full bg-[#D4AF37] transition-all duration-300" style={{ width: `${progress}%` }} />
+        <div className="h-full bg-[var(--color-accent, #D4AF37)] transition-all duration-300" style={{ width: `${progress}%` }} />
       </div>
 
       {/* Page content */}
@@ -94,7 +94,7 @@ export default function EbookReader() {
         <button
           onClick={goPrev}
           disabled={page === 1}
-          className="px-5 py-2 rounded-2xl border-2 border-[#1E3A5F] text-[#1E3A5F] font-bold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#1E3A5F] hover:text-white transition-all"
+          className="px-5 py-2 rounded-2xl border-2 border-[var(--color-primary, #1E3A5F)] text-[var(--color-primary, #1E3A5F)] font-bold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[var(--color-primary, #1E3A5F)] hover:text-white transition-all"
         >
           ← Prev
         </button>
@@ -104,7 +104,7 @@ export default function EbookReader() {
         <button
           onClick={goNext}
           disabled={page === TOTAL_PAGES}
-          className="px-5 py-2 rounded-2xl bg-[#D4AF37] text-[#1E3A5F] font-bold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#E8C84A] transition-all"
+          className="px-5 py-2 rounded-2xl bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)] font-bold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[var(--color-accent-light, #E8C84A)] transition-all"
         >
           Next →
         </button>

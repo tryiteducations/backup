@@ -15,7 +15,7 @@ export default function Particles({ count = 25 }) {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
       {particles.map(p => (
-        <div key={p.id} className="absolute rounded-full bg-[#D4AF37]"
+        <div key={p.id} className="absolute rounded-full bg-[var(--color-accent, #D4AF37)]"
           style={{
             width: p.size, height: p.size,
             left: `${p.x}%`, top: `${p.y}%`,

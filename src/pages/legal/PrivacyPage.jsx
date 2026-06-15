@@ -56,7 +56,7 @@ function Content() {
       <div className="space-y-5">
         {SECTIONS.map(s => (
           <div key={s.title} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-            <h2 className="font-bold text-[#1E3A5F] text-base mb-2">{s.title}</h2>
+            <h2 className="font-bold text-[var(--color-primary, #1E3A5F)] text-base mb-2">{s.title}</h2>
             <p className="text-gray-600 text-sm leading-relaxed whitespace-pre-line">{s.body}</p>
           </div>
         ))}
@@ -78,8 +78,8 @@ export default function PrivacyPage() {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC]">
-      <div className="bg-[#1E3A5F] px-6 py-4 flex items-center justify-between">
-        <span className="text-[#D4AF37] font-black text-xl">TryIT</span>
+      <div className="bg-[var(--color-primary, #1E3A5F)] px-6 py-4 flex items-center justify-between">
+        <span className="text-[var(--color-accent, #D4AF37)] font-black text-xl">TryIT</span>
         <a href="/landing" className="text-white text-sm opacity-70 hover:opacity-100">← Home</a>
       </div>
       <Content />

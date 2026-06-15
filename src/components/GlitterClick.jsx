@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+﻿import { useRef } from 'react'
 
 const STYLE_ID = '__glitter_click_styles__'
 
@@ -18,7 +18,7 @@ function injectStyles() {
       width: 80px;
       height: 80px;
       border-radius: 50%;
-      background: radial-gradient(circle, #E8C84A 0%, #D4AF37 30%, #fff7a1 55%, transparent 75%);
+      background: radial-gradient(circle, var(--color-accent-light, #E8C84A) 0%, var(--color-accent, #D4AF37) 40%, #FFF7A1 70%, transparent 100%);
       animation: glitterBurst 350ms ease-out forwards;
     }
   `

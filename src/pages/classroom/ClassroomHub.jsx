@@ -4,7 +4,7 @@ import AppLayout from '../../components/layout/AppLayout';
 import { useAuth } from '../../context/AuthContext';
 
 const HUB_CARDS = [
-  { id: 'planner', title: 'Study Planner', desc: 'Plan your week, track sessions, build consistency.', emoji: '🗓️', color: 'from-[#1E3A5F] to-[#0F2140]', path: '/classroom/planner' },
+  { id: 'planner', title: 'Study Planner', desc: 'Plan your week, track sessions, build consistency.', emoji: '🗓️', color: 'from-[var(--color-primary, #1E3A5F)] to-[var(--color-primary-dark, #0F2140)]', path: '/classroom/planner' },
   { id: 'pdf', title: 'PDF Library', desc: 'Notes, previous papers, and study material — all in one place.', emoji: '📚', color: 'from-[#064E3B] to-[#0B6B53]', path: '/classroom/pdf' },
   { id: 'ebooks', title: 'Ebook Store', desc: 'Browse, read, and collect ebooks for every exam.', emoji: '📖', color: 'from-[#7C2D12] to-[#9A3F1F]', path: '/ebooks' },
 ];
@@ -31,7 +31,7 @@ export default function ClassroomHub() {
   return (
     <AppLayout title="Classroom">
       <div className="mb-6">
-        <h2 className="font-display text-2xl font-extrabold text-[#1E3A5F] mb-1">Your Classroom 🎓</h2>
+        <h2 className="font-display text-2xl font-extrabold text-[var(--color-primary, #1E3A5F)] mb-1">Your Classroom 🎓</h2>
         <p className="text-slate-500">Plan, study, and read — everything you need to prep.</p>
       </div>
 
@@ -51,8 +51,8 @@ export default function ClassroomHub() {
 
       <div className="bg-white rounded-2xl shadow-md p-5 sm:p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="font-display font-extrabold text-[#1E3A5F]">Today's Plan</h3>
-          <button onClick={() => navigate('/classroom/planner')} className="text-sm font-bold text-[#1E3A5F] hover:text-[#D4AF37]">
+          <h3 className="font-display font-extrabold text-[var(--color-primary, #1E3A5F)]">Today's Plan</h3>
+          <button onClick={() => navigate('/classroom/planner')} className="text-sm font-bold text-[var(--color-primary, #1E3A5F)] hover:text-[var(--color-accent, #D4AF37)]">
             Open Planner →
           </button>
         </div>
@@ -61,7 +61,7 @@ export default function ClassroomHub() {
           <div className="text-center py-6">
             <div className="text-4xl mb-2">🗓️</div>
             <p className="text-slate-500 mb-4">No study blocks for today — plan your day!</p>
-            <button onClick={() => navigate('/classroom/planner')} className="px-5 py-2 rounded-2xl bg-[#D4AF37] text-[#1E3A5F] font-bold">
+            <button onClick={() => navigate('/classroom/planner')} className="px-5 py-2 rounded-2xl bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)] font-bold">
               + Add Study Block
             </button>
           </div>

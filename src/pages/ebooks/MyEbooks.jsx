@@ -19,7 +19,7 @@ export default function MyEbooks() {
   return (
     <AppLayout title="My Ebooks">
       <div className="mb-6">
-        <h2 className="font-display text-2xl font-extrabold text-[#1E3A5F] mb-1">My Ebooks 📚</h2>
+        <h2 className="font-display text-2xl font-extrabold text-[var(--color-primary, #1E3A5F)] mb-1">My Ebooks 📚</h2>
         <p className="text-slate-500">Pick up right where you left off.</p>
       </div>
 
@@ -29,7 +29,7 @@ export default function MyEbooks() {
           <p className="text-slate-600 mb-4">No ebooks yet — browse the store to find your next read!</p>
           <button
             onClick={() => navigate('/ebooks')}
-            className="px-5 py-2 rounded-2xl bg-[#1E3A5F] text-white font-bold"
+            className="px-5 py-2 rounded-2xl bg-[var(--color-primary, #1E3A5F)] text-white font-bold"
           >
             Browse Store →
           </button>
@@ -43,22 +43,22 @@ export default function MyEbooks() {
               className="bg-white rounded-2xl shadow-md p-5 cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all border border-slate-100"
             >
               <div className="flex gap-4">
-                <div className="w-16 h-20 rounded-xl bg-gradient-to-br from-[#1E3A5F] to-[#0F2140] flex items-center justify-center text-3xl flex-shrink-0">
+                <div className="w-16 h-20 rounded-xl bg-gradient-to-br from-[var(--color-primary, #1E3A5F)] to-[var(--color-primary-dark, #0F2140)] flex items-center justify-center text-3xl flex-shrink-0">
                   {eb.emoji}
                 </div>
                 <div className="flex-1">
                   <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-[#FDF6E3] text-[#7C2D12]">{eb.tag}</span>
-                  <h3 className="font-display font-extrabold text-sm text-[#1E3A5F] mt-1">{eb.title}</h3>
+                  <h3 className="font-display font-extrabold text-sm text-[var(--color-primary, #1E3A5F)] mt-1">{eb.title}</h3>
                   <p className="text-xs text-slate-400">{eb.author}</p>
                 </div>
               </div>
               <div className="mt-4">
                 <div className="flex items-center justify-between text-xs text-slate-500 mb-1">
                   <span>Progress</span>
-                  <span className="font-bold text-[#D4AF37]">{eb.progress}%</span>
+                  <span className="font-bold text-[var(--color-accent, #D4AF37)]">{eb.progress}%</span>
                 </div>
                 <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                  <div className="h-full bg-[#D4AF37] rounded-full" style={{ width: `${eb.progress}%` }} />
+                  <div className="h-full bg-[var(--color-accent, #D4AF37)] rounded-full" style={{ width: `${eb.progress}%` }} />
                 </div>
               </div>
             </div>

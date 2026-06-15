@@ -8,31 +8,31 @@ const getMilestones = (category) => {
   if (['medical', 'engineering', 'engineering_pg'].includes(category)) {
     return [
       { id: 1, phase: 'Foundation', icon: '🌱', color: '#064E3B', desc: 'Build core subject fundamentals', weeks: '1–4' },
-      { id: 2, phase: 'Subject Mastery', icon: '📘', color: '#1E3A5F', desc: 'Deep-dive into syllabus topics', weeks: '5–10' },
+      { id: 2, phase: 'Subject Mastery', icon: '📘', color: 'var(--color-primary, #1E3A5F)', desc: 'Deep-dive into syllabus topics', weeks: '5–10' },
       { id: 3, phase: 'Formula & Formula', icon: '🧪', color: '#4C1D95', desc: 'Formulas, shortcuts & problem types', weeks: '11–14' },
       { id: 4, phase: 'Mock Tests', icon: '📝', color: '#7C2D12', desc: 'Full-length practice papers', weeks: '15–18' },
-      { id: 5, phase: 'Analysis & Revision', icon: '🔍', color: '#D4AF37', desc: 'Weak area targeting & speed drills', weeks: '19–22' },
-      { id: 6, phase: 'Exam Day', icon: '🏆', color: '#D4AF37', desc: 'You are ready. Own it.', weeks: 'Final' },
+      { id: 5, phase: 'Analysis & Revision', icon: '🔍', color: 'var(--color-accent, #D4AF37)', desc: 'Weak area targeting & speed drills', weeks: '19–22' },
+      { id: 6, phase: 'Exam Day', icon: '🏆', color: 'var(--color-accent, #D4AF37)', desc: 'You are ready. Own it.', weeks: 'Final' },
     ]
   }
   if (['banking'].includes(category)) {
     return [
       { id: 1, phase: 'Prelims Prep', icon: '🌱', color: '#064E3B', desc: 'Quant + Reasoning + English basics', weeks: '1–3' },
-      { id: 2, phase: 'Speed Building', icon: '⚡', color: '#1E3A5F', desc: 'Accuracy under time pressure', weeks: '4–6' },
+      { id: 2, phase: 'Speed Building', icon: '⚡', color: 'var(--color-primary, #1E3A5F)', desc: 'Accuracy under time pressure', weeks: '4–6' },
       { id: 3, phase: 'Mains Focus', icon: '📊', color: '#4C1D95', desc: 'GA + Advanced DI + Descriptive', weeks: '7–10' },
       { id: 4, phase: 'Mock Marathon', icon: '📝', color: '#7C2D12', desc: '20+ full-length mocks with analysis', weeks: '11–14' },
-      { id: 5, phase: 'Interview Prep', icon: '🎤', color: '#D4AF37', desc: 'GD/PI practice for final round', weeks: '15–16' },
-      { id: 6, phase: 'Selection', icon: '🏆', color: '#D4AF37', desc: 'Your rank, your bank, your career.', weeks: 'Final' },
+      { id: 5, phase: 'Interview Prep', icon: '🎤', color: 'var(--color-accent, #D4AF37)', desc: 'GD/PI practice for final round', weeks: '15–16' },
+      { id: 6, phase: 'Selection', icon: '🏆', color: 'var(--color-accent, #D4AF37)', desc: 'Your rank, your bank, your career.', weeks: 'Final' },
     ]
   }
   // Default (govt/railways/defence/teaching etc.)
   return [
     { id: 1, phase: 'Foundation', icon: '🌱', color: '#064E3B', desc: 'Syllabus mapping & study plan', weeks: '1–2' },
-    { id: 2, phase: 'Core Subjects', icon: '📚', color: '#1E3A5F', desc: 'GK, Reasoning, Quant, English', weeks: '3–7' },
+    { id: 2, phase: 'Core Subjects', icon: '📚', color: 'var(--color-primary, #1E3A5F)', desc: 'GK, Reasoning, Quant, English', weeks: '3–7' },
     { id: 3, phase: 'Prelims Ready', icon: '🎯', color: '#4C1D95', desc: 'Tier I practice & speed drills', weeks: '8–10' },
     { id: 4, phase: 'Mains Prep', icon: '🔬', color: '#7C2D12', desc: 'Advanced topics & full-length mocks', weeks: '11–13' },
-    { id: 5, phase: 'Revision Sprint', icon: '🔁', color: '#D4AF37', desc: 'Revision + previous year paper analysis', weeks: '14–15' },
-    { id: 6, phase: 'Exam Day', icon: '🏆', color: '#D4AF37', desc: 'Trust your preparation. Rank secured.', weeks: 'Final' },
+    { id: 5, phase: 'Revision Sprint', icon: '🔁', color: 'var(--color-accent, #D4AF37)', desc: 'Revision + previous year paper analysis', weeks: '14–15' },
+    { id: 6, phase: 'Exam Day', icon: '🏆', color: 'var(--color-accent, #D4AF37)', desc: 'Trust your preparation. Rank secured.', weeks: 'Final' },
   ]
 }
 
@@ -73,8 +73,8 @@ export default function ExamUniverse() {
       <AppLayout title="Exam Universe">
         <div className="flex flex-col items-center justify-center py-24 text-center">
           <div className="text-5xl mb-4">🌌</div>
-          <h2 className="text-xl font-bold text-[#1E3A5F] mb-2">Universe not found</h2>
-          <button onClick={() => navigate('/exams')} className="px-5 py-2 bg-[#1E3A5F] text-white rounded-xl text-sm font-semibold hover:bg-[#0F2140] transition">
+          <h2 className="text-xl font-bold text-[var(--color-primary, #1E3A5F)] mb-2">Universe not found</h2>
+          <button onClick={() => navigate('/exams')} className="px-5 py-2 bg-[var(--color-primary, #1E3A5F)] text-white rounded-xl text-sm font-semibold hover:bg-[var(--color-primary-dark, #0F2140)] transition">
             Back to Exams
           </button>
         </div>
@@ -93,19 +93,19 @@ export default function ExamUniverse() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="text-6xl mb-3">{exam.emoji || '🌌'}</div>
-          <h1 className="text-2xl font-bold text-[#1E3A5F] mb-1">{exam.name}</h1>
+          <h1 className="text-2xl font-bold text-[var(--color-primary, #1E3A5F)] mb-1">{exam.name}</h1>
           <p className="text-gray-400 text-sm">Your journey from zero to rank</p>
         </div>
 
         {/* Readiness */}
-        <div className="bg-gradient-to-r from-[#1E3A5F] to-[#0F2140] rounded-2xl p-5 mb-8 text-white">
+        <div className="bg-gradient-to-r from-[var(--color-primary, #1E3A5F)] to-[var(--color-primary-dark, #0F2140)] rounded-2xl p-5 mb-8 text-white">
           <div className="flex justify-between items-center mb-2">
             <span className="text-sm font-medium text-blue-200">Overall Readiness</span>
-            <span className="text-2xl font-bold text-[#D4AF37]">{readiness}%</span>
+            <span className="text-2xl font-bold text-[var(--color-accent, #D4AF37)]">{readiness}%</span>
           </div>
           <div className="h-3 bg-white/20 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-[#D4AF37] to-[#E8C84A] rounded-full transition-all duration-700"
+              className="h-full bg-gradient-to-r from-[var(--color-accent, #D4AF37)] to-[var(--color-accent-light, #E8C84A)] rounded-full transition-all duration-700"
               style={{ width: `${readiness}%` }}
             />
           </div>
@@ -133,9 +133,9 @@ export default function ExamUniverse() {
                   <div
                     className={`w-12 h-12 rounded-full flex items-center justify-center text-xl shrink-0 z-10 border-2 transition-all ${
                       isFinal && readiness >= 80
-                        ? 'bg-[#D4AF37] border-[#D4AF37] shadow-lg'
+                        ? 'bg-[var(--color-accent, #D4AF37)] border-[var(--color-accent, #D4AF37)] shadow-lg'
                         : isReached
-                        ? 'bg-[#1E3A5F] border-[#1E3A5F] shadow'
+                        ? 'bg-[var(--color-primary, #1E3A5F)] border-[var(--color-primary, #1E3A5F)] shadow'
                         : 'bg-white border-gray-200'
                     }`}
                     style={isCurrent ? { boxShadow: `0 0 0 4px ${m.color}33` } : {}}
@@ -146,14 +146,14 @@ export default function ExamUniverse() {
                   {/* Content */}
                   <div className={`flex-1 pb-2 ${isCurrent ? 'rounded-2xl bg-blue-50 border border-blue-100 p-4 -mt-1' : ''}`}>
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className={`font-bold text-sm ${isReached ? 'text-[#1E3A5F]' : 'text-gray-400'}`}>
+                      <h3 className={`font-bold text-sm ${isReached ? 'text-[var(--color-primary, #1E3A5F)]' : 'text-gray-400'}`}>
                         {m.phase}
                       </h3>
                       <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">
                         Week {m.weeks}
                       </span>
                       {isCurrent && (
-                        <span className="text-xs bg-[#D4AF37] text-white px-2 py-0.5 rounded-full font-semibold animate-pulse">
+                        <span className="text-xs bg-[var(--color-accent, #D4AF37)] text-white px-2 py-0.5 rounded-full font-semibold animate-pulse">
                           YOU ARE HERE
                         </span>
                       )}
@@ -170,13 +170,13 @@ export default function ExamUniverse() {
         <div className="flex gap-3 mt-8">
           <button
             onClick={() => navigate(`/roadmap/${examId}`)}
-            className="flex-1 bg-[#D4AF37] text-[#1E3A5F] font-bold py-3 rounded-xl text-sm hover:bg-[#E8C84A] transition"
+            className="flex-1 bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)] font-bold py-3 rounded-xl text-sm hover:bg-[var(--color-accent-light, #E8C84A)] transition"
           >
             📅 Full Study Plan
           </button>
           <button
             onClick={() => navigate('/test-engine', { state: { examId: exam.id, examName: exam.name } })}
-            className="flex-1 bg-[#1E3A5F] text-white font-bold py-3 rounded-xl text-sm hover:bg-[#0F2140] transition"
+            className="flex-1 bg-[var(--color-primary, #1E3A5F)] text-white font-bold py-3 rounded-xl text-sm hover:bg-[var(--color-primary-dark, #0F2140)] transition"
           >
             🚀 Practice Now
           </button>
@@ -184,7 +184,7 @@ export default function ExamUniverse() {
 
         <button
           onClick={() => navigate(`/exams/${examId}`)}
-          className="w-full mt-3 text-center text-sm text-gray-400 hover:text-[#1E3A5F] transition py-2"
+          className="w-full mt-3 text-center text-sm text-gray-400 hover:text-[var(--color-primary, #1E3A5F)] transition py-2"
         >
           ← Back to Exam Profile
         </button>

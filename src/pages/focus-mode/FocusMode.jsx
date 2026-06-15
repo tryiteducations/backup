@@ -18,7 +18,7 @@ const SUBJECTS = [
 ]
 
 const THEMES = [
-  { id: 'navy', label: 'Deep Focus', bg: '#0F2140', accent: '#D4AF37', text: '#E2E8F0', ring: '#1E3A5F' },
+  { id: 'navy', label: 'Deep Focus', bg: 'var(--color-primary-dark, #0F2140)', accent: 'var(--color-accent, #D4AF37)', text: 'var(--color-border, #E2E8F0)', ring: 'var(--color-primary, #1E3A5F)' },
   { id: 'forest', label: 'Forest Calm', bg: '#052E16', accent: '#4ADE80', text: '#D1FAE5', ring: '#064E3B' },
   { id: 'amethyst', label: 'Amethyst', bg: '#1E1030', accent: '#A78BFA', text: '#EDE9FE', ring: '#4C1D95' },
   { id: 'ember', label: 'Ember', bg: '#1C0A00', accent: '#FB923C', text: '#FFEDD5', ring: '#7C2D12' },
@@ -275,7 +275,7 @@ export default function FocusMode() {
       {showSettings && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50 px-4">
           <div className="bg-white rounded-2xl p-7 w-full max-w-sm shadow-2xl">
-            <h3 className="font-bold text-[#1E3A5F] text-lg mb-5" style={{ fontFamily: 'Poppins, sans-serif' }}>
+            <h3 className="font-bold text-[var(--color-primary, #1E3A5F)] text-lg mb-5" style={{ fontFamily: 'Poppins, sans-serif' }}>
               Timer Settings
             </h3>
 
@@ -285,7 +285,7 @@ export default function FocusMode() {
                 type="number" min={1} max={90}
                 value={workSecs}
                 onChange={(e) => setWorkSecs(Math.max(1, Math.min(90, Number(e.target.value))))}
-                className="mt-1 w-full border border-gray-200 rounded-xl px-4 py-2 text-[#1E3A5F] font-semibold focus:outline-none focus:border-[#1E3A5F]"
+                className="mt-1 w-full border border-gray-200 rounded-xl px-4 py-2 text-[var(--color-primary, #1E3A5F)] font-semibold focus:outline-none focus:border-[var(--color-primary, #1E3A5F)]"
               />
             </label>
 
@@ -295,7 +295,7 @@ export default function FocusMode() {
                 type="number" min={1} max={30}
                 value={breakSecs}
                 onChange={(e) => setBreakSecs(Math.max(1, Math.min(30, Number(e.target.value))))}
-                className="mt-1 w-full border border-gray-200 rounded-xl px-4 py-2 text-[#1E3A5F] font-semibold focus:outline-none focus:border-[#1E3A5F]"
+                className="mt-1 w-full border border-gray-200 rounded-xl px-4 py-2 text-[var(--color-primary, #1E3A5F)] font-semibold focus:outline-none focus:border-[var(--color-primary, #1E3A5F)]"
               />
             </label>
 
@@ -304,7 +304,7 @@ export default function FocusMode() {
               <select
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                className="mt-1 w-full border border-gray-200 rounded-xl px-4 py-2 text-[#1E3A5F] font-semibold focus:outline-none focus:border-[#1E3A5F]"
+                className="mt-1 w-full border border-gray-200 rounded-xl px-4 py-2 text-[var(--color-primary, #1E3A5F)] font-semibold focus:outline-none focus:border-[var(--color-primary, #1E3A5F)]"
               >
                 {SUBJECTS.map((s) => <option key={s}>{s}</option>)}
               </select>
@@ -319,7 +319,7 @@ export default function FocusMode() {
               </button>
               <button
                 onClick={applySettings}
-                className="flex-1 py-2.5 rounded-xl bg-[#1E3A5F] text-white font-semibold hover:bg-[#0F2140] transition-all"
+                className="flex-1 py-2.5 rounded-xl bg-[var(--color-primary, #1E3A5F)] text-white font-semibold hover:bg-[var(--color-primary-dark, #0F2140)] transition-all"
               >
                 Apply
               </button>

@@ -17,49 +17,49 @@ export default function ParentProgressPage() {
   return (
     <AppLayout title="Children's Progress">
       <div className="mb-6">
-        <h1 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'#1E3A5F', fontSize:22, marginBottom:4 }}>👨‍👩‍👧 Children's Progress</h1>
-        <p style={{ color:'#64748B', fontSize:14 }}>Track your children's exam preparation</p>
+        <h1 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'var(--heading-color, var(--color-text, #1E3A5F))', fontSize:22, marginBottom:4 }}>👨‍👩‍👧 Children's Progress</h1>
+        <p style={{ color:'var(--subtext-color, #64748B)', fontSize:14 }}>Track your children's exam preparation</p>
       </div>
 
       {SAMPLE_CHILDREN.length === 0 ? (
-        <div style={{ textAlign:'center', padding:60, background:'#fff', borderRadius:18, border:'1.5px dashed #E2E8F0' }}>
+        <div style={{ textAlign:'center', padding:60, background:'var(--color-surface, #FFFFFF)', borderRadius:18, border:'1.5px dashed var(--color-border, #E2E8F0)' }}>
           <p style={{ fontSize:40, marginBottom:8 }}>👶</p>
-          <p style={{ color:'#1E3A5F', fontWeight:700, marginBottom:4 }}>No children connected yet</p>
-          <p style={{ color:'#94A3B8', fontSize:13 }}>Ask your child to share their TryIT email, then connect via Family Hub</p>
-          <button onClick={()=>navigate('/family')} style={{ marginTop:16, background:'#1E3A5F', color:'#D4AF37', border:'none', borderRadius:12, padding:'10px 24px', fontFamily:'Poppins,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer' }}>Go to Family Hub →</button>
+          <p style={{ color:'var(--heading-color, var(--color-text, #1E3A5F))', fontWeight:700, marginBottom:4 }}>No children connected yet</p>
+          <p style={{ color:'var(--subtext-color, #64748B)', fontSize:13 }}>Ask your child to share their TryIT email, then connect via Family Hub</p>
+          <button onClick={()=>navigate('/family')} style={{ marginTop:16, background:'linear-gradient(135deg, var(--color-primary-dark, #0F2140), var(--color-primary, #1E3A5F))', color:'var(--color-accent, #D4AF37)', border:'none', borderRadius:12, padding:'10px 24px', fontFamily:'Poppins,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer' }}>Go to Family Hub →</button>
         </div>
       ) : (
         <div style={{ display:'flex', flexDirection:'column', gap:20 }}>
           {SAMPLE_CHILDREN.map(child=>(
-            <div key={child.id} style={{ background:'#fff', borderRadius:20, border:'1.5px solid #E2E8F0', overflow:'hidden' }}>
-              <div style={{ background:'linear-gradient(135deg,#1E3A5F,#0F2140)', padding:'16px 20px', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+            <div key={child.id} style={{ background:'var(--color-surface, #FFFFFF)', borderRadius:20, border:'1.5px solid var(--color-border, #E2E8F0)', overflow:'hidden' }}>
+              <div style={{ background:'linear-gradient(135deg, var(--color-primary-dark, #0F2140), var(--color-primary, #1E3A5F))', padding:'16px 20px', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
                 <div>
-                  <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'#fff', fontSize:16, margin:'0 0 2px' }}>{child.name}</p>
-                  <p style={{ color:'#D4AF37', fontSize:13, margin:0 }}>Preparing for {child.exam}</p>
+                  <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'var(--color-surface, #FFFFFF)', fontSize:16, margin:'0 0 2px' }}>{child.name}</p>
+                  <p style={{ color:'var(--color-accent, #D4AF37)', fontSize:13, margin:0 }}>Preparing for {child.exam}</p>
                 </div>
                 <div style={{ textAlign:'right' }}>
-                  <p style={{ color:'#D4AF37', fontWeight:900, fontSize:22, margin:'0 0 2px' }}>{child.readiness}%</p>
-                  <p style={{ color:'rgba(255,255,255,0.6)', fontSize:11, margin:0 }}>Readiness</p>
+                  <p style={{ color:'var(--color-accent, #D4AF37)', fontWeight:900, fontSize:22, margin:'0 0 2px' }}>{child.readiness}%</p>
+                  <p style={{ color:'rgba(var(--color-surface-rgb, 255,255,255), 0.6)', fontSize:11, margin:0 }}>Readiness</p>
                 </div>
               </div>
               <div style={{ padding:20 }}>
                 <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:12, marginBottom:16 }}>
                   {[['🔥 Streak',`${child.streak} days`],['📝 Tests',child.tests],['📈 Avg Score',`${child.avgScore}%`]].map(([label,val])=>(
-                    <div key={label} style={{ background:'#F8FAFC', borderRadius:12, padding:12, textAlign:'center' }}>
-                      <p style={{ fontWeight:800, color:'#1E3A5F', fontSize:16, margin:'0 0 2px' }}>{val}</p>
-                      <p style={{ color:'#94A3B8', fontSize:11, margin:0 }}>{label}</p>
+                    <div key={label} style={{ background:'var(--color-bg, #F8FAFC)', borderRadius:12, padding:12, textAlign:'center' }}>
+                      <p style={{ fontWeight:800, color:'var(--heading-color, var(--color-text, #1E3A5F))', fontSize:16, margin:'0 0 2px' }}>{val}</p>
+                      <p style={{ color:'var(--subtext-color, #64748B)', fontSize:11, margin:0 }}>{label}</p>
                     </div>
                   ))}
                 </div>
-                <p style={{ fontWeight:700, color:'#1E3A5F', fontSize:13, marginBottom:8 }}>Subject Accuracy</p>
+                <p style={{ fontWeight:700, color:'var(--heading-color, var(--color-text, #1E3A5F))', fontSize:13, marginBottom:8 }}>Subject Accuracy</p>
                 <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
                   {child.subjects.map(s=>(
                     <div key={s.name} style={{ display:'flex', alignItems:'center', gap:10 }}>
-                      <span style={{ fontSize:12, color:'#64748B', width:80 }}>{s.name}</span>
-                      <div style={{ flex:1, height:8, background:'#F1F5F9', borderRadius:4, overflow:'hidden' }}>
-                        <div style={{ height:'100%', width:`${s.accuracy}%`, background: s.accuracy>=75?'#22C55E':s.accuracy>=50?'#D4AF37':'#EF4444', borderRadius:4 }}/>
+                      <span style={{ fontSize:12, color:'var(--subtext-color, #64748B)', width:80 }}>{s.name}</span>
+                      <div style={{ flex:1, height:8, background:'var(--color-bg, #F8FAFC)', borderRadius:4, overflow:'hidden' }}>
+                        <div style={{ height:'100%', width:`${s.accuracy}%`, background: s.accuracy>=75?'var(--color-success, #16A34A)':s.accuracy>=50?'var(--color-accent, #D4AF37)':'var(--color-error, #EF4444)', borderRadius:4 }}/>
                       </div>
-                      <span style={{ fontSize:12, fontWeight:700, color:'#1E3A5F', width:36, textAlign:'right' }}>{s.accuracy}%</span>
+                      <span style={{ fontSize:12, fontWeight:700, color:'var(--heading-color, var(--color-text, #1E3A5F))', width:36, textAlign:'right' }}>{s.accuracy}%</span>
                     </div>
                   ))}
                 </div>

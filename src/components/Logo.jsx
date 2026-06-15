@@ -32,7 +32,7 @@ export default function Logo({ dark = false, height = 54 }) {
         {/* ── 24K Liquid-Gold shimmer gradient (vertical, for text fills) ── */}
         <linearGradient id="goldV" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%"   stopColor="#F5E27A" />
-          <stop offset="14%"  stopColor="#E8C84A" />
+          <stop offset="14%"  stopColor="var(--color-accent-light, #E8C84A)" />
           <stop offset="28%"  stopColor="#FFFFF0" />   {/* white-hot glare */}
           <stop offset="42%"  stopColor="#D4A017" />
           <stop offset="58%"  stopColor="#C9A84C" />

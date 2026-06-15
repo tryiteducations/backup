@@ -56,12 +56,12 @@ export default function StudyPlanner() {
     <AppLayout title="Study Planner">
       <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
         <div>
-          <h2 className="font-display text-2xl font-extrabold text-[#1E3A5F] mb-1">Weekly Study Plan 🗓️</h2>
+          <h2 className="font-display text-2xl font-extrabold text-[var(--color-primary, #1E3A5F)] mb-1">Weekly Study Plan 🗓️</h2>
           <p className="text-slate-500">Build a consistent routine — small steps, big results.</p>
         </div>
         <button
           onClick={() => setShowForm((s) => !s)}
-          className="px-4 py-2 rounded-2xl bg-[#D4AF37] text-[#1E3A5F] font-bold shadow-md hover:bg-[#E8C84A] transition-all"
+          className="px-4 py-2 rounded-2xl bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)] font-bold shadow-md hover:bg-[var(--color-accent-light, #E8C84A)] transition-all"
         >
           + Add Study Block
         </button>
@@ -69,19 +69,19 @@ export default function StudyPlanner() {
 
       {showForm && (
         <div className="bg-white rounded-2xl shadow-md p-5 mb-6">
-          <h3 className="font-display font-extrabold text-[#1E3A5F] mb-4">New Study Block</h3>
+          <h3 className="font-display font-extrabold text-[var(--color-primary, #1E3A5F)] mb-4">New Study Block</h3>
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
             <input
               type="text"
               placeholder="Subject"
               value={form.subject}
               onChange={(e) => setForm({ ...form, subject: e.target.value })}
-              className="px-4 py-2 rounded-2xl border border-slate-200 focus:border-[#D4AF37] outline-none sm:col-span-2"
+              className="px-4 py-2 rounded-2xl border border-slate-200 focus:border-[var(--color-accent, #D4AF37)] outline-none sm:col-span-2"
             />
             <select
               value={form.day}
               onChange={(e) => setForm({ ...form, day: e.target.value })}
-              className="px-4 py-2 rounded-2xl border border-slate-200 focus:border-[#D4AF37] outline-none bg-white"
+              className="px-4 py-2 rounded-2xl border border-slate-200 focus:border-[var(--color-accent, #D4AF37)] outline-none bg-white"
             >
               {DAYS.map((d) => (
                 <option key={d} value={d}>{d}</option>
@@ -92,7 +92,7 @@ export default function StudyPlanner() {
               placeholder="e.g. 6:00 AM"
               value={form.time}
               onChange={(e) => setForm({ ...form, time: e.target.value })}
-              className="px-4 py-2 rounded-2xl border border-slate-200 focus:border-[#D4AF37] outline-none"
+              className="px-4 py-2 rounded-2xl border border-slate-200 focus:border-[var(--color-accent, #D4AF37)] outline-none"
             />
           </div>
           <div className="flex items-center gap-3 mt-3">
@@ -103,11 +103,11 @@ export default function StudyPlanner() {
               step="5"
               value={form.duration}
               onChange={(e) => setForm({ ...form, duration: Number(e.target.value) })}
-              className="w-24 px-3 py-2 rounded-2xl border border-slate-200 focus:border-[#D4AF37] outline-none"
+              className="w-24 px-3 py-2 rounded-2xl border border-slate-200 focus:border-[var(--color-accent, #D4AF37)] outline-none"
             />
             <button
               onClick={handleAdd}
-              className="ml-auto px-5 py-2 rounded-2xl bg-[#1E3A5F] text-white font-bold hover:bg-[#0F2140] transition-all"
+              className="ml-auto px-5 py-2 rounded-2xl bg-[var(--color-primary, #1E3A5F)] text-white font-bold hover:bg-[var(--color-primary-dark, #0F2140)] transition-all"
             >
               Add Block
             </button>
@@ -121,7 +121,7 @@ export default function StudyPlanner() {
           const dayBlocks = blocks.filter((b) => b.day === day);
           return (
             <div key={day} className="bg-white rounded-2xl shadow-md p-3 min-h-[160px]">
-              <h4 className="font-display font-extrabold text-[#1E3A5F] text-sm mb-3 text-center">{day}</h4>
+              <h4 className="font-display font-extrabold text-[var(--color-primary, #1E3A5F)] text-sm mb-3 text-center">{day}</h4>
               {dayBlocks.length === 0 ? (
                 <p className="text-xs text-slate-400 text-center mt-6">No sessions</p>
               ) : (
@@ -136,7 +136,7 @@ export default function StudyPlanner() {
                           type="checkbox"
                           checked={b.done}
                           onChange={() => toggleDone(b.id)}
-                          className="mt-0.5 accent-[#D4AF37]"
+                          className="mt-0.5 accent-[var(--color-accent, #D4AF37)]"
                         />
                         <div>
                           <p className="font-bold">{b.subject}</p>

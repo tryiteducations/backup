@@ -50,7 +50,7 @@ export default function Splash() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'linear-gradient(135deg, #1E3A5F 0%, #3B2A6B 45%, #5B1A3D 100%)',
+        background: 'linear-gradient(135deg, var(--color-primary, #1E3A5F) 0%, #3B2A6B 45%, #5B1A3D 100%)',
         position: 'relative',
         overflow: 'hidden',
       }}
@@ -100,7 +100,7 @@ export default function Splash() {
               width: 7,
               height: 7,
               borderRadius: '50%',
-              background: '#D4AF37',
+              background: 'var(--color-accent, #D4AF37)',
               opacity: 0.7,
               animation: `splashPulse 1.2s ease-in-out ${i * 0.2}s infinite`,
             }}

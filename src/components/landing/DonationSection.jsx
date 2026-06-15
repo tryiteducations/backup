@@ -36,7 +36,7 @@ export default function DonationSection() {
       image:       '/tryit-logo.webp',
       prefill:     { name, email },
       notes:       { pan: pan || 'Not provided', purpose:'TryIT Student Sponsorship' },
-      theme:       { color:'#D4AF37' },
+      theme:       { color:'var(--color-accent, #D4AF37)' },
       handler:     (res) => { setLoading(false); setStep('done') },
       modal:       { ondismiss:()=>setLoading(false) },
     }
@@ -51,7 +51,7 @@ export default function DonationSection() {
   return (
     <section style={{
       padding:'72px 20px',
-      background:'linear-gradient(135deg,#071428,#0F2140)',
+      background:'linear-gradient(135deg, var(--color-primary-darker, #071428), var(--color-primary, #0F2140))',
     }}>
       <div style={{ maxWidth:900, margin:'0 auto' }}>
         <div style={{ display:'grid',
@@ -64,7 +64,7 @@ export default function DonationSection() {
               background:'rgba(212,175,55,0.12)', border:'1px solid rgba(212,175,55,0.3)',
               borderRadius:20, padding:'6px 16px', marginBottom:20 }}>
               <span>💛</span>
-              <span style={{ color:'#D4AF37', fontSize:12, fontWeight:700,
+              <span style={{ color:'var(--color-accent, #D4AF37)', fontSize:12, fontWeight:700,
                 fontFamily:'Poppins,sans-serif', letterSpacing:'1px' }}>
                 SPONSOR A STUDENT
               </span>
@@ -72,7 +72,7 @@ export default function DonationSection() {
             <h2 style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
               fontSize:'clamp(24px,4vw,38px)', color:'#fff', marginBottom:12 }}>
               Help a Student<br/>
-              <span style={{ color:'#D4AF37' }}>Change Their Future</span>
+              <span style={{ color:'var(--color-accent, #D4AF37)' }}>Change Their Future</span>
             </h2>
             <p style={{ fontFamily:'Inter,sans-serif', color:'rgba(255,255,255,0.65)',
               fontSize:'clamp(14px,2vw,16px)', lineHeight:1.75, marginBottom:20 }}>
@@ -93,7 +93,7 @@ export default function DonationSection() {
                   border:'1px solid rgba(255,255,255,0.08)',
                   borderRadius:14, padding:'12px 14px' }}>
                   <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
-                    color:'#D4AF37', fontSize:18 }}>{v}</p>
+                    color:'var(--color-accent, #D4AF37)', fontSize:18 }}>{v}</p>
                   <p style={{ color:'rgba(255,255,255,0.45)', fontSize:11,
                     marginTop:2 }}>{l}</p>
                 </div>
@@ -115,7 +115,7 @@ export default function DonationSection() {
               <div style={{ textAlign:'center', padding:'20px 0' }}>
                 <div style={{ fontSize:56, marginBottom:16 }}>🙏</div>
                 <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800,
-                  color:'#D4AF37', fontSize:22, marginBottom:10 }}>
+                  color:'var(--color-accent, #D4AF37)', fontSize:22, marginBottom:10 }}>
                   Thank You, {name}!
                 </h3>
                 <p style={{ color:'rgba(255,255,255,0.7)', fontSize:14, lineHeight:1.7 }}>
@@ -126,10 +126,10 @@ export default function DonationSection() {
                   Receipt sent to {email} · 80G certificate will follow
                 </p>
                 <button onClick={()=>setStep('amount')}
-                  style={{ marginTop:20, background:'linear-gradient(135deg,#D4AF37,#E8C84A)',
+                  style={{ marginTop:20, background:'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))',
                     border:'none', borderRadius:12, padding:'11px 28px',
                     fontFamily:'Poppins,sans-serif', fontWeight:700,
-                    fontSize:14, color:'#1E3A5F', cursor:'pointer' }}>
+                    fontSize:14, color:'var(--color-primary-dark, #1E3A5F)', cursor:'pointer' }}>
                   Donate Again
                 </button>
               </div>
@@ -149,9 +149,9 @@ export default function DonationSection() {
                         padding:'11px 8px', borderRadius:12, border:'none',
                         cursor:'pointer', textAlign:'center',
                         background: amount===a && !custom
-                          ? 'linear-gradient(135deg,#D4AF37,#E8C84A)'
+                          ? 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))'
                           : 'rgba(255,255,255,0.08)',
-                        color: amount===a && !custom ? '#1E3A5F' : 'rgba(255,255,255,0.7)',
+                        color: amount===a && !custom ? 'var(--color-primary-dark, #1E3A5F)' : 'rgba(255,255,255,0.7)',
                         fontFamily:'Poppins,sans-serif', fontWeight:700, fontSize:14,
                         transition:'all 0.15s',
                       }}>
@@ -173,7 +173,7 @@ export default function DonationSection() {
                       borderRadius:12, color:'#fff', fontSize:15,
                       outline:'none', boxSizing:'border-box',
                       fontFamily:'Poppins,sans-serif' }}
-                    onFocus={e=>e.target.style.borderColor='#D4AF37'}
+                    onFocus={e=>e.target.style.borderColor='var(--color-accent, #D4AF37)'}
                     onBlur={e=>e.target.style.borderColor='rgba(255,255,255,0.15)'}
                   />
                 </div>
@@ -182,7 +182,7 @@ export default function DonationSection() {
                 <div style={{ background:'rgba(212,175,55,0.1)',
                   border:'1px solid rgba(212,175,55,0.2)',
                   borderRadius:12, padding:'10px 14px', marginBottom:16 }}>
-                  <p style={{ color:'#D4AF37', fontSize:13, fontWeight:600 }}>
+                  <p style={{ color:'var(--color-accent, #D4AF37)', fontSize:13, fontWeight:600 }}>
                     💛 Your ₹{finalAmount.toLocaleString()} will: {impactLabel}
                   </p>
                 </div>
@@ -192,11 +192,11 @@ export default function DonationSection() {
                   style={{
                     width:'100%', padding:'14px', borderRadius:14, border:'none',
                     background: finalAmount >= 1
-                      ? 'linear-gradient(135deg,#D4AF37,#E8C84A)'
+                      ? 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))'
                       : 'rgba(255,255,255,0.1)',
                     fontFamily:'Poppins,sans-serif', fontWeight:800,
                     fontSize:16, cursor: finalAmount>=1 ? 'pointer' : 'not-allowed',
-                    color: finalAmount>=1 ? '#1E3A5F' : 'rgba(255,255,255,0.3)',
+                    color: finalAmount>=1 ? 'var(--color-primary-dark, #1E3A5F)' : 'rgba(255,255,255,0.3)',
                   }}>
                   Donate ₹{finalAmount.toLocaleString()} →
                 </button>
@@ -229,7 +229,7 @@ export default function DonationSection() {
                         borderRadius:12, color:'#fff', fontSize:14,
                         outline:'none', boxSizing:'border-box',
                         fontFamily:'Inter,sans-serif' }}
-                      onFocus={e=>e.target.style.borderColor='#D4AF37'}
+                      onFocus={e=>e.target.style.borderColor='var(--color-accent, #D4AF37)'}
                       onBlur={e=>e.target.style.borderColor='rgba(255,255,255,0.15)'}
                     />
                   </div>
@@ -238,10 +238,10 @@ export default function DonationSection() {
                   style={{
                     width:'100%', padding:'14px', borderRadius:14, border:'none',
                     background: !loading&&name&&email
-                      ? 'linear-gradient(135deg,#D4AF37,#E8C84A)'
+                      ? 'linear-gradient(135deg,var(--color-accent, #D4AF37),var(--color-accent-light, #E8C84A))'
                       : 'rgba(255,255,255,0.1)',
                     fontFamily:'Poppins,sans-serif', fontWeight:800, fontSize:16,
-                    color: !loading&&name&&email ? '#1E3A5F' : 'rgba(255,255,255,0.3)',
+                    color: !loading&&name&&email ? 'var(--color-primary, #1E3A5F)' : 'rgba(255,255,255,0.3)',
                     cursor: !loading&&name&&email ? 'pointer' : 'not-allowed',
                   }}>
                   {loading ? '⏳ Opening payment...' : `🔒 Pay ₹${finalAmount.toLocaleString()} Securely`}

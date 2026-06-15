@@ -36,7 +36,7 @@ export default function Tournaments() {
   return (
     <AppLayout title="Tournaments">
       <div className="mb-6">
-        <h2 className="font-display text-2xl font-extrabold text-[#1E3A5F] mb-1">🏆 Tournaments</h2>
+        <h2 className="font-display text-2xl font-extrabold text-[var(--color-primary, #1E3A5F)] mb-1">🏆 Tournaments</h2>
         <p className="text-slate-500">Compete, climb the ranks, and earn exclusive badges — entry is always free.</p>
       </div>
 
@@ -46,7 +46,7 @@ export default function Tournaments() {
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`px-5 py-2 rounded-xl font-bold text-sm transition-all ${
-              activeTab === tab.id ? 'bg-[#1E3A5F] text-white' : 'text-slate-500 hover:text-[#1E3A5F]'
+              activeTab === tab.id ? 'bg-[var(--color-primary, #1E3A5F)] text-white' : 'text-slate-500 hover:text-[var(--color-primary, #1E3A5F)]'
             }`}
           >
             {tab.label}
@@ -71,7 +71,7 @@ export default function Tournaments() {
                   </span>
                 )}
               </div>
-              <h3 className="font-display font-extrabold text-lg text-[#1E3A5F] mb-1">{t.name}</h3>
+              <h3 className="font-display font-extrabold text-lg text-[var(--color-primary, #1E3A5F)] mb-1">{t.name}</h3>
               <p className="text-sm text-slate-500 mb-3">🎁 {t.prize}</p>
               <div className="flex items-center justify-between text-sm text-slate-400 mb-4">
                 <span>📅 {formatDate(t.start)} – {formatDate(t.end)}</span>
@@ -85,7 +85,7 @@ export default function Tournaments() {
                     className={`px-4 py-2 rounded-2xl font-bold text-sm transition-all ${
                       joined[t.id]
                         ? 'bg-emerald-100 text-emerald-700'
-                        : 'bg-[#D4AF37] text-[#1E3A5F] hover:bg-[#E8C84A]'
+                        : 'bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)] hover:bg-[var(--color-accent-light, #E8C84A)]'
                     }`}
                   >
                     {joined[t.id] ? 'Joined ✓' : 'Join'}

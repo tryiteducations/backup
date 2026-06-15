@@ -30,7 +30,7 @@ export default function ReviewScreen() {
     <div className="min-h-screen bg-[#F8FAFC]" style={{ fontFamily: 'Inter, sans-serif' }}>
 
       {/* Header */}
-      <div className="bg-[#1E3A5F] px-4 py-4 flex items-center justify-between sticky top-0 z-10">
+      <div className="bg-[var(--color-primary, #1E3A5F)] px-4 py-4 flex items-center justify-between sticky top-0 z-10">
         <div>
           <h1 className="text-white font-bold text-lg">Answer Review</h1>
           <p className="text-white/60 text-xs">{correct}/{total} correct</p>
@@ -157,7 +157,7 @@ export default function ReviewScreen() {
           </button>
           <button
             onClick={() => navigate('/dashboard')}
-            className="flex-1 py-3 bg-[#1E3A5F] text-white font-semibold rounded-2xl hover:bg-[#0F2140] transition"
+            className="flex-1 py-3 bg-[var(--color-primary, #1E3A5F)] text-white font-semibold rounded-2xl hover:bg-[var(--color-primary-dark, #0F2140)] transition"
           >
             Dashboard
           </button>

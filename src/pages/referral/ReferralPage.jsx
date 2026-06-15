@@ -38,7 +38,7 @@ export default function ReferralPage() {
       <div className="max-w-xl mx-auto space-y-6 p-4">
 
         {/* Hero */}
-        <div className="bg-gradient-to-br from-[#D4AF37] to-[#E8C84A] rounded-2xl p-6 text-[#0F2140] text-center shadow-lg">
+        <div className="bg-gradient-to-br from-[var(--color-accent, #D4AF37)] to-[var(--color-accent-light, #E8C84A)] rounded-2xl p-6 text-[var(--color-primary-dark, #0F2140)] text-center shadow-lg">
           <p className="text-4xl mb-2">🎁</p>
           <p className="text-2xl font-black">Invite Friends, Earn Coins</p>
           <p className="text-sm mt-1 opacity-75">You earn 50 coins for every friend who joins with your code.</p>
@@ -48,10 +48,10 @@ export default function ReferralPage() {
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-4">
           <p className="text-xs text-gray-400 uppercase tracking-wide">Your Referral Code</p>
           <div className="flex items-center gap-3 bg-[#FDF6E3] rounded-xl px-4 py-3">
-            <span className="flex-1 font-black text-[#D4AF37] text-2xl tracking-widest">{code}</span>
+            <span className="flex-1 font-black text-[var(--color-accent, #D4AF37)] text-2xl tracking-widest">{code}</span>
             <button
               onClick={handleCopy}
-              className="px-3 py-1.5 bg-[#1E3A5F] text-white rounded-lg text-xs font-semibold hover:bg-[#0F2140] transition"
+              className="px-3 py-1.5 bg-[var(--color-primary, #1E3A5F)] text-white rounded-lg text-xs font-semibold hover:bg-[var(--color-primary-dark, #0F2140)] transition"
             >
               {copied ? '✓ Copied!' : 'Copy'}
             </button>
@@ -60,7 +60,7 @@ export default function ReferralPage() {
           <div className="flex gap-3">
             <button
               onClick={handleCopy}
-              className="flex-1 py-2.5 border-2 border-[#D4AF37] text-[#D4AF37] rounded-xl font-semibold text-sm hover:bg-[#FDF6E3] transition"
+              className="flex-1 py-2.5 border-2 border-[var(--color-accent, #D4AF37)] text-[var(--color-accent, #D4AF37)] rounded-xl font-semibold text-sm hover:bg-[#FDF6E3] transition"
             >
               📋 Copy Link
             </button>
@@ -75,14 +75,14 @@ export default function ReferralPage() {
 
         {/* Stats */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-          <h2 className="font-bold text-[#1E3A5F] mb-4">Your Referral Stats</h2>
+          <h2 className="font-bold text-[var(--color-primary, #1E3A5F)] mb-4">Your Referral Stats</h2>
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-gray-50 rounded-xl p-4 text-center">
-              <p className="text-3xl font-black text-[#1E3A5F]">0</p>
+              <p className="text-3xl font-black text-[var(--color-primary, #1E3A5F)]">0</p>
               <p className="text-xs text-gray-500 mt-1">Friends Joined</p>
             </div>
             <div className="bg-[#FDF6E3] rounded-xl p-4 text-center">
-              <p className="text-3xl font-black text-[#D4AF37]">0 🪙</p>
+              <p className="text-3xl font-black text-[var(--color-accent, #D4AF37)]">0 🪙</p>
               <p className="text-xs text-gray-500 mt-1">Coins Earned</p>
             </div>
           </div>
@@ -91,7 +91,7 @@ export default function ReferralPage() {
 
         {/* How it works */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-          <h2 className="font-bold text-[#1E3A5F] mb-3">How It Works</h2>
+          <h2 className="font-bold text-[var(--color-primary, #1E3A5F)] mb-3">How It Works</h2>
           {[
             ['1️⃣', 'Share your code with friends'],
             ['2️⃣', 'Friend signs up using your code'],
@@ -106,7 +106,7 @@ export default function ReferralPage() {
 
         {/* Referred friends list */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-          <h2 className="font-bold text-[#1E3A5F] mb-3">Referred Friends</h2>
+          <h2 className="font-bold text-[var(--color-primary, #1E3A5F)] mb-3">Referred Friends</h2>
           <div className="text-center py-6 text-gray-400">
             <p className="text-3xl mb-2">👥</p>
             <p className="text-sm">No referrals yet — share your link to get started!</p>

@@ -54,7 +54,7 @@ export default function TestLauncher() {
 
         {/* Header */}
         <div>
-          <h1 className="text-2xl font-bold text-[#1E3A5F]">Configure Your Test</h1>
+          <h1 className="text-2xl font-bold text-[var(--color-primary, #1E3A5F)]">Configure Your Test</h1>
           <p className="text-sm text-gray-500 mt-1">Set your preferences and begin when ready.</p>
         </div>
 
@@ -66,7 +66,7 @@ export default function TestLauncher() {
             <p className="text-sm text-amber-700 mt-1 mb-4">Add exams to your profile to get targeted test content.</p>
             <button
               onClick={() => navigate('/exams')}
-              className="bg-[#D4AF37] text-white px-5 py-2 rounded-xl font-semibold hover:bg-[#E8C84A] transition"
+              className="bg-[var(--color-accent, #D4AF37)] text-white px-5 py-2 rounded-xl font-semibold hover:bg-[var(--color-accent-light, #E8C84A)] transition"
             >
               Browse Exams →
             </button>
@@ -75,11 +75,11 @@ export default function TestLauncher() {
 
         {/* Exam Selector */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 space-y-3">
-          <label className="block text-sm font-semibold text-[#1E3A5F]">Exam</label>
+          <label className="block text-sm font-semibold text-[var(--color-primary, #1E3A5F)]">Exam</label>
           <select
             value={selectedExam}
             onChange={e => setSelectedExam(e.target.value)}
-            className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#D4AF37]"
+            className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent, #D4AF37)]"
           >
             <option value="">— All Exams (Mixed) —</option>
             {hasExams
@@ -93,7 +93,7 @@ export default function TestLauncher() {
 
         {/* Subject Selector */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 space-y-3">
-          <label className="block text-sm font-semibold text-[#1E3A5F]">Subject</label>
+          <label className="block text-sm font-semibold text-[var(--color-primary, #1E3A5F)]">Subject</label>
           <div className="flex flex-wrap gap-2">
             {SUBJECTS.map(sub => (
               <button
@@ -101,8 +101,8 @@ export default function TestLauncher() {
                 onClick={() => setSelectedSubject(sub)}
                 className={`px-3 py-1.5 rounded-xl text-sm font-medium border transition ${
                   selectedSubject === sub
-                    ? 'bg-[#1E3A5F] text-white border-[#1E3A5F]'
-                    : 'bg-white text-gray-600 border-gray-200 hover:border-[#1E3A5F]'
+                    ? 'bg-[var(--color-primary, #1E3A5F)] text-white border-[var(--color-primary, #1E3A5F)]'
+                    : 'bg-white text-gray-600 border-gray-200 hover:border-[var(--color-primary, #1E3A5F)]'
                 }`}
               >
                 {sub}
@@ -113,7 +113,7 @@ export default function TestLauncher() {
 
         {/* Mode Selector */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 space-y-3">
-          <label className="block text-sm font-semibold text-[#1E3A5F]">Mode</label>
+          <label className="block text-sm font-semibold text-[var(--color-primary, #1E3A5F)]">Mode</label>
           <div className="grid grid-cols-3 gap-3">
             {MODES.map(mode => (
               <button
@@ -121,8 +121,8 @@ export default function TestLauncher() {
                 onClick={() => setSelectedMode(mode.id)}
                 className={`p-3 rounded-xl border text-left transition ${
                   selectedMode === mode.id
-                    ? 'bg-[#1E3A5F] text-white border-[#1E3A5F]'
-                    : 'bg-white text-gray-700 border-gray-200 hover:border-[#1E3A5F]'
+                    ? 'bg-[var(--color-primary, #1E3A5F)] text-white border-[var(--color-primary, #1E3A5F)]'
+                    : 'bg-white text-gray-700 border-gray-200 hover:border-[var(--color-primary, #1E3A5F)]'
                 }`}
               >
                 <div className="text-xl mb-1">{mode.emoji}</div>
@@ -137,7 +137,7 @@ export default function TestLauncher() {
 
         {/* Question Count */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 space-y-3">
-          <label className="block text-sm font-semibold text-[#1E3A5F]">Number of Questions</label>
+          <label className="block text-sm font-semibold text-[var(--color-primary, #1E3A5F)]">Number of Questions</label>
           <div className="flex gap-3">
             {COUNTS.map(count => (
               <button
@@ -145,8 +145,8 @@ export default function TestLauncher() {
                 onClick={() => setSelectedCount(count)}
                 className={`flex-1 py-2.5 rounded-xl border font-semibold text-sm transition ${
                   selectedCount === count
-                    ? 'bg-[#D4AF37] text-white border-[#D4AF37]'
-                    : 'bg-white text-gray-700 border-gray-200 hover:border-[#D4AF37]'
+                    ? 'bg-[var(--color-accent, #D4AF37)] text-white border-[var(--color-accent, #D4AF37)]'
+                    : 'bg-white text-gray-700 border-gray-200 hover:border-[var(--color-accent, #D4AF37)]'
                 }`}
               >
                 {count}
@@ -157,7 +157,7 @@ export default function TestLauncher() {
 
         {/* Difficulty */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 space-y-3">
-          <label className="block text-sm font-semibold text-[#1E3A5F]">Difficulty</label>
+          <label className="block text-sm font-semibold text-[var(--color-primary, #1E3A5F)]">Difficulty</label>
           <div className="flex flex-wrap gap-2">
             {DIFFICULTIES.map(d => (
               <button
@@ -165,8 +165,8 @@ export default function TestLauncher() {
                 onClick={() => setSelectedDifficulty(d.id)}
                 className={`px-3 py-1.5 rounded-xl text-sm font-medium border transition ${
                   selectedDifficulty === d.id
-                    ? 'bg-[#1E3A5F] text-white border-[#1E3A5F]'
-                    : 'bg-white text-gray-600 border-gray-200 hover:border-[#1E3A5F]'
+                    ? 'bg-[var(--color-primary, #1E3A5F)] text-white border-[var(--color-primary, #1E3A5F)]'
+                    : 'bg-white text-gray-600 border-gray-200 hover:border-[var(--color-primary, #1E3A5F)]'
                 }`}
               >
                 {d.label}
@@ -178,7 +178,7 @@ export default function TestLauncher() {
         {/* Start Button */}
         <button
           onClick={handleStart}
-          className="w-full py-4 bg-[#D4AF37] hover:bg-[#E8C84A] text-white font-bold text-lg rounded-2xl shadow-md transition"
+          className="w-full py-4 bg-[var(--color-accent, #D4AF37)] hover:bg-[var(--color-accent-light, #E8C84A)] text-white font-bold text-lg rounded-2xl shadow-md transition"
         >
           Start Test →
         </button>

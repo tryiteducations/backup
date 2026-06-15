@@ -177,7 +177,7 @@ export default function WeakTopicCard() {
           particleCount: 120,
           spread: 80,
           origin: { y: 0.6 },
-          colors: ['#D4AF37', '#E8C84A', '#1E3A5F'],
+          colors: ['var(--color-accent, #D4AF37)', 'var(--color-accent-light, #E8C84A)', 'var(--color-primary, #1E3A5F)'],
         });
         setStage('success');
       } else {

@@ -49,7 +49,7 @@ const ANSWERS_DB = {
       authorId: 'mentor-rk',
       authorName: 'Rajan Kumar (Mentor)',
       authorInitials: 'RK',
-      authorColor: '#D4AF37',
+      authorColor: 'var(--color-accent, #D4AF37)',
       isMentor: true,
       timeAgo: '8 min ago',
       text: `Great question! Here's a quick comparison:\n\n**Subsidiary Alliance (1798, Wellesley):** The Indian ruler had to maintain a British force IN their territory — but the ruler PAID for it. This gave Britain a permanent military presence without spending their own money. If the ruler couldn't pay, they had to cede territory.\n\n**Doctrine of Lapse (Dalhousie, 1848):** Applied when an Indian ruler died without a natural heir. Adopted sons were not recognised. The state "lapsed" to British control automatically.\n\nKey difference: Subsidiary Alliance was about **military control + financial burden** on rulers. Doctrine of Lapse was about **succession and territory** after death. In exams, if the question says "no heir", it's Doctrine of Lapse. If it says "paying for British troops", it's Subsidiary Alliance.`,
@@ -73,7 +73,7 @@ const ANSWERS_DB = {
       authorId: 'user-sk',
       authorName: 'Suresh Kumar',
       authorInitials: 'SK',
-      authorColor: '#1E3A5F',
+      authorColor: 'var(--color-primary, #1E3A5F)',
       isMentor: false,
       timeAgo: '2 min ago',
       text: 'Both were instruments of the Paramountcy doctrine. I\'d also add — Wellesley\'s system was more "voluntary" (the ruler signed), while Dalhousie\'s was imposed unilaterally by policy. That distinction sometimes appears in Prelims questions.',
@@ -87,7 +87,7 @@ const ANSWERS_DB = {
       authorId: 'mentor-dn',
       authorName: 'Deepika Nair (Mentor)',
       authorInitials: 'DN',
-      authorColor: '#D4AF37',
+      authorColor: 'var(--color-accent, #D4AF37)',
       isMentor: true,
       timeAgo: '30 min ago',
       text: `The trick is to always draw a vertical tree, not a horizontal one — it maps generations spatially.\n\nFor your example:\n• Top row (Gen 1): C = D (couple)\n• Middle row (Gen 2): B (child of C and D)\n• Bottom row (Gen 3): A (son of B)\n\nSo D is A\'s maternal grandfather (Nana). Once you lock in the generation rows, the relationship is obvious.\n\nQuick rule: **count the generation gap and the gender** of the linking node. That gets you 90% of these questions in under 30 seconds.`,
@@ -159,7 +159,7 @@ export default function DoubtThread() {
       authorId: user.id,
       authorName: user.name,
       authorInitials: user.initials,
-      authorColor: '#1E3A5F',
+      authorColor: 'var(--color-primary, #1E3A5F)',
       isMentor: user.role === 'mentor',
       timeAgo: 'just now',
       text: answerText.trim(),
@@ -194,7 +194,7 @@ export default function DoubtThread() {
         {toast && (
           <div style={{
             position: 'fixed', top: 24, right: 24, zIndex: 999,
-            background: '#1E3A5F', color: '#fff',
+            background: 'var(--color-primary, #1E3A5F)', color: '#fff',
             borderRadius: 12, padding: '12px 20px',
             fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 14,
             boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
@@ -227,18 +227,18 @@ export default function DoubtThread() {
           {/* Tags */}
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>
             <span style={{
-              background: '#EFF6FF', color: '#1d4ed8', borderRadius: 6, padding: '2px 10px',
+              background: 'var(--color-bg-muted, #EFF6FF)', color: '#1d4ed8', borderRadius: 6, padding: '2px 10px',
               fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 12,
             }}>{doubt.examTag}</span>
             <span style={{
-              background: '#F1F5F9', color: '#475569', borderRadius: 6, padding: '2px 10px',
+              background: 'var(--color-bg-muted-2, #F1F5F9)', color: '#475569', borderRadius: 6, padding: '2px 10px',
               fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 12,
             }}>{doubt.subject}</span>
           </div>
 
           <h1 style={{
             fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 20,
-            color: '#1E3A5F', margin: '0 0 16px', lineHeight: 1.3,
+            color: 'var(--color-primary, #1E3A5F)', margin: '0 0 16px', lineHeight: 1.3,
           }}>
             {doubt.title}
           </h1>
@@ -276,10 +276,10 @@ export default function DoubtThread() {
         <div style={{ marginBottom: 32 }}>
           <div style={{
             display: 'flex', alignItems: 'center', gap: 8,
-            marginBottom: 16, paddingBottom: 10, borderBottom: '2px solid #F1F5F9',
+            marginBottom: 16, paddingBottom: 10, borderBottom: '2px solid var(--color-bg-muted-2, #F1F5F9)',
           }}>
             <span style={{ fontSize: 18 }}>💬</span>
-            <span style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 16, color: '#1E3A5F' }}>
+            <span style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 16, color: 'var(--color-primary, #1E3A5F)' }}>
               {answers.length} {answers.length === 1 ? 'Answer' : 'Answers'}
             </span>
           </div>
@@ -319,7 +319,7 @@ export default function DoubtThread() {
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
             <span style={{ fontSize: 18 }}>✍️</span>
-            <span style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 15, color: '#1E3A5F' }}>
+            <span style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 15, color: 'var(--color-primary, #1E3A5F)' }}>
               Write Your Answer
             </span>
             <span style={{
@@ -354,11 +354,11 @@ export default function DoubtThread() {
             onClick={handleSubmitAnswer}
             disabled={submitting}
             style={{
-              background: submitting ? '#e2e8f0' : 'linear-gradient(135deg, #D4AF37, #E8C84A)',
+              background: submitting ? '#e2e8f0' : 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))',
               border: 'none', borderRadius: 10,
               padding: '12px 28px',
               fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 14,
-              color: submitting ? '#94a3b8' : '#1E3A5F',
+              color: submitting ? '#94a3b8' : 'var(--color-primary, #1E3A5F)',
               cursor: submitting ? 'not-allowed' : 'pointer',
               boxShadow: submitting ? 'none' : '0 4px 14px rgba(212,175,55,0.3)',
             }}
@@ -410,7 +410,7 @@ function AnswerCard({ answer, index, isDoubtAuthor, onAccept, onUpvote }) {
             </span>
             {answer.isMentor && (
               <span style={{
-                background: '#1E3A5F', color: '#D4AF37',
+                background: 'var(--color-primary, #1E3A5F)', color: 'var(--color-accent, #D4AF37)',
                 borderRadius: 6, padding: '1px 8px',
                 fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 10,
               }}>
@@ -444,7 +444,7 @@ function AnswerCard({ answer, index, isDoubtAuthor, onAccept, onUpvote }) {
           onClick={onUpvote}
           style={{
             display: 'flex', alignItems: 'center', gap: 6,
-            background: '#F1F5F9', border: 'none', borderRadius: 8,
+            background: 'var(--color-bg-muted-2, #F1F5F9)', border: 'none', borderRadius: 8,
             padding: '5px 12px', cursor: 'pointer',
             fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 12, color: '#475569',
           }}

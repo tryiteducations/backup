@@ -7,10 +7,10 @@ export default function DailyQuizWidget() {
 
   return (
     <div className="clay rounded-3xl p-6">
-      <h3 className="font-bold text-[#1E3A5F] text-lg font-poppins mb-2">📅 Daily Quiz</h3>
+      <h3 className="font-bold text-[var(--color-primary, #1E3A5F)] text-lg font-poppins mb-2">📅 Daily Quiz</h3>
       <p className="text-slate-500 text-sm mb-3">Today · 5 Questions · Current Affairs Focus</p>
-      <div className="w-full bg-[#D4AF37]/20 rounded-full h-2 mb-3 overflow-hidden">
-        <div className="bg-[#D4AF37] h-2 rounded-full w-full animate-pulse" />
+      <div className="w-full bg-[var(--color-accent, #D4AF37)]/20 rounded-full h-2 mb-3 overflow-hidden">
+        <div className="bg-[var(--color-accent, #D4AF37)] h-2 rounded-full w-full animate-pulse" />
       </div>
       <p className="text-xs text-slate-400 mb-4">Complete before midnight for bonus coins!</p>
       <button onClick={() => { navigate('/daily-quiz'); showToast('info', 'Daily Quiz started!') }}

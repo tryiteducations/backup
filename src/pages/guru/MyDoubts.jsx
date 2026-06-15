@@ -70,7 +70,7 @@ export default function MyDoubts() {
           >
             ← Back to Guru Hub
           </button>
-          <h1 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 24, color: '#1E3A5F', margin: 0 }}>
+          <h1 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 24, color: 'var(--color-primary, #1E3A5F)', margin: 0 }}>
             My Doubts
           </h1>
           <p style={{ fontFamily: 'Inter, sans-serif', color: '#64748b', fontSize: 14, margin: '4px 0 0' }}>
@@ -126,14 +126,14 @@ function SectionHeading({ emoji, title, count }) {
   return (
     <div style={{
       display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14,
-      paddingBottom: 10, borderBottom: '2px solid #F1F5F9',
+      paddingBottom: 10, borderBottom: '2px solid var(--color-bg-muted-2, #F1F5F9)',
     }}>
       <span style={{ fontSize: 20 }}>{emoji}</span>
-      <span style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 16, color: '#1E3A5F' }}>
+      <span style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 16, color: 'var(--color-primary, #1E3A5F)' }}>
         {title}
       </span>
       <span style={{
-        background: '#EFF6FF', color: '#1d4ed8',
+        background: 'var(--color-bg-muted, #EFF6FF)', color: '#1d4ed8',
         borderRadius: 20, padding: '1px 10px',
         fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: 12,
       }}>
@@ -156,8 +156,8 @@ function EmptyState({ emoji, message, ctaLabel, ctaPath, navigate }) {
       <button
         onClick={() => navigate(ctaPath)}
         style={{
-          background: '#D4AF37', border: 'none', borderRadius: 10,
-          padding: '9px 22px', color: '#1E3A5F',
+          background: 'var(--color-accent, #D4AF37)', border: 'none', borderRadius: 10,
+          padding: '9px 22px', color: 'var(--color-primary, #1E3A5F)',
           fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 13, cursor: 'pointer',
         }}
       >
@@ -183,7 +183,7 @@ function PostedDoubtCard({ doubt, onClick }) {
       }}
       onMouseEnter={e => {
         e.currentTarget.style.boxShadow = '0 4px 16px rgba(30,58,95,0.09)'
-        e.currentTarget.style.borderColor = '#D4AF37'
+        e.currentTarget.style.borderColor = 'var(--color-accent, #D4AF37)'
       }}
       onMouseLeave={e => {
         e.currentTarget.style.boxShadow = 'none'
@@ -194,17 +194,17 @@ function PostedDoubtCard({ doubt, onClick }) {
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 8 }}>
             <span style={{
-              background: '#EFF6FF', color: '#1d4ed8', borderRadius: 6, padding: '1px 8px',
+              background: 'var(--color-bg-muted, #EFF6FF)', color: '#1d4ed8', borderRadius: 6, padding: '1px 8px',
               fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 11,
             }}>{doubt.examTag}</span>
             <span style={{
-              background: '#F1F5F9', color: '#475569', borderRadius: 6, padding: '1px 8px',
+              background: 'var(--color-bg-muted-2, #F1F5F9)', color: '#475569', borderRadius: 6, padding: '1px 8px',
               fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 11,
             }}>{doubt.subject}</span>
           </div>
           <div style={{
             fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 14,
-            color: '#1E3A5F', marginBottom: 8,
+            color: 'var(--color-primary, #1E3A5F)', marginBottom: 8,
           }}>
             {doubt.title}
           </div>
@@ -244,7 +244,7 @@ function AnsweredDoubtCard({ doubt, onClick }) {
       }}
       onMouseEnter={e => {
         e.currentTarget.style.boxShadow = '0 4px 16px rgba(30,58,95,0.09)'
-        e.currentTarget.style.borderColor = '#D4AF37'
+        e.currentTarget.style.borderColor = 'var(--color-accent, #D4AF37)'
       }}
       onMouseLeave={e => {
         e.currentTarget.style.boxShadow = 'none'
@@ -255,17 +255,17 @@ function AnsweredDoubtCard({ doubt, onClick }) {
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 8 }}>
             <span style={{
-              background: '#EFF6FF', color: '#1d4ed8', borderRadius: 6, padding: '1px 8px',
+              background: 'var(--color-bg-muted, #EFF6FF)', color: '#1d4ed8', borderRadius: 6, padding: '1px 8px',
               fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 11,
             }}>{doubt.examTag}</span>
             <span style={{
-              background: '#F1F5F9', color: '#475569', borderRadius: 6, padding: '1px 8px',
+              background: 'var(--color-bg-muted-2, #F1F5F9)', color: '#475569', borderRadius: 6, padding: '1px 8px',
               fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 11,
             }}>{doubt.subject}</span>
           </div>
           <div style={{
             fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 14,
-            color: '#1E3A5F', marginBottom: 8,
+            color: 'var(--color-primary, #1E3A5F)', marginBottom: 8,
           }}>
             {doubt.title}
           </div>
@@ -283,13 +283,13 @@ function AnsweredDoubtCard({ doubt, onClick }) {
               }}>
                 ✅ Accepted
               </div>
-              <div style={{ fontFamily: 'Inter, sans-serif', fontSize: 11, color: '#D4AF37', fontWeight: 700 }}>
+              <div style={{ fontFamily: 'Inter, sans-serif', fontSize: 11, color: 'var(--color-accent, #D4AF37)', fontWeight: 700 }}>
                 +{doubt.coinsEarned} coins earned
               </div>
             </div>
           ) : (
             <span style={{
-              background: '#F1F5F9', color: '#94a3b8',
+              background: 'var(--color-bg-muted-2, #F1F5F9)', color: '#94a3b8',
               borderRadius: 8, padding: '3px 10px',
               fontFamily: 'Inter, sans-serif', fontWeight: 600, fontSize: 11,
             }}>

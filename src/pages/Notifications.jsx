@@ -13,9 +13,9 @@ const NOTIFS = [
   { id:8, type:'exam',     icon:'📡', title:'UPSC Prelims 2026 Notification Out',  body:'Notification released. Applications open Feb 15 – Mar 15. Check now.', time:'2 days ago',read:true  },
 ]
 
-const TYPE_COLOR = { badge:'bg-[#D4AF37]', rank:'bg-green-500', doubt:'bg-blue-500',
+const TYPE_COLOR = { badge:'bg-[var(--color-accent, #D4AF37)]', rank:'bg-green-500', doubt:'bg-blue-500',
   alert:'bg-red-500', hall:'bg-purple-500', coins:'bg-amber-500',
-  streak:'bg-orange-500', exam:'bg-[#1E3A5F]' }
+  streak:'bg-orange-500', exam:'bg-[var(--color-primary, #1E3A5F)]' }
 
 const FILTERS = ['All','Unread','Badges','Rank','Doubts','Alerts','Hall']
 
@@ -42,14 +42,14 @@ export default function Notifications() {
       <div className="max-w-2xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-3xl font-bold text-[#1E3A5F] font-poppins">🔔 Notifications</h1>
+            <h1 className="text-3xl font-bold text-[var(--color-primary, #1E3A5F)] font-poppins">🔔 Notifications</h1>
             {unreadCount > 0 && (
               <p className="text-slate-500 text-sm mt-1">{unreadCount} unread</p>
             )}
           </div>
           {unreadCount > 0 && (
             <button onClick={markAllRead}
-              className="text-[#D4AF37] text-sm font-semibold hover:underline">
+              className="text-[var(--color-accent, #D4AF37)] text-sm font-semibold hover:underline">
               Mark all read
             </button>
           )}
@@ -59,7 +59,7 @@ export default function Notifications() {
           {FILTERS.map(f => (
             <button key={f} onClick={() => setFilter(f)}
               className={`px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap flex-shrink-0 transition-all
-                ${filter===f ? 'bg-[#1E3A5F] text-white' : 'bg-white border border-slate-200 text-slate-600 hover:border-[#D4AF37]'}`}>
+                ${filter===f ? 'bg-[var(--color-primary, #1E3A5F)] text-white' : 'bg-white border border-slate-200 text-slate-600 hover:border-[var(--color-accent, #D4AF37)]'}`}>
               {f}
             </button>
           ))}
@@ -70,26 +70,26 @@ export default function Notifications() {
             <div key={n.id}
               onClick={() => setNotifs(prev => prev.map(x => x.id===n.id ? {...x,read:true} : x))}
               className={`flex items-start gap-4 p-4 rounded-2xl border-2 cursor-pointer transition-all
-                ${n.read ? 'bg-white border-slate-100' : 'bg-white border-[#D4AF37]/30 shadow-sm'}`}>
+                ${n.read ? 'bg-white border-slate-100' : 'bg-white border-[var(--color-accent, #D4AF37)]/30 shadow-sm'}`}>
               <div className={`w-10 h-10 rounded-full ${TYPE_COLOR[n.type] || 'bg-slate-400'} flex items-center justify-center text-lg flex-shrink-0 mt-0.5`}>
                 {n.icon}
               </div>
               <div className="flex-1 min-w-0">
-                <p className={`text-sm font-semibold ${n.read ? 'text-slate-700' : 'text-[#1E3A5F]'}`}>
+                <p className={`text-sm font-semibold ${n.read ? 'text-slate-700' : 'text-[var(--color-primary, #1E3A5F)]'}`}>
                   {n.title}
                 </p>
                 <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">{n.body}</p>
                 <p className="text-xs text-slate-400 mt-1">{n.time}</p>
               </div>
               {!n.read && (
-                <div className="w-2.5 h-2.5 rounded-full bg-[#D4AF37] flex-shrink-0 mt-1.5" />
+                <div className="w-2.5 h-2.5 rounded-full bg-[var(--color-accent, #D4AF37)] flex-shrink-0 mt-1.5" />
               )}
             </div>
           ))}
           {filtered.length === 0 && (
             <div className="clay rounded-3xl p-12 text-center">
               <p className="text-5xl mb-3">🔕</p>
-              <p className="font-bold text-[#1E3A5F]">No notifications here</p>
+              <p className="font-bold text-[var(--color-primary, #1E3A5F)]">No notifications here</p>
             </div>
           )}
         </div>

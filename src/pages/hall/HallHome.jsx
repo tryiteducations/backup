@@ -41,17 +41,17 @@ export default function HallHome() {
 
   return (
     <AppLayout title={hall.name}>
-      <div className="bg-gradient-to-r from-[#1E3A5F] to-[#0F2140] rounded-2xl shadow-md p-6 mb-6 flex items-center justify-between flex-wrap gap-4">
+      <div className="bg-gradient-to-r from-[var(--color-primary, #1E3A5F)] to-[var(--color-primary-dark, #0F2140)] rounded-2xl shadow-md p-6 mb-6 flex items-center justify-between flex-wrap gap-4">
         <div className="flex items-center gap-4">
           <div className="text-5xl">{hall.emoji}</div>
           <div>
             <h2 className="font-display text-2xl font-extrabold text-white">{hall.name}</h2>
-            <p className="text-[#E8C84A] text-sm mt-1">Focus: {hall.examFocus} · {SAMPLE_MEMBERS.length} members</p>
+            <p className="text-[var(--color-accent-light, #E8C84A)] text-sm mt-1">Focus: {hall.examFocus} · {SAMPLE_MEMBERS.length} members</p>
           </div>
         </div>
         <button
           onClick={() => navigate(`/hall/${hallId}/battle`)}
-          className="px-6 py-3 rounded-2xl bg-[#D4AF37] text-[#1E3A5F] font-bold shadow-md hover:bg-[#E8C84A] transition-all"
+          className="px-6 py-3 rounded-2xl bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)] font-bold shadow-md hover:bg-[var(--color-accent-light, #E8C84A)] transition-all"
         >
           ⚔️ Start Battle
         </button>
@@ -60,11 +60,11 @@ export default function HallHome() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Members */}
         <div className="lg:col-span-1 bg-white rounded-2xl shadow-md p-5">
-          <h3 className="font-display font-extrabold text-[#1E3A5F] mb-4">Members</h3>
+          <h3 className="font-display font-extrabold text-[var(--color-primary, #1E3A5F)] mb-4">Members</h3>
           <div className="space-y-3">
             {SAMPLE_MEMBERS.map((m) => (
               <div key={m.name} className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#1E3A5F] text-white flex items-center justify-center font-bold text-sm">
+                <div className="w-10 h-10 rounded-full bg-[var(--color-primary, #1E3A5F)] text-white flex items-center justify-center font-bold text-sm">
                   {m.initials}
                 </div>
                 <div className="flex-1">
@@ -78,7 +78,7 @@ export default function HallHome() {
 
         {/* Activity Feed */}
         <div className="lg:col-span-1 bg-white rounded-2xl shadow-md p-5">
-          <h3 className="font-display font-extrabold text-[#1E3A5F] mb-4">Recent Activity</h3>
+          <h3 className="font-display font-extrabold text-[var(--color-primary, #1E3A5F)] mb-4">Recent Activity</h3>
           <div className="space-y-4">
             {SAMPLE_ACTIVITY.map((a, i) => (
               <div key={i} className="flex gap-3">
@@ -96,15 +96,15 @@ export default function HallHome() {
 
         {/* Hall Leaderboard */}
         <div className="lg:col-span-1 bg-white rounded-2xl shadow-md p-5">
-          <h3 className="font-display font-extrabold text-[#1E3A5F] mb-4">Hall Leaderboard (This Week)</h3>
+          <h3 className="font-display font-extrabold text-[var(--color-primary, #1E3A5F)] mb-4">Hall Leaderboard (This Week)</h3>
           <div className="space-y-2">
             {ranked.map((m, i) => (
               <div key={m.name} className={`flex items-center justify-between p-2 rounded-xl ${i === 0 ? 'bg-[#FDF6E3]' : ''}`}>
                 <div className="flex items-center gap-2">
-                  <span className="font-extrabold text-[#1E3A5F] w-6">{i + 1}</span>
+                  <span className="font-extrabold text-[var(--color-primary, #1E3A5F)] w-6">{i + 1}</span>
                   <span className="text-sm font-bold text-slate-700">{m.name}</span>
                 </div>
-                <span className="text-sm font-bold text-[#D4AF37]">{m.coinsThisWeek} 🪙</span>
+                <span className="text-sm font-bold text-[var(--color-accent, #D4AF37)]">{m.coinsThisWeek} 🪙</span>
               </div>
             ))}
           </div>

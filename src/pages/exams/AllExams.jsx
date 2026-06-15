@@ -56,7 +56,7 @@ export default function AllExams() {
       <div className="max-w-7xl mx-auto px-4 py-6">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-[#1E3A5F] mb-1">Exam Explorer</h1>
+          <h1 className="text-3xl font-bold text-[var(--color-primary, #1E3A5F)] mb-1">Exam Explorer</h1>
           <p className="text-gray-500 text-sm">
             {total} exams and growing — new exams added weekly
           </p>
@@ -70,7 +70,7 @@ export default function AllExams() {
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search by exam name or conducting body..."
-            className="w-full pl-11 pr-4 py-3 rounded-2xl border border-gray-200 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D4AF37] text-sm text-gray-700 placeholder-gray-400"
+            className="w-full pl-11 pr-4 py-3 rounded-2xl border border-gray-200 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-accent, #D4AF37)] text-sm text-gray-700 placeholder-gray-400"
           />
         </div>
 
@@ -82,8 +82,8 @@ export default function AllExams() {
               onClick={() => setActiveCategory(key)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${
                 activeCategory === key
-                  ? 'bg-[#1E3A5F] text-white border-[#1E3A5F] shadow'
-                  : 'bg-white text-gray-600 border-gray-200 hover:border-[#D4AF37] hover:text-[#1E3A5F]'
+                  ? 'bg-[var(--color-primary, #1E3A5F)] text-white border-[var(--color-primary, #1E3A5F)] shadow'
+                  : 'bg-white text-gray-600 border-gray-200 hover:border-[var(--color-accent, #D4AF37)] hover:text-[var(--color-primary, #1E3A5F)]'
               }`}
             >
               {label}
@@ -110,13 +110,13 @@ export default function AllExams() {
         ) : filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
             <div className="text-5xl mb-4">🔭</div>
-            <h3 className="text-lg font-semibold text-[#1E3A5F] mb-2">No exams found</h3>
+            <h3 className="text-lg font-semibold text-[var(--color-primary, #1E3A5F)] mb-2">No exams found</h3>
             <p className="text-gray-500 text-sm mb-4">
               Try a different search term or category.
             </p>
             <button
               onClick={() => { setSearch(''); setActiveCategory('all') }}
-              className="px-5 py-2 bg-[#D4AF37] text-white rounded-xl text-sm font-semibold hover:bg-[#E8C84A] transition"
+              className="px-5 py-2 bg-[var(--color-accent, #D4AF37)] text-white rounded-xl text-sm font-semibold hover:bg-[var(--color-accent-light, #E8C84A)] transition"
             >
               Clear Filters
             </button>
@@ -127,10 +127,10 @@ export default function AllExams() {
               <button
                 key={exam.id}
                 onClick={() => navigate(`/exams/${exam.id}`)}
-                className="text-left bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md hover:border-[#D4AF37] transition-all group"
+                className="text-left bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md hover:border-[var(--color-accent, #D4AF37)] transition-all group"
               >
                 <div className="text-4xl mb-3">{exam.emoji || '📋'}</div>
-                <h3 className="font-bold text-[#1E3A5F] text-sm leading-snug mb-1 group-hover:text-[#D4AF37] transition-colors line-clamp-2">
+                <h3 className="font-bold text-[var(--color-primary, #1E3A5F)] text-sm leading-snug mb-1 group-hover:text-[var(--color-accent, #D4AF37)] transition-colors line-clamp-2">
                   {exam.name}
                 </h3>
                 <p className="text-xs text-gray-400 mb-3 line-clamp-1">{exam.body}</p>

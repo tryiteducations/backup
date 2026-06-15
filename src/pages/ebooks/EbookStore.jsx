@@ -28,20 +28,20 @@ export default function EbookStore() {
     <AppLayout title="Ebook Store">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div>
-          <h2 className="font-display text-2xl font-extrabold text-[#1E3A5F] mb-1">Ebook Store 📖</h2>
+          <h2 className="font-display text-2xl font-extrabold text-[var(--color-primary, #1E3A5F)] mb-1">Ebook Store 📖</h2>
           <p className="text-slate-500">Read, learn, and collect ebooks for every exam.</p>
         </div>
         <div className="flex gap-3">
           <button
             onClick={() => navigate('/ebooks/my')}
-            className="px-4 py-2 rounded-2xl border-2 border-[#1E3A5F] text-[#1E3A5F] font-bold hover:bg-[#1E3A5F] hover:text-white transition-all"
+            className="px-4 py-2 rounded-2xl border-2 border-[var(--color-primary, #1E3A5F)] text-[var(--color-primary, #1E3A5F)] font-bold hover:bg-[var(--color-primary, #1E3A5F)] hover:text-white transition-all"
           >
             📚 My Ebooks
           </button>
           {(user.role === 'mentor' || user.role === 'institution') && (
             <button
               onClick={() => navigate('/ebooks/upload')}
-              className="px-4 py-2 rounded-2xl bg-[#D4AF37] text-[#1E3A5F] font-bold shadow-md hover:bg-[#E8C84A] transition-all"
+              className="px-4 py-2 rounded-2xl bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)] font-bold shadow-md hover:bg-[var(--color-accent-light, #E8C84A)] transition-all"
             >
               ⬆️ Upload
             </button>
@@ -56,15 +56,15 @@ export default function EbookStore() {
             onClick={() => navigate(`/ebooks/${eb.id}`)}
             className="bg-white rounded-2xl shadow-md p-4 cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all border border-slate-100"
           >
-            <div className="w-full h-32 rounded-xl bg-gradient-to-br from-[#1E3A5F] to-[#0F2140] flex items-center justify-center text-5xl mb-3">
+            <div className="w-full h-32 rounded-xl bg-gradient-to-br from-[var(--color-primary, #1E3A5F)] to-[var(--color-primary-dark, #0F2140)] flex items-center justify-center text-5xl mb-3">
               {eb.emoji}
             </div>
             <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-[#FDF6E3] text-[#7C2D12]">{eb.tag}</span>
-            <h3 className="font-display font-extrabold text-sm text-[#1E3A5F] mt-2 line-clamp-2">{eb.title}</h3>
+            <h3 className="font-display font-extrabold text-sm text-[var(--color-primary, #1E3A5F)] mt-2 line-clamp-2">{eb.title}</h3>
             <p className="text-xs text-slate-400 mt-1">{eb.author}</p>
             <div className="flex items-center justify-between mt-3">
-              <span className="text-xs text-[#D4AF37] font-bold">{'★'.repeat(Math.round(eb.rating))} {eb.rating}</span>
-              <span className={`text-xs font-bold ${eb.price === 'Free' ? 'text-emerald-600' : 'text-[#1E3A5F]'}`}>
+              <span className="text-xs text-[var(--color-accent, #D4AF37)] font-bold">{'★'.repeat(Math.round(eb.rating))} {eb.rating}</span>
+              <span className={`text-xs font-bold ${eb.price === 'Free' ? 'text-emerald-600' : 'text-[var(--color-primary, #1E3A5F)]'}`}>
                 {eb.price}
               </span>
             </div>
