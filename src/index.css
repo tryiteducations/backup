@@ -9,7 +9,7 @@
   --glass-accent: rgba(212,175,55,0.16);
   --button-surface: rgba(255,255,255,0.9);
   --button-text: #1E293B;
-  --heading-color: rgba(255,255,255,0.35);
+  --heading-color: #1E293B;
   --subtext-color: #64748B;
   --theme-transition-duration: 0.48s;
 }
@@ -78,14 +78,14 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
   border: 1px solid rgba(255,255,255,0.12);
   border-radius: 24px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
-  color: #FFFFFF;
+  color: var(--color-on-dark, #FFFFFF);
 }
 .glass-dark p,
 .glass-dark span,
 .glass-dark h1,
 .glass-dark h2,
 .glass-dark h3,
-.glass-dark div { color: #FFFFFF; }
+.glass-dark div { color: var(--color-on-dark, #FFFFFF); }
 
 .glass-gold {
   background: rgba(var(--color-accent-rgb,212,175,55), 0.14);
@@ -97,7 +97,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
   color: var(--color-text, #1E3A5F);
 }
 .glass-text-important {
-  color: #FFFFFF !important;
+  color: var(--color-on-dark, #FFFFFF) !important;
 }
 
 /* ── BUTTONS ───────────────────────────────────────── */
@@ -147,6 +147,58 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
 }
 .text-outline {
   text-shadow: 0 0 2px rgba(255,255,255,0.85), 0 0 6px rgba(255,255,255,0.45);
+}
+
+/* ── IMPROVED TEXT VISIBILITY UTILITIES ─────────────– */
+.text-bright {
+  color: var(--color-text, #1E293B) !important;
+  font-weight: 600;
+}
+
+.text-primary-bright {
+  color: var(--color-primary, #1E3A5F) !important;
+  font-weight: 700;
+}
+
+.text-heading {
+  color: var(--heading-color, var(--color-text, #1E293B)) !important;
+  font-weight: 800;
+  font-family: 'Poppins', sans-serif;
+}
+
+.text-surface {
+  color: var(--color-surface-text, var(--color-text, #1E293B)) !important;
+}
+
+.text-muted-dark {
+  color: var(--color-text-muted, rgba(30,58,95,0.55)) !important;
+  opacity: 0.9;
+}
+
+/* Ensure text is visible on all backgrounds */
+.text-always-visible {
+  color: var(--color-text) !important;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.text-on-dark {
+  color: var(--color-on-dark, #FFFFFF) !important;
+}
+
+.text-on-dark-muted {
+  color: var(--color-on-dark-muted, rgba(255,255,255,0.72)) !important;
+}
+
+.text-on-light {
+  color: var(--color-on-light, #1E3A5F) !important;
+}
+
+.text-on-light-muted {
+  color: var(--color-on-light-muted, #64748B) !important;
+}
+
+.bg-surface-dark {
+  background: var(--color-surface-dark, rgba(0,0,0,0.88)) !important;
 }
 
 /* ── REVEAL ANIMATIONS ─────────────────────────────── */

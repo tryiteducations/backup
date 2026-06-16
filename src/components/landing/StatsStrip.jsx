@@ -53,7 +53,7 @@ function StatItem({ stat }) {
         {/* ── EXPLICIT TERNARY — never use `isNum && value` which renders "0" ── */}
         {isNum ? `${count.toLocaleString()}${stat.suffix}` : stat.display}
       </span>
-      <span className="text-sm text-center leading-tight" style={{ color: 'rgba(var(--color-surface-rgb,255,255,255),0.7)' }}>{stat.label}</span>
+      <span className="text-sm text-center leading-tight" style={{ color: 'var(--color-on-dark-muted, rgba(255,255,255,0.72))' }}>{stat.label}</span>
     </div>
   )
 }

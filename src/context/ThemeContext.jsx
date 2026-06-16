@@ -54,8 +54,13 @@ function applyThemeToDOM(themeId) {
     : 'rgba(255, 255, 255, 0.9)'
   const buttonText = surfaceDark ? '#0F172A' : t.text
   const surfaceText = surfaceDark ? (t.textLight || '#F8FAFC') : t.text
+  const surfaceDarkValue = surfaceDark ? t.surface : 'rgba(0, 0, 0, 0.88)'
   const headingColor = surfaceText
   const subtextColor = t.textLight || '#94A3B8'
+  const onDarkText = '#FFFFFF'
+  const onDarkTextMuted = 'rgba(255,255,255,0.72)'
+  const onLightText = t.text
+  const onLightTextMuted = t.textLight || '#64748B'
   const successBg = 'rgba(34,197,94,0.12)'
   const successBorder = 'rgba(34,197,94,0.22)'
   const accentRgb = hexToRgb(t.accent)
@@ -88,6 +93,11 @@ function applyThemeToDOM(themeId) {
     '--color-text':          t.text,
     '--color-text-light':    bgDark ? 'rgba(255,255,255,0.82)' : (t.textLight || '#64748B'),
     '--color-surface-text':  surfaceText,
+    '--color-on-surface':    surfaceText,
+    '--color-on-dark':       onDarkText,
+    '--color-on-dark-muted': onDarkTextMuted,
+    '--color-on-light':      onLightText,
+    '--color-on-light-muted':onLightTextMuted,
     '--color-muted':         t.textLight || t.border || 'var(--color-muted, #64748B)',
     '--color-border':        t.border,
     '--color-success':       t.success,
@@ -115,9 +125,10 @@ function applyThemeToDOM(themeId) {
     '--glass-border':        glassBorder,
     '--glass-shadow':        accentGlow,
     '--glass-accent':        t.accent,
-    '--glass-dark-text':     '#FFFFFF',
+    '--glass-dark-text':     onDarkText,
     '--color-logo-it':       bgDark ? 'rgba(255,255,255,0.95)' : t.text,
-'--color-text-muted':    bgDark ? 'rgba(255,255,255,0.65)' : 'rgba(30,58,95,0.55)',
+    '--color-text-muted':    bgDark ? 'rgba(255,255,255,0.65)' : 'rgba(30,58,95,0.55)',
+    '--color-surface-dark':  surfaceDarkValue,
     '--button-surface':      buttonSurface,
     '--button-text':         buttonText,
     '--color-surface-muted': surfaceDark ? 'rgba(255,255,255,0.1)' : 'rgba(243,244,246,1)',

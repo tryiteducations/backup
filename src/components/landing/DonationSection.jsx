@@ -70,11 +70,11 @@ export default function DonationSection() {
               </span>
             </div>
             <h2 style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
-              fontSize:'clamp(24px,4vw,38px)', color:'#fff', marginBottom:12 }}>
+              fontSize:'clamp(24px,4vw,38px)', color:'var(--color-on-dark, #FFFFFF)', marginBottom:12 }}>
               Help a Student<br/>
               <span style={{ color:'var(--color-accent, #D4AF37)' }}>Change Their Future</span>
             </h2>
-            <p style={{ fontFamily:'Inter,sans-serif', color:'rgba(255,255,255,0.65)',
+            <p style={{ fontFamily:'Inter,sans-serif', color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))',
               fontSize:'clamp(14px,2vw,16px)', lineHeight:1.75, marginBottom:20 }}>
               Every rupee you donate directly funds free exam preparation
               for orphans, sanitation workers' children, Veer Nari families,
@@ -94,12 +94,12 @@ export default function DonationSection() {
                   borderRadius:14, padding:'12px 14px' }}>
                   <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
                     color:'var(--color-accent, #D4AF37)', fontSize:18 }}>{v}</p>
-                  <p style={{ color:'rgba(255,255,255,0.45)', fontSize:11,
+                  <p style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))', fontSize:11,
                     marginTop:2 }}>{l}</p>
                 </div>
               ))}
             </div>
-            <p style={{ color:'rgba(255,255,255,0.25)', fontSize:11,
+            <p style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))', fontSize:11,
               fontFamily:'Inter,sans-serif' }}>
               * 80G certificate provided after verification. TryIT Educations
               is applying for Section 80G status.
@@ -118,11 +118,11 @@ export default function DonationSection() {
                   color:'var(--color-accent, #D4AF37)', fontSize:22, marginBottom:10 }}>
                   Thank You, {name}!
                 </h3>
-                <p style={{ color:'rgba(255,255,255,0.7)', fontSize:14, lineHeight:1.7 }}>
+                <p style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))', fontSize:14, lineHeight:1.7 }}>
                   Your ₹{finalAmount.toLocaleString()} donation will help fund
                   free education for students who need it most.
                 </p>
-                <p style={{ color:'rgba(255,255,255,0.45)', fontSize:12, marginTop:12 }}>
+                <p style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))', fontSize:12, marginTop:12 }}>
                   Receipt sent to {email} · 80G certificate will follow
                 </p>
                 <button onClick={()=>setStep('amount')}
@@ -136,7 +136,7 @@ export default function DonationSection() {
             ) : step === 'amount' ? (
               <>
                 <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700,
-                  color:'#fff', fontSize:16, marginBottom:16 }}>
+                  color:'var(--color-on-dark, #FFFFFF)', fontSize:16, marginBottom:16 }}>
                   Choose Amount
                 </p>
 
@@ -151,7 +151,7 @@ export default function DonationSection() {
                         background: amount===a && !custom
                           ? 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))'
                           : 'rgba(255,255,255,0.08)',
-                        color: amount===a && !custom ? 'var(--color-primary-dark, #1E3A5F)' : 'rgba(255,255,255,0.7)',
+                        color: amount===a && !custom ? 'var(--color-primary-dark, #1E3A5F)' : 'var(--color-on-dark-muted, rgba(255,255,255,0.72))',
                         fontFamily:'Poppins,sans-serif', fontWeight:700, fontSize:14,
                         transition:'all 0.15s',
                       }}>
@@ -163,14 +163,14 @@ export default function DonationSection() {
                 {/* Custom amount */}
                 <div style={{ position:'relative', marginBottom:12 }}>
                   <span style={{ position:'absolute', left:14, top:'50%',
-                    transform:'translateY(-50%)', color:'rgba(255,255,255,0.5)',
+                    transform:'translateY(-50%)', color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))',
                     fontWeight:700, fontSize:16 }}>₹</span>
                   <input value={custom} type="number" placeholder="Enter custom amount"
                     onChange={e=>{ setCustom(e.target.value); setAmount(0) }}
                     style={{ width:'100%', padding:'12px 12px 12px 32px',
                       background:'rgba(255,255,255,0.08)',
                       border:'1.5px solid rgba(255,255,255,0.15)',
-                      borderRadius:12, color:'#fff', fontSize:15,
+                      borderRadius:12, color:'var(--color-on-dark, #FFFFFF)', fontSize:15,
                       outline:'none', boxSizing:'border-box',
                       fontFamily:'Poppins,sans-serif' }}
                     onFocus={e=>e.target.style.borderColor='var(--color-accent, #D4AF37)'}
@@ -196,7 +196,7 @@ export default function DonationSection() {
                       : 'rgba(255,255,255,0.1)',
                     fontFamily:'Poppins,sans-serif', fontWeight:800,
                     fontSize:16, cursor: finalAmount>=1 ? 'pointer' : 'not-allowed',
-                    color: finalAmount>=1 ? 'var(--color-primary-dark, #1E3A5F)' : 'rgba(255,255,255,0.3)',
+                    color: finalAmount>=1 ? 'var(--color-primary-dark, #1E3A5F)' : 'var(--color-on-dark-muted, rgba(255,255,255,0.72))',
                   }}>
                   Donate ₹{finalAmount.toLocaleString()} →
                 </button>
@@ -205,10 +205,10 @@ export default function DonationSection() {
               <>
                 <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:20 }}>
                   <button onClick={()=>setStep('amount')}
-                    style={{ background:'none', border:'none', color:'rgba(255,255,255,0.5)',
+                    style={{ background:'none', border:'none', color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))',
                       cursor:'pointer', fontSize:18 }}>←</button>
                   <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700,
-                    color:'#fff', fontSize:15 }}>
+                    color:'var(--color-on-dark, #FFFFFF)', fontSize:15 }}>
                     Donating ₹{finalAmount.toLocaleString()}
                   </p>
                 </div>
@@ -218,7 +218,7 @@ export default function DonationSection() {
                   { label:'PAN (for 80G)',  val:pan,   set:setPan,   ph:'ABCDE1234F (optional)', type:'text' },
                 ].map(f=>(
                   <div key={f.label} style={{ marginBottom:14 }}>
-                    <label style={{ display:'block', color:'rgba(255,255,255,0.7)',
+                    <label style={{ display:'block', color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))',
                       fontSize:12, fontWeight:600, marginBottom:6,
                       fontFamily:'Poppins,sans-serif' }}>{f.label}</label>
                     <input value={f.val} type={f.type} placeholder={f.ph}
@@ -226,7 +226,7 @@ export default function DonationSection() {
                       style={{ width:'100%', padding:'11px 14px',
                         background:'rgba(255,255,255,0.08)',
                         border:'1.5px solid rgba(255,255,255,0.15)',
-                        borderRadius:12, color:'#fff', fontSize:14,
+                        borderRadius:12, color:'var(--color-on-dark, #FFFFFF)', fontSize:14,
                         outline:'none', boxSizing:'border-box',
                         fontFamily:'Inter,sans-serif' }}
                       onFocus={e=>e.target.style.borderColor='var(--color-accent, #D4AF37)'}
@@ -246,7 +246,7 @@ export default function DonationSection() {
                   }}>
                   {loading ? '⏳ Opening payment...' : `🔒 Pay ₹${finalAmount.toLocaleString()} Securely`}
                 </button>
-                <p style={{ color:'rgba(255,255,255,0.25)', fontSize:11,
+                <p style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))', fontSize:11,
                   textAlign:'center', marginTop:10 }}>
                   Powered by Razorpay · UPI · Cards · Net Banking accepted
                 </p>

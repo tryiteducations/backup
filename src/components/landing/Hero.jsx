@@ -41,7 +41,7 @@ export default function Hero() {
 
           <p className="text-lg italic font-inter" style={{ color: 'var(--color-accent, #D4AF37)' }}>Your Exam. Your Rank. Your Success.</p>
 
-          <p className="text-base leading-relaxed max-w-lg" style={{ color: 'var(--color-muted, #64748B)' }}>
+          <p className="text-base leading-relaxed max-w-lg" style={{ color: 'var(--color-on-dark-muted, rgba(255,255,255,0.72))' }}>
             75,000+ exam pathways — Class 6 to PhD, age 12 to 60+.
             Study in 40+ Indian languages. Real All-India rankings after every test.
           </p>
@@ -57,7 +57,7 @@ export default function Hero() {
 
           <div className="flex items-center gap-2 glass px-4 py-2.5 rounded-2xl w-fit">
             <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse-dot" />
-            <span className="text-sm font-semibold" style={{ color: 'var(--color-text, #1E3A5F)' }}>1,247 students studying right now</span>
+            <span className="text-sm font-semibold" style={{ color: 'var(--color-on-dark, #FFFFFF)' }}>1,247 students studying right now</span>
           </div>
 
           <div className="flex flex-wrap gap-2">

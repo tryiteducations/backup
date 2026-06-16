@@ -64,9 +64,9 @@ function Hero({ navigate }) {
 
             <h1 style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
             fontSize:'clamp(38px,6vw,72px)', lineHeight:1.05, marginBottom:16 }}>
-            <span style={{ color:'var(--heading-color)' }}>One App.</span><br/>
+            <span style={{ color:'var(--color-on-dark, #FFFFFF)' }}>One App.</span><br/>
             <span style={{ color:'var(--color-accent)' }}>Every Exam.</span><br/>
-            <span style={{ color:'var(--heading-color)' }}>Zero Barriers.</span>
+            <span style={{ color:'var(--color-on-dark, #FFFFFF)' }}>Zero Barriers.</span>
           </h1>
 
           <p style={{ color:'var(--color-accent, #D4AF37)', fontStyle:'italic',
@@ -74,7 +74,7 @@ function Hero({ navigate }) {
             fontFamily:'Inter,sans-serif' }}>
             Your Exam. Your Rank. Your Success.
           </p>
-          <p style={{ color:'var(--color-text-light, rgba(255,255,255,0.65))',
+          <p style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))',
             fontSize:'clamp(14px,1.8vw,16px)', lineHeight:1.75,
             maxWidth:520, marginBottom:32,
             fontFamily:'Inter,sans-serif' }}>
@@ -99,7 +99,7 @@ function Hero({ navigate }) {
               borderRadius:16,
               padding:'clamp(13px,2vw,18px) clamp(20px,3vw,28px)',
               fontFamily:'Poppins,sans-serif', fontWeight:700,
-              fontSize:'clamp(14px,2vw,16px)', color:'var(--color-surface, #FFFFFF)', cursor:'pointer' }}>
+              fontSize:'clamp(14px,2vw,16px)', color:'var(--color-on-dark, #FFFFFF)', cursor:'pointer' }}>
               🤝 Free Access — 9 Communities
             </button>
           </div>
@@ -110,7 +110,7 @@ function Hero({ navigate }) {
               '📚 From Class 6 to PhD'].map(t => (
               <span key={t} style={{ background:'rgba(255,255,255,0.06)',
                 border:'1px solid rgba(255,255,255,0.1)', borderRadius:20,
-                padding:'5px 12px', color:'var(--color-text-light, rgba(255,255,255,0.6))',
+                padding:'5px 12px', color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))',
                 fontSize:'clamp(10px,1.5vw,12px)',
                 fontFamily:'Inter,sans-serif' }}>{t}</span>
             ))}
@@ -119,22 +119,22 @@ function Hero({ navigate }) {
 
         {/* Right cards */}
         <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
-          <div style={{ background:'var(--color-surface-dark, rgba(0,0,0,0.88)',
+          <div style={{ background:'var(--color-surface-dark, rgba(0, 0, 0, 0.88))',
             border:'1px solid rgba(212,175,55,0.3)', borderRadius:20,
             padding:18, backdropFilter:'blur(16px)' }}>
             <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:12 }}>
               <div style={{ width:46, height:46, borderRadius:'50%',
                 background:'linear-gradient(135deg, var(--color-accent), var(--color-accent-light))',
                 display:'flex', alignItems:'center', justifyContent:'center',
-                fontWeight:900, fontSize:16, color:'var(--heading-color)', flexShrink:0 }}>AK</div>
+                fontWeight:900, fontSize:16, color:'#1E293B', flexShrink:0 }}>AK</div>
               <div>
-                <p className="glass-text-important" style={{ color:'var(--glass-dark-text, var(--color-surface-text, #FFFFFF))', fontWeight:700,
+                <p className="glass-text-important" style={{ color:'var(--color-on-dark, #FFFFFF)', fontWeight:700,
                   fontFamily:'Poppins,sans-serif', fontSize:14 }}>
                   Arjun K. — Tamil Nadu</p>
                 <p style={{ color:'var(--color-accent, #D4AF37)', fontSize:12 }}>⛏️ The Gold Miner · SSC CGL</p>
               </div>
             </div>
-            <p style={{ color:'var(--glass-dark-text, var(--color-surface-text, rgba(255,255,255,0.75)))', fontSize:13, marginBottom:12 }}>
+            <p style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.75))', fontSize:13, marginBottom:12 }}>
               "Moved from #8,432 → <strong style={{ color:'var(--color-accent-light, #E8C84A)' }}>#1,243</strong> in 30 days! 🔥"
             </p>
             <div style={{ display:'flex', alignItems:'center', gap:8 }}>
@@ -154,7 +154,7 @@ function Hero({ navigate }) {
             <div>
               <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
                 color:'var(--color-primary-dark, #1E3A5F)', fontSize:'clamp(16px,2.5vw,20px)' }}>Baahuveer</p>
-              <p style={{ color:'var(--color-surface-text, rgba(255,255,255,0.85))', fontSize:13 }}>
+              <p style={{ color:'var(--color-on-dark, #FFFFFF)', fontSize:13 }}>
                 Level 6 — Indian Cinema meets Exam Glory 🎬</p>
             </div>
           </div>
@@ -167,7 +167,7 @@ function Hero({ navigate }) {
               <div key={l} style={{ textAlign:'center' }}>
                 <p style={{ color:'var(--color-accent, #D4AF37)', fontFamily:'Poppins,sans-serif',
                   fontWeight:900, fontSize:'clamp(14px,2.5vw,20px)' }}>{v}</p>
-                <p style={{ color:'rgba(255,255,255,0.45)', fontSize:10, marginTop:2 }}>{l}</p>
+                <p style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.45))', fontSize:10, marginTop:2 }}>{l}</p>
               </div>
             ))}
           </div>
@@ -201,7 +201,7 @@ function StatsStrip() {
             fontSize:'clamp(26px,4vw,44px)', color:'var(--color-accent, #D4AF37)', lineHeight:1 }}>
             {c1.toLocaleString()}+
           </p>
-          <p style={{ color:'var(--color-text-light, rgba(255,255,255,0.55))', fontSize:13, marginTop:4 }}>
+          <p style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))', fontSize:13, marginTop:4 }}>
             Exam Pathways
           </p>
         </div>
@@ -221,7 +221,7 @@ function StatsStrip() {
             fontSize:'clamp(20px,3.5vw,34px)', color:'var(--color-accent, #D4AF37)', lineHeight:1.1 }}>
             Millions Coming
           </p>
-          <p style={{ color:'rgba(212,175,55,0.7)', fontSize:13,
+          <p style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))', fontSize:13,
             marginTop:4, fontStyle:'italic' }}>
             What about YOU? 🔥
           </p>
@@ -234,7 +234,7 @@ function StatsStrip() {
             fontSize:'clamp(16px,2.5vw,22px)', color:'var(--color-accent, #D4AF37)', lineHeight:1.2 }}>
             Every Exam In India
           </p>
-          <p style={{ color:'rgba(255,255,255,0.45)', fontSize:11, marginTop:4 }}>
+          <p style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))', fontSize:11, marginTop:4 }}>
             CLAT · Swayam · Foreign · UPSC · Arts · Science · ITI · Scholarships
           </p>
         </div>
@@ -245,7 +245,7 @@ function StatsStrip() {
             fontSize:'clamp(26px,4vw,44px)', color:'var(--color-accent, #D4AF37)', lineHeight:1 }}>
             28/28
           </p>
-          <p style={{ color:'rgba(255,255,255,0.55)', fontSize:13, marginTop:4 }}>
+          <p style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))', fontSize:13, marginTop:4 }}>
             States Covered
           </p>
         </div>
@@ -293,7 +293,7 @@ function TestPreview() {
                   padding:'3px 10px', borderRadius:20 }}>{tag}</span>
               ))}
             </div>
-            <span style={{ color:'rgba(255,255,255,0.7)', fontSize:13 }}>⏱ 1:24</span>
+            <span style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.7))', fontSize:13 }}>⏱ 1:24</span>
           </div>
           <div style={{ padding:'24px 20px' }}>
             <p style={{ color:'var(--color-text, #1E293B)', fontWeight:600, fontSize:16,
@@ -343,7 +343,7 @@ function TestPreview() {
                 <button onClick={() => { setSelected(null); setRevealed(false) }} style={{
                   background:'var(--color-primary, #1E3A5F)', border:'none', borderRadius:12,
                   padding:'11px 24px', fontFamily:'Poppins,sans-serif',
-                  fontWeight:700, fontSize:14, color:'#fff', cursor:'pointer' }}>
+                  fontWeight:700, fontSize:14, color:'var(--color-on-dark, #FFFFFF)', cursor:'pointer' }}>
                   Try Again
                 </button>
               )}
@@ -389,10 +389,10 @@ function LeaderboardPreview({ navigate }) {
       <div style={{ maxWidth:800, margin:'0 auto' }}>
         <div style={{ textAlign:'center', marginBottom:32 }}>
           <h2 style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
-            fontSize:'clamp(22px,4vw,38px)', color:'var(--color-surface, #fff)', marginBottom:8 }}>
+            fontSize:'clamp(22px,4vw,38px)', color:'var(--color-on-dark, #FFFFFF)', marginBottom:8 }}>
             🏆 Real All-India Rankings
           </h2>
-          <p style={{ color:'rgba(var(--color-surface-rgb, 255,255,255), 0.6)', fontSize:15 }}>
+          <p style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))', fontSize:15 }}>
             After every test. Live. Your name could be up here.
           </p>
         </div>
@@ -418,15 +418,15 @@ function LeaderboardPreview({ navigate }) {
               </span>
               <div>
                 <div style={{ display:'flex', alignItems:'center', gap:6, flexWrap:'wrap' }}>
-                  <span style={{ color:'#fff', fontWeight:600, fontSize:13 }}>{r.name}</span>
+                  <span style={{ color:'var(--color-on-dark, #FFFFFF)', fontWeight:600, fontSize:13 }}>{r.name}</span>
                   {r.isYou && <span style={{ background:'var(--color-accent, #D4AF37)', color:'var(--color-primary-dark, #1E3A5F)',
                     fontSize:9, fontWeight:800, padding:'2px 8px', borderRadius:20 }}>← YOU</span>}
                 </div>
-                <span style={{ color:'rgba(255,255,255,0.35)', fontSize:11 }}>
+                <span style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.35))', fontSize:11 }}>
                   {r.badge} · {r.state}
                 </span>
               </div>
-              <span style={{ background:'rgba(255,255,255,0.08)', color:'rgba(var(--color-surface-rgb, 255,255,255), 0.6)',
+              <span style={{ background:'rgba(255,255,255,0.08)', color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))',
                 fontSize:10, fontWeight:600, padding:'3px 8px', borderRadius:20,
                 display:'inline-block' }}>{r.exam}</span>
               <span style={{ color:'var(--color-accent, #D4AF37)', fontWeight:800, fontSize:14 }}>{r.score}</span>
@@ -532,10 +532,10 @@ function EquitySection({ navigate }) {
         <div style={{ textAlign:'center', marginBottom:36 }}>
           <span style={{ fontSize:'clamp(32px,5vw,52px)' }}>🇮🇳</span>
           <h2 style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
-            fontSize:'clamp(24px,4vw,40px)', color:'var(--color-surface, #fff)', margin:'12px 0 8px' }}>
+            fontSize:'clamp(24px,4vw,40px)', color:'var(--color-on-dark, #FFFFFF)', margin:'12px 0 8px' }}>
             TryIT Cares — Free For Life
           </h2>
-          <p style={{ color:'var(--color-text-light, rgba(255,255,255,0.6))', fontSize:15,
+          <p style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.74))', fontSize:15,
             maxWidth:560, margin:'0 auto 8px' }}>
             6 communities get 100% free access for life.
             Including full support for Transgender youth via the SMILE Portal. 🏳️‍⚧️
@@ -550,7 +550,7 @@ function EquitySection({ navigate }) {
               borderRadius:16, padding:'14px 16px',
               display:'flex', alignItems:'center', gap:10 }}>
               <span style={{ fontSize:24, flexShrink:0 }}>{t.emoji}</span>
-              <span style={{ color:'#fff', fontFamily:'Poppins,sans-serif',
+              <span style={{ color:'var(--color-on-dark, #FFFFFF)', fontFamily:'Poppins,sans-serif',
                 fontWeight:600, fontSize:13, flex:1 }}>{t.name}</span>
               <span style={{ background: t.free?'rgba(34,197,94,0.18)':'rgba(212,175,55,0.15)',
                 color: t.free? 'var(--color-success-light, #4ADE80)' : 'var(--color-accent, #D4AF37)',
@@ -566,7 +566,7 @@ function EquitySection({ navigate }) {
             background:'linear-gradient(135deg, var(--color-success, #22C55E), #16A34A)', border:'none',
             borderRadius:14, padding:'13px 36px',
             fontFamily:'Poppins,sans-serif', fontWeight:700,
-            fontSize:16, color:'var(--color-surface, #FFFFFF)', cursor:'pointer',
+            fontSize:16, color:'var(--color-on-dark, #FFFFFF)', cursor:'pointer',
             boxShadow:'0 6px 20px rgba(34,197,94,0.3)' }}>
             Check Your Eligibility →
           </button>
@@ -655,10 +655,10 @@ function FinalCTA({ navigate }) {
       textAlign:'center' }}>
       <div style={{ maxWidth:700, margin:'0 auto' }}>
         <h2 style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
-          fontSize:'clamp(26px,4vw,48px)', color:'var(--color-surface, #FFFFFF)', marginBottom:16 }}>
+          fontSize:'clamp(26px,4vw,48px)', color:'var(--color-on-dark, #FFFFFF)', marginBottom:16 }}>
           Ready to Start Your Journey?
         </h2>
-        <p style={{ color:'var(--color-text-light, rgba(255,255,255,0.65))', fontSize:16,
+        <p style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.65))', fontSize:16,
           maxWidth:520, margin:'0 auto 32px', lineHeight:1.7 }}>
           1,10,000+ exams. 40+ languages. Real rankings. Free for 9 communities.
           From Class 6 to PhD — for every Indian, at every age.
@@ -677,11 +677,11 @@ function FinalCTA({ navigate }) {
             border:'1.5px solid rgba(212,175,55,0.4)', borderRadius:18,
             padding:'clamp(14px,2vw,20px) clamp(24px,3vw,40px)',
             fontFamily:'Poppins,sans-serif', fontWeight:700,
-            fontSize:'clamp(15px,2vw,18px)', color:'var(--color-surface, #FFFFFF)', cursor:'pointer' }}>
+            fontSize:'clamp(15px,2vw,18px)', color:'var(--color-on-dark, #FFFFFF)', cursor:'pointer' }}>
             🤝 Apply for Free Access
           </button>
         </div>
-        <p style={{ color:'var(--color-text-light, rgba(255,255,255,0.3))', fontSize:12 }}>
+        <p style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.3))', fontSize:12 }}>
           No credit card · No commitment · Free forever for eligible communities
         </p>
       </div>

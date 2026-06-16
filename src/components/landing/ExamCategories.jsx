@@ -25,10 +25,10 @@ export default function ExamCategories() {
     <section className="py-16 reveal" style={{ background:'linear-gradient(180deg, var(--color-primary-dark, #0F2140), var(--color-primary, #1E3A5F))' }}>
       <div className="max-w-7xl mx-auto px-5">
         <div className="text-center mb-10">
-          <h2 className="font-poppins font-bold" style={{ fontSize:'clamp(26px,4vw,40px)', color:'var(--color-surface, #FFFFFF)' }}>
+          <h2 className="font-poppins font-bold" style={{ fontSize:'clamp(26px,4vw,40px)', color:'var(--color-on-dark, #FFFFFF)' }}>
             Find Your Exam
           </h2>
-          <p className="mt-2" style={{ color:'rgba(var(--color-surface-rgb,255,255,255),0.62)' }}>75,000+ exam pathways across every category</p>
+          <p className="mt-2" style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))' }}>75,000+ exam pathways across every category</p>
         </div>
         <div className="flex flex-wrap justify-center gap-4">
           {CATS.map(cat => (
@@ -42,7 +42,7 @@ export default function ExamCategories() {
                 style={{ backgroundColor: cat.color }}>
                 {cat.emoji}
               </div>
-              <p className="font-semibold text-xs text-center leading-tight" style={{ color:'var(--color-surface, #FFFFFF)' }}>{cat.name}</p>
+              <p className="font-semibold text-xs text-center leading-tight" style={{ color:'var(--color-on-dark, #FFFFFF)' }}>{cat.name}</p>
               <p className="text-xs font-semibold" style={{ color:'var(--color-accent, #D4AF37)' }}>{cat.count} series</p>
               <span className="text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity" style={{ color:'var(--color-accent, #D4AF37)' }}>
                 Explore →
