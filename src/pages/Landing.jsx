@@ -119,9 +119,9 @@ function Hero({ navigate }) {
 
         {/* Right cards */}
         <div style={{ display:'flex', flexDirection:'column', gap:14 }}>
-          <div style={{ background:'var(--color-surface-dark, rgba(15,33,64,0.9))',
+          <div style={{ background:'var(--color-surface-dark, rgba(0,0,0,0.88)',
             border:'1px solid rgba(212,175,55,0.3)', borderRadius:20,
-            padding:18, backdropFilter:'blur(20px)' }}>
+            padding:18, backdropFilter:'blur(16px)' }}>
             <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:12 }}>
               <div style={{ width:46, height:46, borderRadius:'50%',
                 background:'linear-gradient(135deg, var(--color-accent), var(--color-accent-light))',

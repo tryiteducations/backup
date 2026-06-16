@@ -88,20 +88,26 @@ export default function Navbar() {
         boxShadow: '0 18px 45px rgba(15,23,42,0.08)',
       }}>
         {/* Logo – animated, dynamic contrast */}
-        <div
-          onClick={() => navigate('/')}
-          style={{
-            cursor: 'pointer',
-            flexShrink: 0,
-            display: 'flex',
-            alignItems: 'center',
-            lineHeight: 0,
-            filter: theme && isDarkColor(theme.bg) ? 'drop-shadow(0 4px 18px rgba(0,0,0,0.25))' : 'drop-shadow(0 4px 18px rgba(15,23,42,0.12))',
-          }}
-        >
-          <LogoAnimated size={logoSz} mode="loop" dark={surfaceDark} />
-        </div>
-
+<div
+  onClick={() => navigate('/landing')}
+  style={{ display:'flex', alignItems:'center', gap:8, cursor:'pointer', flexShrink:0 }}>
+  <span style={{
+    fontFamily: 'Poppins,sans-serif',
+    fontWeight: 900,
+    fontSize: 20,
+    color: 'var(--color-accent, #D4AF37)',
+    letterSpacing: -0.5,
+    lineHeight: 1,
+  }}>Try IT</span>
+  <span style={{
+    fontFamily: 'Poppins,sans-serif',
+    fontWeight: 900,
+    fontSize: 20,
+    color: 'var(--color-accent, #D4AF37)',
+    letterSpacing: -0.5,
+    lineHeight: 1,
+  }}>Educations</span>
+</div>
         {/* Desktop nav links – hidden on mobile */}
         <div
           className="nav-links"
