@@ -95,7 +95,8 @@ const ThemeSelector         = lazy(() => import('./pages/settings/ThemeSelector'
 const Terms                 = lazy(() => import('./pages/legal/Terms'))
 const Privacy               = lazy(() => import('./pages/legal/Privacy'))
 const CommunityStandards    = lazy(() => import('./pages/legal/CommunityStandards'))
-
+const CommunityPage = lazy(() => import('./pages/community/CommunityPage'))
+// SmartExamSearch and ProfilePhoto are components — just import where needed
 const Stub = ({ title = 'Coming Soon' }) => (
   <div style={{ minHeight:'100vh', display:'flex', flexDirection:'column',
     alignItems:'center', justifyContent:'center', gap:16, padding:24,
@@ -158,7 +159,7 @@ function ThemedApp() {
             <Route path="/login"       element={<Login />} />
             <Route path="/onboarding"  element={<Onboarding />} />
             <Route path="/role-select" element={<RoleSelect />} />
-
+            <Route path="/community" element={<CommunityPage />} />
             {/* CORE */}
             <Route path="/dashboard"     element={<Dashboard />} />
             <Route path="/profile"       element={<Profile />} />
