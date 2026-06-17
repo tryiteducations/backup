@@ -2,6 +2,81 @@
 import { createContext, useContext, useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import localDb from '../lib/localDb'
+// ── PLAN RULES (Free / Pro / Ultra feature gates) ─────────────────────────
+const PLAN_RULES = {
+  free: {
+    pyq_questions:    { allowed: true,  limit: null, period: null,  coins: 0  },
+    ai_questions:     { allowed: false, limit: null, period: null,  coins: 10 },
+    explanation:      { allowed: true,  limit: 5,    period: '6hr', coins: 20 },
+    concept_learning: { allowed: false, limit: null, period: null,  coins: 0  },
+    daily_tests:      { allowed: true,  limit: 5,    period: '24hr',coins: 0  },
+    mock_tests:       { allowed: true,  limit: 1,    period: '7day',coins: 50 },
+    daily_materials:  { allowed: true,  limit: null, period: null,  coins: 0  },
+    games_basic:      { allowed: true,  limit: null, period: null,  coins: 30 },
+    games_advanced:   { allowed: false, limit: null, period: null,  coins: 100},
+    prep_pathways:    { allowed: false, limit: null, period: null,  coins: 0  },
+    battles:          { allowed: true,  limit: 3,    period: '24hr',coins: 20 },
+    offline_download: { allowed: false, limit: null, period: null,  coins: 50 },
+    doubt_mentor:     { allowed: false, limit: null, period: null,  coins: 100},
+  },
+  pro: {
+    pyq_questions:    { allowed: true,  limit: null, period: null, coins: 0 },
+    ai_questions:     { allowed: true,  limit: null, period: null, coins: 0 },
+    explanation:      { allowed: true,  limit: null, period: null, coins: 0 },
+    concept_learning: { allowed: false, limit: null, period: null, coins: 0 },
+    daily_tests:      { allowed: true,  limit: null, period: null, coins: 0 },
+    mock_tests:       { allowed: true,  limit: null, period: null, coins: 0 },
+    daily_materials:  { allowed: true,  limit: null, period: null, coins: 0 },
+    games_basic:      { allowed: true,  limit: null, period: null, coins: 0 },
+    games_advanced:   { allowed: true,  limit: null, period: null, coins: 0 },
+    prep_pathways:    { allowed: false, limit: null, period: null, coins: 0 },
+    battles:          { allowed: true,  limit: null, period: null, coins: 0 },
+    offline_download: { allowed: true,  limit: null, period: null, coins: 0 },
+    doubt_mentor:     { allowed: true,  limit: 5,    period: '30day', coins: 0 },
+  },
+  ultra: {
+    pyq_questions:    { allowed: true, limit: null, period: null, coins: 0 },
+    ai_questions:     { allowed: true, limit: null, period: null, coins: 0 },
+    explanation:      { allowed: true, limit: null, period: null, coins: 0 },
+    concept_learning: { allowed: true, limit: null, period: null, coins: 0 },
+    daily_tests:      { allowed: true, limit: null, period: null, coins: 0 },
+    mock_tests:       { allowed: true, limit: null, period: null, coins: 0 },
+    daily_materials:  { allowed: true, limit: null, period: null, coins: 0 },
+    games_basic:      { allowed: true, limit: null, period: null, coins: 0 },
+    games_advanced:   { allowed: true, limit: null, period: null, coins: 0 },
+    prep_pathways:    { allowed: true, limit: null, period: null, coins: 0 },
+    battles:          { allowed: true, limit: null, period: null, coins: 0 },
+    offline_download: { allowed: true, limit: null, period: null, coins: 0 },
+    doubt_mentor:     { allowed: true, limit: null, period: null, coins: 0 },
+  },
+}
+
+// Also keep pro_trial and pro_grant acting as 'pro'
+function normalizePlan(plan) {
+  if (!plan) return 'free'
+  if (plan === 'ultra') return 'ultra'
+  if (['pro', 'pro_trial', 'pro_grant', 'pro_monthly',
+       'pro_quarterly', 'pro_yearly'].includes(plan)) return 'pro'
+  return 'free'
+}
+
+function getUsagePeriodKey(userId, feature, period) {
+  const now = new Date()
+  let block
+  if (period === '6hr') {
+    const h = now.getHours()
+    block = `${now.toDateString()}_${Math.floor(h / 6)}`
+  } else if (period === '24hr') {
+    block = now.toDateString()
+  } else if (period === '7day') {
+    block = `week_${Math.floor(now.getTime() / (7 * 24 * 60 * 60 * 1000))}`
+  } else if (period === '30day') {
+    block = `${now.getFullYear()}_${now.getMonth()}`
+  } else {
+    block = now.toDateString()
+  }
+  return `tryit_usage_${userId}_${feature}_${block}`
+}
 
 const MOCK_USER = {
   id: 'usr-mock-001',
@@ -13,7 +88,7 @@ const MOCK_USER = {
   role: localStorage.getItem('tryit_role') || 'student',
   xp: 0, xpToNext: 500, coins: 0, streak: 0, streakFreezes: 2,
   level: 1, levelTitle: 'The Fierce One', levelEmoji: '🔥',
-  isPro: true, plan: 'pro_trial',
+  isPro: false, plan: 'free',
   userId: 'TRY-TN-00001-2026', joinDate: 'June 2026',
   rank: null, testsCompleted: 0, avgScore: null,
   studyHours: '0h', guruPoints: 0,
@@ -211,14 +286,105 @@ export function AuthProvider({ children }) {
     if (realEmail) localStorage.setItem('tryit_email', realEmail)
     initSession()
   }
+  // ── canAccess: check if user can use a feature ──────────────────────────
+  const canAccess = (feature) => {
+    const tier  = normalizePlan(user?.plan)
+    const rules = PLAN_RULES[tier] || PLAN_RULES.free
+    const rule  = rules[feature]
+    if (!rule) return { allowed: false, reason: 'unknown_feature' }
+
+    // Feature blocked at this plan level
+    if (!rule.allowed) {
+      const upgradeTo = feature === 'concept_learning' ? 'ultra' : 'pro'
+      return {
+        allowed: false,
+        reason: 'plan_restriction',
+        upgradeTo,
+        coinCost: rule.coins,
+        canByCoin: rule.coins > 0 && (user?.coins || 0) >= rule.coins,
+      }
+    }
+
+    // Check usage limits
+    if (rule.limit !== null && rule.period && user?.id) {
+      const key  = getUsagePeriodKey(user.id, feature, rule.period)
+      const used = parseInt(localStorage.getItem(key) || '0')
+      if (used >= rule.limit) {
+        const upgradeTo = feature === 'concept_learning' ? 'ultra' : 'pro'
+        return {
+          allowed: false,
+          reason: 'limit_reached',
+          used,
+          limit: rule.limit,
+          period: rule.period,
+          coinCost: rule.coins,
+          canByCoin: rule.coins > 0 && (user?.coins || 0) >= rule.coins,
+          upgradeTo,
+        }
+      }
+    }
+    return { allowed: true }
+  }
+
+  // ── trackUsage: increment usage counter after using a feature ───────────
+  const trackUsage = (feature) => {
+    const tier  = normalizePlan(user?.plan)
+    const rule  = (PLAN_RULES[tier] || PLAN_RULES.free)[feature]
+    if (!rule?.period || !user?.id) return
+    const key  = getUsagePeriodKey(user.id, feature, rule.period)
+    const used = parseInt(localStorage.getItem(key) || '0')
+    localStorage.setItem(key, used + 1)
+  }
+
+  // ── spendCoins: deduct coins and sync ───────────────────────────────────
+  const spendCoins = (amount, reason = '') => {
+    if (!user || (user.coins || 0) < amount) return false
+    const newBal = (user.coins || 0) - amount
+    updateUser({ coins: newBal })
+    // Async sync to Supabase
+    if (!IS_DEV && user.id) {
+      supabase.from('coins_ledger').insert({
+        user_id: user.id,
+        transaction_type: 'spent_hint',
+        amount: -amount,
+        balance_after: newBal,
+        notes: reason,
+      }).then(() => {
+        supabase.from('users').update({ coins: newBal }).eq('id', user.id)
+      })
+    }
+    return true
+  }
+
+  // ── isTopicUnlocked: check if user has bought a topic concept ───────────
+  const isTopicUnlocked = (topicId) => {
+    const tier = normalizePlan(user?.plan)
+    if (tier === 'ultra') return true
+    const key     = `tryit_topic_unlocks_${user?.id}`
+    const unlocked = JSON.parse(localStorage.getItem(key) || '[]')
+    return unlocked.includes(topicId)
+  }
+
+  const unlockTopic = (topicId) => {
+    const key      = `tryit_topic_unlocks_${user?.id}`
+    const unlocked = JSON.parse(localStorage.getItem(key) || '[]')
+    if (!unlocked.includes(topicId)) {
+      unlocked.push(topicId)
+      localStorage.setItem(key, JSON.stringify(unlocked))
+    }
+  }
 
   const isImpersonating = () => localStorage.getItem('tryit_admin_impersonating') === '1'
 
   return (
     <AuthCtx.Provider value={{
       user, loading, syncStatus,
-      login, logout, updateUser, addCoins,
+      login, logout, updateUser, addCoins, spendCoins,
       viewAs, exitImpersonation, isImpersonating,
+      canAccess, trackUsage, isTopicUnlocked, unlockTopic,
+      isPro:   normalizePlan(user?.plan) !== 'free',
+      isUltra: normalizePlan(user?.plan) === 'ultra',
+      planTier: normalizePlan(user?.plan),
     }}>
       {children}
     </AuthCtx.Provider>
