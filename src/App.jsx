@@ -5,7 +5,6 @@ import { ToastProvider } from './context/ToastContext'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import ImpersonationBanner from './components/ImpersonationBanner'
 
-// ── AUTH / CORE ────────────────────────────────────────────────
 const Splash          = lazy(() => import('./pages/Splash'))
 const Landing         = lazy(() => import('./pages/Landing'))
 const Login           = lazy(() => import('./pages/Login'))
@@ -16,27 +15,25 @@ const Profile         = lazy(() => import('./pages/Profile'))
 const Settings        = lazy(() => import('./pages/Settings'))
 const Notifications   = lazy(() => import('./pages/Notifications'))
 const JourneyPassport = lazy(() => import('./pages/JourneyPassport'))
+const TestLauncher    = lazy(() => import('./pages/test-engine/TestLauncher'))
+const ActiveTest      = lazy(() => import('./pages/test-engine/ActiveTest'))
+const ResultScreen    = lazy(() => import('./pages/test-engine/ResultScreen'))
+const ReviewScreen    = lazy(() => import('./pages/test-engine/ReviewScreen'))
+const AllExams        = lazy(() => import('./pages/exams/AllExams'))
+const ExamDetail      = lazy(() => import('./pages/exams/ExamDetail'))
+const ExamUniverse    = lazy(() => import('./pages/exams/ExamUniverse'))
+const RoadmapPage     = lazy(() => import('./pages/roadmap/RoadmapPage'))
+const ExamAlerts      = lazy(() => import('./pages/exam-alerts/ExamAlerts'))
 
-// ── TEST ENGINE ────────────────────────────────────────────────
-const TestLauncher = lazy(() => import('./pages/test-engine/TestLauncher'))
-const ActiveTest   = lazy(() => import('./pages/test-engine/ActiveTest'))
-const ResultScreen = lazy(() => import('./pages/test-engine/ResultScreen'))
-const ReviewScreen = lazy(() => import('./pages/test-engine/ReviewScreen'))
+// ── CONCEPT LEARNING (NEW) ─────────────────────────────────────
+const ConceptCard        = lazy(() => import('./pages/concept/ConceptCard'))
+const ConceptCheckpoint  = lazy(() => import('./pages/concept/ConceptCheckpoint'))
+const PrepPathway        = lazy(() => import('./pages/roadmap/PrepPathway'))
 
-// ── EXAMS ──────────────────────────────────────────────────────
-const AllExams    = lazy(() => import('./pages/exams/AllExams'))
-const ExamDetail  = lazy(() => import('./pages/exams/ExamDetail'))
-const ExamUniverse= lazy(() => import('./pages/exams/ExamUniverse'))
-const RoadmapPage = lazy(() => import('./pages/roadmap/RoadmapPage'))
-const ExamAlerts  = lazy(() => import('./pages/exam-alerts/ExamAlerts'))
-
-// ── GURU HUB ───────────────────────────────────────────────────
-const GuruHub    = lazy(() => import('./pages/guru/GuruHub'))
-const MyDoubts   = lazy(() => import('./pages/guru/MyDoubts'))
-const PostDoubt  = lazy(() => import('./pages/guru/PostDoubt'))
-const DoubtThread= lazy(() => import('./pages/guru/DoubtThread'))
-
-// ── DISCOVERY ──────────────────────────────────────────────────
+const GuruHub        = lazy(() => import('./pages/guru/GuruHub'))
+const MyDoubts       = lazy(() => import('./pages/guru/MyDoubts'))
+const PostDoubt      = lazy(() => import('./pages/guru/PostDoubt'))
+const DoubtThread    = lazy(() => import('./pages/guru/DoubtThread'))
 const CareerCompass  = lazy(() => import('./pages/career-compass/CareerCompass'))
 const ScholarshipHub = lazy(() => import('./pages/scholarships/ScholarshipHub'))
 const CurrentAffairs = lazy(() => import('./pages/current-affairs/CurrentAffairs'))
@@ -49,8 +46,6 @@ const UploadEbook    = lazy(() => import('./pages/ebooks/UploadEbook'))
 const EbookReader    = lazy(() => import('./pages/ebooks/EbookReader'))
 const TryITLab       = lazy(() => import('./pages/tryit-lab/TryITLab'))
 const BrainTeaser    = lazy(() => import('./pages/brain-teaser/BrainTeaser'))
-
-// ── COMPETITION ────────────────────────────────────────────────
 const HallHub        = lazy(() => import('./pages/hall/HallHub'))
 const HallHome       = lazy(() => import('./pages/hall/HallHome'))
 const CreateHall     = lazy(() => import('./pages/hall/CreateHall'))
@@ -63,81 +58,64 @@ const MathBlitz      = lazy(() => import('./pages/games/MathBlitz'))
 const WordRush       = lazy(() => import('./pages/games/WordRush'))
 const GKBlitz        = lazy(() => import('./pages/games/GKBlitz'))
 const LogicGrid      = lazy(() => import('./pages/games/LogicGrid'))
-
-// ── PROGRESS ───────────────────────────────────────────────────
-const Analytics   = lazy(() => import('./pages/analytics/Analytics'))
-const Achievements= lazy(() => import('./pages/achievements/Achievements'))
-const FocusMode   = lazy(() => import('./pages/focus-mode/FocusMode'))
-
-// ── SOCIAL / MONETISATION ──────────────────────────────────────
-const PricingPage = lazy(() => import('./pages/pricing/PricingPage'))
-const WalletPage  = lazy(() => import('./pages/wallet/WalletPage'))
-const FamilyHub   = lazy(() => import('./pages/family/FamilyHub'))
-const ReferralPage= lazy(() => import('./pages/referral/ReferralPage'))
-
-// ── MENTOR ─────────────────────────────────────────────────────
+const Analytics      = lazy(() => import('./pages/analytics/Analytics'))
+const Achievements   = lazy(() => import('./pages/achievements/Achievements'))
+const FocusMode      = lazy(() => import('./pages/focus-mode/FocusMode'))
+const PricingPage    = lazy(() => import('./pages/pricing/PricingPage'))
+const WalletPage     = lazy(() => import('./pages/wallet/WalletPage'))
+const FamilyHub      = lazy(() => import('./pages/family/FamilyHub'))
+const ReferralPage   = lazy(() => import('./pages/referral/ReferralPage'))
 const MentorHub      = lazy(() => import('./pages/mentor/MentorHub'))
 const CashbackCenter = lazy(() => import('./pages/mentor/CashbackCenter'))
 const MentorAnalytics= lazy(() => import('./pages/mentor/MentorAnalytics'))
 const CouponManager  = lazy(() => import('./pages/mentor/CouponManager'))
-
-// ── EQUITY / ACCESSIBILITY / IMPACT ───────────────────────────
 const EquityTierSelector = lazy(() => import('./pages/equity/EquityTierSelector'))
 const EquityVerification = lazy(() => import('./pages/equity/EquityVerification'))
 const AccessibilityMode  = lazy(() => import('./pages/accessibility/AccessibilityMode'))
 const SchoolCircle       = lazy(() => import('./pages/circles/SchoolCircle'))
 const SisterhoodCircle   = lazy(() => import('./pages/circles/SisterhoodCircle'))
 const LiveImpactTracker  = lazy(() => import('./pages/impact/LiveImpactTracker'))
+const CentreLogin        = lazy(() => import('./pages/centre/CentreLogin'))
+const CentreDashboard    = lazy(() => import('./pages/centre/CentreDashboard'))
+const CentreAnalytics    = lazy(() => import('./pages/centre/CentreAnalytics'))
+const ConductTest        = lazy(() => import('./pages/centre/ConductTest'))
+const StudentDetail      = lazy(() => import('./pages/centre/StudentDetail'))
+const StudentHistory     = lazy(() => import('./pages/centre/StudentHistory'))
+const ParentLogin        = lazy(() => import('./pages/parent/ParentLogin'))
+const ParentDashboard    = lazy(() => import('./pages/parent/ParentDashboard'))
+const ChildDetail        = lazy(() => import('./pages/parent/ChildDetail'))
+const MyTestHistory      = lazy(() => import('./pages/student/MyTestHistory'))
+const AdminLogin            = lazy(() => import('./pages/admin/AdminLogin'))
+const AdminDashboard        = lazy(() => import('./pages/admin/AdminDashboard'))
+const ExamManager           = lazy(() => import('./pages/admin/ExamManager'))
+const QuestionManager       = lazy(() => import('./pages/admin/QuestionManager'))
+const UserManager           = lazy(() => import('./pages/admin/UserManager'))
+const CurrentAffairsManager = lazy(() => import('./pages/admin/CurrentAffairsManager'))
+const ThemeSelector         = lazy(() => import('./pages/settings/ThemeSelector'))
+const Terms                 = lazy(() => import('./pages/legal/Terms'))
+const Privacy               = lazy(() => import('./pages/legal/Privacy'))
+const CommunityStandards    = lazy(() => import('./pages/legal/CommunityStandards'))
 
-// ── CENTRE / INSTITUTION ───────────────────────────────────────
-const CentreLogin    = lazy(() => import('./pages/centre/CentreLogin'))
-const CentreDashboard= lazy(() => import('./pages/centre/CentreDashboard'))
-const CentreAnalytics= lazy(() => import('./pages/centre/CentreAnalytics'))
-const ConductTest    = lazy(() => import('./pages/centre/ConductTest'))
-const StudentDetail  = lazy(() => import('./pages/centre/StudentDetail'))
-const StudentHistory = lazy(() => import('./pages/centre/StudentHistory'))
-
-// ── PARENT / STUDENT ───────────────────────────────────────────
-const ParentLogin    = lazy(() => import('./pages/parent/ParentLogin'))
-const ParentDashboard= lazy(() => import('./pages/parent/ParentDashboard'))
-const ChildDetail    = lazy(() => import('./pages/parent/ChildDetail'))
-const MyTestHistory  = lazy(() => import('./pages/student/MyTestHistory'))
-
-// ── ADMIN ──────────────────────────────────────────────────────
-const AdminLogin     = lazy(() => import('./pages/admin/AdminLogin'))
-const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
-const ExamManager    = lazy(() => import('./pages/admin/ExamManager'))
-const QuestionManager= lazy(() => import('./pages/admin/QuestionManager'))
-const UserManager    = lazy(() => import('./pages/admin/UserManager'))
-
-// ── SETTINGS / LEGAL ───────────────────────────────────────────
-const ThemeSelector      = lazy(() => import('./pages/settings/ThemeSelector'))
-const Terms              = lazy(() => import('./pages/legal/Terms'))
-const Privacy            = lazy(() => import('./pages/legal/Privacy'))
-const CommunityStandards = lazy(() => import('./pages/legal/CommunityStandards'))
-
-// ── Stub ───────────────────────────────────────────────────────
 const Stub = ({ title = 'Coming Soon' }) => (
   <div style={{ minHeight:'100vh', display:'flex', flexDirection:'column',
     alignItems:'center', justifyContent:'center', gap:16, padding:24,
     fontFamily:'Poppins,sans-serif',
-    background:'linear-gradient(135deg, var(--color-primary, #1E3A5F), var(--color-primary-dark, #0F2140))' }}>
+    background:'linear-gradient(135deg,#1E3A5F,#0F2140)' }}>
     <div style={{ fontSize:56 }}>🔧</div>
-    <h2 style={{ color:'var(--color-accent, #D4AF37)', fontSize:24, fontWeight:800, textAlign:'center' }}>{title}</h2>
-    <p style={{ color:'rgba(var(--color-surface-rgb, 255,255,255), 0.6)', fontSize:14 }}>Being built. Check back soon!</p>
-    <a href="/dashboard" style={{ background:'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))',
+    <h2 style={{ color:'#C9A84C', fontSize:24, fontWeight:800, textAlign:'center' }}>{title}</h2>
+    <p style={{ color:'rgba(255,255,255,0.6)', fontSize:14 }}>Being built. Check back soon!</p>
+    <a href="/dashboard" style={{ background:'linear-gradient(135deg,#C9A84C,#E8C84A)',
       borderRadius:14, padding:'12px 28px', fontWeight:700, fontSize:15,
-      color:'var(--color-primary, #1E3A5F)', textDecoration:'none', marginTop:8 }}>← Back to Dashboard</a>
+      color:'#1E3A5F', textDecoration:'none', marginTop:8 }}>← Back to Dashboard</a>
   </div>
 )
 
-// ── Loader ─────────────────────────────────────────────────────
 const Loader = () => (
   <div style={{ minHeight:'100vh', display:'flex', alignItems:'center',
-    justifyContent:'center', background:'linear-gradient(135deg, var(--color-primary, #1E3A5F), var(--color-primary-dark, #0F2140))' }}>
+    justifyContent:'center', background:'linear-gradient(135deg,#1E3A5F,#0F2140)' }}>
     <svg width="56" height="56" viewBox="0 0 56 56">
-      <circle cx="28" cy="28" r="22" fill="none" stroke="rgba(var(--color-accent-rgb, 212, 175, 55), 0.18)" strokeWidth="4"/>
-      <circle cx="28" cy="28" r="22" fill="none" stroke="var(--color-accent, #D4AF37)" strokeWidth="4"
+      <circle cx="28" cy="28" r="22" fill="none" stroke="rgba(212,175,55,0.18)" strokeWidth="4"/>
+      <circle cx="28" cy="28" r="22" fill="none" stroke="#C9A84C" strokeWidth="4"
         strokeDasharray="40 98"
         style={{ animation:'spin 1.2s linear infinite', transformOrigin:'center' }}/>
     </svg>
@@ -145,33 +123,17 @@ const Loader = () => (
   </div>
 )
 
-// ── Global glitter effect on every click ──────────────────────
 function useGlobalGlitter() {
   useEffect(() => {
-    // Inject keyframe once
     if (!document.getElementById('glitter-style')) {
       const s = document.createElement('style')
       s.id = 'glitter-style'
-      s.textContent = `@keyframes glitterBurst {
-        0%   { transform: translate(-50%,-50%) scale(0); opacity: 1; }
-        100% { transform: translate(-50%,-50%) scale(2.8); opacity: 0; }
-      }`
+      s.textContent = `@keyframes glitterBurst{0%{transform:translate(-50%,-50%) scale(0);opacity:1}100%{transform:translate(-50%,-50%) scale(2.8);opacity:0}}`
       document.head.appendChild(s)
     }
     const handleClick = (e) => {
       const burst = document.createElement('div')
-      burst.style.cssText = [
-        `position:fixed`,
-        `left:${e.clientX}px`,
-        `top:${e.clientY}px`,
-        `width:56px`,
-        `height:56px`,
-        `border-radius:50%`,
-        `pointer-events:none`,
-        `z-index:99999`,
-        `background:radial-gradient(circle, rgba(var(--color-accent-rgb, 212, 175, 55), 0.96) 0%, rgba(var(--color-accent-rgb, 212, 175, 55), 0.55) 30%, var(--color-accent, #D4AF37) 60%, transparent 80%)`,
-        `animation:glitterBurst 380ms ease-out forwards`,
-      ].join(';')
+      burst.style.cssText = `position:fixed;left:${e.clientX}px;top:${e.clientY}px;width:56px;height:56px;border-radius:50%;pointer-events:none;z-index:99999;background:radial-gradient(circle,rgba(201,168,76,0.96) 0%,rgba(201,168,76,0.55) 30%,#C9A84C 60%,transparent 80%);animation:glitterBurst 380ms ease-out forwards`
       document.body.appendChild(burst)
       setTimeout(() => burst.remove(), 400)
     }
@@ -180,7 +142,6 @@ function useGlobalGlitter() {
   }, [])
 }
 
-// ── ThemedApp: inside AuthProvider so user.level is available ──
 function ThemedApp() {
   const { user } = useAuth()
   useGlobalGlitter()
@@ -211,14 +172,21 @@ function ThemedApp() {
             <Route path="/test-engine/result" element={<ResultScreen />} />
             <Route path="/test-engine/review" element={<ReviewScreen />} />
 
-            {/* EXAMS — static before dynamic */}
+            {/* CONCEPT LEARNING (NEW) */}
+            <Route path="/concept/:topicId/:level"            element={<ConceptCard />} />
+            <Route path="/concept/:topicId/:level/checkpoint" element={<ConceptCheckpoint />} />
+
+            {/* PREP PATHWAYS (NEW) */}
+            <Route path="/pathway/:pathwayId" element={<PrepPathway />} />
+
+            {/* EXAMS */}
             <Route path="/exams"                  element={<AllExams />} />
             <Route path="/exams/:examId/universe" element={<ExamUniverse />} />
             <Route path="/exams/:examId"          element={<ExamDetail />} />
             <Route path="/roadmap/:examId"        element={<RoadmapPage />} />
             <Route path="/exam-alerts"            element={<ExamAlerts />} />
 
-            {/* GURU HUB — static before dynamic */}
+            {/* GURU HUB */}
             <Route path="/guru-hub"             element={<GuruHub />} />
             <Route path="/guru-hub/my-doubts"   element={<MyDoubts />} />
             <Route path="/guru-hub/post-doubt"  element={<PostDoubt />} />
@@ -238,7 +206,7 @@ function ThemedApp() {
             <Route path="/tryit-lab"         element={<TryITLab />} />
             <Route path="/brain-teaser"      element={<BrainTeaser />} />
 
-            {/* COMPETITION — static before dynamic */}
+            {/* COMPETITION */}
             <Route path="/hall"                element={<HallHub />} />
             <Route path="/hall/create"         element={<CreateHall />} />
             <Route path="/hall/leaderboard"    element={<HallLeaderboard />} />
@@ -294,11 +262,12 @@ function ThemedApp() {
             <Route path="/student/test-history" element={<MyTestHistory />} />
 
             {/* ADMIN */}
-            <Route path="/admin/login"     element={<AdminLogin />} />
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
-            <Route path="/admin/exams"     element={<ExamManager />} />
-            <Route path="/admin/questions" element={<QuestionManager />} />
-            <Route path="/admin/users"     element={<UserManager />} />
+            <Route path="/admin/login"           element={<AdminLogin />} />
+            <Route path="/admin/dashboard"       element={<AdminDashboard />} />
+            <Route path="/admin/exams"           element={<ExamManager />} />
+            <Route path="/admin/questions"       element={<QuestionManager />} />
+            <Route path="/admin/users"           element={<UserManager />} />
+            <Route path="/admin/current-affairs" element={<CurrentAffairsManager />} />
 
             {/* SETTINGS */}
             <Route path="/settings/themes" element={<ThemeSelector />} />
@@ -317,7 +286,6 @@ function ThemedApp() {
   )
 }
 
-// ── Root App ───────────────────────────────────────────────────
 export default function App() {
   return (
     <ToastProvider>

@@ -4,3 +4,4 @@ dist/
 .DS_Store
 *.log
 src_today_backup/
+.aider*
