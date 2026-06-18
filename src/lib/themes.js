@@ -85,6 +85,11 @@ function buildTheme(seed) {
     bg, surface, isDark = false,
     success = '#22C55E', error = '#EF4444', warning = '#F59E0B',
     glow = null, unlock = null,
+    // plan: 'free' | 'pro' | 'ultra' — minimum subscription tier required
+    // to be ELIGIBLE for this theme. Even when eligible, the unlock
+    // criteria in `unlock` still has to be met. Base themes (tier:'base')
+    // ignore plan entirely — they're free for everyone.
+    plan = 'pro',
   } = seed
 
   // Base text color: near-black on light surfaces, near-white on dark ones.
@@ -118,7 +123,7 @@ function buildTheme(seed) {
   const warningSafe = ensureContrast(warning, bg, 3)
 
   return {
-    id, name, emoji, category, tier, unlock,
+    id, name, emoji, category, tier, unlock, plan,
     primary, primaryDark, accent, accentLight,
     bg, surface, isDark,
     text, textLight, border,
@@ -140,32 +145,32 @@ function buildTheme(seed) {
 
 const BASE_THEMES = [
   buildTheme({
-    id: 'default', name: 'TryIT Classic', emoji: '🎓', category: 'Base', tier: 'base',
+    id: 'default', name: 'TryIT Classic', emoji: '🎓', category: 'Base', tier: 'base', plan: 'free',
     primary: '#1E3A5F', primaryDark: '#0F2140',
     accent: '#D4AF37', accentLight: '#E8C44A',
     bg: '#F8FAFC', surface: '#FFFFFF', isDark: false,
   }),
   buildTheme({
-    id: 'midnight', name: 'Midnight', emoji: '🌙', category: 'Base', tier: 'base',
+    id: 'midnight', name: 'Midnight', emoji: '🌙', category: 'Base', tier: 'base', plan: 'free',
     primary: '#1E293B', primaryDark: '#0F172A',
     accent: '#D4AF37', accentLight: '#E8C44A',
     bg: '#0F172A', surface: '#1E293B', isDark: true,
   }),
   buildTheme({
-    id: 'high-contrast', name: 'High Contrast', emoji: '🔳', category: 'Accessibility', tier: 'base',
+    id: 'high-contrast', name: 'High Contrast', emoji: '🔳', category: 'Accessibility', tier: 'base', plan: 'free',
     primary: '#000000', primaryDark: '#000000',
     accent: '#FFFFFF', accentLight: '#F8FAFC',
     bg: '#000000', surface: '#000000', isDark: true,
     glow: '0 0 25px rgba(255,255,255,0.20)',
   }),
   buildTheme({
-    id: 'sunrise', name: 'Sunrise', emoji: '🌅', category: 'Base', tier: 'base',
+    id: 'sunrise', name: 'Sunrise', emoji: '🌅', category: 'Base', tier: 'base', plan: 'free',
     primary: '#92400E', primaryDark: '#78350F',
     accent: '#F59E0B', accentLight: '#FCD34D',
     bg: '#FFFBEB', surface: '#FFFFFF', isDark: false,
   }),
   buildTheme({
-    id: 'ocean', name: 'Ocean Deep', emoji: '🌊', category: 'Base', tier: 'base',
+    id: 'ocean', name: 'Ocean Deep', emoji: '🌊', category: 'Base', tier: 'base', plan: 'free',
     primary: '#0C4A6E', primaryDark: '#082F49',
     accent: '#0EA5E9', accentLight: '#38BDF8',
     bg: '#F0F9FF', surface: '#FFFFFF', isDark: false,
@@ -201,11 +206,11 @@ const UNLOCK_THEMES = [
     unlock: { type: 'tests_completed', value: 10, label: 'Complete 10 tests' },
   }),
   buildTheme({
-    id: 'imperial-throne', name: 'Imperial Throne', emoji: '👑', category: 'Indian Cinema',
+    id: 'imperial-throne', name: 'Imperial Throne', emoji: '👑', category: 'Indian Cinema', plan: 'ultra',
     primary: '#7B2400', primaryDark: '#4A1500',
     accent: '#D4AF37', accentLight: '#F0C84A',
     bg: '#FFF9F0', surface: '#FFFFFF', isDark: false,
-    unlock: { type: 'score_percent', value: 90, label: 'Score 90%+ in any test' },
+    unlock: { type: 'score_percent', value: 95, label: 'Score 95%+ in any test (Ultra)' },
   }),
   buildTheme({
     id: 'style-icon', name: 'Style Icon', emoji: '🕶️', category: 'Indian Cinema',
@@ -229,11 +234,11 @@ const UNLOCK_THEMES = [
     unlock: { type: 'subject_mastery', value: 1, label: 'Master any one subject' },
   }),
   buildTheme({
-    id: 'deep-orbit', name: 'Deep Orbit', emoji: '🌌', category: 'Cinematic',
+    id: 'deep-orbit', name: 'Deep Orbit', emoji: '🌌', category: 'Cinematic', plan: 'ultra',
     primary: '#0B0C1E', primaryDark: '#050610',
     accent: '#E8C84A', accentLight: '#F5D76E',
     bg: '#F0F2FF', surface: '#FFFFFF', isDark: false,
-    unlock: { type: 'streak_days', value: 30, label: '30-day streak' },
+    unlock: { type: 'streak_days', value: 45, label: '45-day streak (Ultra)' },
   }),
   buildTheme({
     id: 'midnight-vigil', name: 'Midnight Vigil', emoji: '🦇', category: 'Cinematic',
@@ -306,18 +311,18 @@ const UNLOCK_THEMES = [
     unlock: { type: 'coins_earned', value: 100, label: 'Earn 100 coins' },
   }),
   buildTheme({
-    id: 'galaxy', name: 'Galaxy', emoji: '🌠', category: 'Space',
+    id: 'galaxy', name: 'Galaxy', emoji: '🌠', category: 'Space', plan: 'ultra',
     primary: '#2E1065', primaryDark: '#1E0A4A',
     accent: '#A855F7', accentLight: '#C084FC',
     bg: '#FAF5FF', surface: '#FFFFFF', isDark: false,
-    unlock: { type: 'streak_days', value: 14, label: '14-day streak' },
+    unlock: { type: 'rank_top', value: 50, label: 'Reach Top 50 on any leaderboard (Ultra)' },
   }),
   buildTheme({
-    id: 'crimson-edge', name: 'Crimson Edge', emoji: '🗡️', category: 'Indian Cinema',
+    id: 'crimson-edge', name: 'Crimson Edge', emoji: '🗡️', category: 'Indian Cinema', plan: 'ultra',
     primary: '#0D3B2E', primaryDark: '#041F18',
     accent: '#00D9A3', accentLight: '#6EFFD9',
     bg: '#F0FFF8', surface: '#FFFFFF', isDark: false,
-    unlock: { type: 'subject_mastery', value: 3, label: 'Master any 3 subjects' },
+    unlock: { type: 'subject_mastery', value: 5, label: 'Master any 5 subjects (Ultra)' },
   }),
   buildTheme({
     id: 'desert', name: 'Desert Storm', emoji: '🏜️', category: 'Nature',

@@ -1,232 +1,255 @@
-// FILE: src/pages/Dashboard.jsx
-import { useNavigate } from 'react-router-dom'
-import AppLayout from '../components/layout/AppLayout'
-import { useAuth } from '../context/AuthContext'
+// FILE: src/pages/Dashboard.jsx — TryIT Main Home Screen
+import { useState, useEffect } from 'react'
+import { useNavigate }         from 'react-router-dom'
+import { useAuth }             from '../context/AuthContext'
+import { supabase }            from '../lib/supabase'
+
+const NAVY = '#1E3A5F'
+const GOLD = '#C9A84C'
+const BG   = '#F8FAFC'
+
+const MOCK_ENROLLED = [
+  { id:'ssc_cgl_t1',  name:'SSC CGL Tier 1',   readiness:72, examDate:'Nov 2026', icon:'📋', color:'#1D4ED8' },
+  { id:'ibps_po_pre', name:'IBPS PO Prelims',   readiness:58, examDate:'Oct 2026', icon:'🏦', color:'#059669' },
+  { id:'upsc_cse_pre',name:'UPSC CSE Prelims',  readiness:41, examDate:'May 2027', icon:'🇮🇳', color:'#DC2626' },
+]
+const MOCK_MATERIALS = [
+  { material_id:'m1', title:'Daily Current Affairs — 18 June 2026', material_type:'daily_current_affairs', source:'The Hindu + PIB', file_url:'#', view_count:1240, download_count:342, is_pinned:true },
+  { material_id:'m2', title:'SSC CGL Maths Formula Sheet — All Chapters', material_type:'formula_sheet', source:'TryIT', file_url:'#', view_count:3840, download_count:1203, is_pinned:false },
+  { material_id:'m3', title:'RRB NTPC Notification 2026 — Official PDF', material_type:'exam_notification', source:'Railway Board', file_url:'#', view_count:8920, download_count:4102, is_pinned:false },
+]
+const MOCK_LEADERBOARD = [
+  { id:'u1', name:'Priya K.',   state:'Tamil Nadu',    score:9840, accuracy:91 },
+  { id:'u2', name:'Arjun M.',   state:'Karnataka',     score:9720, accuracy:89 },
+  { id:'u3', name:'Ravi S.',    state:'Andhra Pradesh',score:9601, accuracy:87 },
+]
+const MOCK_STORY = {
+  headline:'The Man Who Planted a Forest — Alone — for 37 Years',
+  state_name:'Assam', region:'northeast',
+  hook_line:'While the world was moving forward, one man was moving earth.',
+}
+const MAT_ICONS = { daily_current_affairs:'📰', formula_sheet:'📐', exam_notification:'📣', revision_sheet:'🗂️', study_notes:'📝', question_paper:'📄', answer_key:'🔑', video_link:'▶️', one_liner_gk:'💡', strategy_guide:'🎯' }
+const REGION_BG = { south:'#065F46', central:'#1E3A5F', north:'#4C1D95', northeast:'#064E3B', west:'#7C2D12', east:'#831843', jammu_kashmir:'#0C4A6E' }
+
+function SectionHeader({ title, action, onAction }) {
+  return (
+    <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', paddingTop:18, paddingBottom:8 }}>
+      <p style={{ fontSize:14, fontWeight:800, color:NAVY, margin:0 }}>{title}</p>
+      {action && <button onClick={onAction} style={{ fontSize:12, color:GOLD, fontWeight:700, background:'none', border:'none', cursor:'pointer' }}>{action}</button>}
+    </div>
+  )
+}
 
 export default function Dashboard() {
-  const { user } = useAuth()
   const navigate = useNavigate()
+  const { user, planTier, isUltra, coins, explanationsLeft } = useAuth()
 
-  if (!user) return null
+  const [enrolled,    setEnrolled]    = useState(MOCK_ENROLLED)
+  const [materials,   setMaterials]   = useState(MOCK_MATERIALS)
+  const [leaderboard, setLeaderboard] = useState(MOCK_LEADERBOARD)
+  const [todayStory,  setTodayStory]  = useState(MOCK_STORY)
+  const [community,   setCommunity]   = useState({ title:'Add state-specific current affairs for each PSC', vote_count:456 })
+  const [greeting,    setGreeting]    = useState('Good morning ☀️')
+  const [testCount,   setTestCount]   = useState(0)
+  const [showBanner,  setShowBanner]  = useState(true)
 
-  const greeting = (() => {
+  useEffect(() => {
     const h = new Date().getHours()
-    if (h < 12) return 'Good morning'
-    if (h < 17) return 'Good afternoon'
-    return 'Good evening'
-  })()
+    if (h<5) setGreeting('Burning midnight oil 🌙')
+    else if (h<12) setGreeting('Good morning ☀️')
+    else if (h<17) setGreeting('Good afternoon 🌤️')
+    else if (h<20) setGreeting('Good evening 🌅')
+    else setGreeting('Good night 🌙')
+  }, [])
 
-  const firstName = user.name?.split(' ')[0] || user.email?.split('@')[0] || 'there'
-  const primaryExam = user.exams?.[0]
-  const subjects = user.subjects || []
-  const coinsThisWeek = user.coinsThisWeek ?? 0
-  const coinsWeekGoal = 500
-  const streakDays = ['M','T','W','T','F','S','S']
-  const streak = user.streak || 0
-  const headingColor = 'var(--color-surface-text, var(--heading-color, #1E3A5F))'
-  const mutedText = 'var(--subtext-color, #64748B)'
-  const primaryColor = 'var(--color-primary, #1E3A5F)'
-  const accentColor = 'var(--color-accent, #D4AF37)'
-  const accentLight = 'var(--color-accent-light, #E8C84A)'
-  const surfaceColor = 'var(--color-surface, #FFFFFF)'
-  const bgColor = 'var(--color-bg, #F8FAFC)'
-  const borderColor = 'var(--color-border, #E2E8F0)'
-  const successColor = 'var(--color-success, #22C55E)'
-  const errorColor = 'var(--color-error, #EF4444)'
-  const mutedColor = 'var(--color-muted, #94A3B8)'
+  useEffect(() => {
+    if (!user?.id) return
+    const key = `tryit_usage_${user.id}_daily_tests_${new Date().toDateString()}`
+    setTestCount(parseInt(localStorage.getItem(key) || '0'))
+    Promise.all([
+      supabase.from('daily_materials').select('*').eq('is_active',true).order('publish_date',{ascending:false}).limit(5),
+      supabase.from('daily_stories').select('headline,state_name,region,hook_line').lte('publish_date',new Date().toISOString().slice(0,10)).order('publish_date',{ascending:false}).limit(1).single(),
+      supabase.from('community_posts').select('title,vote_count').order('vote_count',{ascending:false}).limit(1).single(),
+    ]).then(([m,s,c]) => {
+      if (m.data?.length) setMaterials(m.data)
+      if (s.data) setTodayStory(s.data)
+      if (c.data) setCommunity(c.data)
+    }).catch(()=>{})
+  }, [user?.id])
+
+  const freeTestsLeft = planTier==='free' ? Math.max(0, 5-testCount) : Infinity
+  const expLeft = planTier==='free' ? (explanationsLeft?.() ?? 5) : Infinity
+  const storyBg = REGION_BG[todayStory?.region] || NAVY
 
   return (
-    <AppLayout title="Dashboard">
-      {/* Greeting */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold font-poppins" style={{ color: headingColor }}>
-          {greeting}, {firstName}! 👋
-        </h1>
-        <p className="text-sm mt-1" style={{ color: mutedText }}>
-          {primaryExam
-            ? <>Preparing for <strong style={{ color: accentColor }}>{primaryExam.name}</strong> · Language Stream: English</>
-            : <>Pick your exam to unlock a personalized study plan →{' '}
-                <button onClick={()=>navigate('/all-exams')} className="font-semibold underline" style={{ color: accentColor }}>Browse Exams</button>
-              </>}
-        </p>
-      </div>
-
-      {/* ── Exam Readiness ─────────────────────────────────────── */}
-      {primaryExam ? (
-        <div className="rounded-2xl p-5 mb-6 flex items-center justify-between flex-wrap gap-3" style={{ background: surfaceColor, border: `1px solid ${borderColor}` }}>
-          <div className="flex items-center gap-3">
-            <span className="text-2xl">🎯</span>
-            <div>
-              <p className="font-bold font-poppins" style={{ color: 'var(--heading-color, #1E3A5F)' }}>Exam Readiness</p>
-              <p className="text-xs" style={{ color: mutedText }}>{primaryExam.name} · {primaryExam.examDate || 'Date TBD'}</p>
+    <div style={{ minHeight:'100vh', background:BG, fontFamily:'Inter,sans-serif', paddingBottom:80 }}>
+      {/* Header */}
+      <div style={{ background:`linear-gradient(135deg,${NAVY},#0F2140)`, padding:'16px 16px 20px', position:'sticky', top:0, zIndex:50 }}>
+        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+          <div>
+            <p style={{ fontSize:10, color:'rgba(255,255,255,0.5)', margin:0 }}>{greeting}</p>
+            <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, fontSize:17, color:'#fff', margin:0 }}>{user?.name?.split(' ')[0] || 'Student'} 👋</p>
+          </div>
+          <div style={{ display:'flex', gap:8, alignItems:'center' }}>
+            <div style={{ display:'flex', alignItems:'center', gap:4, background:'rgba(255,255,255,0.1)', borderRadius:99, padding:'5px 10px' }}>
+              <span style={{ fontSize:14 }}>🔥</span>
+              <span style={{ fontSize:12, fontWeight:700, color:'#FCD34D' }}>{user?.streak||0}d</span>
             </div>
-          </div>
-          <span className="text-xs font-semibold px-3 py-1.5 rounded-full" style={{ background: 'rgba(var(--color-success-rgb, 34, 197, 94), 0.16)', color: successColor }}>
-            Predicted: {primaryExam.readiness ? `${Math.round(primaryExam.readiness*1.5+50)}-${Math.round(primaryExam.readiness*1.6+62)}` : '—'} / 200 · {primaryExam.readiness >= 50 ? 'ON TRACK ✅' : 'GET STARTED'}
-          </span>
-        </div>
-      ) : (
-        <div className="rounded-2xl p-5 mb-6 text-center" style={{ background: surfaceColor, border: `1px dashed ${borderColor}` }}>
-          <p className="text-3xl mb-2">🎯</p>
-          <p className="font-bold font-poppins mb-1" style={{ color: headingColor }}>No exam selected yet</p>
-          <p className="text-sm mb-3" style={{ color: mutedText }}>Choose an exam to see your personalized readiness score.</p>
-          <button onClick={()=>navigate('/all-exams')}
-            className="font-semibold text-sm rounded-xl px-5 py-2"
-            style={{ background: primaryColor, color: 'var(--color-surface, #FFFFFF)' }}>
-            Browse 9,600+ Exams →
-          </button>
-        </div>
-      )}
-
-      {/* ── Main grid ──────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
-        {/* Study Streak */}
-        <div className="rounded-2xl p-5" style={{ background:'var(--color-surface, #FFFFFF)', border:'1px solid var(--color-border, #E2E8F0)' }}>
-          <p className="font-bold font-poppins mb-1" style={{ color: 'var(--heading-color, #1E3A5F)' }}>🔥 Study Streak</p>
-          <p className="text-xs mb-3" style={{ color: 'var(--subtext-color, #64748B)' }}>consecutive days</p>
-          <div className="flex gap-1.5 mb-2">
-            {streakDays.map((d,i)=>(
-              <div key={i} className="flex-1 h-9 rounded-lg flex items-center justify-center text-xs font-bold"
-                style={{
-                    background: i < streak ? accentColor : i === streak ? primaryColor : surfaceColor,
-                    color: i < streak ? primaryColor : i === streak ? surfaceColor : mutedColor,
-                    border: i < streak || i === streak ? '1px solid rgba(var(--color-text-rgb, 15, 23, 45), 0.05)' : '1px solid var(--color-border, #E2E8F0)',
-                }}>
-                {i < streak ? '✓' : d}
-              </div>
-            ))}
-          </div>
-          {streak === 0 ? (
-            <p className="text-xs" style={{ color: mutedText }}>Complete a test today to start your streak!</p>
-          ) : (
-            <p className="text-xs" style={{ color: accentColor }}>❄️ Use Streak Freeze ({user.streakFreezes ?? 0} left)</p>
-          )}
-        </div>
-
-        {/* Coins */}
-        <div className="rounded-2xl p-5" style={{ background:'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))' }}>
-          <p className="font-bold font-poppins mb-1" style={{ color: 'var(--color-primary, #1E3A5F)' }}>🪙 Coins</p>
-          <div className="flex justify-between text-xs mb-1" style={{ color: 'var(--color-primary, #1E3A5F)', opacity: 0.72 }}>
-            <span>This week</span><span>{coinsThisWeek}/{coinsWeekGoal}</span>
-          </div>
-          <div className="h-2 rounded-full bg-white/20 mb-3 overflow-hidden" style={{ background: 'rgba(255,255,255,0.2)' }}>
-            <div className="h-full rounded-full" style={{ width:`${Math.min(100,(coinsThisWeek/coinsWeekGoal)*100)}%`, background:'var(--color-primary, #1E3A5F)' }}/>
-          </div>
-          {(user.coinHistory || []).length === 0 ? (
-            <p className="text-xs mb-3" style={{ color: primaryColor, opacity: 0.72 }}>Earn coins by playing games, daily quizzes, and helping in Guru Hub.</p>
-          ) : (
-            <div className="text-xs space-y-1 mb-3" style={{ color: primaryColor, opacity: 0.8 }}>
-              {user.coinHistory.map((h,i)=>(
-                <div key={i} className="flex justify-between"><span>{h.label}</span><span>+{h.amount} 🪙</span></div>
-              ))}
-            </div>
-          )}
-          <button onClick={()=>navigate('/wallet')} className="w-full rounded-xl py-2 text-sm font-semibold"
-            style={{ background:'var(--color-primary, #1E3A5F)', color:'var(--color-surface, #FFFFFF)' }}>
-            View Wallet →
-          </button>
-        </div>
-
-        {/* Daily Quiz */}
-        <div className="rounded-2xl border p-5" style={{ background:'var(--color-surface, #FFFFFF)', borderColor:'var(--color-border, #E2E8F0)' }}>
-          <p className="font-bold font-poppins mb-1" style={{ color: 'var(--heading-color, #1E3A5F)' }}>📅 Daily Quiz</p>
-          <p className="text-xs mb-3" style={{ color: 'var(--subtext-color, #64748B)' }}>Today · 5 Questions · Current Affairs Focus</p>
-             <div className="h-1.5 rounded-full" style={{ background: 'var(--color-bg, #F8FAFC)' }} />
-          <button onClick={()=>navigate('/daily-quiz')} className="w-full rounded-xl py-2 text-sm font-bold mb-2"
-            style={{ background: accentColor, color: primaryColor }}>
-            Start Daily Quiz →
-          </button>
-             <p className="text-xs" style={{ color: successColor, textAlign: 'center' }}>+50 🪙 bonus waiting!</p>
-        </div>
-      </div>
-
-      {/* ── Quick Test + Score Trend ──────────────────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
-        <div className="rounded-2xl p-5" style={{ background: primaryColor }}>
-          <p className="font-bold text-white font-poppins mb-3">⚡ Quick Test</p>
-          <div className="flex gap-2">
-            {['Practice','Mock','Speed'].map(m=>(
-              <button key={m} onClick={()=>navigate(`/test/quick?mode=${m.toLowerCase()}`)}
-                className="flex-1 rounded-xl py-2.5 text-sm font-semibold transition-colors"
-                style={{ background:'rgba(var(--color-surface-rgb, 255,255,255), 0.1)', color:'var(--color-surface, #FFFFFF)' }}>
-                {m}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="rounded-2xl border p-5" style={{ background:'var(--color-surface, #FFFFFF)', borderColor:'var(--color-border, #E2E8F0)' }}>
-          <div className="flex justify-between items-center mb-3">
-            <p className="font-bold font-poppins" style={{ color: 'var(--heading-color, #1E3A5F)' }}>📈 Score Trend</p>
-            <span className="text-xs" style={{ color: 'var(--subtext-color, #64748B)' }}>Last 30 days</span>
-          </div>
-          {user.testsCompleted > 0 ? (
-            <div className="h-20 flex items-end gap-1">
-              {(user.scoreTrend || []).map((v,i)=>(
-                <div key={i} className="flex-1 rounded-t" style={{ height:`${v}%`, background:'var(--color-accent, #D4AF37)' }}/>
-              ))}
-            </div>
-          ) : (
-            <div className="h-20 flex items-center justify-center text-center">
-              <p className="text-sm" style={{ color: mutedColor }}>Take your first test to see your score trend 📊</p>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* ── Subject Accuracy ─────────────────────────────────── */}
-      <div className="rounded-2xl border p-5 mb-6" style={{ background:'var(--color-surface, #FFFFFF)', borderColor:'var(--color-border, #E2E8F0)' }}>
-        <p className="font-bold font-poppins mb-3" style={{ color: 'var(--heading-color, #1E3A5F)' }}>📚 Subject Accuracy</p>
-        {subjects.length === 0 ? (
-          <div className="text-center py-6">
-            <p className="text-3xl mb-2">📊</p>
-            <p className="text-sm mb-3" style={{ color: 'var(--subtext-color, #64748B)' }}>No subject data yet — complete a few tests to see your strengths and weak areas here.</p>
-            <button onClick={()=>navigate('/test/quick')} className="font-semibold text-sm rounded-xl px-5 py-2"
-              style={{ background: primaryColor, color: accentColor }}>
-              Take a Test →
+            <button onClick={()=>navigate('/wallet')} style={{ display:'flex', alignItems:'center', gap:4, background:'rgba(201,168,76,0.2)', borderRadius:99, padding:'5px 10px', border:'none', cursor:'pointer' }}>
+              <span style={{ fontSize:14 }}>🪙</span>
+              <span style={{ fontSize:12, fontWeight:700, color:GOLD }}>{(coins||0).toLocaleString('en-IN')}</span>
+            </button>
+            <button onClick={()=>navigate('/profile')} style={{ width:34, height:34, borderRadius:'50%', background:`linear-gradient(135deg,${GOLD},#E8C96A)`, border:'none', cursor:'pointer', fontFamily:'Poppins,sans-serif', fontWeight:800, fontSize:13, color:NAVY }}>
+              {(user?.initials||user?.name?.slice(0,2)||'?').toUpperCase().slice(0,2)}
             </button>
           </div>
-        ) : (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {subjects.map(s=>(
-              <div key={s.name} className="rounded-xl p-3 text-center" style={{ background:'var(--color-bg, #F8FAFC)' }}>
-                <p className="text-2xl mb-1">{s.emoji}</p>
-                <p className="text-sm font-semibold" style={{ color: 'var(--heading-color, #1E3A5F)' }}>{s.name}</p>
-                <p className="text-lg font-bold" style={{ color: s.accuracy >= 75 ? successColor : s.accuracy >= 50 ? accentColor : errorColor }}>
-                  {s.accuracy}%
-                </p>
-                <p className="text-xs" style={{ color: 'var(--subtext-color, #64748B)' }}>{s.trend === 'up' ? '↑ improving' : s.trend === 'down' ? '↓ needs work' : '→ steady'}</p>
-              </div>
-            ))}
+        </div>
+        {planTier==='free' && (
+          <div style={{ marginTop:12, background:'rgba(255,255,255,0.08)', borderRadius:10, padding:'8px 12px' }}>
+            <div style={{ display:'flex', justifyContent:'space-between', marginBottom:4 }}>
+              <span style={{ fontSize:11, color:'rgba(255,255,255,0.6)' }}>Tests: {testCount}/5 · Explanations: {expLeft===Infinity?'∞':expLeft}/5</span>
+              <button onClick={()=>navigate('/pro')} style={{ fontSize:10, color:GOLD, background:'none', border:'none', cursor:'pointer', fontWeight:700 }}>Upgrade →</button>
+            </div>
+            <div style={{ height:4, background:'rgba(255,255,255,0.15)', borderRadius:99 }}>
+              <div style={{ height:'100%', width:`${(testCount/5)*100}%`, background:testCount>=5?'#EF4444':GOLD, borderRadius:99 }} />
+            </div>
           </div>
         )}
       </div>
 
-      {/* ── Your Rank / Leaderboard ──────────────────────────── */}
-      <div className="rounded-2xl border p-5" style={{ background:'var(--color-surface, #FFFFFF)', borderColor:'var(--color-border, #E2E8F0)' }}>
-        <div className="flex justify-between items-center mb-3">
-          <p className="font-bold font-poppins" style={{ color: 'var(--heading-color, #1E3A5F)' }}>🏆 Your All-India Rank</p>
-          <button onClick={()=>navigate('/the-hall')} className="text-xs font-semibold" style={{ color: 'var(--color-accent, #D4AF37)' }}>View Leaderboard →</button>
-        </div>
-        {user.rank ? (
-          <div className="flex items-center gap-4">
-            <span className="text-4xl font-bold font-poppins" style={{ color:'var(--heading-color, #1E3A5F)' }}>#{user.rank.toLocaleString()}</span>
-            <div>
-              <p className="text-sm" style={{ color:'var(--color-muted, #94A3B8)' }}>out of all {primaryExam?.name || 'TryIT'} aspirants</p>
-              <p className="text-xs" style={{ color: successColor }}>{user.avgScore ? `Avg score: ${user.avgScore}%` : ''}</p>
+      <div style={{ padding:'0 16px', maxWidth:480, margin:'0 auto' }}>
+        {/* Upgrade banner */}
+        {showBanner && planTier==='free' && (
+          <div style={{ background:`linear-gradient(135deg,${NAVY},#0F2140)`, borderRadius:16, padding:'12px 14px', marginTop:14, display:'flex', alignItems:'center', gap:10, border:`1px solid ${GOLD}44` }}>
+            <span style={{ fontSize:22, flexShrink:0 }}>✨</span>
+            <div style={{ flex:1 }}>
+              <p style={{ fontSize:13, fontWeight:700, color:'#fff', margin:0 }}>Unlimited explanations for ₹4/day</p>
+              <p style={{ fontSize:11, color:'rgba(255,255,255,0.6)', margin:'2px 0 0' }}>87% cheaper than BYJU's · Try 3 days for ₹49</p>
+            </div>
+            <div style={{ display:'flex', flexDirection:'column', gap:4, alignItems:'flex-end' }}>
+              <button onClick={()=>navigate('/pro')} style={{ padding:'6px 12px', background:GOLD, color:NAVY, border:'none', borderRadius:8, fontWeight:800, fontSize:11, cursor:'pointer' }}>Try →</button>
+              <button onClick={()=>setShowBanner(false)} style={{ fontSize:9, color:'rgba(255,255,255,0.3)', background:'none', border:'none', cursor:'pointer' }}>dismiss</button>
             </div>
           </div>
-        ) : (
-          <div className="text-center py-4">
-            <p className="text-3xl mb-2">🏆</p>
-            <p className="text-sm mb-3" style={{ color:'var(--color-muted, #94A3B8)' }}>You're unranked — complete your first test to join the leaderboard!</p>
-            <button onClick={()=>navigate('/test/quick')} className="font-bold text-sm rounded-xl px-5 py-2"
-              style={{ background: accentColor, color: primaryColor }}>
-              Take Your First Test →
-            </button>
-          </div>
         )}
+
+        {/* Quick actions */}
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:8, marginTop:16 }}>
+          {[['📝','Practice','#1D4ED8','/test-engine'],['🧠','Concepts','#7C3AED','/exams'],['📰','CA Today','#059669','/current-affairs'],['🎮','Games','#DC2626','/games']].map(([icon,label,color,path]) => (
+            <button key={label} onClick={()=>navigate(path)} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:5, padding:'12px 4px', borderRadius:14, border:'none', cursor:'pointer', background:'#fff', boxShadow:'0 2px 8px rgba(0,0,0,0.05)' }}>
+              <span style={{ fontSize:22 }}>{icon}</span>
+              <span style={{ fontSize:10, fontWeight:700, color }}>{label}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Enrolled exams */}
+        <SectionHeader title="Your Exams" action="+ Add Exam" onAction={()=>navigate('/exams')} />
+        {enrolled.map(exam => (
+          <div key={exam.id} onClick={()=>navigate(`/exams/${exam.id}`)} style={{ background:'#fff', borderRadius:14, padding:'12px 14px', marginBottom:8, cursor:'pointer', border:'1.5px solid #E2E8F0', display:'flex', alignItems:'center', gap:12 }}>
+            <div style={{ width:40, height:40, borderRadius:10, flexShrink:0, fontSize:20, background:`${exam.color}15`, display:'flex', alignItems:'center', justifyContent:'center' }}>{exam.icon}</div>
+            <div style={{ flex:1, minWidth:0 }}>
+              <p style={{ fontWeight:700, color:'#1E293B', fontSize:13, margin:0 }}>{exam.name}</p>
+              <div style={{ display:'flex', justifyContent:'space-between', marginTop:4 }}>
+                <span style={{ fontSize:11, color:'#64748B' }}>Readiness: {exam.readiness}%</span>
+                <span style={{ fontSize:11, color:'#94A3B8' }}>📅 {exam.examDate}</span>
+              </div>
+              <div style={{ height:4, background:'#E2E8F0', borderRadius:99, marginTop:5, overflow:'hidden' }}>
+                <div style={{ height:'100%', width:`${exam.readiness}%`, borderRadius:99, background:exam.readiness>=70?'#059669':exam.readiness>=40?GOLD:'#DC2626' }} />
+              </div>
+            </div>
+            <span style={{ color:'#94A3B8', fontSize:14 }}>›</span>
+          </div>
+        ))}
+
+        {/* Start test */}
+        <button onClick={()=>navigate('/test-engine')} disabled={planTier==='free'&&freeTestsLeft===0}
+          style={{ width:'100%', padding:'14px', marginBottom:4, background:planTier==='free'&&freeTestsLeft===0?'#E2E8F0':`linear-gradient(135deg,${NAVY},#0F2140)`, color:planTier==='free'&&freeTestsLeft===0?'#94A3B8':'#fff', border:'none', borderRadius:14, fontWeight:800, fontSize:15, cursor:planTier==='free'&&freeTestsLeft===0?'not-allowed':'pointer' }}>
+          {planTier==='free'&&freeTestsLeft===0 ? '🔒 Daily Limit Reached — Upgrade for More' : '📝 Start Practice Test →'}
+        </button>
+
+        {/* Bharat Pulse */}
+        <SectionHeader title="🇮🇳 Bharat Pulse" action="All Stories →" onAction={()=>navigate('/bharat-pulse')} />
+        <div onClick={()=>navigate('/bharat-pulse')} style={{ borderRadius:16, overflow:'hidden', marginBottom:4, cursor:'pointer', background:`linear-gradient(160deg,${storyBg}EE,${storyBg}BB,rgba(15,21,40,0.95))`, border:`1px solid ${storyBg}88` }}>
+          <div style={{ padding:'16px 14px' }}>
+            <span style={{ fontSize:10, fontWeight:700, color:GOLD, background:'rgba(201,168,76,0.2)', padding:'2px 8px', borderRadius:99 }}>TODAY · {todayStory?.state_name}</span>
+            <p style={{ fontWeight:800, color:'#fff', fontSize:15, lineHeight:1.5, margin:'8px 0 6px' }}>{todayStory?.headline}</p>
+            <p style={{ fontSize:12, color:GOLD, fontStyle:'italic', margin:'0 0 10px', borderLeft:`2px solid ${GOLD}88`, paddingLeft:8 }}>{todayStory?.hook_line}</p>
+            <p style={{ fontSize:11, color:'rgba(255,255,255,0.4)', margin:0 }}>Tap to read full story · 📤 Share →</p>
+          </div>
+        </div>
+
+        {/* Daily materials */}
+        <SectionHeader title="📰 Today's Materials" action="View All →" onAction={()=>navigate('/current-affairs')} />
+        {materials.slice(0,3).map(m => (
+          <a key={m.material_id} href={m.file_url||'#'} target={m.file_url&&m.file_url!=='#'?'_blank':'_self'} rel="noreferrer" style={{ textDecoration:'none', display:'block', marginBottom:6 }}>
+            <div style={{ background:'#fff', borderRadius:12, padding:'10px 13px', border:m.is_pinned?`1.5px solid ${GOLD}`:'1.5px solid #E2E8F0', display:'flex', alignItems:'center', gap:10 }}>
+              <span style={{ fontSize:20, flexShrink:0 }}>{MAT_ICONS[m.material_type]||'📄'}</span>
+              <div style={{ flex:1, minWidth:0 }}>
+                <p style={{ fontSize:13, fontWeight:600, color:'#1E293B', margin:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{m.is_pinned&&'📌 '}{m.title}</p>
+                <p style={{ fontSize:10, color:'#94A3B8', margin:'2px 0 0' }}>{m.source} · 👁️ {(m.view_count||0).toLocaleString('en-IN')} · ⬇️ {(m.download_count||0).toLocaleString('en-IN')}</p>
+              </div>
+              <span style={{ fontSize:14, color:'#94A3B8', flexShrink:0 }}>›</span>
+            </div>
+          </a>
+        ))}
+
+        {/* Leaderboard */}
+        <SectionHeader title="🏆 All India Rankings" action="Full Board →" onAction={()=>navigate('/leaderboard')} />
+        <div style={{ background:'#fff', borderRadius:16, overflow:'hidden', border:'1.5px solid #E2E8F0', marginBottom:4 }}>
+          {leaderboard.map((u, i) => {
+            const isYou = u.id===user?.id
+            return (
+              <div key={u.id} style={{ display:'flex', alignItems:'center', gap:10, padding:'10px 14px', borderBottom:i<leaderboard.length-1?'1px solid #F1F5F9':'none', background:isYou?`${NAVY}08`:'transparent' }}>
+                <span style={{ fontSize:18, width:28, textAlign:'center', flexShrink:0 }}>{['🥇','🥈','🥉'][i]}</span>
+                <div style={{ width:32, height:32, borderRadius:'50%', flexShrink:0, background:`linear-gradient(135deg,${NAVY},${GOLD})`, display:'flex', alignItems:'center', justifyContent:'center', fontWeight:800, fontSize:11, color:'#fff' }}>
+                  {u.name.split(' ').map(w=>w[0]).join('').slice(0,2)}
+                </div>
+                <div style={{ flex:1, minWidth:0 }}>
+                  <p style={{ fontSize:12, fontWeight:700, color:'#1E293B', margin:0 }}>{u.name}{isYou&&<span style={{ color:NAVY, fontSize:10 }}> (You)</span>}</p>
+                  <p style={{ fontSize:10, color:'#94A3B8', margin:0 }}>{u.state}</p>
+                </div>
+                <div style={{ textAlign:'right' }}>
+                  <p style={{ fontSize:13, fontWeight:800, color:NAVY, margin:0 }}>{(u.score||0).toLocaleString('en-IN')}</p>
+                  <p style={{ fontSize:10, color:'#94A3B8', margin:0 }}>{u.accuracy}% acc</p>
+                </div>
+              </div>
+            )
+          })}
+          <button onClick={()=>navigate('/leaderboard')} style={{ width:'100%', padding:'10px', border:'none', background:BG, color:'#64748B', fontSize:12, fontWeight:600, cursor:'pointer' }}>See full leaderboard + your rank →</button>
+        </div>
+
+        {/* Community */}
+        <SectionHeader title="🗳️ Community" action="Vote →" onAction={()=>navigate('/community')} />
+        <div style={{ background:'#fff', borderRadius:14, padding:'12px 14px', border:'1.5px solid #E2E8F0', marginBottom:4 }}>
+          <p style={{ fontSize:11, color:'#94A3B8', marginBottom:4 }}>🔥 Most Voted Request</p>
+          <p style={{ fontSize:13, fontWeight:600, color:'#1E293B', marginBottom:8 }}>{community?.title}</p>
+          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+            <span style={{ fontSize:12, fontWeight:700, color:NAVY }}>▲ {(community?.vote_count||0).toLocaleString('en-IN')} votes</span>
+            <button onClick={()=>navigate('/community')} style={{ padding:'5px 12px', background:NAVY, color:'#fff', border:'none', borderRadius:8, fontSize:11, fontWeight:700, cursor:'pointer' }}>Vote →</button>
+          </div>
+        </div>
+
+        {/* Pathway CTA */}
+        <div onClick={()=>isUltra?navigate('/pathway/jee_7yr'):navigate('/pro')}
+          style={{ borderRadius:16, padding:'14px 16px', marginTop:4, cursor:'pointer', background:`linear-gradient(135deg,${isUltra?'#92400E':NAVY},${isUltra?'#B45309':'#0F2140'})`, display:'flex', gap:12, alignItems:'center' }}>
+          <span style={{ fontSize:28, flexShrink:0 }}>🗺️</span>
+          <div style={{ flex:1 }}>
+            {isUltra ? (
+              <>
+                <p style={{ fontWeight:700, color:'#fff', fontSize:13, margin:'0 0 2px' }}>Continue Your Pathway</p>
+                <p style={{ fontSize:11, color:'rgba(255,255,255,0.7)', margin:0 }}>JEE 7-Year Journey · Stage 4 Active →</p>
+              </>
+            ) : (
+              <>
+                <p style={{ fontWeight:700, color:'#fff', fontSize:13, margin:'0 0 2px' }}>24 Prep Pathways — JEE · NEET · UPSC · Banking</p>
+                <p style={{ fontSize:11, color:GOLD, margin:0, fontWeight:700 }}>Unlock with Ultra ✨ →</p>
+              </>
+            )}
+          </div>
+        </div>
+        <div style={{ height:24 }} />
       </div>
-    </AppLayout>
+    </div>
   )
 }

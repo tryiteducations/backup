@@ -1,7 +1,7 @@
 // src/components/ThemeSwitcher.jsx
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Lock } from 'lucide-react'
+import { Lock, Crown } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 
 export default function ThemeSwitcher({ dark = false }) {
@@ -82,7 +82,7 @@ export default function ThemeSwitcher({ dark = false }) {
                     }}>
                     <span style={{ fontSize: 16, filter: locked ? 'grayscale(1)' : 'none' }}>{t.emoji}</span>
                     <span style={{ fontSize: 11, fontWeight: 600, lineHeight: 1.3, flex: 1 }}>{t.name}</span>
-                    {locked && <Lock size={12} />}
+                    {locked && (t.planLocked ? <Crown size={12} /> : <Lock size={12} />)}
                   </button>
                 )
               })}

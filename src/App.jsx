@@ -4,6 +4,7 @@ import { ThemeProvider } from './context/ThemeContext'
 import { ToastProvider } from './context/ToastContext'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import ImpersonationBanner from './components/ImpersonationBanner'
+import { useCoins } from './context/CoinContext';
 
 const Splash          = lazy(() => import('./pages/Splash'))
 const Landing         = lazy(() => import('./pages/Landing'))
@@ -96,6 +97,7 @@ const Terms                 = lazy(() => import('./pages/legal/Terms'))
 const Privacy               = lazy(() => import('./pages/legal/Privacy'))
 const CommunityStandards    = lazy(() => import('./pages/legal/CommunityStandards'))
 const CommunityPage = lazy(() => import('./pages/community/CommunityPage'))
+
 // SmartExamSearch and ProfilePhoto are components — just import where needed
 const Stub = ({ title = 'Coming Soon' }) => (
   <div style={{ minHeight:'100vh', display:'flex', flexDirection:'column',
@@ -145,12 +147,27 @@ function useGlobalGlitter() {
 
 function ThemedApp() {
   const { user } = useAuth()
+  
+  // 1. Initialize useCoins to get celebrateThemeUnlock
+  const { celebrateThemeUnlock } = useCoins() 
+
+  // 2. Fetch or define your profile and stats object here!
+  // (Replace these placeholders with the actual custom hooks your app uses, e.g., useProfile())
+  const profile = user?.profile || { plan: 'free' } 
+  const statsObject = user?.stats || {}
+
   useGlobalGlitter()
 
   return (
-    <ThemeProvider userLevel={user?.level ?? 1}>
+    <ThemeProvider
+      userLevel={user?.level ?? 1}
+      userPlan={profile.plan}
+      userStats={statsObject} 
+      onThemeUnlocked={celebrateThemeUnlock}
+    >
       <BrowserRouter>
         <ImpersonationBanner />
+        {/* ... rest of your routes ... */}
         <Suspense fallback={<Loader />}>
           <Routes>
             {/* AUTH */}

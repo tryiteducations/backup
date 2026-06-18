@@ -169,12 +169,19 @@ const ThemeContext = createContext({})
  * fields you don't have yet simply default to 0 and that theme stays
  * locked until you wire the real number in.
  *
+ * userPlan: 'free' | 'pro' | 'ultra' — the user's current subscription
+ * tier, read from your billing source of truth. If a subscription
+ * lapses and the active theme is no longer accessible, the provider
+ * silently falls back to the user's last base theme — no special
+ * downgrade ceremony, no blocking of cancellation, just a quiet
+ * fallback to what's already free for everyone.
+ *
  * onThemeUnlocked: optional callback(theme) fired the moment a new
- * theme crosses its unlock threshold — wire this to your celebration
- * effect (confetti, coin burst, toast) in CoinContext or wherever you
- * trigger reward moments.
+ * theme crosses its unlock threshold AND is plan-accessible — wire
+ * this to your celebration effect (confetti, coin burst, toast) in
+ * CoinContext or wherever you trigger reward moments.
  */
-export function ThemeProvider({ children, userLevel = 1, userStats = {}, onThemeUnlocked = null }) {
+export function ThemeProvider({ children, userLevel = 1, userStats = {}, userPlan = 'free', onThemeUnlocked = null }) {
   const [activeTheme, setActiveThemeState] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('tryit_active_theme')
@@ -201,7 +208,7 @@ export function ThemeProvider({ children, userLevel = 1, userStats = {}, onTheme
   // Whenever the stats that drive unlocks change (new test result,
   // streak update, coins earned...), check for newly-crossed thresholds.
   useEffect(() => {
-    const newly = findNewlyUnlocked(userStats, unlockedThemeIds)
+    const newly = findNewlyUnlocked(userStats, unlockedThemeIds, userPlan)
     if (newly.length === 0) return
     setUnlockedThemeIds(prev => {
       let next = prev
@@ -213,18 +220,32 @@ export function ThemeProvider({ children, userLevel = 1, userStats = {}, onTheme
       newly.forEach(t => onThemeUnlocked(t))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(userStats)])
+  }, [JSON.stringify(userStats), userPlan])
+
+  const themesWithStatus = useMemo(
+    () => getThemesWithStatus(userStats, unlockedThemeIds, userPlan),
+    [userStats, unlockedThemeIds, userPlan]
+  )
+
+  // If the active theme is no longer accessible (subscription lapsed,
+  // or this device never had it unlocked), fall back to a base theme.
+  // Simple and silent — no ceremony, and cancellation itself is never
+  // blocked or discouraged here, this only reacts to the resulting plan.
+  useEffect(() => {
+    const current = themesWithStatus.find(t => t.id === activeTheme)
+    if (current && !current.unlocked) {
+      const fallback = current.isDark ? 'midnight' : 'default'
+      setActiveThemeState(fallback)
+      try { localStorage.setItem(STORAGE_KEY, fallback) } catch {}
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [themesWithStatus])
 
   const setActiveTheme = useCallback((id) => {
     if (!THEMES[id]) return
     setActiveThemeState(id)
     try { localStorage.setItem(STORAGE_KEY, id) } catch {}
   }, [])
-
-  const themesWithStatus = useMemo(
-    () => getThemesWithStatus(userStats, unlockedThemeIds),
-    [userStats, unlockedThemeIds]
-  )
 
   const isThemeUnlocked = useCallback((id) => {
     const t = themesWithStatus.find(th => th.id === id)

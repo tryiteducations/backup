@@ -2,8 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * ─────────────────────────────────────────────────────────────────
+ * TryIT — Global stylesheet
+ * ─────────────────────────────────────────────────────────────────
+ * Text-color rules below are DELIBERATELY MINIMAL. Every color that
+ * matters (text, textLight, border, card colors) is already computed
+ * and contrast-checked per-theme in src/lib/themes.js and pushed into
+ * these CSS variables by src/context/ThemeContext.jsx. This file's
+ * job is to consume those variables consistently — not to patch
+ * individual components with !important overrides.
+ *
+ * If you ever find a spot where text is hard to read, the fix belongs
+ * in themes.js (the seed colors) or ThemeContext.jsx (the derivation
+ * logic), not as a new selector appended here. Patching here is how
+ * the old file ended up with brittle [style*="..."] attribute hacks
+ * that silently stopped working the moment a component's inline
+ * style format changed even slightly.
+ */
+
 :root {
   --glass-surface: rgba(255,255,255,0.72);
+  --glass-surface-dark: rgba(15,23,42,0.82);
   --glass-border: rgba(255,255,255,0.55);
   --glass-shadow: 0 18px 60px rgba(15,23,42,0.12);
   --glass-accent: rgba(212,175,55,0.16);
@@ -17,7 +37,7 @@
 /* ── FONTS ─────────────────────────────────────────── */
 body {
   font-family: 'Inter', sans-serif;
-  background: var(--color-bg, #F8FAFC) !important;
+  background: var(--color-bg, #F8FAFC);
   color: var(--color-text, #1E293B);
   transition:
     background var(--theme-transition-duration, 0.48s) cubic-bezier(0.22,1,0.36,1),
@@ -39,6 +59,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
     inset 2px 2px 6px rgba(255,255,255,0.8),
     inset -2px -2px 6px rgba(var(--color-text-rgb,30,58,95),0.06);
   border: 1.5px solid rgba(255,255,255,0.7);
+  color: var(--color-text, #1E293B);
 }
 .clay-dark {
   background: linear-gradient(135deg, var(--color-primary,#1E3A5F), var(--color-primary-dark,#0F2140));
@@ -49,6 +70,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
     inset 2px 2px 8px rgba(255,255,255,0.07),
     inset -2px -2px 8px rgba(0,0,0,0.3);
   border: 1.5px solid rgba(255,255,255,0.09);
+  color: var(--color-on-dark, #FFFFFF);
 }
 .clay-gold {
   background: linear-gradient(135deg, var(--color-accent,#D4AF37), var(--color-accent-light,#E8C84A), var(--color-accent,#D4AF37));
@@ -59,6 +81,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
     inset 2px 2px 8px rgba(255,255,255,0.4),
     inset -2px -2px 8px rgba(184,150,10,0.3);
   border: 1.5px solid rgba(255,255,255,0.5);
+  color: var(--color-primary-dark, #1E3A5F);
 }
 
 /* ── GLASSMORPHISM ─────────────────────────────────── */
@@ -69,10 +92,10 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
   border: 1px solid var(--glass-border, rgba(255,255,255,0.55));
   border-radius: 24px;
   box-shadow: var(--glass-shadow, 0 18px 60px rgba(15,23,42,0.12));
-  color: var(--color-text, #1E3A5F);
+  color: var(--color-on-surface, var(--color-text, #1E3A5F));
 }
 .glass-dark {
-  background: rgba(0,0,0,0.42);
+  background: var(--glass-surface-dark, rgba(15,23,42,0.82));
   backdrop-filter: blur(24px) saturate(200%);
   -webkit-backdrop-filter: blur(24px) saturate(200%);
   border: 1px solid rgba(255,255,255,0.12);
@@ -80,12 +103,9 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
   box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
   color: var(--color-on-dark, #FFFFFF);
 }
-.glass-dark p,
-.glass-dark span,
-.glass-dark h1,
-.glass-dark h2,
-.glass-dark h3,
-.glass-dark div { color: var(--color-on-dark, #FFFFFF); }
+/* Children inherit color from .glass-dark naturally — no per-tag
+   override list needed, this is what `color` inheritance is for. */
+.glass-dark * { color: inherit; }
 
 .glass-gold {
   background: rgba(var(--color-accent-rgb,212,175,55), 0.14);
@@ -94,10 +114,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
   border: 1px solid rgba(var(--color-accent-rgb,212,175,55), 0.35);
   border-radius: 20px;
   box-shadow: 0 5px 28px rgba(var(--color-accent-rgb,212,175,55),0.18), inset 0 1px 0 rgba(255,255,255,0.35);
-  color: var(--color-text, #1E3A5F);
-}
-.glass-text-important {
-  color: var(--color-on-dark, #FFFFFF) !important;
+  color: var(--color-on-surface, var(--color-text, #1E3A5F));
 }
 
 /* ── BUTTONS ───────────────────────────────────────── */
@@ -106,16 +123,23 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
   color: var(--color-primary-dark, #1E3A5F);
   border: none;
   box-shadow: 0 14px 28px rgba(var(--color-accent-rgb,212,175,55),0.22);
+  transition: transform 0.22s cubic-bezier(0.22,1,0.36,1), box-shadow 0.22s ease;
 }
 .btn-gold:hover {
   background: linear-gradient(135deg, var(--color-accent-light,#E8C84A), var(--color-accent,#D4AF37));
+  transform: translateY(-1px);
 }
+.btn-gold:active { transform: translateY(0) scale(0.98); }
+
 .btn-navy {
   background: linear-gradient(135deg, var(--color-primary,#1E3A5F), var(--color-primary-dark,#0F2140));
   color: #FFFFFF;
   border: none;
+  transition: transform 0.22s cubic-bezier(0.22,1,0.36,1), opacity 0.22s ease;
 }
-.btn-navy:hover { opacity: 0.94; }
+.btn-navy:hover { opacity: 0.94; transform: translateY(-1px); }
+.btn-navy:active { transform: translateY(0) scale(0.98); }
+
 .btn-glass {
   background: var(--button-surface, rgba(255,255,255,0.92));
   color: var(--button-text, var(--color-text, #1E3A5F));
@@ -124,81 +148,63 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
   box-shadow: 0 18px 40px rgba(15,23,42,0.08);
   padding: 0.85rem 1.2rem;
   font-weight: 700;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s ease, background 0.25s ease;
 }
 .btn-glass:hover {
   transform: translateY(-1px);
   box-shadow: 0 24px 48px rgba(15,23,42,0.12);
 }
+.btn-glass:active { transform: translateY(0) scale(0.98); }
+
 .btn-primary {
   background: linear-gradient(135deg, var(--color-accent,#D4AF37), var(--color-accent-light,#E8C84A));
   color: var(--color-primary-dark, #1E3A5F);
   border: none;
   box-shadow: 0 14px 28px rgba(212,175,55,0.22);
+  transition: transform 0.22s cubic-bezier(0.22,1,0.36,1), box-shadow 0.22s ease;
 }
 .btn-primary:hover {
   background: linear-gradient(135deg, var(--color-accent-light,#E8C84A), var(--color-accent,#D4AF37));
+  transform: translateY(-1px);
 }
+.btn-primary:active { transform: translateY(0) scale(0.98); }
 
-/* ── TEXT UTILITIES ────────────────────────────────── */
-.text-contrast {
-  color: var(--heading-color, var(--color-text, #1E3A5F));
-  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
-}
-.text-outline {
-  text-shadow: 0 0 2px rgba(255,255,255,0.85), 0 0 6px rgba(255,255,255,0.45);
-}
-
-/* ── IMPROVED TEXT VISIBILITY UTILITIES ─────────────– */
-.text-bright {
-  color: var(--color-text, #1E293B) !important;
-  font-weight: 600;
-}
-
-.text-primary-bright {
-  color: var(--color-primary, #1E3A5F) !important;
-  font-weight: 700;
-}
-
+/* ── TEXT UTILITIES ──────────────────────────────────
+ * Every one of these reads from a CSS variable that ThemeContext.jsx
+ * already guarantees is contrast-safe for the active theme. None of
+ * these need !important — they're applied as the component's actual
+ * color, not fighting against a conflicting rule, because there is
+ * no longer a parallel system of hardcoded per-theme text colors to
+ * fight against.
+ */
 .text-heading {
-  color: var(--heading-color, var(--color-text, #1E293B)) !important;
+  color: var(--heading-color, var(--color-text, #1E293B));
   font-weight: 800;
   font-family: 'Poppins', sans-serif;
 }
-
-.text-surface {
-  color: var(--color-surface-text, var(--color-text, #1E293B)) !important;
+.text-body {
+  color: var(--color-text, #1E293B);
 }
-
-.text-muted-dark {
-  color: var(--color-text-muted, rgba(30,58,95,0.55)) !important;
-  opacity: 0.9;
+.text-muted {
+  color: var(--color-text-light, var(--subtext-color, #64748B));
 }
-
-/* Ensure text is visible on all backgrounds */
-.text-always-visible {
-  color: var(--color-text) !important;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
-
 .text-on-dark {
-  color: var(--color-on-dark, #FFFFFF) !important;
+  color: var(--color-on-dark, #FFFFFF);
 }
-
 .text-on-dark-muted {
-  color: var(--color-on-dark-muted, rgba(255,255,255,0.72)) !important;
+  color: var(--color-on-dark-muted, rgba(255,255,255,0.72));
 }
-
 .text-on-light {
-  color: var(--color-on-light, #1E3A5F) !important;
+  color: var(--color-on-light, #1E3A5F);
 }
-
 .text-on-light-muted {
-  color: var(--color-on-light-muted, #64748B) !important;
+  color: var(--color-on-light-muted, #64748B);
 }
-
-.bg-surface-dark {
-  background: var(--color-surface-dark, rgba(0,0,0,0.88)) !important;
+.text-accent {
+  color: var(--color-accent, #D4AF37);
+}
+.text-outline {
+  text-shadow: 0 0 2px rgba(255,255,255,0.85), 0 0 6px rgba(255,255,255,0.45);
 }
 
 /* ── REVEAL ANIMATIONS ─────────────────────────────── */
@@ -273,6 +279,19 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
   from { width:0%; }
   to   { width:var(--bar-w,100%); }
 }
+@keyframes coinPop {
+  from { transform: scale(0.8) translateY(20px); opacity:0; }
+  to   { transform: scale(1) translateY(0); opacity:1; }
+}
+@keyframes coinBurst {
+  0%   { transform: scale(0) rotate(0deg); opacity: 1; }
+  60%  { transform: scale(1.2) rotate(180deg); opacity: 1; }
+  100% { transform: scale(1) rotate(360deg) translateY(-40px); opacity: 0; }
+}
+@keyframes ringExpand {
+  0%   { transform: scale(0.6); opacity: 0.6; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
 
 /* Utility animation classes */
 .animate-float       { animation:float 4s ease-in-out infinite; }
@@ -307,26 +326,4 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
     color var(--theme-transition-duration,0.48s) cubic-bezier(0.22,1,0.36,1),
     border-color var(--theme-transition-duration,0.48s) cubic-bezier(0.22,1,0.36,1),
     box-shadow var(--theme-transition-duration,0.48s) ease;
-}
-/* ── GLOBAL READABILITY FIX ────────────────────────── */
-
-/* Small text / badges on dark backgrounds — always readable */
-[style*="rgba(255,255,255,0.06)"],
-[style*="rgba(255,255,255,0.04)"],
-[style*="rgba(255,255,255,0.08)"] {
-  border-color: rgba(255,255,255,0.25) !important;
-}
-
-/* All small span/badge text in dark sections */
-section span[style*="fontSize"],
-section p[style*="fontSize:'clamp(14"],
-section p[style*="fontSize:'clamp(13"] {
-  color: rgba(255,255,255,0.82) !important;
-}
-
-/* Badge pill text specifically */
-[style*="borderRadius:20"] span,
-[style*="borderRadius:'20px'"] span,
-[style*="border-radius: 20px"] span {
-  color: rgba(255,255,255,0.85) !important;
 }

@@ -1,191 +1,291 @@
-import { useState } from 'react'
-import AppLayout from '../components/layout/AppLayout'
-import { useAuth } from '../context/AuthContext'
-import { useToast } from '../context/ToastContext'
-import StudentIDCard from '../components/profile/StudentIDCard'
-import { BADGES, LEVELS, getLevelInfo } from '../data/mockSeeds'
+// FILE: src/pages/Profile.jsx
+// TryIT — User Profile Page
+// Route: /profile
+import { useState }     from 'react'
+import { useNavigate }  from 'react-router-dom'
+import { useAuth }      from '../context/AuthContext'
+import ProfilePhoto     from '../components/ProfilePhoto'
 
-const TABS = ['Overview','ID Card','Badges','Exams','Stats']
+const NAVY = '#1E3A5F'
+const GOLD = '#C9A84C'
+const BG   = '#F8FAFC'
+const GREEN = '#059669'
+
+const LEVEL_TITLES = [
+  [1,'The Curious One','🌱'],[2,'The Determined One','💪'],[3,'The Fierce One','🔥'],
+  [4,'The Relentless One','⚡'],[5,'The Champion','🏆'],[6,'The Scholar','📚'],
+  [7,'The Achiever','🎯'],[8,'The Legend','🌟'],[9,'The Guru','🧙'],[10,'The Elite','👑'],
+]
 
 export default function Profile() {
-  const { user } = useAuth()
-  const { showToast } = useToast()
-  const [tab, setTab] = useState('Overview')
-  const levelInfo = getLevelInfo(user?.xp)
+  const navigate  = useNavigate()
+  const { user, logout, planTier, isPro, isUltra, coins, updateUser } = useAuth()
+
+  const [tab, setTab] = useState('stats')
+  const [editName, setEditName] = useState(false)
+  const [nameVal,  setNameVal]  = useState(user?.name || '')
+
+  const level      = Math.min(10, Math.max(1, user?.level || 1))
+  const levelInfo  = LEVEL_TITLES[level - 1] || LEVEL_TITLES[0]
+  const xpPct      = user?.xpToNext > 0 ? Math.round(((user?.xp||0) / user?.xpToNext) * 100) : 0
+
+  const PLAN_DISPLAY = {
+    free:  { label:'Free Plan',            color:'#64748B', bg:'#F1F5F9',  emoji:'🆓' },
+    pro:   { label:'Pro Member',           color:'#1D4ED8', bg:'#EFF6FF',  emoji:'⭐' },
+    ultra: { label:'Ultra Member ✨',      color:'#92400E', bg:'#FFF7E6',  emoji:'🏆' },
+  }
+  const planDisplay = PLAN_DISPLAY[planTier] || PLAN_DISPLAY.free
+
+  const saveUsername = () => {
+    if (nameVal.trim()) updateUser({ name: nameVal.trim() })
+    setEditName(false)
+  }
+
+  const enrolled = user?.exams || [
+    { id:'ssc_cgl_t1',  name:'SSC CGL Tier 1',   readiness:72, icon:'📋' },
+    { id:'ibps_po_pre', name:'IBPS PO Prelims',   readiness:58, icon:'🏦' },
+  ]
+
+  const ACHIEVEMENTS = [
+    { id:'first_test',  emoji:'📝', label:'First Test',       desc:'Completed first practice test',        earned:true  },
+    { id:'streak_7',    emoji:'🔥', label:'Week Warrior',     desc:'7-day study streak',                   earned:user?.streak>=7  },
+    { id:'streak_30',   emoji:'💪', label:'Month Master',     desc:'30-day study streak',                  earned:user?.streak>=30 },
+    { id:'top_100',     emoji:'🏆', label:'Top 100',          desc:'Reached All India top 100',            earned:false },
+    { id:'concept_1',   emoji:'🧠', label:'Concept Seeker',   desc:'Completed first concept card',         earned:true  },
+    { id:'referral_1',  emoji:'👥', label:'First Referral',   desc:'Referred your first friend',           earned:false },
+    { id:'accuracy_90', emoji:'🎯', label:'Sharp Shooter',    desc:'90%+ accuracy in a full mock test',    earned:false },
+    { id:'bharat_5',    emoji:'🇮🇳', label:'India Lover',     desc:'Read 5 Bharat Pulse stories',          earned:true  },
+  ]
 
   return (
-    <AppLayout>
-      {/* Hero */}
-      <div className="clay-dark rounded-3xl p-8 mb-6">
-        <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
-          <div className="relative flex-shrink-0">
-            <div className="w-24 h-24 rounded-full bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)] font-extrabold text-3xl flex items-center justify-center ring-4 ring-white/20">
-              {user?.initials}
-            </div>
-            <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-[var(--color-accent, #D4AF37)] flex items-center justify-center text-lg">
-              {user?.levelEmoji}
-            </div>
-          </div>
-          <div className="flex-1 text-center sm:text-left">
-            <h1 className="text-2xl font-bold text-white font-poppins">{user?.name}</h1>
-            <p className="text-[var(--color-accent, #D4AF37)] font-semibold mt-1">{user?.levelEmoji} Level {user?.level} — {user?.levelTitle}</p>
-            <p className="text-white/60 text-sm mt-1">📍 {user?.city}, {user?.state}</p>
-            <div className="flex flex-wrap gap-2 mt-3 justify-center sm:justify-start">
-              {user?.isPro && <span className="clay-gold text-[var(--color-primary, #1E3A5F)] text-xs font-bold px-3 py-1 rounded-full">⚡ PRO MEMBER</span>}
-              <span className="bg-white/10 text-white text-xs px-3 py-1 rounded-full">Joined {user?.joinDate}</span>
-              <span className="bg-white/10 text-white/60 text-xs px-3 py-1 rounded-full font-mono">{user?.userId}</span>
-            </div>
-          </div>
+    <div style={{ minHeight:'100vh', background:BG, fontFamily:'Inter,sans-serif', paddingBottom:100 }}>
+
+      {/* Header banner */}
+      <div style={{ background:`linear-gradient(160deg,${NAVY} 0%,#0F2140 100%)`, padding:'24px 16px 28px' }}>
+        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:20 }}>
+          <button onClick={() => navigate(-1)} style={{ background:'rgba(255,255,255,0.1)', border:'none', color:'rgba(255,255,255,0.7)', width:34, height:34, borderRadius:'50%', fontSize:16, cursor:'pointer' }}>←</button>
+          <button onClick={() => navigate('/settings')} style={{ background:'rgba(255,255,255,0.1)', border:'none', color:'rgba(255,255,255,0.7)', width:34, height:34, borderRadius:'50%', fontSize:18, cursor:'pointer' }}>⚙️</button>
         </div>
 
-        {/* XP Bar */}
-        <div className="mt-6">
-          <div className="flex justify-between text-sm mb-2">
-            <span className="text-white/70">Level {user?.level} — {user?.levelTitle}</span>
-            <span className="text-[var(--color-accent, #D4AF37)] font-bold">{user?.xp.toLocaleString()} / {user?.xpToNext.toLocaleString()} XP</span>
+        {/* Profile photo + name */}
+        <div style={{ textAlign:'center', marginBottom:16 }}>
+          <div style={{ display:'inline-block', marginBottom:12 }}>
+            <ProfilePhoto
+              userId={user?.id}
+              name={user?.name}
+              photoUrl={user?.profile_photo_url}
+              size={84}
+              isOwner
+              showUpload
+              onPhotoUpdated={(url) => updateUser({ profile_photo_url: url })}
+            />
           </div>
-          <div className="w-full bg-white/10 rounded-full h-3">
-            <div className="bg-[var(--color-accent, #D4AF37)] h-3 rounded-full transition-all duration-1000"
-              style={{ width:`${(user?.xp / user?.xpToNext) * 100}%` }} />
-          </div>
-          <p className="text-white/40 text-xs mt-1">
-            {(user?.xpToNext - user?.xp).toLocaleString()} XP to {LEVELS[user?.level]?.title || 'Max Level'}
+
+          {editName ? (
+            <div style={{ display:'flex', gap:6, justifyContent:'center', alignItems:'center' }}>
+              <input value={nameVal} onChange={e => setNameVal(e.target.value)}
+                onKeyDown={e => e.key==='Enter' && saveUsername()}
+                style={{ padding:'6px 10px', borderRadius:8, border:'1px solid rgba(255,255,255,0.3)', background:'rgba(255,255,255,0.1)', color:'#fff', fontSize:16, fontWeight:700, textAlign:'center', outline:'none', width:180 }} />
+              <button onClick={saveUsername} style={{ background:GREEN, color:'#fff', border:'none', borderRadius:8, padding:'6px 10px', cursor:'pointer', fontSize:13 }}>✓</button>
+            </div>
+          ) : (
+            <div style={{ display:'flex', gap:8, justifyContent:'center', alignItems:'center' }}>
+              <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, fontSize:20, color:'#fff', margin:0 }}>
+                {user?.name || 'Student'}
+              </p>
+              <button onClick={() => setEditName(true)} style={{ background:'none', border:'none', color:'rgba(255,255,255,0.4)', cursor:'pointer', fontSize:14 }}>✏️</button>
+            </div>
+          )}
+
+          <p style={{ fontSize:12, color:'rgba(255,255,255,0.6)', margin:'4px 0 10px' }}>
+            {user?.userId || `TRY-001`} · {user?.state || 'India'}
           </p>
+
+          {/* Plan badge */}
+          <span style={{ display:'inline-block', background:planDisplay.bg, color:planDisplay.color,
+            padding:'5px 14px', borderRadius:99, fontSize:12, fontWeight:800 }}>
+            {planDisplay.emoji} {planDisplay.label}
+          </span>
+        </div>
+
+        {/* Level + XP */}
+        <div style={{ background:'rgba(255,255,255,0.08)', borderRadius:14, padding:'12px 14px' }}>
+          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:6 }}>
+            <div style={{ display:'flex', alignItems:'center', gap:6 }}>
+              <span style={{ fontSize:20 }}>{levelInfo[2]}</span>
+              <div>
+                <p style={{ fontSize:12, fontWeight:800, color:'#fff', margin:0 }}>Level {level} — {levelInfo[1]}</p>
+                <p style={{ fontSize:10, color:'rgba(255,255,255,0.5)', margin:0 }}>
+                  {(user?.xp||0).toLocaleString('en-IN')} / {(user?.xpToNext||500).toLocaleString('en-IN')} XP
+                </p>
+              </div>
+            </div>
+            <span style={{ fontSize:12, fontWeight:700, color:GOLD }}>{xpPct}%</span>
+          </div>
+          <div style={{ height:6, background:'rgba(255,255,255,0.15)', borderRadius:99, overflow:'hidden' }}>
+            <div style={{ height:'100%', width:`${xpPct}%`, background:GOLD, borderRadius:99 }} />
+          </div>
         </div>
       </div>
 
       {/* Quick stats */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:0, background:'#fff', borderBottom:'1px solid #E2E8F0' }}>
         {[
-          { icon:'🏆', val:`#${user?.rank.toLocaleString()}`, label:'All India Rank' },
-          { icon:'🔥', val:`${user?.streak} days`, label:'Study Streak' },
-          { icon:'📝', val:user?.testsCompleted, label:'Tests Completed' },
-          { icon:'📊', val:`${user?.avgScore}%`, label:'Average Score' },
-        ].map(s => (
-          <div key={s.label} className="clay rounded-2xl p-4 text-center">
-            <p className="text-2xl mb-1">{s.icon}</p>
-            <p className="text-2xl font-bold text-[var(--color-accent, #D4AF37)] font-poppins">{s.val}</p>
-            <p className="text-xs text-slate-500 mt-1">{s.label}</p>
+          { label:'Tests',    value:user?.testsCompleted||0,    emoji:'📝' },
+          { label:'Avg Score',value:`${user?.avgScore||0}%`,    emoji:'🎯' },
+          { label:'Streak',   value:`${user?.streak||0}d`,      emoji:'🔥' },
+          { label:'Rank',     value:`#${user?.rank||'—'}`,      emoji:'🏆' },
+        ].map((s, i) => (
+          <div key={s.label} style={{ padding:'12px 6px', textAlign:'center', borderRight: i<3?'1px solid #E2E8F0':'none' }}>
+            <p style={{ fontSize:18, margin:'0 0 2px' }}>{s.emoji}</p>
+            <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, fontSize:16, color:NAVY, margin:'0 0 1px' }}>{s.value}</p>
+            <p style={{ fontSize:9, color:'#94A3B8', margin:0 }}>{s.label}</p>
           </div>
         ))}
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 mb-6 overflow-x-auto scrollbar-hide">
-        {TABS.map(t => (
-          <button key={t} onClick={() => setTab(t)}
-            className={`px-5 py-2.5 rounded-2xl font-semibold text-sm whitespace-nowrap flex-shrink-0 transition-all
-              ${tab === t ? 'bg-[var(--color-primary, #1E3A5F)] text-white' : 'bg-white border border-slate-200 text-slate-600 hover:border-[var(--color-accent, #D4AF37)]'}`}>
-            {t}
+      <div style={{ display:'flex', background:'#fff', borderBottom:'1px solid #E2E8F0' }}>
+        {[
+          { id:'stats',       label:'📊 Stats'       },
+          { id:'exams',       label:'📋 Exams'       },
+          { id:'achievements',label:'🏅 Badges'      },
+          { id:'referral',    label:'👥 Referral'    },
+        ].map(t => (
+          <button key={t.id} onClick={() => setTab(t.id)}
+            style={{ flex:1, padding:'11px 4px', border:'none', background:'transparent', cursor:'pointer', fontSize:11, fontWeight:700, whiteSpace:'nowrap',
+              color: tab===t.id ? NAVY : '#94A3B8',
+              borderBottom: tab===t.id ? `2.5px solid ${GOLD}` : '2.5px solid transparent' }}>
+            {t.label}
           </button>
         ))}
       </div>
 
-      {/* Overview */}
-      {tab === 'Overview' && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="clay rounded-2xl p-5">
-            <h3 className="font-bold text-[var(--color-primary, #1E3A5F)] mb-3">📊 Subject Performance</h3>
-            {user?.subjects.map(s => (
-              <div key={s.name} className="mb-3">
-                <div className="flex justify-between mb-1">
-                  <span className="text-sm font-medium text-slate-700">{s.emoji} {s.name}</span>
-                  <div className="flex items-center gap-1">
-                    <span className={`text-xs font-bold ${s.trend==='up'?'text-green-500':'text-red-500'}`}>
-                      {s.trend==='up'?'↑':'↓'}
-                    </span>
-                    <span className="text-sm font-bold text-[var(--color-primary, #1E3A5F)]">{s.accuracy}%</span>
-                  </div>
-                </div>
-                <div className="w-full bg-slate-100 rounded-full h-2.5">
-                  <div className={`h-2.5 rounded-full ${s.accuracy>=80?'bg-green-500':s.accuracy>=70?'bg-[var(--color-accent, #D4AF37)]':'bg-amber-500'}`}
-                    style={{ width:`${s.accuracy}%` }} />
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="clay rounded-2xl p-5">
-            <h3 className="font-bold text-[var(--color-primary, #1E3A5F)] mb-3">🎯 Exam Readiness</h3>
-            {user?.exams.map(e => (
-              <div key={e.id} className="mb-3">
-                <div className="flex justify-between mb-1">
-                  <span className="text-sm font-semibold text-[var(--color-primary, #1E3A5F)]">{e.name}</span>
-                  <span className="text-sm font-bold text-[var(--color-accent, #D4AF37)]">{e.readiness}%</span>
-                </div>
-                <div className="w-full bg-slate-100 rounded-full h-2.5">
-                  <div className={`h-2.5 rounded-full transition-all duration-1000 ${e.readiness>=70?'bg-green-500':e.readiness>=40?'bg-[var(--color-accent, #D4AF37)]':'bg-amber-500'}`}
-                    style={{ width:`${e.readiness}%` }} />
-                </div>
-                {e.examDate && <p className="text-xs text-slate-400 mt-0.5">Exam: {e.examDate}</p>}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      <div style={{ padding:16, maxWidth:480, margin:'0 auto' }}>
 
-      {/* ID Card */}
-      {tab === 'ID Card' && (
-        <div className="clay rounded-3xl p-6 max-w-md mx-auto">
-          <h3 className="font-bold text-[var(--color-primary, #1E3A5F)] text-xl text-center mb-6">🪪 Your Student ID Card</h3>
-          <StudentIDCard user={user} />
-        </div>
-      )}
-
-      {/* Badges */}
-      {tab === 'Badges' && (
-        <div>
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="font-bold text-[var(--color-primary, #1E3A5F)] text-xl">🏅 Your Badges</h3>
-            <span className="text-slate-500 text-sm">
-              {BADGES.filter(b=>b.earned).length}/{BADGES.length} earned
-            </span>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {BADGES.map(b => (
-              <div key={b.id}
-                className={`rounded-2xl p-4 text-center transition-all ${b.earned ? 'clay-gold' : 'clay opacity-60'}`}>
-                <div className="text-4xl mb-2">{b.emoji}</div>
-                <p className={`font-bold text-sm ${b.earned ? 'text-[var(--color-primary, #1E3A5F)]' : 'text-slate-600'}`}>{b.name}</p>
-                <p className={`text-xs mt-1 ${b.earned ? 'text-[var(--color-primary, #1E3A5F)]/70' : 'text-slate-400'}`}>{b.desc}</p>
-                {b.earned ? (
-                  <p className="text-xs text-green-600 font-semibold mt-2">✅ {b.earnedDate}</p>
-                ) : b.progress !== undefined ? (
-                  <div className="mt-2">
-                    <div className="w-full bg-slate-200 rounded-full h-1.5">
-                      <div className="bg-[var(--color-accent, #D4AF37)] h-1.5 rounded-full"
-                        style={{ width:`${(b.progress / b.target) * 100}%` }} />
-                    </div>
-                    <p className="text-xs text-slate-400 mt-1">{b.progress}/{b.target}</p>
-                  </div>
-                ) : null}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Stats */}
-      {tab === 'Stats' && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-          {[
-            { icon:'📝', val:user?.testsCompleted, label:'Tests Taken' },
-            { icon:'📊', val:`${user?.avgScore}%`, label:'Average Score' },
-            { icon:'🏆', val:`#${user?.rank.toLocaleString()}`, label:'All India Rank' },
-            { icon:'🔥', val:`${user?.streak} days`, label:'Study Streak' },
-            { icon:'🪙', val:user?.coins.toLocaleString(), label:'Total Coins' },
-            { icon:'🎓', val:user?.guruPoints, label:'Guru Points' },
-            { icon:'⏱️', val:user?.studyHours, label:'Study Time' },
-            { icon:'⭐', val:user?.xp.toLocaleString(), label:'XP Earned' },
-            { icon:'💎', val:`Level ${user?.level}`, label:'Current Level' },
-          ].map(s => (
-            <div key={s.label} className="clay rounded-2xl p-4 text-center">
-              <p className="text-3xl mb-2">{s.icon}</p>
-              <p className="text-2xl font-bold text-[var(--color-accent, #D4AF37)] font-poppins">{s.val}</p>
-              <p className="text-xs text-slate-500 mt-1">{s.label}</p>
+        {/* STATS TAB */}
+        {tab === 'stats' && (
+          <div>
+            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10, marginBottom:14 }}>
+              {[
+                { label:'Study Hours',    value:user?.studyHours||'0h',  emoji:'⏱️', color:'#7C3AED' },
+                { label:'Coins Earned',   value:`${(coins||0).toLocaleString('en-IN')}🪙`, emoji:'🪙', color:'#92400E' },
+                { label:'Questions Done', value:'—',                     emoji:'❓', color:NAVY   },
+                { label:'Guru Points',    value:user?.guruPoints||0,     emoji:'⭐', color:GREEN  },
+              ].map(s => (
+                <div key={s.label} style={{ background:'#fff', borderRadius:14, padding:14, border:'1.5px solid #E2E8F0', textAlign:'center' }}>
+                  <p style={{ fontSize:24, margin:'0 0 4px' }}>{s.emoji}</p>
+                  <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, fontSize:18, color:s.color, margin:'0 0 2px' }}>{s.value}</p>
+                  <p style={{ fontSize:11, color:'#94A3B8', margin:0 }}>{s.label}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      )}
-    </AppLayout>
+
+            <div style={{ background:'#fff', borderRadius:14, padding:14, border:'1.5px solid #E2E8F0', marginBottom:14 }}>
+              <p style={{ fontSize:12, fontWeight:700, color:NAVY, marginBottom:10 }}>📅 Member Since</p>
+              <p style={{ fontSize:14, color:'#475569', margin:'0 0 4px' }}>{user?.joinDate || 'June 2026'}</p>
+              <p style={{ fontSize:11, color:'#94A3B8', margin:0 }}>ID: {user?.userId}</p>
+            </div>
+
+            {!isPro && (
+              <div style={{ background:`linear-gradient(135deg,${NAVY},#0F2140)`, borderRadius:14, padding:14 }}>
+                <p style={{ fontSize:13, fontWeight:700, color:'#fff', margin:'0 0 4px' }}>✨ Upgrade to unlock more stats</p>
+                <p style={{ fontSize:11, color:'rgba(255,255,255,0.6)', margin:'0 0 10px' }}>Weekly performance charts, subject heat maps, predicted rank, and exam gap analysis</p>
+                <button onClick={() => navigate('/pro')} style={{ padding:'8px 18px', background:GOLD, color:NAVY, border:'none', borderRadius:9, fontWeight:700, fontSize:12, cursor:'pointer' }}>
+                  See Plans →
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* EXAMS TAB */}
+        {tab === 'exams' && (
+          <div>
+            {enrolled.map(exam => (
+              <div key={exam.id} onClick={() => navigate(`/exams/${exam.id}`)}
+                style={{ background:'#fff', borderRadius:14, padding:'12px 14px', marginBottom:8, border:'1.5px solid #E2E8F0', cursor:'pointer', display:'flex', alignItems:'center', gap:12 }}>
+                <span style={{ fontSize:24, flexShrink:0 }}>{exam.icon}</span>
+                <div style={{ flex:1 }}>
+                  <p style={{ fontSize:13, fontWeight:700, color:'#1E293B', margin:'0 0 4px' }}>{exam.name}</p>
+                  <div style={{ height:4, background:'#E2E8F0', borderRadius:99, overflow:'hidden' }}>
+                    <div style={{ height:'100%', width:`${exam.readiness}%`, background:exam.readiness>=70?GREEN:GOLD, borderRadius:99 }} />
+                  </div>
+                  <p style={{ fontSize:10, color:'#94A3B8', margin:'4px 0 0' }}>Readiness: {exam.readiness}%</p>
+                </div>
+                <span style={{ color:'#94A3B8', fontSize:14 }}>›</span>
+              </div>
+            ))}
+            <button onClick={() => navigate('/exams')}
+              style={{ width:'100%', padding:'12px', background:BG, color:'#64748B', border:'1.5px solid #E2E8F0', borderRadius:12, fontSize:13, cursor:'pointer', fontWeight:600 }}>
+              + Enroll in More Exams
+            </button>
+          </div>
+        )}
+
+        {/* ACHIEVEMENTS TAB */}
+        {tab === 'achievements' && (
+          <div>
+            <p style={{ fontSize:12, color:'#64748B', marginBottom:14 }}>
+              Earned: {ACHIEVEMENTS.filter(a=>a.earned).length}/{ACHIEVEMENTS.length} badges
+            </p>
+            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
+              {ACHIEVEMENTS.map(a => (
+                <div key={a.id} style={{ background: a.earned?'#fff':'#F8FAFC', borderRadius:14, padding:14, border:`1.5px solid ${a.earned?GOLD:'#E2E8F0'}`, opacity:a.earned?1:0.5, textAlign:'center' }}>
+                  <p style={{ fontSize:32, margin:'0 0 6px', filter:a.earned?'none':'grayscale(1)' }}>{a.emoji}</p>
+                  <p style={{ fontSize:12, fontWeight:700, color:a.earned?NAVY:'#94A3B8', margin:'0 0 4px' }}>{a.label}</p>
+                  <p style={{ fontSize:10, color:'#94A3B8', margin:0, lineHeight:1.4 }}>{a.desc}</p>
+                  {a.earned && <p style={{ fontSize:9, color:GREEN, margin:'6px 0 0', fontWeight:700 }}>✓ Earned</p>}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* REFERRAL TAB */}
+        {tab === 'referral' && (
+          <div>
+            <div style={{ background:`linear-gradient(135deg,${NAVY},#0F2140)`, borderRadius:16, padding:16, marginBottom:14, textAlign:'center' }}>
+              <p style={{ fontSize:11, color:'rgba(255,255,255,0.6)', margin:'0 0 4px', letterSpacing:1 }}>YOUR REFERRAL CODE</p>
+              <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900, fontSize:28, color:GOLD, margin:'0 0 8px', letterSpacing:3 }}>
+                {user?.name?.toUpperCase().replace(' ','').slice(0,8) || 'TRYIT001'}
+              </p>
+              <div style={{ display:'flex', gap:8, justifyContent:'center' }}>
+                <button onClick={() => {
+                  navigator.clipboard.writeText(`Join TryIT — India's best exam prep platform!\nUse my code: ${user?.name?.toUpperCase().replace(' ','').slice(0,8)||'TRYIT001'}\nhttps://tryiteducations.net`)
+                  alert('✅ Copied! Share with friends.')
+                }} style={{ padding:'8px 18px', background:GOLD, color:NAVY, border:'none', borderRadius:10, fontWeight:800, fontSize:12, cursor:'pointer' }}>
+                  📋 Copy & Share
+                </button>
+                <button style={{ padding:'8px 14px', background:'rgba(255,255,255,0.1)', color:'#fff', border:'1px solid rgba(255,255,255,0.2)', borderRadius:10, fontWeight:700, fontSize:12, cursor:'pointer' }}>
+                  💬 WhatsApp →
+                </button>
+              </div>
+            </div>
+
+            <div style={{ background:'#fff', borderRadius:14, padding:14, border:'1.5px solid #E2E8F0', marginBottom:12 }}>
+              <p style={{ fontSize:12, fontWeight:700, color:NAVY, marginBottom:10 }}>🎁 Referral Rewards</p>
+              {[
+                { event:'Friend signs up',      reward:'50 coins'          },
+                { event:'Friend takes first test',reward:'100 coins'       },
+                { event:'Friend buys Pro',       reward:'200 coins + ₹20' },
+                { event:'Friend buys Ultra',     reward:'500 coins + ₹50' },
+              ].map(r => (
+                <div key={r.event} style={{ display:'flex', justifyContent:'space-between', padding:'7px 0', borderBottom:'1px solid #F1F5F9' }}>
+                  <span style={{ fontSize:12, color:'#475569' }}>{r.event}</span>
+                  <span style={{ fontSize:12, fontWeight:700, color:GREEN }}>{r.reward}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Logout */}
+        <button onClick={logout}
+          style={{ width:'100%', padding:'12px', background:'#FEE2E2', color:'#991B1B', border:'none', borderRadius:12, fontSize:13, fontWeight:700, cursor:'pointer', marginTop:20 }}>
+          🚪 Log Out
+        </button>
+      </div>
+    </div>
   )
 }

@@ -1,351 +1,521 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../context/AuthContext'
-import AppLayout from '../../components/layout/AppLayout'
+// FILE: src/pages/centre/CentreDashboard.jsx
+// TryIT — Institution / Coaching Centre Dashboard
+// Manage students, batches, conduct tests, track performance, earn cashback
+// Route: /centre/dashboard
+import { useState, useEffect } from 'react'
+import { useNavigate }        from 'react-router-dom'
+import { useAuth }            from '../../context/AuthContext'
+import { supabase }           from '../../lib/supabase'
 
-// ─── Sample / placeholder data ───────────────────────────────────────────────
+const NAVY = '#1E3A5F'
+const GOLD = '#C9A84C'
+const BG   = '#F8FAFC'
+const GREEN = '#059669'
 
-const SAMPLE_TESTS = [
-  { id: 1, name: 'SSC CGL Mock #1',    subject: 'General Studies', date: '2025-06-10', students: 24, avgScore: '71%' },
-  { id: 2, name: 'Quant Speed Test',   subject: 'Quantitative Aptitude', date: '2025-06-14', students: 18, avgScore: '64%' },
-  { id: 3, name: 'English Full Mock',  subject: 'English Language', date: '2025-06-18', students: 31, avgScore: '68%' },
+// ── MOCK DATA ─────────────────────────────────────────────────────────────
+const MOCK_CENTRE = {
+  client_id:     'centre-001',
+  centre_name:   'Vijay IAS Academy',
+  city:          'Coimbatore',
+  state:         'Tamil Nadu',
+  plan:          'institution_monthly',
+  seats_total:   200,
+  seats_used:    87,
+  cashback_pending: 1240,
+  cashback_total:   8920,
+  joined:        '2026-01-15',
+}
+
+const MOCK_BATCHES = [
+  { id:'b1', name:'SSC CGL 2026 Batch A', exam:'SSC CGL', students:32, avg_score:74, last_test:'2 days ago', color:'#1D4ED8', active:true },
+  { id:'b2', name:'UPSC 2027 Foundation', exam:'UPSC CSE', students:18, avg_score:61, last_test:'1 week ago', color:'#DC2626', active:true },
+  { id:'b3', name:'Banking Prelims Nov', exam:'IBPS PO',   students:24, avg_score:68, last_test:'Yesterday',  color:'#059669', active:true },
+  { id:'b4', name:'TNPSC Group 2 Tamil',  exam:'TNPSC',   students:13, avg_score:77, last_test:'3 days ago', color:'#7C3AED', active:true },
 ]
 
-const SAMPLE_STUDENTS = [
-  { id: 1, name: 'Aarav Sharma',   email: 'aarav@example.com',   exams: ['SSC CGL', 'SSC CHSL'], progress: 72 },
-  { id: 2, name: 'Priya Mehta',    email: 'priya@example.com',   exams: ['IBPS PO'],             progress: 58 },
-  { id: 3, name: 'Rohan Das',      email: 'rohan@example.com',   exams: ['RRB NTPC'],            progress: 81 },
-  { id: 4, name: 'Sneha Pillai',   email: 'sneha@example.com',   exams: ['SSC CGL'],             progress: 45 },
+const MOCK_STUDENTS = [
+  { id:'s1', name:'Priya Krishnamurthy', batch:'SSC CGL 2026 Batch A', plan:'pro',   tests:28, avg_score:82, streak:14, last_active:'2h ago',  rank:234  },
+  { id:'s2', name:'Arjun Selvam',        batch:'SSC CGL 2026 Batch A', plan:'ultra', tests:35, avg_score:89, streak:21, last_active:'30m ago', rank:87   },
+  { id:'s3', name:'Kavitha Rajan',       batch:'UPSC 2027 Foundation', plan:'ultra', tests:42, avg_score:71, streak:8,  last_active:'1d ago',  rank:512  },
+  { id:'s4', name:'Suresh Pandiyan',     batch:'Banking Prelims Nov',  plan:'pro',   tests:19, avg_score:64, streak:5,  last_active:'3h ago',  rank:1240 },
+  { id:'s5', name:'Meena Devi',          batch:'TNPSC Group 2 Tamil',  plan:'pro',   tests:31, avg_score:78, streak:12, last_active:'6h ago',  rank:334  },
+  { id:'s6', name:'Raj Kumar',           batch:'SSC CGL 2026 Batch A', plan:'free',  tests:8,  avg_score:58, streak:2,  last_active:'2d ago',  rank:2810 },
+  { id:'s7', name:'Anita Menon',         batch:'Banking Prelims Nov',  plan:'pro',   tests:22, avg_score:71, streak:9,  last_active:'4h ago',  rank:678  },
 ]
 
-// ─── Sub-components ───────────────────────────────────────────────────────────
+const MOCK_TOP_STUDENTS = [
+  { name:'Arjun Selvam',   score:89, tests:35, batch:'SSC CGL' },
+  { name:'Priya K.',       score:82, tests:28, batch:'SSC CGL' },
+  { name:'Meena Devi',     score:78, tests:31, batch:'TNPSC'   },
+  { name:'Kavitha Rajan',  score:71, tests:42, batch:'UPSC'    },
+  { name:'Anita Menon',    score:71, tests:22, batch:'Banking' },
+]
 
-function StatCard({ emoji, value, label, hint }) {
-  return (
-    <div className="rounded-2xl p-5 flex flex-col gap-1" style={{ background: 'var(--color-surface, #FFFFFF)', boxShadow: '0 1px 8px rgba(30,58,95,0.07)' }}>
-      <span className="text-2xl">{emoji}</span>
-      <span className="text-2xl font-bold mt-1" style={{ color: 'var(--heading-color, var(--color-text, #1E3A5F))', fontFamily: 'Poppins, sans-serif' }}>{value}</span>
-      <span className="text-xs font-medium" style={{ color: 'var(--subtext-color, #64748B)', fontFamily: 'Inter, sans-serif' }}>{label}</span>
-      {hint && <span className="text-xs mt-1" style={{ color: 'var(--subtext-color, #64748B)', fontFamily: 'Inter, sans-serif' }}>{hint}</span>}
-    </div>
-  )
+const S = {
+  card:   { background:'#fff', borderRadius:16, padding:16, border:'1.5px solid #E2E8F0', marginBottom:12 },
+  badge:  (bg,color) => ({ fontSize:10, fontWeight:700, padding:'2px 8px', borderRadius:99, background:bg, color }),
+  btn:    { background:NAVY, color:'#fff', border:'none', borderRadius:10, padding:'10px 18px', fontWeight:700, fontSize:13, cursor:'pointer' },
+  btnSm:  { background:'#EFF6FF', color:NAVY, border:'1.5px solid #BFDBFE', borderRadius:8, padding:'6px 12px', fontWeight:600, fontSize:11, cursor:'pointer' },
+  inp:    { width:'100%', padding:'10px 12px', borderRadius:10, border:'1.5px solid #E2E8F0', fontSize:13, outline:'none', boxSizing:'border-box', marginBottom:10, background:'#fff' },
 }
-
-function EmptyState({ icon, title, body, action, onAction }) {
-  return (
-    <div className="flex flex-col items-center justify-center py-16 gap-3">
-      <span className="text-5xl">{icon}</span>
-      <p className="text-base font-semibold" style={{ color: 'var(--heading-color, var(--color-text, #1E3A5F))', fontFamily: 'Poppins, sans-serif' }}>{title}</p>
-      <p className="text-sm text-center max-w-xs" style={{ color: 'var(--subtext-color, #64748B)', fontFamily: 'Inter, sans-serif' }}>{body}</p>
-      {action && (
-        <button
-          onClick={onAction}
-          className="mt-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all hover:shadow-md"
-          style={{ background: 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))', color: 'var(--color-primary-dark, #0F2140)', fontFamily: 'Poppins, sans-serif' }}
-        >
-          {action}
-        </button>
-      )}
-    </div>
-  )
-}
-
-function TestsTab({ tests, onCreateTest }) {
-  if (!tests.length) {
-    return (
-      <EmptyState
-        icon="📋"
-        title="No tests created yet"
-        body="Create your first test and share it with your students to start tracking performance."
-        action="+ Create Test"
-        onAction={onCreateTest}
-      />
-    )
-  }
-
-  return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
-        <thead>
-          <tr style={{ borderBottom: '2px solid var(--color-border, #E2E8F0)' }}>
-            {['Test Name', 'Subject', 'Date', 'Students', 'Avg Score'].map(h => (
-              <th key={h} className="text-left pb-3 pr-4 font-semibold text-xs uppercase tracking-wide" style={{ color: 'var(--subtext-color, #64748B)' }}>{h}</th>
-            ))}
-            <th className="pb-3" />
-          </tr>
-        </thead>
-        <tbody>
-          {tests.map((t, i) => (
-            <tr
-              key={t.id}
-              className="transition-colors hover:bg-slate-50"
-              style={{ borderBottom: i < tests.length - 1 ? '1px solid var(--color-bg-muted-2, #F1F5F9)' : 'none' }}
-            >
-              <td className="py-3.5 pr-4 font-medium" style={{ color: 'var(--heading-color, var(--color-text, #1E3A5F))' }}>{t.name}</td>
-              <td className="py-3.5 pr-4" style={{ color: 'var(--subtext-color, #64748B)' }}>{t.subject}</td>
-              <td className="py-3.5 pr-4" style={{ color: 'var(--subtext-color, #64748B)' }}>{new Date(t.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
-              <td className="py-3.5 pr-4">
-                <span className="flex items-center gap-1" style={{ color: 'var(--subtext-color, #64748B)' }}>
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                  {t.students}
-                </span>
-              </td>
-              <td className="py-3.5 pr-4">
-                <span className="px-2 py-0.5 rounded-full text-xs font-semibold" style={{ background: 'var(--color-success-bg, #F0FDF4)', color: 'var(--color-success, #16A34A)' }}>{t.avgScore}</span>
-              </td>
-              <td className="py-3.5 text-right">
-                <button className="text-xs px-3 py-1 rounded-lg border transition-colors hover:bg-slate-50" style={{ borderColor: 'var(--color-border, #E2E8F0)', color: 'var(--subtext-color, #64748B)' }}>
-                  View
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  )
-}
-
-function ProgressBar({ value }) {
-  const pct = Math.min(100, Math.max(0, value))
-  const color = pct >= 70 ? 'var(--color-success, #16A34A)' : pct >= 45 ? 'var(--color-accent, #D4AF37)' : 'var(--color-error, #EF4444)'
-  return (
-    <div className="flex items-center gap-2">
-      <div className="flex-1 h-1.5 rounded-full" style={{ background: 'var(--color-bg-muted-2, #E2E8F0)' }}>
-        <div className="h-1.5 rounded-full transition-all" style={{ width: `${pct}%`, background: color }} />
-      </div>
-      <span className="text-xs font-medium w-8 text-right" style={{ color, fontFamily: 'Inter, sans-serif' }}>{pct}%</span>
-    </div>
-  )
-}
-
-function StudentsTab({ students, centreCode }) {
-  if (!students.length) {
-    return (
-      <div className="flex flex-col items-center justify-center py-16 gap-3">
-        <span className="text-5xl">👥</span>
-        <p className="text-base font-semibold" style={{ color: 'var(--heading-color, var(--color-text, #1E3A5F))', fontFamily: 'Poppins, sans-serif' }}>No students yet</p>
-        <p className="text-sm text-center max-w-xs" style={{ color: 'var(--subtext-color, #64748B)', fontFamily: 'Inter, sans-serif' }}>
-          Share your Centre code with students so they can join.
-        </p>
-        <div className="mt-2 flex items-center gap-2 px-4 py-2.5 rounded-xl" style={{ background: 'rgba(var(--color-accent-rgb, 212,175,55), 0.12)', border: '1.5px solid rgba(var(--color-accent-rgb, 212,175,55), 0.35)' }}>
-          <span className="text-xs font-medium" style={{ color: 'var(--subtext-color, #64748B)', fontFamily: 'Inter, sans-serif' }}>Centre code</span>
-          <span className="text-sm font-bold tracking-widest" style={{ color: 'var(--heading-color, var(--color-text, #1E3A5F))', fontFamily: 'Poppins, sans-serif' }}>{centreCode || 'TRYIT001'}</span>
-          <button
-            onClick={() => navigator.clipboard?.writeText(centreCode || 'TRYIT001')}
-            className="text-xs px-2 py-0.5 rounded-lg transition-colors hover:opacity-70"
-            style={{ background: 'var(--color-accent, #D4AF37)', color: 'var(--color-primary-dark, #0F2140)', fontFamily: 'Inter, sans-serif' }}
-          >
-            Copy
-          </button>
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <div className="overflow-x-auto">
-      <table className="w-full text-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
-        <thead>
-          <tr style={{ borderBottom: '2px solid var(--color-border, #E2E8F0)' }}>
-            {['Student', 'Email', 'Enrolled Exams', 'Progress'].map(h => (
-              <th key={h} className="text-left pb-3 pr-4 font-semibold text-xs uppercase tracking-wide" style={{ color: 'var(--color-muted, #94A3B8)' }}>{h}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {students.map((s, i) => (
-            <tr
-              key={s.id}
-              className="transition-colors hover:bg-slate-50"
-              style={{ borderBottom: i < students.length - 1 ? '1px solid var(--color-bg-muted-2, #F1F5F9)' : 'none' }}
-            >
-              <td className="py-3.5 pr-4">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
-                    style={{ background: 'var(--color-bg-muted, #EFF6FF)', color: 'var(--color-primary, #1E3A5F)' }}>
-                    {s.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
-                  </div>
-                  <span className="font-medium" style={{ color: 'var(--heading-color, var(--color-text, #1E3A5F))' }}>{s.name}</span>
-                </div>
-              </td>
-              <td className="py-3.5 pr-4" style={{ color: 'var(--subtext-color, #64748B)' }}>{s.email}</td>
-              <td className="py-3.5 pr-4">
-                <div className="flex flex-wrap gap-1">
-                  {s.exams.map(ex => (
-                    <span key={ex} className="px-2 py-0.5 rounded-full text-xs" style={{ background: 'var(--color-bg-muted-2, #F1F5F9)', color: 'var(--color-muted, #64748B)' }}>{ex}</span>
-                  ))}
-                </div>
-              </td>
-              <td className="py-3.5 pr-4 min-w-[120px]">
-                <ProgressBar value={s.progress} />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  )
-}
-
-// ─── Main component ───────────────────────────────────────────────────────────
 
 export default function CentreDashboard() {
   const navigate = useNavigate()
-  const { user, loading } = useAuth()
-  const [activeTab, setActiveTab] = useState('tests')
+  const { user } = useAuth()
 
-  // Derive display values — use real user fields where they exist, fall back gracefully
-  const institutionName = user?.institutionName || user?.name || 'Your Coaching Centre'
-  const studentCount    = user?.studentCount    || SAMPLE_STUDENTS.length
-  const centreRank      = user?.centreRank      || '—'
-  const testsThisMonth  = user?.testsCompleted  || SAMPLE_TESTS.length
-  const avgScore        = user?.avgScore        ? `${user.avgScore}%` : '68%'
-  const centreCode      = user?.userId          || 'TRYIT001'
+  const [tab,          setTab]          = useState('overview')
+  const [centre,       setCentre]       = useState(MOCK_CENTRE)
+  const [batches,      setBatches]      = useState(MOCK_BATCHES)
+  const [students,     setStudents]     = useState(MOCK_STUDENTS)
+  const [batchFilter,  setBatchFilter]  = useState('all')
+  const [search,       setSearch]       = useState('')
+  const [showAddBatch, setShowAddBatch] = useState(false)
+  const [showTestModal,setShowTestModal]= useState(null)
+  const [newBatch,     setNewBatch]     = useState({ name:'', exam:'', color:'#1D4ED8' })
+  const [testConfig,   setTestConfig]   = useState({ mode:'mock', count:100, duration:60 })
 
-  // For demo, use sample data; in production these would come from API/context
-  const tests    = SAMPLE_TESTS
-  const students = SAMPLE_STUDENTS
+  useEffect(() => {
+    if (!user?.id) return
+    supabase.from('b2b_clients').select('*').eq('contact_user_id', user.id).single()
+      .then(({ data }) => { if (data) setCentre(data) })
+      .catch(()=>{})
+  }, [user?.id])
 
-  const hasData = tests.length > 0
+  const filteredStudents = students
+    .filter(s => batchFilter === 'all' || s.batch === batchFilter)
+    .filter(s => s.name.toLowerCase().includes(search.toLowerCase()))
 
-  const STATS = [
-    { emoji: '📝', value: testsThisMonth || 0, label: 'Tests This Month', hint: !hasData ? 'Create your first test to see stats' : null },
-    { emoji: '👥', value: studentCount,        label: 'Active Students',   hint: studentCount === 0 ? 'Share your code to add students' : null },
-    { emoji: '🏆', value: centreRank === '—' ? '—' : `#${centreRank}`, label: 'Centre Rank India', hint: centreRank === '—' ? 'Rank unlocks after 10 tests' : null },
-    { emoji: '📊', value: avgScore,            label: 'Avg Score',         hint: null },
-  ]
+  const seatsAvail  = centre.seats_total - centre.seats_used
+  const seatsPct    = (centre.seats_used / centre.seats_total) * 100
+  const avgOverall  = Math.round(students.reduce((a,s) => a + s.avg_score, 0) / students.length)
+  const activeToday = students.filter(s => s.last_active.includes('m ago') || s.last_active.includes('h ago')).length
 
-  function handleCreateTest() {
-    navigate('/centre/create-test')
+  const conductTest = async () => {
+    if (!showTestModal) return
+    try {
+      await supabase.from('batch_tests').insert({
+        batch_id:   showTestModal.id,
+        client_id:  centre.client_id,
+        test_config: testConfig,
+        assigned_at: new Date().toISOString(),
+        exam_name:   showTestModal.exam,
+      })
+    } catch {}
+    alert(`✅ Test assigned to ${showTestModal.name}! All ${showTestModal.students} students will see it when they log in.`)
+    setShowTestModal(null)
+  }
+
+  const PLAN_BADGE = {
+    free:  { bg:'#F1F5F9', color:'#64748B' },
+    pro:   { bg:'#DBEAFE', color:'#1D4ED8' },
+    ultra: { bg:'#FFF7E6', color:'#92400E' },
   }
 
   const TABS = [
-    { id: 'tests',    label: 'Tests' },
-    { id: 'students', label: 'Students' },
+    { id:'overview',  label:'📊 Overview'  },
+    { id:'batches',   label:'👥 Batches'   },
+    { id:'students',  label:'🎓 Students'  },
+    { id:'tests',     label:'📝 Tests'     },
+    { id:'earnings',  label:'💰 Earnings'  },
   ]
 
   return (
-    <AppLayout title="Centre Dashboard">
-      <div className="min-h-screen" style={{ background: 'var(--color-bg, #F8FAFC)' }}>
+    <div style={{ minHeight:'100vh', background:BG, fontFamily:'Inter,sans-serif', paddingBottom:80 }}>
 
-        {/* ── Header banner ──────────────────────────────────────── */}
-        <div
-          className="px-6 py-6 sm:px-8"
-          style={{ background: 'linear-gradient(135deg, var(--color-primary-dark, #0F2140) 0%, var(--color-primary, #1E3A5F) 100%)' }}
-        >
-          <div className="max-w-5xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div>
-              <h1
-                className="text-xl sm:text-2xl font-bold"
-                style={{ color: 'var(--color-accent, #D4AF37)', fontFamily: 'Poppins, sans-serif' }}
-              >
-                {institutionName}
-              </h1>
-              <p className="text-sm mt-0.5" style={{ color: 'rgba(255,255,255,0.85)', fontFamily: 'Inter, sans-serif' }}>
-                {studentCount} students
-                {centreRank !== '—' && <> · All India Rank <span style={{ color: 'var(--color-accent-light, #E8C84A)' }}>#{centreRank}</span> Centre</>}
-                {centreRank === '—' && <> · Centre rank unlocks after 10 tests</>}
-              </p>
-            </div>
-            <button
-              onClick={handleCreateTest}
-              className="self-start sm:self-auto flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all hover:shadow-lg"
-              style={{
-                background: 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))',
-                color: 'var(--color-primary-dark, #0F2140)',
-                fontFamily: 'Poppins, sans-serif',
-              }}
-              onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-1px)'}
-              onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Create Test
-            </button>
+      {/* ── HEADER ──────────────────────────────────────────────────────── */}
+      <div style={{ background:`linear-gradient(135deg,${NAVY},#0F2140)`, padding:'20px 16px 24px' }}>
+        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:16 }}>
+          <button onClick={() => navigate('/')} style={{ background:'rgba(255,255,255,0.1)', border:'none', color:'rgba(255,255,255,0.7)', width:34, height:34, borderRadius:'50%', fontSize:16, cursor:'pointer' }}>←</button>
+          <span style={{ background:`${GOLD}33`, color:GOLD, padding:'4px 12px', borderRadius:99, fontSize:11, fontWeight:700 }}>🏫 INSTITUTION</span>
+        </div>
+
+        <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, fontSize:20, color:'#fff', margin:'0 0 2px' }}>
+          {centre.centre_name}
+        </p>
+        <p style={{ fontSize:12, color:'rgba(255,255,255,0.6)', margin:'0 0 16px' }}>
+          📍 {centre.city}, {centre.state} · {centre.seats_used}/{centre.seats_total} seats used
+        </p>
+
+        {/* Seats bar */}
+        <div style={{ marginBottom:14 }}>
+          <div style={{ display:'flex', justifyContent:'space-between', marginBottom:4 }}>
+            <span style={{ fontSize:11, color:'rgba(255,255,255,0.6)' }}>Seats Used</span>
+            <span style={{ fontSize:11, color: seatsAvail < 20 ? '#FCA5A5' : GOLD, fontWeight:700 }}>
+              {seatsAvail} seats available
+            </span>
+          </div>
+          <div style={{ height:6, background:'rgba(255,255,255,0.15)', borderRadius:99, overflow:'hidden' }}>
+            <div style={{ height:'100%', width:`${seatsPct}%`, background: seatsPct>90?'#EF4444':GOLD, borderRadius:99 }} />
           </div>
         </div>
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-8 py-6 space-y-6">
+        {/* Quick stats */}
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:8 }}>
+          {[
+            { label:'Total Students', value:centre.seats_used  },
+            { label:'Active Today',   value:activeToday        },
+            { label:'Avg Score',      value:`${avgOverall}%`   },
+            { label:'Batches',        value:batches.length     },
+          ].map(s => (
+            <div key={s.label} style={{ background:'rgba(255,255,255,0.1)', borderRadius:12, padding:'8px 4px', textAlign:'center' }}>
+              <p style={{ fontWeight:800, color:'#fff', fontSize:16, margin:'0 0 2px' }}>{s.value}</p>
+              <p style={{ fontSize:9, color:'rgba(255,255,255,0.5)', margin:0 }}>{s.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
 
-          {/* ── Stats row ──────────────────────────────────────────── */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {STATS.map(s => <StatCard key={s.label} {...s} />)}
-          </div>
+      {/* ── TABS ─────────────────────────────────────────────────────────── */}
+      <div style={{ display:'flex', background:'#fff', borderBottom:'1px solid #E2E8F0', overflowX:'auto' }}>
+        {TABS.map(t => (
+          <button key={t.id} onClick={() => setTab(t.id)}
+            style={{ flex:1, padding:'12px 6px', border:'none', background:'transparent', cursor:'pointer', fontSize:11, fontWeight:700, whiteSpace:'nowrap',
+              color: tab===t.id ? NAVY : '#94A3B8',
+              borderBottom: tab===t.id ? `2.5px solid ${GOLD}` : '2.5px solid transparent' }}>
+            {t.label}
+          </button>
+        ))}
+      </div>
 
-          {/* ── Tabs + content ─────────────────────────────────────── */}
-          <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--color-surface, #FFFFFF)', boxShadow: '0 1px 8px rgba(30,58,95,0.07)' }}>
+      <div style={{ padding:16, maxWidth:600, margin:'0 auto' }}>
 
-            {/* Tab bar */}
-            <div className="flex items-center justify-between px-5 pt-4 pb-0" style={{ borderBottom: '1px solid var(--color-border, #E2E8F0)' }}>
-              <div className="flex gap-1">
-                {TABS.map(tab => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className="px-4 py-2.5 text-sm font-semibold rounded-t-lg transition-all focus:outline-none"
-                    style={{
-                      color: activeTab === tab.id ? 'var(--heading-color, var(--color-text, #1E3A5F))' : 'var(--subtext-color, #64748B)',
-                      borderBottom: activeTab === tab.id ? '2px solid var(--color-accent, #D4AF37)' : '2px solid transparent',
-                      fontFamily: 'Inter, sans-serif',
-                      background: 'transparent',
-                      marginBottom: '-1px',
-                    }}
-                  >
-                    {tab.label}
-                    {tab.id === 'tests' && tests.length > 0 && (
-                      <span className="ml-1.5 px-1.5 py-0.5 rounded-full text-xs" style={{ background: 'var(--color-bg-muted-2, #F1F5F9)', color: 'var(--subtext-color, #64748B)' }}>{tests.length}</span>
-                    )}
-                    {tab.id === 'students' && students.length > 0 && (
-                      <span className="ml-1.5 px-1.5 py-0.5 rounded-full text-xs" style={{ background: 'var(--color-bg-muted-2, #F1F5F9)', color: 'var(--subtext-color, #64748B)' }}>{students.length}</span>
-                    )}
-                  </button>
-                ))}
-              </div>
-
-              {/* Create test button in tab bar (desktop shortcut) */}
-              {activeTab === 'tests' && (
-                <button
-                  onClick={handleCreateTest}
-                  className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all hover:shadow mb-1"
-                  style={{ background: 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))', color: 'var(--color-primary-dark, #0F2140)', fontFamily: 'Poppins, sans-serif' }}
-                >
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                  Create Test
-                </button>
-              )}
+        {/* ── OVERVIEW ─────────────────────────────────────────────────── */}
+        {tab === 'overview' && (
+          <div>
+            {/* Top performers */}
+            <div style={S.card}>
+              <p style={{ fontSize:12, fontWeight:700, color:NAVY, marginBottom:12 }}>🏆 Top Performers This Week</p>
+              {MOCK_TOP_STUDENTS.map((s, i) => (
+                <div key={s.name} style={{ display:'flex', alignItems:'center', gap:10, padding:'8px 0',
+                  borderBottom: i<MOCK_TOP_STUDENTS.length-1 ? '1px solid #F1F5F9' : 'none' }}>
+                  <span style={{ fontSize:16, width:24, textAlign:'center' }}>
+                    {i<3 ? ['🥇','🥈','🥉'][i] : `#${i+1}`}
+                  </span>
+                  <div style={{ flex:1 }}>
+                    <p style={{ fontSize:12, fontWeight:700, color:'#1E293B', margin:0 }}>{s.name}</p>
+                    <p style={{ fontSize:10, color:'#94A3B8', margin:0 }}>{s.batch} · {s.tests} tests</p>
+                  </div>
+                  <span style={{ fontSize:13, fontWeight:800,
+                    color: s.score>=80?GREEN:s.score>=70?GOLD:'#64748B' }}>
+                    {s.score}%
+                  </span>
+                </div>
+              ))}
             </div>
 
-            {/* Tab content */}
-            <div className="p-5">
-              {activeTab === 'tests' && (
-                <TestsTab tests={tests} onCreateTest={handleCreateTest} />
-              )}
-              {activeTab === 'students' && (
-                <StudentsTab students={students} centreCode={centreCode} />
-              )}
+            {/* Batch performance */}
+            <div style={S.card}>
+              <p style={{ fontSize:12, fontWeight:700, color:NAVY, marginBottom:12 }}>📚 Batch Performance</p>
+              {batches.map(b => (
+                <div key={b.id} style={{ marginBottom:12 }}>
+                  <div style={{ display:'flex', justifyContent:'space-between', marginBottom:4 }}>
+                    <div style={{ display:'flex', alignItems:'center', gap:6 }}>
+                      <div style={{ width:10, height:10, borderRadius:'50%', background:b.color }} />
+                      <span style={{ fontSize:12, fontWeight:600, color:'#1E293B' }}>{b.name}</span>
+                    </div>
+                    <span style={{ fontSize:12, fontWeight:700, color:b.avg_score>=70?GREEN:GOLD }}>
+                      {b.avg_score}% avg
+                    </span>
+                  </div>
+                  <div style={{ height:6, background:'#E2E8F0', borderRadius:99, overflow:'hidden' }}>
+                    <div style={{ height:'100%', width:`${b.avg_score}%`, background:b.color, borderRadius:99 }} />
+                  </div>
+                  <p style={{ fontSize:10, color:'#94A3B8', marginTop:3 }}>{b.students} students · Last test: {b.last_test}</p>
+                </div>
+              ))}
             </div>
-          </div>
 
-          {/* ── Centre code footer chip ────────────────────────────── */}
-          <div className="flex items-center justify-center gap-3 py-2">
-            <span className="text-xs" style={{ color: 'var(--subtext-color, #64748B)', fontFamily: 'Inter, sans-serif' }}>Your Centre code:</span>
-            <div
-              className="flex items-center gap-2 px-3 py-1.5 rounded-lg"
-              style={{ background: 'rgba(var(--color-accent-rgb, 212, 175, 55), 0.12)', border: '1.5px solid rgba(var(--color-accent-rgb, 212, 175, 55), 0.35)' }}
-            >
-              <span className="text-sm font-bold tracking-widest" style={{ color: 'var(--heading-color, var(--color-text, #1E3A5F))', fontFamily: 'Poppins, sans-serif' }}>{centreCode}</span>
-              <button
-                onClick={() => navigator.clipboard?.writeText(centreCode)}
-                className="text-xs px-2 py-0.5 rounded-md transition-opacity hover:opacity-70"
-                style={{ background: 'var(--color-accent, #D4AF37)', color: 'var(--color-primary-dark, #0F2140)', fontFamily: 'Inter, sans-serif' }}
-              >
-                Copy
+            {/* Cashback teaser */}
+            <div style={{ background:`linear-gradient(135deg,${GREEN},#047857)`, borderRadius:16, padding:16 }}>
+              <p style={{ fontSize:11, color:'rgba(255,255,255,0.7)', margin:'0 0 4px' }}>THIS MONTH'S CASHBACK</p>
+              <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900, fontSize:32, color:'#fff', margin:'0 0 4px' }}>
+                ₹{centre.cashback_pending.toLocaleString('en-IN')}
+              </p>
+              <p style={{ fontSize:12, color:'rgba(255,255,255,0.7)', margin:'0 0 12px' }}>
+                10% of all student subscription payments
+              </p>
+              <button onClick={() => setTab('earnings')}
+                style={{ padding:'8px 18px', background:'rgba(255,255,255,0.2)', color:'#fff', border:'1px solid rgba(255,255,255,0.3)', borderRadius:10, fontSize:12, fontWeight:700, cursor:'pointer' }}>
+                View Earnings →
               </button>
             </div>
           </div>
+        )}
 
-        </div>
+        {/* ── BATCHES ──────────────────────────────────────────────────── */}
+        {tab === 'batches' && (
+          <div>
+            <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:14 }}>
+              <p style={{ fontWeight:700, color:NAVY, fontSize:15, margin:0 }}>Your Batches</p>
+              <button onClick={() => setShowAddBatch(true)} style={S.btn}>
+                + Create Batch
+              </button>
+            </div>
+
+            {batches.map(b => (
+              <div key={b.id} style={{ ...S.card, borderLeft:`4px solid ${b.color}` }}>
+                <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', marginBottom:10 }}>
+                  <div>
+                    <p style={{ fontSize:14, fontWeight:800, color:'#1E293B', margin:'0 0 2px' }}>{b.name}</p>
+                    <p style={{ fontSize:11, color:'#64748B', margin:0 }}>
+                      {b.exam} · {b.students} students · Last test: {b.last_test}
+                    </p>
+                  </div>
+                  <div style={{ width:44, height:44, borderRadius:12, background:`${b.color}20`,
+                    display:'flex', alignItems:'center', justifyContent:'center',
+                    fontFamily:'Poppins,sans-serif', fontWeight:900, fontSize:16, color:b.color }}>
+                    {b.avg_score}%
+                  </div>
+                </div>
+
+                {/* Progress bar */}
+                <div style={{ height:4, background:'#E2E8F0', borderRadius:99, overflow:'hidden', marginBottom:10 }}>
+                  <div style={{ height:'100%', width:`${b.avg_score}%`, background:b.color, borderRadius:99 }} />
+                </div>
+
+                <div style={{ display:'flex', gap:8 }}>
+                  <button onClick={() => { setBatchFilter(b.name); setTab('students') }}
+                    style={S.btnSm}>
+                    👥 View Students
+                  </button>
+                  <button onClick={() => { setShowTestModal(b) }}
+                    style={{ ...S.btnSm, background:'#F0FDF4', color:GREEN, borderColor:'#BBF7D0' }}>
+                    📝 Assign Test
+                  </button>
+                  <button onClick={() => navigate('/current-affairs')}
+                    style={{ ...S.btnSm, background:`${b.color}10`, color:b.color, borderColor:`${b.color}44` }}>
+                    📄 Post Material
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ── STUDENTS ─────────────────────────────────────────────────── */}
+        {tab === 'students' && (
+          <div>
+            <div style={{ display:'flex', gap:8, marginBottom:12 }}>
+              <input style={{ ...S.inp, flex:1, marginBottom:0 }}
+                placeholder="Search students..."
+                value={search} onChange={e => setSearch(e.target.value)} />
+              <select style={{ padding:'10px 8px', borderRadius:10, border:'1.5px solid #E2E8F0', fontSize:12, flexShrink:0 }}
+                value={batchFilter} onChange={e => setBatchFilter(e.target.value)}>
+                <option value="all">All Batches</option>
+                {batches.map(b => <option key={b.id} value={b.name}>{b.name}</option>)}
+              </select>
+            </div>
+
+            <p style={{ fontSize:11, color:'#64748B', marginBottom:10 }}>
+              Showing {filteredStudents.length} students
+            </p>
+
+            {filteredStudents.map(s => {
+              const pb = PLAN_BADGE[s.plan] || PLAN_BADGE.free
+              return (
+                <div key={s.id} style={{ ...S.card, padding:'12px 14px' }}>
+                  <div style={{ display:'flex', alignItems:'center', gap:10 }}>
+                    <div style={{ width:36, height:36, borderRadius:'50%', background:`${NAVY}15`,
+                      display:'flex', alignItems:'center', justifyContent:'center',
+                      fontWeight:800, color:NAVY, fontSize:13, flexShrink:0 }}>
+                      {s.name.split(' ').map(w=>w[0]).join('').slice(0,2)}
+                    </div>
+                    <div style={{ flex:1, minWidth:0 }}>
+                      <div style={{ display:'flex', alignItems:'center', gap:6 }}>
+                        <p style={{ fontSize:13, fontWeight:700, color:'#1E293B', margin:0 }}>{s.name}</p>
+                        <span style={{ fontSize:9, fontWeight:700, padding:'1px 6px', borderRadius:99, background:pb.bg, color:pb.color }}>
+                          {s.plan.toUpperCase()}
+                        </span>
+                      </div>
+                      <p style={{ fontSize:10, color:'#94A3B8', margin:'2px 0 0' }}>
+                        {s.batch} · 🔥{s.streak}d · Last: {s.last_active}
+                      </p>
+                    </div>
+                    <div style={{ textAlign:'right', flexShrink:0 }}>
+                      <p style={{ fontSize:14, fontWeight:800,
+                        color: s.avg_score>=80?GREEN:s.avg_score>=70?GOLD:'#64748B', margin:0 }}>
+                        {s.avg_score}%
+                      </p>
+                      <p style={{ fontSize:10, color:'#94A3B8', margin:0 }}>{s.tests} tests · #{s.rank}</p>
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+
+            {/* Upgrade nudge for free plan students */}
+            {filteredStudents.some(s => s.plan==='free') && (
+              <div style={{ background:'#FFF7E6', border:`1px solid ${GOLD}`, borderRadius:12, padding:12, marginTop:4 }}>
+                <p style={{ fontSize:12, color:'#92400E', margin:'0 0 8px', fontWeight:600 }}>
+                  💡 {filteredStudents.filter(s=>s.plan==='free').length} students on free plan — upgrade them to Pro for better results
+                </p>
+                <p style={{ fontSize:11, color:'#78350F', margin:'0 0 8px', lineHeight:1.5 }}>
+                  As an institution partner, you earn 10% cashback on every subscription they buy.
+                  Upgrading {filteredStudents.filter(s=>s.plan==='free').length} students = ₹{filteredStudents.filter(s=>s.plan==='free').length * 199 * 0.1 | 0} extra cashback/month.
+                </p>
+                <button style={{ padding:'8px 16px', background:GOLD, color:NAVY, border:'none', borderRadius:8, fontWeight:700, fontSize:12, cursor:'pointer' }}>
+                  Share Upgrade Link with Students →
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── ASSIGN TEST ───────────────────────────────────────────────── */}
+        {tab === 'tests' && (
+          <div>
+            <p style={{ fontSize:12, color:'#64748B', marginBottom:14 }}>
+              Assign tests to your batches. Students see the test when they log in next.
+            </p>
+
+            {batches.map(b => (
+              <div key={b.id} style={{ ...S.card, borderLeft:`4px solid ${b.color}` }}>
+                <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+                  <div>
+                    <p style={{ fontSize:13, fontWeight:700, color:'#1E293B', margin:'0 0 2px' }}>{b.name}</p>
+                    <p style={{ fontSize:11, color:'#64748B', margin:0 }}>{b.students} students · {b.exam}</p>
+                  </div>
+                  <button onClick={() => setShowTestModal(b)} style={{ ...S.btn, padding:'8px 14px', fontSize:12 }}>
+                    📝 Assign Test
+                  </button>
+                </div>
+              </div>
+            ))}
+
+            <div style={{ background:'#EFF6FF', border:'1px solid #BFDBFE', borderRadius:12, padding:12, marginTop:4 }}>
+              <p style={{ fontSize:12, color:'#1D4ED8', fontWeight:600, marginBottom:4 }}>ℹ️ About Test Assignment</p>
+              <p style={{ fontSize:11, color:'#1D4ED8', lineHeight:1.6, margin:0 }}>
+                All tests follow PYQ-aligned question weightage for your exam.
+                Duration is automatically set 10% shorter than real exam time to build preparation pressure.
+                Students can take the test anytime in the next 7 days.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* ── EARNINGS ─────────────────────────────────────────────────── */}
+        {tab === 'earnings' && (
+          <div>
+            <div style={{ background:`linear-gradient(135deg,${GREEN},#047857)`, borderRadius:18, padding:20, textAlign:'center', marginBottom:14 }}>
+              <p style={{ fontSize:11, color:'rgba(255,255,255,0.7)', margin:'0 0 4px' }}>PENDING CASHBACK</p>
+              <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900, fontSize:40, color:'#fff', margin:'0 0 4px' }}>
+                ₹{centre.cashback_pending.toLocaleString('en-IN')}
+              </p>
+              <p style={{ fontSize:13, color:'rgba(255,255,255,0.7)', margin:'0 0 16px' }}>
+                Total earned: ₹{centre.cashback_total.toLocaleString('en-IN')}
+              </p>
+              <button style={{ padding:'10px 28px', background:'rgba(255,255,255,0.2)', color:'#fff', border:'1px solid rgba(255,255,255,0.3)', borderRadius:12, fontWeight:800, fontSize:13, cursor:'pointer' }}>
+                Withdraw to Bank / UPI →
+              </button>
+            </div>
+
+            <div style={{ ...S.card, marginBottom:12 }}>
+              <p style={{ fontSize:12, fontWeight:700, color:NAVY, marginBottom:12 }}>💰 How You Earn</p>
+              {[
+                { event:'Student buys Pro (₹199/month)',    you:'₹19.90/month per student' },
+                { event:'Student buys Ultra (₹299/month)',  you:'₹29.90/month per student' },
+                { event:'Student buys Pro Annual (₹999)',   you:'₹99.90 one-time'          },
+                { event:'Student buys Ultra Annual (₹1499)',you:'₹149.90 one-time'         },
+              ].map(r => (
+                <div key={r.event} style={{ display:'flex', justifyContent:'space-between', padding:'8px 0', borderBottom:'1px solid #F1F5F9' }}>
+                  <span style={{ fontSize:12, color:'#475569' }}>{r.event}</span>
+                  <span style={{ fontSize:12, fontWeight:700, color:GREEN }}>{r.you}</span>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ ...S.card }}>
+              <p style={{ fontSize:12, fontWeight:700, color:NAVY, marginBottom:10 }}>📊 Cashback Calculator</p>
+              <p style={{ fontSize:12, color:'#64748B', lineHeight:1.7 }}>
+                Your current students: <strong>{centre.seats_used}</strong><br/>
+                If all upgrade to Pro monthly: <strong style={{ color:GREEN }}>₹{(centre.seats_used * 199 * 0.10).toFixed(0)} per month</strong><br/>
+                If all upgrade to Ultra yearly: <strong style={{ color:GREEN }}>₹{(centre.seats_used * 1499 * 0.10).toFixed(0)} one-time</strong>
+              </p>
+              <p style={{ fontSize:11, color:'#94A3B8', marginTop:8, lineHeight:1.6 }}>
+                💡 Share a referral link with your students. Every subscription they purchase automatically credits your account.
+              </p>
+            </div>
+          </div>
+        )}
+
       </div>
-    </AppLayout>
+
+      {/* ── ADD BATCH MODAL ────────────────────────────────────────────── */}
+      {showAddBatch && (
+        <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.6)', display:'flex', alignItems:'flex-end', justifyContent:'center', zIndex:1000 }}
+          onClick={e => e.target===e.currentTarget && setShowAddBatch(false)}>
+          <div style={{ background:'#fff', borderRadius:'20px 20px 0 0', padding:24, width:'100%', maxWidth:460 }}>
+            <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:NAVY, marginBottom:16 }}>+ Create New Batch</h3>
+            <label style={{ fontSize:11, fontWeight:700, color:'#64748B', display:'block', marginBottom:4 }}>Batch Name *</label>
+            <input style={S.inp} placeholder="e.g. SSC CGL Morning Batch 2026"
+              value={newBatch.name} onChange={e => setNewBatch(b=>({...b,name:e.target.value}))} />
+            <label style={{ fontSize:11, fontWeight:700, color:'#64748B', display:'block', marginBottom:4 }}>Target Exam</label>
+            <input style={S.inp} placeholder="e.g. SSC CGL, IBPS PO, TNPSC Group 2"
+              value={newBatch.exam} onChange={e => setNewBatch(b=>({...b,exam:e.target.value}))} />
+            <label style={{ fontSize:11, fontWeight:700, color:'#64748B', display:'block', marginBottom:4 }}>Batch Colour</label>
+            <div style={{ display:'flex', gap:8, marginBottom:16 }}>
+              {['#1D4ED8','#DC2626','#059669','#7C3AED','#D97706','#0891B2','#1E3A5F'].map(c => (
+                <button key={c} onClick={() => setNewBatch(b=>({...b,color:c}))}
+                  style={{ width:32, height:32, borderRadius:'50%', background:c, border: newBatch.color===c?`3px solid ${GOLD}`:'3px solid transparent', cursor:'pointer' }} />
+              ))}
+            </div>
+            <div style={{ display:'flex', gap:8 }}>
+              <button onClick={() => {
+                if (!newBatch.name.trim()) { alert('Enter batch name'); return }
+                const batch = { id:`b${Date.now()}`, ...newBatch, students:0, avg_score:0, last_test:'—', active:true }
+                setBatches(b => [...b, batch])
+                setShowAddBatch(false)
+                setNewBatch({ name:'', exam:'', color:'#1D4ED8' })
+              }} style={{ ...S.btn, flex:1 }}>Create Batch</button>
+              <button onClick={() => setShowAddBatch(false)} style={{ flex:1, padding:'10px', border:'1.5px solid #E2E8F0', borderRadius:10, fontSize:13, cursor:'pointer', background:'#fff', color:'#64748B' }}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── ASSIGN TEST MODAL ─────────────────────────────────────────── */}
+      {showTestModal && (
+        <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.6)', display:'flex', alignItems:'flex-end', justifyContent:'center', zIndex:1000 }}
+          onClick={e => e.target===e.currentTarget && setShowTestModal(null)}>
+          <div style={{ background:'#fff', borderRadius:'20px 20px 0 0', padding:24, width:'100%', maxWidth:460 }}>
+            <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:NAVY, marginBottom:4 }}>📝 Assign Test</h3>
+            <p style={{ fontSize:12, color:'#64748B', marginBottom:16 }}>To: {showTestModal.name} ({showTestModal.students} students)</p>
+
+            <label style={{ fontSize:11, fontWeight:700, color:'#64748B', display:'block', marginBottom:4 }}>Test Mode</label>
+            <div style={{ display:'flex', gap:8, marginBottom:12 }}>
+              {[{id:'mock',label:'Full Mock'},{ id:'practice',label:'Practice'},{id:'speed',label:'Speed'}].map(m => (
+                <button key={m.id} onClick={() => setTestConfig(c=>({...c,mode:m.id}))}
+                  style={{ flex:1, padding:'9px', borderRadius:10, border:'none', fontWeight:700, fontSize:12, cursor:'pointer',
+                    background:testConfig.mode===m.id?NAVY:'#F1F5F9', color:testConfig.mode===m.id?'#fff':'#64748B' }}>
+                  {m.label}
+                </button>
+              ))}
+            </div>
+
+            <label style={{ fontSize:11, fontWeight:700, color:'#64748B', display:'block', marginBottom:4 }}>Questions</label>
+            <div style={{ display:'flex', gap:6, marginBottom:12 }}>
+              {[25,50,100,150].map(n => (
+                <button key={n} onClick={() => setTestConfig(c=>({...c,count:n}))}
+                  style={{ flex:1, padding:'8px', borderRadius:9, border:'none', fontWeight:700, fontSize:12, cursor:'pointer',
+                    background:testConfig.count===n?NAVY:'#F1F5F9', color:testConfig.count===n?'#fff':'#64748B' }}>
+                  {n}Q
+                </button>
+              ))}
+            </div>
+
+            <div style={{ background:'#F0FDF4', border:'1px solid #BBF7D0', borderRadius:10, padding:'8px 12px', marginBottom:14 }}>
+              <p style={{ fontSize:11, color:'#065F46', margin:0 }}>
+                ⏱️ Duration: {Math.floor(testConfig.count * 0.54)}m (10% stricter than real exam · PYQ-aligned weightage)
+              </p>
+            </div>
+
+            <div style={{ display:'flex', gap:8 }}>
+              <button onClick={conductTest} style={{ ...S.btn, flex:1 }}>✅ Assign Now</button>
+              <button onClick={() => setShowTestModal(null)} style={{ flex:1, padding:'10px', border:'1.5px solid #E2E8F0', borderRadius:10, fontSize:13, cursor:'pointer', background:'#fff', color:'#64748B' }}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   )
 }

@@ -1,30 +1,35 @@
 // FILE: src/pages/settings/ThemeSelector.jsx
 import { useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Lock, Check, Sparkles } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { Lock, Check, Sparkles, Crown } from 'lucide-react'
 import AppLayout from '../../components/layout/AppLayout'
 import { useTheme } from '../../context/ThemeContext'
 
 const springTap = { type: 'spring', stiffness: 400, damping: 28 }
 
-function ThemeCard({ t, isActive, onSelect }) {
+function ThemeCard({ t, isActive, onSelect, onUpgradeClick }) {
   const [pressed, setPressed] = useState(false)
   const locked = !t.unlocked
+  const planLocked = t.planLocked
 
   return (
     <motion.button
-      onClick={() => !locked && onSelect(t.id)}
+      onClick={() => {
+        if (planLocked) { onUpgradeClick?.(t); return }
+        if (!locked) onSelect(t.id)
+      }}
       onPointerDown={() => setPressed(true)}
       onPointerUp={() => setPressed(false)}
       onPointerLeave={() => setPressed(false)}
-      whileHover={locked ? {} : { y: -4 }}
-      whileTap={locked ? {} : { scale: 0.97 }}
+      whileHover={locked && !planLocked ? {} : { y: -4 }}
+      whileTap={locked && !planLocked ? {} : { scale: 0.97 }}
       transition={springTap}
       style={{
         textAlign: 'left',
         borderRadius: 20,
         padding: 18,
-        cursor: locked ? 'default' : 'pointer',
+        cursor: locked && !planLocked ? 'default' : 'pointer',
         position: 'relative',
         overflow: 'hidden',
         border: isActive ? `2px solid ${t.accent}` : '1.5px solid rgba(226,232,240,0.9)',
@@ -37,24 +42,36 @@ function ThemeCard({ t, isActive, onSelect }) {
       {locked && (
         <div style={{
           position: 'absolute', inset: 0, zIndex: 2,
-          background: 'rgba(15,23,42,0.55)',
+          background: planLocked
+            ? 'linear-gradient(135deg, rgba(124,58,237,0.85), rgba(15,23,42,0.7))'
+            : 'rgba(15,23,42,0.55)',
           backdropFilter: 'blur(2px)',
           display: 'flex', flexDirection: 'column',
           alignItems: 'center', justifyContent: 'center', gap: 8,
           color: '#FFFFFF', padding: 14, textAlign: 'center',
         }}>
-          <Lock size={20} strokeWidth={2.2} />
+          {planLocked ? <Crown size={20} strokeWidth={2.2} /> : <Lock size={20} strokeWidth={2.2} />}
           <span style={{ fontSize: 11, fontWeight: 700, lineHeight: 1.3 }}>
-            {t.unlockLabel || 'Keep going to unlock'}
+            {planLocked ? t.planGateLabel : (t.unlockLabel || 'Keep going to unlock')}
           </span>
-          <div style={{ width: '70%', height: 4, borderRadius: 4, background: 'rgba(255,255,255,0.25)', overflow: 'hidden' }}>
-            <div style={{
-              height: '100%', borderRadius: 4,
-              width: `${Math.round((t.progress || 0) * 100)}%`,
-              background: '#FFFFFF',
-              transition: 'width 0.4s ease',
-            }} />
-          </div>
+          {!planLocked && (
+            <div style={{ width: '70%', height: 4, borderRadius: 4, background: 'rgba(255,255,255,0.25)', overflow: 'hidden' }}>
+              <div style={{
+                height: '100%', borderRadius: 4,
+                width: `${Math.round((t.progress || 0) * 100)}%`,
+                background: '#FFFFFF',
+                transition: 'width 0.4s ease',
+              }} />
+            </div>
+          )}
+          {planLocked && (
+            <span style={{
+              marginTop: 2, fontSize: 10, fontWeight: 800, padding: '4px 10px',
+              borderRadius: 10, background: 'rgba(255,255,255,0.18)', letterSpacing: 0.4,
+            }}>
+              UPGRADE TO {t.plan === 'ultra' ? 'ULTRA' : 'PRO'}
+            </span>
+          )}
         </div>
       )}
 
@@ -90,6 +107,7 @@ function ThemeCard({ t, isActive, onSelect }) {
 export default function ThemeSelector() {
   const { activeTheme, setActiveTheme, themesWithStatus } = useTheme()
   const [justUnlockedToast, setJustUnlockedToast] = useState(null)
+  const navigate = useNavigate()
 
   const baseThemes = useMemo(() => themesWithStatus.filter(t => t.tier === 'base'), [themesWithStatus])
   const unlockThemes = useMemo(() => themesWithStatus.filter(t => t.tier !== 'base'), [themesWithStatus])
@@ -97,6 +115,10 @@ export default function ThemeSelector() {
 
   const handleSelect = (id) => {
     setActiveTheme(id)
+  }
+
+  const handleUpgradeClick = (theme) => {
+    navigate('/pricing', { state: { highlightPlan: theme.plan, fromTheme: theme.id } })
   }
 
   return (
@@ -118,7 +140,7 @@ export default function ThemeSelector() {
       </h2>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(220px,1fr))', gap: 14, marginBottom: 32 }}>
         {baseThemes.map(t => (
-          <ThemeCard key={t.id} t={t} isActive={activeTheme === t.id} onSelect={handleSelect} />
+          <ThemeCard key={t.id} t={t} isActive={activeTheme === t.id} onSelect={handleSelect} onUpgradeClick={handleUpgradeClick} />
         ))}
       </div>
 
@@ -127,7 +149,7 @@ export default function ThemeSelector() {
       </h2>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(220px,1fr))', gap: 14 }}>
         {unlockThemes.map(t => (
-          <ThemeCard key={t.id} t={t} isActive={activeTheme === t.id} onSelect={handleSelect} />
+          <ThemeCard key={t.id} t={t} isActive={activeTheme === t.id} onSelect={handleSelect} onUpgradeClick={handleUpgradeClick} />
         ))}
       </div>
 
