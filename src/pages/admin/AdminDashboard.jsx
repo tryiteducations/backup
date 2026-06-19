@@ -8,13 +8,16 @@ import { useAuth } from '../../context/AuthContext'
 
 const TABS = [
   { id:'overview',      label:'📊 Overview'       },
+  { id:'tournament',    label:'🏆 Tournament'     },
+  { id:'game_economy',  label:'🎮 Game Economy'   },
+  { id:'game_testing',  label:'🛡️ Game Testing'    },
   { id:'users',         label:'👥 Users'           },
   { id:'grants',        label:'🪙 Grants'          },
   { id:'exams',         label:'📋 Exams'           },
-  { id:'materials',     label:'📄 Daily Materials' },  // NEW
-  { id:'flags',         label:'🚩 Flags & Fix'     },  // NEW
-  { id:'config',        label:'⚙️ Config'           },  // NEW
-  { id:'announcements', label:'📢 Announce'        },  // NEW
+  { id:'materials',     label:'📄 Daily Materials' },
+  { id:'flags',         label:'🚩 Flags & Fix'     },
+  { id:'config',        label:'⚙️ Config'           },
+  { id:'announcements', label:'📢 Announce'        },
   { id:'security',      label:'🛡️ Security'         },
   { id:'viewas',        label:'👁️ View As'          },
 ]
@@ -82,6 +85,9 @@ export default function AdminDashboard() {
 
       <div style={{ padding:'24px clamp(16px,4vw,40px) 60px', background:'#fff', minHeight:'60vh' }}>
         {tab === 'overview'      && <OverviewTab navigate={navigate} />}
+        {tab === 'tournament'    && <TournamentAdminTab />}
+        {tab === 'game_economy'  && <GameEconomyTab />}
+        {tab === 'game_testing'  && <GameTestingTab />}
         {tab === 'users'         && <UsersTab />}
         {tab === 'grants'        && <GrantsTab />}
         {tab === 'exams'         && <ExamsTab navigate={navigate} />}
@@ -1073,6 +1079,539 @@ function ViewAsTab() {
           </div>
         ))}
       </div>
+    </div>
+  )
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// TOURNAMENT ADMIN TAB
+// Create tournaments, set schedules, manage polls, dispatch prizes, announce
+// Architecture: Admin creates → CDN serves questions → Cloudflare Worker batch
+// ═══════════════════════════════════════════════════════════════════════════
+import { supabase } from '../../lib/supabase'
+
+function TournamentAdminTab(){
+  const[subtab,setSubtab]=useState('upcoming')
+  const[tournaments,setTournaments]=useState([])
+  const[polls,setPolls]=useState([])
+  const[showCreate,setShowCreate]=useState(false)
+  const[form,setForm]=useState({
+    tournament_name:'',tournament_type:'national',exam_scheme_id:'ssc_cgl_t1',
+    exam_display_name:'SSC CGL Tier 1',total_questions:100,
+    exam_date:'',exam_time:'09:00',entry_fee_free_user:5,
+    question_sets_count:50,scope_states:[],
+  })
+
+  const NAVY='#1E3A5F',GOLD='#C9A84C'
+
+  useEffect(()=>{
+    supabase.from('tournaments').select('*').order('exam_starts_at',{ascending:false}).limit(20)
+      .then(({data})=>{if(data)setTournaments(data)}).catch(()=>{})
+    supabase.from('tournament_polls').select('*').order('vote_count',{ascending:false}).limit(20)
+      .then(({data})=>{if(data)setPolls(data)}).catch(()=>{})
+  },[])
+
+  const createTournament=async()=>{
+    if(!form.tournament_name||!form.exam_date){alert('Fill tournament name and date');return}
+    const examDate=form.exam_date
+    const examStartsAt=`${examDate}T${form.exam_time}:00+05:30`
+    const examEndsAt=new Date(new Date(examStartsAt).getTime()+90*60000).toISOString()
+    const subWindowEnds=new Date(new Date(examEndsAt).getTime()+75*60000).toISOString()
+    const batchComputeAt=`${examDate}T10:30:00+05:30`
+    const resultsAt=`${examDate}T20:00:00+05:30`
+    const regOpens=new Date(new Date(examStartsAt).getTime()-7*86400000).toISOString()
+    const regCloses=new Date(new Date(examStartsAt).getTime()-2*3600000).toISOString()
+
+    const t={
+      tournament_name:form.tournament_name,
+      tournament_type:form.tournament_type,
+      exam_scheme_id:form.exam_scheme_id,
+      exam_display_name:form.exam_display_name,
+      total_questions:parseInt(form.total_questions),
+      registration_opens:regOpens,
+      registration_closes:regCloses,
+      exam_starts_at:examStartsAt,
+      exam_ends_at:examEndsAt,
+      submission_window_ends:subWindowEnds,
+      batch_compute_at:batchComputeAt,
+      results_at:resultsAt,
+      question_sets_count:parseInt(form.question_sets_count),
+      entry_fee_free_user:parseFloat(form.entry_fee_free_user),
+      entry_fee_pro_ultra:0,
+      status:'draft',
+      cdn_question_url:`https://cdn.tryiteducations.net/q/${Date.now()}`,
+    }
+
+    const{data,error}=await supabase.from('tournaments').insert(t).select().single()
+    if(error){alert('Error: '+error.message);return}
+    setTournaments(prev=>[data,...prev])
+    setShowCreate(false)
+    setForm({tournament_name:'',tournament_type:'national',exam_scheme_id:'ssc_cgl_t1',exam_display_name:'SSC CGL Tier 1',total_questions:100,exam_date:'',exam_time:'09:00',entry_fee_free_user:5,question_sets_count:50,scope_states:[]})
+    alert('✅ Tournament created as DRAFT. Set status to "upcoming" when ready to open registration.')
+  }
+
+  const updateStatus=async(id,status)=>{
+    await supabase.from('tournaments').update({status}).eq('tournament_id',id)
+    setTournaments(prev=>prev.map(t=>t.tournament_id===id?{...t,status}:t))
+  }
+
+  const dispatchPrizes=async(id)=>{
+    if(!confirm('Dispatch prizes to top performers now?'))return
+    try{
+      const{error}=await supabase.rpc('dispatch_tournament_prizes',{p_tournament_id:id})
+      if(error)throw error
+      alert('✅ Prizes dispatched! Top performers upgraded. Leaderboard pinned. Coins awarded.')
+    }catch(e){alert('Error: '+e.message)}
+  }
+
+  const confirmPoll=async(pollId,note)=>{
+    await supabase.from('tournament_polls').update({status:'admin_confirmed',admin_note:note}).eq('poll_id',pollId)
+    setPolls(prev=>prev.map(p=>p.poll_id===pollId?{...p,status:'admin_confirmed',admin_note:note}:p))
+    alert('✅ Poll confirmed! Students will see it scheduled.')
+  }
+
+  const STATUS_COLORS={draft:'#94A3B8',upcoming:'#1D4ED8',registration_open:'#059669',live:'#DC2626',computing:'#7C3AED',results_live:GOLD,archived:'#94A3B8'}
+  const SCHEME_OPTIONS=[
+    {id:'ssc_cgl_t1',name:'SSC CGL Tier 1'},{id:'ibps_po_pre',name:'IBPS PO Prelims'},
+    {id:'upsc_cse_pre',name:'UPSC CSE Prelims'},{id:'jee_main',name:'JEE Main'},
+    {id:'neet_ug',name:'NEET UG'},{id:'nda_written',name:'NDA Written'},
+    {id:'rrb_ntpc_cbt1',name:'RRB NTPC CBT1'},{id:'tnpsc_g1',name:'TNPSC Group 1'},
+    {id:'kpsc_ka',name:'KPSC Group A/B'},{id:'gate_general',name:'GATE'},
+  ]
+
+  return(
+    <div style={{padding:16}}>
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:14}}>
+        <div>
+          <h2 style={{...S.h2,marginBottom:2}}>🏆 Tournament Control</h2>
+          <p style={{fontSize:12,color:'#64748B',margin:0}}>Create · Schedule · Announce · Dispatch prizes</p>
+        </div>
+        <button onClick={()=>setShowCreate(true)} style={S.btnGold}>+ Create Tournament</button>
+      </div>
+
+      {/* Subtabs */}
+      <div style={{display:'flex',background:'#F1F5F9',borderRadius:10,padding:3,marginBottom:14}}>
+        {[{id:'upcoming',l:'📅 Active'},{id:'polls',l:'🗳️ Polls'},{id:'archived',l:'📦 Archive'}].map(t=>(
+          <button key={t.id} onClick={()=>setSubtab(t.id)} style={{flex:1,padding:'8px',borderRadius:8,border:'none',cursor:'pointer',fontSize:12,fontWeight:700,background:subtab===t.id?NAVY:'transparent',color:subtab===t.id?'#fff':'#64748B'}}>
+            {t.l}
+          </button>
+        ))}
+      </div>
+
+      {/* Architecture reminder */}
+      <div style={{background:'#F0FDF4',border:'1px solid #BBF7D0',borderRadius:12,padding:10,marginBottom:14}}>
+        <p style={{fontSize:11,color:'#065F46',margin:0,lineHeight:1.7}}>
+          ✅ <strong>Architecture:</strong> Questions → Cloudflare CDN (AES-256 encrypted JSON) · Test → 100% offline on device · Submit → 1KB jitter → Cloudflare Worker → R2 · 4 PM → Histogram batch → rank_index.json → KV · 8 PM → App reads CDN → rank on device · <strong>Cost: ~₹1,300/tournament · Revenue: ₹50L</strong>
+        </p>
+      </div>
+
+      {subtab==='upcoming'&&(
+        <div>
+          {tournaments.filter(t=>t.status!=='archived').map(t=>(
+            <div key={t.tournament_id} style={{...S.card,marginBottom:12}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:10}}>
+                <div>
+                  <p style={{fontWeight:700,color:'#1E293B',fontSize:14,margin:'0 0 2px'}}>{t.tournament_name}</p>
+                  <p style={{fontSize:11,color:'#64748B',margin:0}}>{t.exam_display_name} · {t.total_questions}Q · {t.question_sets_count} sets</p>
+                </div>
+                <span style={{fontSize:10,fontWeight:700,padding:'3px 8px',borderRadius:99,background:`${STATUS_COLORS[t.status]}20`,color:STATUS_COLORS[t.status]}}>
+                  {t.status?.replace('_',' ').toUpperCase()}
+                </span>
+              </div>
+
+              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:8,marginBottom:10}}>
+                <div style={{background:'#F8FAFC',borderRadius:8,padding:'8px',textAlign:'center'}}>
+                  <p style={{fontSize:11,fontWeight:700,color:NAVY,margin:'0 0 1px'}}>{new Date(t.exam_starts_at).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}</p>
+                  <p style={{fontSize:9,color:'#94A3B8',margin:0}}>Exam Date</p>
+                </div>
+                <div style={{background:'#F8FAFC',borderRadius:8,padding:'8px',textAlign:'center'}}>
+                  <p style={{fontSize:11,fontWeight:700,color:'#059669',margin:'0 0 1px'}}>{(t.total_registrations||0).toLocaleString('en-IN')}</p>
+                  <p style={{fontSize:9,color:'#94A3B8',margin:0}}>Registered</p>
+                </div>
+                <div style={{background:'#F8FAFC',borderRadius:8,padding:'8px',textAlign:'center'}}>
+                  <p style={{fontSize:11,fontWeight:700,color:GOLD,margin:'0 0 1px'}}>₹{((t.total_registrations||0)*t.entry_fee_free_user).toLocaleString('en-IN')}</p>
+                  <p style={{fontSize:9,color:'#94A3B8',margin:0}}>Est. Revenue</p>
+                </div>
+              </div>
+
+              {/* Status control */}
+              <div style={{display:'flex',gap:6,flexWrap:'wrap'}}>
+                {[
+                  {s:'upcoming',l:'📅 Set Upcoming',show:t.status==='draft'},
+                  {s:'registration_open',l:'✅ Open Registration',show:['upcoming'].includes(t.status)},
+                  {s:'live',l:'🔴 Go Live',show:t.status==='registration_closed'},
+                  {s:'submission_window',l:'⏳ Close Exam',show:t.status==='live'},
+                  {s:'computing',l:'🔄 Computing',show:t.status==='submission_window'},
+                  {s:'results_live',l:'🏆 Release Results',show:t.status==='computing'},
+                  {s:'archived',l:'📦 Archive',show:t.status==='results_live'},
+                ].filter(x=>x.show).map(x=>(
+                  <button key={x.s} onClick={()=>updateStatus(t.tournament_id,x.s)}
+                    style={{padding:'6px 12px',border:'none',borderRadius:8,fontWeight:700,fontSize:11,cursor:'pointer',background:NAVY,color:'#fff'}}>
+                    {x.l}
+                  </button>
+                ))}
+                {t.status==='results_live'&&(
+                  <button onClick={()=>dispatchPrizes(t.tournament_id)}
+                    style={{padding:'6px 12px',border:'none',borderRadius:8,fontWeight:700,fontSize:11,cursor:'pointer',background:GOLD,color:NAVY}}>
+                    🎁 Dispatch Prizes
+                  </button>
+                )}
+              </div>
+
+              {/* CDN URL field */}
+              {t.status==='draft'&&(
+                <div style={{marginTop:10}}>
+                  <p style={{fontSize:11,color:'#64748B',marginBottom:4}}>CDN Question URL (paste after uploading encrypted JSON to Cloudflare)</p>
+                  <input defaultValue={t.cdn_question_url||''} placeholder="https://cdn.tryiteducations.net/q/tournament_id"
+                    onBlur={e=>supabase.from('tournaments').update({cdn_question_url:e.target.value}).eq('tournament_id',t.tournament_id).then(()=>{})}
+                    style={{width:'100%',padding:'8px 10px',borderRadius:8,border:'1.5px solid #E2E8F0',fontSize:11,boxSizing:'border-box'}}/>
+                </div>
+              )}
+            </div>
+          ))}
+          {tournaments.filter(t=>t.status!=='archived').length===0&&(
+            <div style={{textAlign:'center',padding:32,color:'#94A3B8'}}>
+              <p style={{fontSize:24}}>🏆</p><p>No active tournaments. Create one above!</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {subtab==='polls'&&(
+        <div>
+          <p style={{fontSize:12,color:'#64748B',marginBottom:12}}>
+            When votes cross the minimum threshold, confirm here to schedule the tournament.
+          </p>
+          {polls.map(poll=>(
+            <div key={poll.poll_id} style={{...S.card,marginBottom:10}}>
+              <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:8}}>
+                <div>
+                  <p style={{fontWeight:700,color:'#1E293B',fontSize:14,margin:'0 0 2px'}}>{poll.exam_name}</p>
+                  <p style={{fontSize:11,color:'#64748B',margin:0}}>{poll.description}</p>
+                </div>
+                <span style={{fontSize:10,fontWeight:700,padding:'3px 8px',borderRadius:99,
+                  background:poll.status==='threshold_reached'?'#D1FAE5':'#EFF6FF',
+                  color:poll.status==='threshold_reached'?'#065F46':'#1D4ED8'}}>
+                  {poll.vote_count?.toLocaleString('en-IN')} votes
+                </span>
+              </div>
+              {/* Vote progress */}
+              <div style={{height:6,background:'#E2E8F0',borderRadius:99,overflow:'hidden',marginBottom:8}}>
+                <div style={{height:'100%',width:`${Math.min(((poll.vote_count||0)/(poll.min_votes_national||2000))*100,100)}%`,background:poll.status==='threshold_reached'?'#059669':NAVY,borderRadius:99}}/>
+              </div>
+              <p style={{fontSize:10,color:'#94A3B8',margin:'0 0 8px'}}>{poll.vote_count}/{poll.min_votes_national||2000} national / {poll.min_votes_state||500} state threshold</p>
+              {poll.admin_note&&<p style={{fontSize:11,color:'#475569',background:'#F8FAFC',padding:'6px 10px',borderRadius:8,margin:'0 0 8px'}}>🛡️ Admin note: {poll.admin_note}</p>}
+              {['threshold_reached','open'].includes(poll.status)&&poll.status!=='admin_confirmed'&&(
+                <button onClick={()=>{
+                  const note=prompt('Enter admin note for students (e.g. "Scheduling for July 2026"):')
+                  if(note!==null)confirmPoll(poll.poll_id,note)
+                }} style={{padding:'8px 16px',background:NAVY,color:'#fff',border:'none',borderRadius:9,fontWeight:700,fontSize:12,cursor:'pointer'}}>
+                  ✅ Confirm & Schedule
+                </button>
+              )}
+              {poll.status==='admin_confirmed'&&<span style={{fontSize:11,color:'#059669',fontWeight:700}}>✅ Confirmed — will be scheduled</span>}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {subtab==='archived'&&(
+        <div>
+          {tournaments.filter(t=>t.status==='archived').map(t=>(
+            <div key={t.tournament_id} style={{...S.card,marginBottom:8,opacity:0.7}}>
+              <p style={{fontWeight:600,color:'#475569',fontSize:13,margin:'0 0 2px'}}>{t.tournament_name}</p>
+              <p style={{fontSize:11,color:'#94A3B8',margin:0}}>
+                {new Date(t.exam_starts_at).toLocaleDateString('en-IN')} · {(t.total_submissions||0).toLocaleString('en-IN')} submissions · ₹{((t.total_submissions||0)*t.entry_fee_free_user).toLocaleString('en-IN')} revenue
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Create Tournament Modal */}
+      {showCreate&&(
+        <div style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.6)',display:'flex',alignItems:'flex-end',justifyContent:'center',zIndex:1000}}
+          onClick={e=>e.target===e.currentTarget&&setShowCreate(false)}>
+          <div style={{background:'#fff',borderRadius:'20px 20px 0 0',padding:24,width:'100%',maxWidth:500,maxHeight:'90vh',overflowY:'auto'}}>
+            <h3 style={{fontFamily:'Poppins,sans-serif',fontWeight:800,color:NAVY,marginBottom:16}}>+ Create New Tournament</h3>
+
+            <label style={S.label}>Tournament Name *</label>
+            <input style={{...S.input,marginBottom:10}} placeholder="All India SSC CGL Championship 2026"
+              value={form.tournament_name} onChange={e=>setForm(f=>({...f,tournament_name:e.target.value}))}/>
+
+            <label style={S.label}>Tournament Type</label>
+            <select style={{...S.input,marginBottom:10}} value={form.tournament_type} onChange={e=>setForm(f=>({...f,tournament_type:e.target.value}))}>
+              <option value="national">🇮🇳 National (All India)</option>
+              <option value="state">🏢 State Level</option>
+              <option value="match_day">⚡ Match Day</option>
+              <option value="practice">📝 Practice</option>
+            </select>
+
+            <label style={S.label}>Exam</label>
+            <select style={{...S.input,marginBottom:10}} value={form.exam_scheme_id} onChange={e=>{
+              const scheme=SCHEME_OPTIONS.find(s=>s.id===e.target.value)
+              setForm(f=>({...f,exam_scheme_id:e.target.value,exam_display_name:scheme?.name||''}))
+            }}>
+              {SCHEME_OPTIONS.map(s=><option key={s.id} value={s.id}>{s.name}</option>)}
+            </select>
+
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,marginBottom:10}}>
+              <div>
+                <label style={S.label}>Exam Date *</label>
+                <input type="date" style={S.input} value={form.exam_date} onChange={e=>setForm(f=>({...f,exam_date:e.target.value}))}/>
+              </div>
+              <div>
+                <label style={S.label}>Start Time</label>
+                <input type="time" style={S.input} value={form.exam_time} onChange={e=>setForm(f=>({...f,exam_time:e.target.value}))}/>
+              </div>
+            </div>
+
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,marginBottom:10}}>
+              <div>
+                <label style={S.label}>Question Sets (50-100)</label>
+                <input type="number" style={S.input} value={form.question_sets_count} onChange={e=>setForm(f=>({...f,question_sets_count:e.target.value}))} min={10} max={100}/>
+              </div>
+              <div>
+                <label style={S.label}>Free User Entry Fee (₹)</label>
+                <input type="number" style={S.input} value={form.entry_fee_free_user} onChange={e=>setForm(f=>({...f,entry_fee_free_user:e.target.value}))} min={0}/>
+              </div>
+            </div>
+
+            <div style={{background:'#FFF7E6',border:`1px solid ${GOLD}`,borderRadius:10,padding:10,marginBottom:14}}>
+              <p style={{fontSize:11,color:'#92400E',margin:0,lineHeight:1.7}}>
+                ⚙️ <strong>Auto-calculated:</strong> Registration opens 7 days before · Closes 2h before · Exam time -10% (our_time) · Submission window +75min · Batch compute 4 PM · Results 8 PM<br/>
+                💰 <strong>Revenue estimate:</strong> ₹{(100000*parseFloat(form.entry_fee_free_user||5)).toLocaleString('en-IN')} at 1 lakh free users
+              </p>
+            </div>
+
+            <div style={{display:'flex',gap:8}}>
+              <button onClick={createTournament} style={{...S.btnGold,flex:1,padding:'12px'}}>Create Tournament</button>
+              <button onClick={()=>setShowCreate(false)} style={{flex:1,padding:'12px',border:'1.5px solid #E2E8F0',borderRadius:11,cursor:'pointer',background:'#fff',color:'#64748B',fontSize:13}}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// GAME ECONOMY ADMIN TAB
+// Full control over coin entry/win/loss amounts — changeable anytime, no app update
+// Add to TABS: { id:'game_economy', label:'🎮 Game Economy' }
+// Add to render: {tab === 'game_economy' && <GameEconomyTab />}
+// ═══════════════════════════════════════════════════════════════════════════
+function GameEconomyTab(){
+  const[config,setConfig]=useState({
+    entry_cost:5, win_reward:5, loss_penalty:5, draw_reward:0,
+    coin_pack_1_price:5, coin_pack_1_coins:50,
+    coin_pack_2_price:20, coin_pack_2_coins:220,
+    coin_pack_3_price:49, coin_pack_3_coins:600,
+  })
+  const[games,setGames]=useState([])
+  const[overrideGame,setOverrideGame]=useState(null)
+  const[saving,setSaving]=useState(false)
+  const NAVY='#1E3A5F',GOLD='#C9A84C'
+
+  useEffect(()=>{
+    supabase.from('game_economy_config').select('*').eq('config_id','default').single()
+      .then(({data})=>{if(data)setConfig(data)}).catch(()=>{})
+    supabase.from('games_catalog').select('game_id,name,emoji,tier_required').order('tier_rank')
+      .then(({data})=>{if(data)setGames(data)}).catch(()=>{})
+  },[])
+
+  const save=async()=>{
+    setSaving(true)
+    try{
+      await supabase.from('game_economy_config').update({...config,updated_at:new Date().toISOString()}).eq('config_id','default')
+      alert('✅ Saved! Takes effect immediately for all games — no app update needed.')
+    }catch(e){alert('Error: '+e.message)}
+    setSaving(false)
+  }
+
+  const saveOverride=async(gameId,overrides)=>{
+    try{
+      const{data:current}=await supabase.from('game_economy_config').select('per_game_overrides').eq('config_id','default').single()
+      const updated={...(current?.per_game_overrides||{}),[gameId]:overrides}
+      await supabase.from('game_economy_config').update({per_game_overrides:updated}).eq('config_id','default')
+      alert(`✅ Override saved for ${gameId}`)
+      setOverrideGame(null)
+    }catch(e){alert('Error: '+e.message)}
+  }
+
+  return(
+    <div style={{padding:16}}>
+      <h2 style={{...S.h2,marginBottom:4}}>🎮 Game Economy Control</h2>
+      <p style={{fontSize:12,color:'#64748B',marginBottom:16}}>
+        Change coin amounts anytime — 5 → 50 → 500, instant effect, zero app deployment needed.
+      </p>
+
+      <div style={{background:'#F0FDF4',border:'1px solid #BBF7D0',borderRadius:12,padding:12,marginBottom:16}}>
+        <p style={{fontSize:12,color:'#065F46',margin:0,lineHeight:1.7}}>
+          💰 <strong>Default Secret Sauce:</strong> ₹5 = 50 coins. Win game = +5 coins. Lose = -5 coins.
+          Each game costs 5 coins to enter. Net swing per game = 10 coins — creates "one more game" loop.
+        </p>
+      </div>
+
+      {/* GLOBAL DEFAULTS */}
+      <div style={{...S.card,marginBottom:16}}>
+        <p style={{fontSize:13,fontWeight:700,color:NAVY,marginBottom:12}}>⚙️ Global Defaults (all games unless overridden)</p>
+        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:10}}>
+          <div>
+            <label style={S.label}>Entry Cost (coins to play)</label>
+            <input type="number" style={S.input} value={config.entry_cost}
+              onChange={e=>setConfig(c=>({...c,entry_cost:parseInt(e.target.value)||0}))}/>
+          </div>
+          <div>
+            <label style={S.label}>Win Reward (coins)</label>
+            <input type="number" style={S.input} value={config.win_reward}
+              onChange={e=>setConfig(c=>({...c,win_reward:parseInt(e.target.value)||0}))}/>
+          </div>
+          <div>
+            <label style={S.label}>Loss Penalty (coins)</label>
+            <input type="number" style={S.input} value={config.loss_penalty}
+              onChange={e=>setConfig(c=>({...c,loss_penalty:parseInt(e.target.value)||0}))}/>
+          </div>
+          <div>
+            <label style={S.label}>Draw Reward (Battle ties)</label>
+            <input type="number" style={S.input} value={config.draw_reward}
+              onChange={e=>setConfig(c=>({...c,draw_reward:parseInt(e.target.value)||0}))}/>
+          </div>
+        </div>
+        <p style={{fontSize:11,color:'#94A3B8'}}>
+          Net per game if won: +{config.win_reward}🪙 · if lost: -{config.loss_penalty}🪙 (entry {config.entry_cost}🪙 always deducted first)
+        </p>
+      </div>
+
+      {/* COIN PURCHASE PACKS */}
+      <div style={{...S.card,marginBottom:16}}>
+        <p style={{fontSize:13,fontWeight:700,color:NAVY,marginBottom:12}}>🛒 Coin Purchase Packs</p>
+        {[1,2,3].map(n=>(
+          <div key={n} style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:10}}>
+            <div>
+              <label style={S.label}>Pack {n} Price (₹)</label>
+              <input type="number" style={S.input} value={config[`coin_pack_${n}_price`]}
+                onChange={e=>setConfig(c=>({...c,[`coin_pack_${n}_price`]:parseFloat(e.target.value)||0}))}/>
+            </div>
+            <div>
+              <label style={S.label}>Pack {n} Coins</label>
+              <input type="number" style={S.input} value={config[`coin_pack_${n}_coins`]}
+                onChange={e=>setConfig(c=>({...c,[`coin_pack_${n}_coins`]:parseInt(e.target.value)||0}))}/>
+            </div>
+          </div>
+        ))}
+        <p style={{fontSize:11,color:'#92400E',background:'#FFF7E6',padding:'8px 10px',borderRadius:8}}>
+          💡 Secret sauce: ₹{config.coin_pack_1_price} feels like nothing → {config.coin_pack_1_coins} coins = {Math.floor(config.coin_pack_1_coins/config.entry_cost)} game entries · zero friction purchase
+        </p>
+      </div>
+
+      <button onClick={save} disabled={saving} style={{...S.btnGold,width:'100%',padding:'13px',marginBottom:20}}>
+        {saving?'Saving...':'💾 Save Global Economy (Instant Effect)'}
+      </button>
+
+      {/* PER-GAME OVERRIDES */}
+      <div style={S.card}>
+        <p style={{fontSize:13,fontWeight:700,color:NAVY,marginBottom:4}}>🎯 Per-Game Overrides</p>
+        <p style={{fontSize:11,color:'#64748B',marginBottom:12}}>Set custom economy for specific games (e.g. Battle costs more)</p>
+        {games.map(g=>(
+          <div key={g.game_id} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'8px 0',borderBottom:'1px solid #F1F5F9'}}>
+            <span style={{fontSize:12,color:'#475569'}}>{g.emoji} {g.name}</span>
+            <button onClick={()=>setOverrideGame(g.game_id)}
+              style={{padding:'5px 12px',background:'#F1F5F9',color:NAVY,border:'none',borderRadius:8,fontSize:11,fontWeight:600,cursor:'pointer'}}>
+              Override →
+            </button>
+          </div>
+        ))}
+      </div>
+
+      {overrideGame&&(
+        <div style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.6)',display:'flex',alignItems:'center',justifyContent:'center',zIndex:1000,padding:20}}
+          onClick={e=>e.target===e.currentTarget&&setOverrideGame(null)}>
+          <OverrideModal gameId={overrideGame} defaultConfig={config} onSave={saveOverride} onClose={()=>setOverrideGame(null)}/>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function OverrideModal({gameId,defaultConfig,onSave,onClose}){
+  const[entry,setEntry]=useState(defaultConfig.entry_cost)
+  const[win,setWin]=useState(defaultConfig.win_reward)
+  const[loss,setLoss]=useState(defaultConfig.loss_penalty)
+  const NAVY='#1E3A5F'
+
+  return(
+    <div style={{background:'#fff',borderRadius:20,padding:24,maxWidth:340,width:'100%'}}>
+      <h3 style={{fontFamily:'Poppins,sans-serif',fontWeight:800,color:NAVY,marginBottom:14}}>Override: {gameId}</h3>
+      <label style={S.label}>Entry Cost</label>
+      <input type="number" style={{...S.input,marginBottom:10}} value={entry} onChange={e=>setEntry(parseInt(e.target.value)||0)}/>
+      <label style={S.label}>Win Reward</label>
+      <input type="number" style={{...S.input,marginBottom:10}} value={win} onChange={e=>setWin(parseInt(e.target.value)||0)}/>
+      <label style={S.label}>Loss Penalty</label>
+      <input type="number" style={{...S.input,marginBottom:16}} value={loss} onChange={e=>setLoss(parseInt(e.target.value)||0)}/>
+      <div style={{display:'flex',gap:8}}>
+        <button onClick={()=>onSave(gameId,{entry_cost:entry,win_reward:win,loss_penalty:loss})} style={{...S.btnGold,flex:1}}>Save Override</button>
+        <button onClick={onClose} style={{flex:1,padding:'10px',border:'1.5px solid #E2E8F0',borderRadius:11,background:'#fff',color:'#64748B',cursor:'pointer'}}>Cancel</button>
+      </div>
+    </div>
+  )
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// GAME & LEVEL TESTING TAB
+// Direct admin shortcut — jump to any game, any level, any theme universe instantly
+// Add to TABS: { id:'game_testing', label:'🛡️ Game Testing' }
+// Add to render: {tab === 'game_testing' && <GameTestingTab />}
+// ═══════════════════════════════════════════════════════════════════════════
+function GameTestingTab(){
+  const navigate=useNavigate()
+  const[games,setGames]=useState([])
+  const[search,setSearch]=useState('')
+  const NAVY='#1E3A5F'
+
+  useEffect(()=>{
+    supabase.from('games_catalog').select('*').order('tier_rank')
+      .then(({data})=>{if(data)setGames(data)}).catch(()=>{})
+  },[])
+
+  const filtered=games.filter(g=>g.name.toLowerCase().includes(search.toLowerCase()))
+  const TIER_COLOR={free:'#64748B',pro:'#1D4ED8',ultra:'#92400E'}
+
+  return(
+    <div style={{padding:16}}>
+      <h2 style={{...S.h2,marginBottom:4}}>🛡️ Game & Level Testing</h2>
+      <p style={{fontSize:12,color:'#64748B',marginBottom:16}}>
+        Jump straight into any game at any level — bypasses all tier gates and coin costs.
+        Test plays never touch real student leaderboards or skill data.
+      </p>
+
+      <div style={{background:'#FEF2F2',border:'1.5px solid #FCA5A5',borderRadius:12,padding:12,marginBottom:16}}>
+        <p style={{fontSize:12,color:'#991B1B',margin:0,lineHeight:1.7}}>
+          ⚠️ This bypass only works because your account role is <strong>admin</strong>.
+          Regular students always go through the normal unlock flow — this tab has zero
+          effect on the live game economy.
+        </p>
+      </div>
+
+      <input placeholder="🔍 Search games..." value={search} onChange={e=>setSearch(e.target.value)}
+        style={{width:'100%',padding:'10px 14px',borderRadius:10,border:'1.5px solid #E2E8F0',fontSize:13,marginBottom:14,boxSizing:'border-box'}}/>
+
+      <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
+        {filtered.map(g=>(
+          <div key={g.game_id} onClick={()=>navigate(`/games/levels/${g.game_id}`)}
+            style={{...S.card,cursor:'pointer',padding:'12px',display:'flex',alignItems:'center',gap:10}}>
+            <span style={{fontSize:22}}>{g.emoji}</span>
+            <div style={{flex:1,minWidth:0}}>
+              <p style={{fontSize:12,fontWeight:700,color:'#1E293B',margin:'0 0 2px',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{g.name}</p>
+              <span style={{fontSize:9,fontWeight:700,padding:'1px 6px',borderRadius:99,background:`${TIER_COLOR[g.tier_required]}15`,color:TIER_COLOR[g.tier_required]}}>
+                {g.tier_required.toUpperCase()}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {filtered.length===0&&<p style={{textAlign:'center',color:'#94A3B8',padding:30}}>No games match your search.</p>}
     </div>
   )
 }

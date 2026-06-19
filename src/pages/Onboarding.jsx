@@ -1,9 +1,14 @@
+// FILE: src/pages/Onboarding.jsx
+// TryIT — Unified Multi-Role Onboarding Pipeline
+// Route: /onboarding (Triggers dynamically post role-select to configure profile details)
+
 import { useState, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth, onboardingKey } from '../context/AuthContext'
+import { supabase } from '../lib/supabase'
 import Logo from '../components/Logo'
 
-// --- Static data ---
+// --- Primitives & Master Catalogs ---
 
 const INDIA_STATES = [
   'Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh',
@@ -15,7 +20,17 @@ const INDIA_STATES = [
   'Delhi','Jammu & Kashmir','Ladakh','Lakshadweep','Puducherry',
 ]
 
-const LANGUAGES = ['English', 'Hindi', 'Tamil', 'Telugu', 'Kannada', 'Malayalam', 'Bengali', 'Marathi']
+const LANGUAGES = [
+  { code: 'en', native: 'English' },
+  { code: 'hi', native: 'हिन्दी' },
+  { code: 'ta', native: 'தமிழ்' },
+  { code: 'te', native: 'తెలుగు' },
+  { code: 'kn', native: 'ಕನ್ನಡ' },
+  { code: 'ml', native: 'മലയാളം' },
+  { code: 'bn', native: 'বাংলা' },
+  { code: 'mr', native: 'मराठी' },
+  { code: 'gu', native: 'ગુજરાતી' }
+]
 
 const SUBJECTS = [
   { name: 'Quantitative Aptitude', emoji: '🔢' },
@@ -39,29 +54,24 @@ const QUALIFICATIONS = [
 ]
 
 const INSTITUTION_TYPES = ['Coaching Centre','School','College','Online Platform','Other']
-
 const RELATIONS = ['Parent','Guardian','Grandparent','Sibling','Other']
 
-// ----- Fallback exams in case fetch fails -----
 const FALLBACK_EXAMS = [
-  { id:'ssc-cgl',    name:'SSC CGL',         category:'SSC',     level:'Graduate' },
-  { id:'ssc-chsl',   name:'SSC CHSL',        category:'SSC',     level:'12th Pass' },
-  { id:'ibps-po',    name:'IBPS PO',         category:'Banking', level:'Graduate' },
-  { id:'ibps-clerk', name:'IBPS Clerk',      category:'Banking', level:'Graduate' },
-  { id:'sbi-po',     name:'SBI PO',          category:'Banking', level:'Graduate' },
-  { id:'upsc-cse',   name:'UPSC CSE',        category:'UPSC',    level:'Graduate' },
-  { id:'rrb-ntpc',   name:'RRB NTPC',        category:'Railway', level:'Graduate' },
-  { id:'rrb-group-d',name:'RRB Group D',     category:'Railway', level:'10th Pass' },
-  { id:'neet',       name:'NEET',            category:'Medical', level:'12th Pass' },
-  { id:'jee-main',   name:'JEE Main',        category:'Engineering', level:'12th Pass' },
-  { id:'cat',        name:'CAT',             category:'MBA',     level:'Graduate' },
-  { id:'clat',       name:'CLAT',            category:'Law',     level:'12th Pass' },
-  { id:'cuet',       name:'CUET',            category:'University', level:'12th Pass' },
-  { id:'nda',        name:'NDA',             category:'Defence', level:'12th Pass' },
-  { id:'cds',        name:'CDS',             category:'Defence', level:'Graduate' },
+  { id: 'ssc_cgl',    name: 'SSC CGL',         category: 'SSC',         level: 'Graduate' },
+  { id: 'ssc_chsl',   name: 'SSC CHSL',        category: 'SSC',         level: '12th Pass' },
+  { id: 'ibps_po',    name: 'IBPS PO',         category: 'Banking',     level: 'Graduate' },
+  { id: 'ibps_clerk', name: 'IBPS Clerk',      category: 'Banking',     level: 'Graduate' },
+  { id: 'sbi_po',     name: 'SBI PO',          category: 'Banking',     level: 'Graduate' },
+  { id: 'upsc_cse',   name: 'UPSC CSE',        category: 'UPSC',        level: 'Graduate' },
+  { id: 'rrb_ntpc',   name: 'RRB NTPC',        category: 'Railway',     level: 'Graduate' },
+  { id: 'neet_ug',    name: 'NEET',            category: 'Medical',     level: '12th Pass' },
+  { id: 'jee_main',   name: 'JEE Main',        category: 'Engineering', level: '12th Pass' },
+  { id: 'cat',        name: 'CAT',             category: 'MBA',         level: 'Graduate' },
+  { id: 'clat',       name: 'CLAT',            category: 'Law',         level: '12th Pass' },
+  { id: 'gate',       name: 'GATE',            category: 'Graduate',    level: 'Graduate' },
 ]
 
-// ----- Helpers -----
+// --- Core Shared UI Helper Nodes ---
 
 function groupBy(arr, key) {
   return arr.reduce((acc, item) => {
@@ -72,16 +82,17 @@ function groupBy(arr, key) {
 }
 
 function ProgressBar({ current, total }) {
+  const widthPercentage = (current / total) * 100
   return (
     <div className="w-full mb-6">
       <div className="flex justify-between text-xs mb-1.5" style={{ color: '#94A3B8', fontFamily: 'Inter, sans-serif' }}>
         <span>Step {current} of {total}</span>
-        <span>{Math.round((current / total) * 100)}%</span>
+        <span>{Math.round(widthPercentage)}%</span>
       </div>
       <div className="w-full h-2 rounded-full" style={{ background: 'var(--color-border, #E2E8F0)' }}>
         <div
           className="h-2 rounded-full transition-all duration-500"
-          style={{ width: `${(current / total) * 100}%`, background: 'linear-gradient(90deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))' }}
+          style={{ width: `${widthPercentage}%`, background: 'linear-gradient(90deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))' }}
         />
       </div>
     </div>
@@ -167,7 +178,7 @@ function SelectInput({ label, value, onChange, options, placeholder, optional })
   )
 }
 
-// --- Step components ---
+// ─── STUDENT SUB-COMPONENTS ───
 
 function StudentStep1({ data, setData }) {
   return (
@@ -183,7 +194,7 @@ function StudentStep1({ data, setData }) {
 function StudentStep2({ data, setData }) {
   return (
     <div className="space-y-4">
-      <StepTitle title="Where are you based?" subtitle="We'll show you state-specific exam notifications." />
+      <StepTitle title="Where are you based?" subtitle="We'll show you state-specific exam notification data structures." />
       <SelectInput label="State / UT" value={data.state || ''} onChange={v => setData(d => ({...d, state: v}))} options={INDIA_STATES} placeholder="Select state..." />
       <TextInput label="City" value={data.city || ''} onChange={v => setData(d => ({...d, city: v}))} placeholder="Your city" optional />
     </div>
@@ -197,7 +208,7 @@ function StudentStep3({ data, setData, exams }) {
   const filtered = useMemo(() => {
     if (!search.trim()) return exams
     const q = search.toLowerCase()
-    return exams.filter(e => e.name.toLowerCase().includes(q) || (e.category||'').toLowerCase().includes(q))
+    return exams.filter(e => e.name.toLowerCase().includes(q) || (e.category || '').toLowerCase().includes(q))
   }, [search, exams])
 
   const grouped = groupBy(filtered, 'category')
@@ -220,7 +231,7 @@ function StudentStep3({ data, setData, exams }) {
         <input
           value={search}
           onChange={e => setSearch(e.target.value)}
-          placeholder="Search exams..."
+          placeholder="Search target exams..."
           className="w-full rounded-xl border-2 pl-9 pr-4 py-2.5 text-sm outline-none transition-all"
           style={inputStyle}
           onFocus={e => e.target.style.borderColor = 'var(--color-accent, #D4AF37)'}
@@ -233,7 +244,7 @@ function StudentStep3({ data, setData, exams }) {
           {selected.map(e => (
             <span key={e.id} className="flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold" style={{ background: '#FFFBF0', border: '1.5px solid var(--color-accent, #D4AF37)', color: 'var(--color-primary, #1E3A5F)' }}>
               {e.name}
-              <button onClick={() => toggle(e)} className="hover:opacity-60">✕</button>
+              <button onClick={() => toggle(e)} className="ml-1 hover:opacity-60">✕</button>
             </span>
           ))}
           {selected.length < 3 && (
@@ -277,21 +288,28 @@ function StudentStep3({ data, setData, exams }) {
 }
 
 function StudentStep4({ data, setData }) {
-  const selected = data.languages || []
-  function toggle(lang) {
-    if (selected.includes(lang)) setData(d => ({...d, languages: selected.filter(l => l !== lang)}))
-    else setData(d => ({...d, languages: [...selected, lang]}))
-  }
+  const selectedLang = data.preferred_language || 'en'
   return (
     <div>
-      <StepTitle title="Preferred study language" subtitle="We'll prioritise content in your chosen language." />
-      <div className="flex flex-wrap gap-2 mb-4">
-        {LANGUAGES.map(lang => (
-          <ToggleChip key={lang} label={lang} selected={selected.includes(lang)} onClick={() => toggle(lang)} />
+      <StepTitle title="Choose your language" subtitle="Questions, explanations, and the app engine will deploy this setting." />
+      <div className="grid grid-cols-2 gap-2.5 mb-4">
+        {LANGUAGES.map(l => (
+          <button
+            key={l.code}
+            type="button"
+            onClick={() => setData(d => ({...d, preferred_language: l.code}))}
+            className="p-3.5 rounded-xl text-center border-2 transition-all cursor-pointer"
+            style={{
+              borderColor: selectedLang === l.code ? 'var(--color-accent, #D4AF37)' : 'var(--color-border, #E2E8F0)',
+              background: selectedLang === l.code ? '#FFFBF0' : '#fff',
+            }}
+          >
+            <p className="text-sm font-bold" style={{ color: 'var(--color-primary, #1E3A5F)', margin: 0 }}>{l.native}</p>
+          </button>
         ))}
       </div>
       <p className="text-xs mt-3 px-3 py-2 rounded-lg" style={{ background: '#FEF3C7', color: '#92400E', fontFamily: 'Inter, sans-serif' }}>
-        ✨ More regional languages coming weekly
+        ✨ Dynamic translations serving 40 regional variants rolling out weekly.
       </p>
     </div>
   )
@@ -310,7 +328,7 @@ function StudentStep5({ data, setData }) {
   }
   return (
     <div>
-      <StepTitle title="Your strengths & weak areas" subtitle="Optional — helps us build your first study plan." />
+      <StepTitle title="Your strengths & weak areas" subtitle="Optional — helps us parameterize your adaptive study map." />
       <div className="mb-5">
         <p className="text-sm font-semibold mb-2" style={{ color: '#16A34A', fontFamily: 'Inter, sans-serif' }}>💪 Strong in</p>
         <div className="flex flex-wrap gap-2">
@@ -331,10 +349,12 @@ function StudentStep5({ data, setData }) {
   )
 }
 
+// ─── MENTOR SUB-COMPONENTS ───
+
 function MentorStep1({ data, setData }) {
   return (
     <div className="space-y-4">
-      <StepTitle title="Your credentials" />
+      <StepTitle title="Your credentials" subtitle="Establish your verification domain profiles." />
       <TextInput label="Full Name" value={data.name || ''} onChange={v => setData(d => ({...d, name: v}))} placeholder="Your name" />
       <SelectInput label="Highest Qualification" value={data.qualification || ''} onChange={v => setData(d => ({...d, qualification: v}))} options={QUALIFICATIONS} />
       <div>
@@ -348,8 +368,6 @@ function MentorStep1({ data, setData }) {
           placeholder="e.g. 5"
           className="w-full rounded-xl border-2 px-4 py-2.5 text-sm outline-none transition-all"
           style={inputStyle}
-          onFocus={e => e.target.style.borderColor = 'var(--color-accent, #D4AF37)'}
-          onBlur={e => e.target.style.borderColor = 'var(--color-border, #E2E8F0)'}
         />
       </div>
     </div>
@@ -364,7 +382,7 @@ function MentorStep2({ data, setData }) {
   }
   return (
     <div>
-      <StepTitle title="Subjects you can mentor" subtitle="Select all that apply." />
+      <StepTitle title="Subjects you can mentor" subtitle="Select all fields that match your domain expertise." />
       <div className="flex flex-wrap gap-2">
         {MENTOR_SUBJECTS.map(s => (
           <ToggleChip key={s} label={s} selected={selected.includes(s)} onClick={() => toggle(s)} />
@@ -377,20 +395,22 @@ function MentorStep2({ data, setData }) {
 function MentorStep3({ data, setData }) {
   const selected = data.mentorLanguages || []
   function toggle(l) {
-    if (selected.includes(l)) setData(d => ({...d, mentorLanguages: selected.filter(x => x !== l)}))
-    else setData(d => ({...d, mentorLanguages: [...selected, l]}))
+    if (selected.includes(l.code)) setData(d => ({...d, mentorLanguages: selected.filter(x => x !== l.code)}))
+    else setData(d => ({...d, mentorLanguages: [...selected, l.code]}))
   }
   return (
     <div>
-      <StepTitle title="Languages you can mentor in" />
+      <StepTitle title="Languages you can resolve doubts in" subtitle="Affects ticket queue allocation workflows." />
       <div className="flex flex-wrap gap-2">
         {LANGUAGES.map(l => (
-          <ToggleChip key={l} label={l} selected={selected.includes(l)} onClick={() => toggle(l)} />
+          <ToggleChip key={l.code} label={l.native} selected={selected.includes(l.code)} onClick={() => toggle(l)} />
         ))}
       </div>
     </div>
   )
 }
+
+// ─── INSTITUTION SUB-COMPONENTS ───
 
 function InstitutionStep1({ data, setData }) {
   return (
@@ -406,9 +426,9 @@ function InstitutionStep1({ data, setData }) {
 function InstitutionStep2({ data, setData }) {
   return (
     <div className="space-y-4">
-      <StepTitle title="Your student base" subtitle="Approximate is fine." />
+      <StepTitle title="Your student base" subtitle="Helps optimize dynamic package pricing tiers." />
       <SelectInput
-        label="Number of students enrolled"
+        label="Number of active students enrolled"
         value={data.studentCount || ''}
         onChange={v => setData(d => ({...d, studentCount: v}))}
         options={['1–50','51–200','201–500','501–1000','1000+']}
@@ -426,7 +446,7 @@ function InstitutionStep3({ data, setData }) {
   }
   return (
     <div>
-      <StepTitle title="Exams you prepare students for" />
+      <StepTitle title="Exams you curate curricula for" />
       <div className="flex flex-wrap gap-2">
         {all.map(e => (
           <ToggleChip key={e.id} label={e.name} selected={selected.includes(e.name)} onClick={() => toggle(e.name)} />
@@ -436,12 +456,14 @@ function InstitutionStep3({ data, setData }) {
   )
 }
 
+// ─── FAMILY SUB-COMPONENTS ───
+
 function FamilyStep1({ data, setData }) {
   return (
     <div className="space-y-4">
       <StepTitle title="About you" />
-      <TextInput label="Your Name" value={data.name || ''} onChange={v => setData(d => ({...d, name: v}))} placeholder="Your name" />
-      <SelectInput label="Relation to student" value={data.relation || ''} onChange={v => setData(d => ({...d, relation: v}))} options={RELATIONS} />
+      <TextInput label="Your Parent Profile Name" value={data.name || ''} onChange={v => setData(d => ({...d, name: v}))} placeholder="Your name" />
+      <SelectInput label="Relation context to student" value={data.relation || ''} onChange={v => setData(d => ({...d, relation: v}))} options={RELATIONS} />
     </div>
   )
 }
@@ -449,23 +471,23 @@ function FamilyStep1({ data, setData }) {
 function FamilyStep2({ data, setData }) {
   return (
     <div className="space-y-4">
-      <StepTitle title="Connect to your child's account" subtitle="Optional — enter their TryIT email to link progress tracking." />
+      <StepTitle title="Connect to student node dashboard" subtitle="Enter your child's tracking token alias email descriptor link." />
       <TextInput
-        label="Child's TryIT email"
+        label="Child's registered TryIT email"
         type="email"
         value={data.childEmail || ''}
         onChange={v => setData(d => ({...d, childEmail: v}))}
-        placeholder="child@example.com"
+        placeholder="child@phone.tryiteducations.net"
         optional
       />
-      <p className="text-xs px-3 py-2 rounded-lg" style={{ background: 'var(--color-bg-muted, #EFF6FF)', color: '#1D4ED8', fontFamily: 'Inter, sans-serif' }}>
-        You can also connect later from Settings → Family.
+      <p className="text-xs px-3 py-2 rounded-lg" style={{ background: '#EFF6FF', color: '#1D4ED8', fontFamily: 'Inter, sans-serif' }}>
+        You can securely sync or alter bindings post-onboarding inside Settings configuration controls.
       </p>
     </div>
   )
 }
 
-// ----- Main component -----
+// ─── MAIN MASTER CLASS WORKFLOW ───
 
 export default function Onboarding() {
   const navigate = useNavigate()
@@ -473,7 +495,7 @@ export default function Onboarding() {
   const role = user?.role || localStorage.getItem('tryit_role') || 'student'
 
   const [step, setStep] = useState(0)
-  const [data, setData] = useState({})
+  const [data, setData] = useState({ preferred_language: 'en', exams: [], strongSubjects: [], weakSubjects: [] })
   const [exams, setExams] = useState(FALLBACK_EXAMS)
   const [finishing, setFinishing] = useState(false)
 
@@ -484,7 +506,7 @@ export default function Onboarding() {
       .catch(() => {})
   }, [])
 
-  // Define steps per role
+  // Establish sequential layout dynamic routing index
   const steps = useMemo(() => {
     if (role === 'student') return [
       { label: 'About you',     Component: StudentStep1 },
@@ -517,21 +539,18 @@ export default function Onboarding() {
 
   async function handleFinish() {
     setFinishing(true)
-
-    // Build updateUser patch
-    const patch = {}
+    const patch = { onboarding_complete: true }
 
     if (role === 'student') {
-      if (data.name)  patch.name  = data.name
-      if (data.state) patch.state = data.state
-      if (data.city)  patch.city  = data.city
-
-      // Exams with readiness
+      patch.name = data.name || ''
+      patch.state = data.state || ''
+      patch.city = data.city || ''
+      patch.preferred_language = data.preferred_language || 'en'
+      
       if (data.exams?.length) {
         patch.exams = data.exams.map(e => ({ id: e.id, name: e.name, readiness: 0, examDate: null }))
       }
 
-      // Subjects from strong/weak
       const subjectMap = {}
       ;(data.strongSubjects || []).forEach(name => {
         const meta = SUBJECTS.find(s => s.name === name)
@@ -546,42 +565,61 @@ export default function Onboarding() {
     }
 
     if (role === 'mentor') {
-      if (data.name)           patch.name           = data.name
-      if (data.qualification)  patch.qualification  = data.qualification
-      if (data.experience)     patch.experience     = data.experience
-      if (data.mentorSubjects) patch.mentorSubjects = data.mentorSubjects
-      if (data.mentorLanguages)patch.mentorLanguages= data.mentorLanguages
+      patch.name = data.name || ''
+      patch.qualification = data.qualification || ''
+      patch.experience = data.experience || 0
+      patch.mentorSubjects = data.mentorSubjects || []
+      patch.mentorLanguages = data.mentorLanguages || []
     }
 
     if (role === 'institution') {
-      if (data.institutionName) patch.institutionName = data.institutionName
-      if (data.institutionType) patch.institutionType = data.institutionType
-      if (data.city)            patch.city            = data.city
-      if (data.studentCount)    patch.studentCount    = data.studentCount
-      if (data.institutionExams)patch.institutionExams= data.institutionExams
+      patch.institutionName = data.institutionName || ''
+      patch.institutionType = data.institutionType || ''
+      patch.city = data.city || ''
+      patch.studentCount = data.studentCount || ''
+      patch.institutionExams = data.institutionExams || []
     }
 
     if (role === 'family') {
-      if (data.name)       patch.name       = data.name
-      if (data.relation)   patch.relation   = data.relation
-      if (data.childEmail) patch.childEmail = data.childEmail
+      patch.name = data.name || ''
+      patch.relation = data.relation || ''
+      patch.childEmail = data.childEmail || ''
     }
 
-    updateUser(patch)
+    try {
+      // Step 1: Commit metadata modifications locally into active application memory
+      await updateUser?.(patch)
 
-    // Mark onboarding complete per-user
-    const email = user?.email || localStorage.getItem('tryit_email')
-    localStorage.setItem(onboardingKey(email), '1')
+      // Step 2: Push database state sync transactions downstream directly into Supabase server storage pools
+      if (user?.id) {
+        await supabase
+          .from('users')
+          .update({
+            name: patch.name || user.name,
+            state: patch.state,
+            preferred_language: patch.preferred_language || 'en',
+            metadata: patch
+          })
+          .eq('id', user.id)
+      }
 
-    // Route to the right home base per role — this was the bug
-    // sending everyone to the student dashboard.
-    const ROLE_HOME = {
-      student: '/dashboard',
-      mentor: '/mentor-hub',
-      institution: '/centre/dashboard',
-      family: '/family',
+      // Step 3: Flag storage local references to avoid onboarding recycle loops
+      const email = user?.email || localStorage.getItem('tryit_email') || `${user?.id}@tryiteducations.net`
+      localStorage.setItem(onboardingKey(email), '1')
+
+      // Step 4: Perform explicit multi-role target workspace navigation routing matches
+      const ROLE_HOME = {
+        student: '/dashboard',
+        mentor: '/mentor-hub',
+        institution: '/centre/dashboard',
+        family: '/family',
+      }
+      navigate(ROLE_HOME[role] || '/dashboard')
+    } catch (err) {
+      console.error('Onboarding synchronization failure:', err)
+    } finally {
+      setFinishing(false)
     }
-    navigate(ROLE_HOME[role] || '/dashboard')
   }
 
   function handleNext() {
@@ -598,34 +636,35 @@ export default function Onboarding() {
 
   return (
     <div
-      className="min-h-screen flex items-center justify-center px-4 py-10"
+      className="min-h-screen flex items-center justify-center px-4 py-10 relative overflow-hidden"
       style={{ background: 'linear-gradient(135deg, var(--color-primary-dark, #0F2140) 0%, var(--color-primary, #1E3A5F) 55%, #162d4a 100%)' }}
     >
-      {/* Subtle background rings */}
+      {/* Decorative ambient background visual graphics panels */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute rounded-full opacity-10" style={{ width: 700, height: 700, top: '50%', left: '50%', transform: 'translate(-50%, -60%)', border: '1.5px solid var(--color-accent, #D4AF37)' }} />
         <div className="absolute rounded-full opacity-5"  style={{ width: 420, height: 420, top: '50%', left: '50%', transform: 'translate(-50%, -55%)', border: '1.5px solid var(--color-accent, #D4AF37)' }} />
       </div>
 
       <div className="relative w-full max-w-lg">
-        <div className="rounded-2xl p-8 shadow-2xl" style={{ background: '#F8FAFC' }}>
-          {/* Header */}
+        <div className="rounded-2xl p-8 shadow-2xl transition-all duration-300" style={{ background: '#F8FAFC' }}>
+          
+          {/* Top Brand Block Header */}
           <div className="flex flex-col items-center mb-6">
             <Logo dark={false} height={40} />
             <p className="mt-2 text-xs font-medium tracking-widest uppercase" style={{ color: 'var(--color-accent, #D4AF37)', fontFamily: 'Poppins, sans-serif' }}>
-              Setting up your profile
+              Setting up your workspace profile
             </p>
           </div>
 
-          {/* Progress */}
+          {/* Active Pipeline Progress Node Indicators */}
           <ProgressBar current={current} total={total} />
 
-          {/* Step tabs */}
+          {/* Configuration Steps Category Tab Nodes Tracker */}
           <div className="flex gap-1.5 mb-6 overflow-x-auto pb-1">
             {steps.map((s, i) => (
               <div
                 key={i}
-                className="flex-1 min-w-0 text-center text-xs px-2 py-1 rounded-lg truncate"
+                className="flex-1 min-w-[65px] text-center text-xs px-2 py-1 rounded-lg truncate transition-colors duration-150"
                 style={{
                   background: i < step ? '#FFFBF0' : i === step ? 'var(--color-primary, #1E3A5F)' : 'var(--color-bg-muted-2, #F1F5F9)',
                   color: i < step ? 'var(--color-accent, #D4AF37)' : i === step ? '#fff' : '#94A3B8',
@@ -639,17 +678,17 @@ export default function Onboarding() {
             ))}
           </div>
 
-          {/* Step content */}
-          <div className="min-h-[260px]">
+          {/* Core Content Pipeline Component Display Port */}
+          <div className="min-h-[280px]">
             <Component data={data} setData={setData} exams={exams} />
           </div>
 
-          {/* Navigation */}
+          {/* Navigation Control Toolbar Module */}
           <div className="flex items-center justify-between mt-6 pt-4" style={{ borderTop: '1px solid var(--color-border, #E2E8F0)' }}>
             <button
               type="button"
               onClick={handleBack}
-              className="flex items-center gap-1 text-sm font-medium transition-opacity hover:opacity-70"
+              className="flex items-center gap-1 text-sm font-medium transition-opacity hover:opacity-70 cursor-pointer"
               style={{ color: 'var(--color-muted, #64748B)', fontFamily: 'Inter, sans-serif' }}
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="M12 5l-7 7 7 7"/></svg>
@@ -661,7 +700,7 @@ export default function Onboarding() {
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="text-sm transition-opacity hover:opacity-70"
+                  className="text-sm font-medium transition-opacity hover:opacity-70 cursor-pointer"
                   style={{ color: '#94A3B8', fontFamily: 'Inter, sans-serif' }}
                 >
                   Skip
@@ -671,19 +710,20 @@ export default function Onboarding() {
                 type="button"
                 onClick={handleNext}
                 disabled={finishing}
-                className="rounded-xl px-6 py-2.5 font-semibold text-sm transition-all hover:shadow-md disabled:opacity-60"
+                className="rounded-xl px-6 py-2.5 font-semibold text-sm transition-all hover:shadow-md disabled:opacity-60 cursor-pointer"
                 style={{
                   background: 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))',
                   color: 'var(--color-primary-dark, #0F2140)',
                   fontFamily: 'Poppins, sans-serif',
                 }}
               >
-                {finishing ? 'Setting up…' : isLast ? 'Finish →' : 'Next →'}
+                {finishing ? 'Saving Profiles...' : isLast ? 'Finish & Launch 🚀' : 'Next →'}
               </button>
             </div>
           </div>
         </div>
 
+        {/* Footnote Copyright Node */}
         <p className="text-center mt-4 text-xs opacity-40" style={{ color: '#fff', fontFamily: 'Inter, sans-serif' }}>
           TryIT Educations © {new Date().getFullYear()}
         </p>

@@ -437,6 +437,7 @@ export function AuthProvider({ children }) {
       planTier,                         // 'free' | 'pro' | 'ultra'
       isPro:   planTier !== 'free',     // true for pro AND ultra
       isUltra: planTier === 'ultra',    // true only for ultra
+      isAdmin: user?.role === 'admin',  // god-mode: full access, bypasses all gates
     }}>
       {children}
     </AuthCtx.Provider>

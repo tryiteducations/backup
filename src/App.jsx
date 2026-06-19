@@ -4,7 +4,7 @@ import { ThemeProvider } from './context/ThemeContext'
 import { ToastProvider } from './context/ToastContext'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import ImpersonationBanner from './components/ImpersonationBanner'
-import { useCoins } from './context/CoinContext';
+import NotificationBar from './components/NotificationBar'
 
 const Splash          = lazy(() => import('./pages/Splash'))
 const Landing         = lazy(() => import('./pages/Landing'))
@@ -13,7 +13,7 @@ const Onboarding      = lazy(() => import('./pages/Onboarding'))
 const RoleSelect      = lazy(() => import('./pages/role-select/RoleSelect'))
 const Dashboard       = lazy(() => import('./pages/Dashboard'))
 const Profile         = lazy(() => import('./pages/Profile'))
-const Settings        = lazy(() => import('./pages/Settings'))
+const Settings        = lazy(() => import('./pages/settings/Settings'))
 const Notifications   = lazy(() => import('./pages/Notifications'))
 const JourneyPassport = lazy(() => import('./pages/JourneyPassport'))
 const TestLauncher    = lazy(() => import('./pages/test-engine/TestLauncher'))
@@ -30,6 +30,8 @@ const ExamAlerts      = lazy(() => import('./pages/exam-alerts/ExamAlerts'))
 const ConceptCard        = lazy(() => import('./pages/concept/ConceptCard'))
 const ConceptCheckpoint  = lazy(() => import('./pages/concept/ConceptCheckpoint'))
 const PrepPathway        = lazy(() => import('./pages/roadmap/PrepPathway'))
+const BharatPulse   = lazy(() => import('./pages/bharat-pulse/BharatPulse'))
+const CommunityPage = lazy(() => import('./pages/community/CommunityPage'))
 
 const GuruHub        = lazy(() => import('./pages/guru/GuruHub'))
 const MyDoubts       = lazy(() => import('./pages/guru/MyDoubts'))
@@ -53,12 +55,25 @@ const CreateHall     = lazy(() => import('./pages/hall/CreateHall'))
 const BattleArena    = lazy(() => import('./pages/hall/BattleArena'))
 const HallLeaderboard= lazy(() => import('./pages/hall/HallLeaderboard'))
 const FullLeaderboard= lazy(() => import('./pages/leaderboard/Leaderboard'))
-const Tournaments    = lazy(() => import('./pages/tournaments/Tournaments'))
+const Tournaments    = lazy(() => import('./pages/tournament/Tournaments'))
+const TournamentHub  = lazy(() => import('./pages/tournament/TournamentHub'))
+const TournamentLive = lazy(() => import('./pages/tournament/TournamentLive'))
+const TournamentResults = lazy(() => import('./pages/tournament/TournamentResults'))
+const TournamentReview  = lazy(() => import('./pages/tournament/TournamentReview'))
 const GamesHub       = lazy(() => import('./pages/games/GamesHub'))
 const MathBlitz      = lazy(() => import('./pages/games/MathBlitz'))
 const WordRush       = lazy(() => import('./pages/games/WordRush'))
 const GKBlitz        = lazy(() => import('./pages/games/GKBlitz'))
 const LogicGrid      = lazy(() => import('./pages/games/LogicGrid'))
+const Battle         = lazy(() => import('./pages/games/Battle'))
+const MemoryMatch    = lazy(() => import('./pages/games/MemoryMatch'))
+const VisualIdentify = lazy(() => import('./pages/games/VisualIdentify'))
+const NumberSeries   = lazy(() => import('./pages/games/NumberSeries'))
+const SpeedReading   = lazy(() => import('./pages/games/SpeedReading'))
+const DailyChallengeGame = lazy(() => import('./pages/games/DailyChallenge'))
+const CurrentAffairsRapid = lazy(() => import('./pages/games/CurrentAffairsRapid'))
+const SportsMastery  = lazy(() => import('./pages/games/SportsMastery'))
+const GameLevelRoadmap = lazy(() => import('./pages/games/GameLevelRoadmap'))
 const Analytics      = lazy(() => import('./pages/analytics/Analytics'))
 const Achievements   = lazy(() => import('./pages/achievements/Achievements'))
 const FocusMode      = lazy(() => import('./pages/focus-mode/FocusMode'))
@@ -77,12 +92,14 @@ const SchoolCircle       = lazy(() => import('./pages/circles/SchoolCircle'))
 const SisterhoodCircle   = lazy(() => import('./pages/circles/SisterhoodCircle'))
 const LiveImpactTracker  = lazy(() => import('./pages/impact/LiveImpactTracker'))
 const CentreLogin        = lazy(() => import('./pages/centre/CentreLogin'))
+const CentreOnboarding   = lazy(() => import('./pages/centre/CentreOnboarding'))
 const CentreDashboard    = lazy(() => import('./pages/centre/CentreDashboard'))
 const CentreAnalytics    = lazy(() => import('./pages/centre/CentreAnalytics'))
 const ConductTest        = lazy(() => import('./pages/centre/ConductTest'))
 const StudentDetail      = lazy(() => import('./pages/centre/StudentDetail'))
 const StudentHistory     = lazy(() => import('./pages/centre/StudentHistory'))
 const ParentLogin        = lazy(() => import('./pages/parent/ParentLogin'))
+const ParentOnboarding   = lazy(() => import('./pages/parent/ParentOnboarding'))
 const ParentDashboard    = lazy(() => import('./pages/parent/ParentDashboard'))
 const ChildDetail        = lazy(() => import('./pages/parent/ChildDetail'))
 const MyTestHistory      = lazy(() => import('./pages/student/MyTestHistory'))
@@ -96,9 +113,7 @@ const ThemeSelector         = lazy(() => import('./pages/settings/ThemeSelector'
 const Terms                 = lazy(() => import('./pages/legal/Terms'))
 const Privacy               = lazy(() => import('./pages/legal/Privacy'))
 const CommunityStandards    = lazy(() => import('./pages/legal/CommunityStandards'))
-const CommunityPage = lazy(() => import('./pages/community/CommunityPage'))
 
-// SmartExamSearch and ProfilePhoto are components — just import where needed
 const Stub = ({ title = 'Coming Soon' }) => (
   <div style={{ minHeight:'100vh', display:'flex', flexDirection:'column',
     alignItems:'center', justifyContent:'center', gap:16, padding:24,
@@ -147,27 +162,13 @@ function useGlobalGlitter() {
 
 function ThemedApp() {
   const { user } = useAuth()
-  
-  // 1. Initialize useCoins to get celebrateThemeUnlock
-  const { celebrateThemeUnlock } = useCoins() 
-
-  // 2. Fetch or define your profile and stats object here!
-  // (Replace these placeholders with the actual custom hooks your app uses, e.g., useProfile())
-  const profile = user?.profile || { plan: 'free' } 
-  const statsObject = user?.stats || {}
-
   useGlobalGlitter()
 
   return (
-    <ThemeProvider
-      userLevel={user?.level ?? 1}
-      userPlan={profile.plan}
-      userStats={statsObject} 
-      onThemeUnlocked={celebrateThemeUnlock}
-    >
+    <ThemeProvider userLevel={user?.level ?? 1}>
       <BrowserRouter>
         <ImpersonationBanner />
-        {/* ... rest of your routes ... */}
+        <NotificationBar />
         <Suspense fallback={<Loader />}>
           <Routes>
             {/* AUTH */}
@@ -176,7 +177,7 @@ function ThemedApp() {
             <Route path="/login"       element={<Login />} />
             <Route path="/onboarding"  element={<Onboarding />} />
             <Route path="/role-select" element={<RoleSelect />} />
-            <Route path="/community" element={<CommunityPage />} />
+
             {/* CORE */}
             <Route path="/dashboard"     element={<Dashboard />} />
             <Route path="/profile"       element={<Profile />} />
@@ -194,8 +195,10 @@ function ThemedApp() {
             <Route path="/concept/:topicId/:level"            element={<ConceptCard />} />
             <Route path="/concept/:topicId/:level/checkpoint" element={<ConceptCheckpoint />} />
 
-            {/* PREP PATHWAYS (NEW) */}
+            {/* PREP PATHWAYS + BHARAT PULSE + COMMUNITY (NEW) */}
             <Route path="/pathway/:pathwayId" element={<PrepPathway />} />
+            <Route path="/bharat-pulse" element={<BharatPulse />} />
+            <Route path="/community" element={<CommunityPage />} />
 
             {/* EXAMS */}
             <Route path="/exams"                  element={<AllExams />} />
@@ -232,11 +235,24 @@ function ThemedApp() {
             <Route path="/hall/:hallId"        element={<HallHome />} />
             <Route path="/leaderboard"         element={<FullLeaderboard />} />
             <Route path="/tournaments"         element={<Tournaments />} />
+            <Route path="/tournament"          element={<TournamentHub />} />
+            <Route path="/tournament/:id/live"    element={<TournamentLive />} />
+            <Route path="/tournament/:id/results" element={<TournamentResults />} />
+            <Route path="/tournament/:id/review"  element={<TournamentReview />} />
             <Route path="/games"               element={<GamesHub />} />
             <Route path="/games/math-blitz"    element={<MathBlitz />} />
             <Route path="/games/word-rush"     element={<WordRush />} />
             <Route path="/games/gk-blitz"      element={<GKBlitz />} />
             <Route path="/games/logic-grid"    element={<LogicGrid />} />
+            <Route path="/games/battle"        element={<Battle />} />
+            <Route path="/games/memory/:gameId" element={<MemoryMatch />} />
+            <Route path="/games/visual/:gameId" element={<VisualIdentify />} />
+            <Route path="/games/number-series" element={<NumberSeries />} />
+            <Route path="/games/speed-reading" element={<SpeedReading />} />
+            <Route path="/games/daily-challenge" element={<DailyChallengeGame />} />
+            <Route path="/games/current-affairs" element={<CurrentAffairsRapid />} />
+            <Route path="/games/sports-mastery" element={<SportsMastery />} />
+            <Route path="/games/levels/:gameId" element={<GameLevelRoadmap />} />
 
             {/* PROGRESS */}
             <Route path="/analytics"    element={<Analytics />} />
@@ -267,6 +283,7 @@ function ThemedApp() {
 
             {/* CENTRE */}
             <Route path="/centre/login"        element={<CentreLogin />} />
+            <Route path="/centre/onboarding"   element={<CentreOnboarding />} />
             <Route path="/centre/dashboard"    element={<CentreDashboard />} />
             <Route path="/centre/analytics"    element={<CentreAnalytics />} />
             <Route path="/centre/conduct-test" element={<ConductTest />} />
@@ -275,6 +292,7 @@ function ThemedApp() {
 
             {/* PARENT */}
             <Route path="/parent/login"         element={<ParentLogin />} />
+            <Route path="/parent/onboarding"    element={<ParentOnboarding />} />
             <Route path="/parent/dashboard"     element={<ParentDashboard />} />
             <Route path="/parent/child/:id"     element={<ChildDetail />} />
             <Route path="/student/test-history" element={<MyTestHistory />} />

@@ -5,6 +5,7 @@ import { useState }     from 'react'
 import { useNavigate }  from 'react-router-dom'
 import { useAuth }      from '../context/AuthContext'
 import ProfilePhoto     from '../components/ProfilePhoto'
+import SkillProgress    from '../components/SkillProgress'
 
 const NAVY = '#1E3A5F'
 const GOLD = '#C9A84C'
@@ -185,6 +186,11 @@ export default function Profile() {
               <p style={{ fontSize:12, fontWeight:700, color:NAVY, marginBottom:10 }}>📅 Member Since</p>
               <p style={{ fontSize:14, color:'#475569', margin:'0 0 4px' }}>{user?.joinDate || 'June 2026'}</p>
               <p style={{ fontSize:11, color:'#94A3B8', margin:0 }}>ID: {user?.userId}</p>
+            </div>
+
+            <div style={{ marginBottom:14 }}>
+              <p style={{ fontSize:12, fontWeight:700, color:NAVY, marginBottom:10 }}>📈 Real Skill Improvement</p>
+              <SkillProgress />
             </div>
 
             {!isPro && (

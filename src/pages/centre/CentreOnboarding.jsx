@@ -1,60 +1,47 @@
-// FILE: src/pages/centre/CentreLogin.jsx
-// TryIT — Institution Login (with mandatory copyright agreement)
-// Route: /centre/login
+// FILE: src/pages/centre/CentreOnboarding.jsx
+// TryIT — Institution details form for ALREADY-authenticated users
+// Route: /centre/onboarding (reached via RoleSelect, NOT a login screen)
+// Distinct from CentreLogin.jsx, which is the standalone entry point
+// for institutions arriving via a direct/marketing link with no account yet.
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 
-const NAVY='#1E3A5F', GOLD='#C9A84C', GREEN='#059669'
+const NAVY='#1E3A5F', GOLD='#C9A84C'
 
-export default function CentreLogin(){
+export default function CentreOnboarding(){
   const navigate = useNavigate()
-  const { login, updateUser } = useAuth()
+  const { user, updateUser } = useAuth()
   const [centreName,setCentreName]=useState('')
-  const [phone,setPhone]=useState('')
   const [city,setCity]=useState('')
   const [agreed,setAgreed]=useState(false)
   const [loading,setLoading]=useState(false)
   const [error,setError]=useState('')
 
   const handleSubmit=async()=>{
-    if(!centreName.trim()||phone.replace(/\D/g,'').length!==10||!city.trim()){
-      setError('Please fill all fields correctly'); return
-    }
+    if(!centreName.trim()||!city.trim()){ setError('Please fill all fields'); return }
     if(!agreed){ setError('You must agree to the copyright terms to continue'); return }
     setError(''); setLoading(true)
-    try{
-      await login(`${phone}@centre.tryiteducations.net`,'centre')
-      await updateUser?.({ name:centreName, role:'centre', city, copyright_agreed:true, copyright_agreed_at:new Date().toISOString() })
-      navigate('/centre/dashboard')
-    }catch{ setError('Something went wrong. Please try again.') }
+    await updateUser?.({ name:centreName, city, copyright_agreed:true, copyright_agreed_at:new Date().toISOString() })
     setLoading(false)
+    navigate('/centre/dashboard')
   }
 
   return (
     <div style={{minHeight:'100vh',background:`linear-gradient(160deg,${NAVY},#0F2140)`,fontFamily:'Inter,sans-serif',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:24,color:'#fff'}}>
-      <div style={{textAlign:'center',marginBottom:28}}>
-        <p style={{fontFamily:'Poppins,sans-serif',fontWeight:900,fontSize:28,margin:'0 0 4px'}}><span>Try</span><span style={{color:GOLD}}>IT</span></p>
-        <p style={{fontSize:11,color:'rgba(255,255,255,0.5)',letterSpacing:2}}>🏫 INSTITUTION PARTNER LOGIN</p>
-      </div>
+      <p style={{fontSize:40,marginBottom:10}}>🏫</p>
+      <h2 style={{fontFamily:'Poppins,sans-serif',fontWeight:800,fontSize:20,marginBottom:6,textAlign:'center'}}>Tell us about your institution</h2>
+      <p style={{fontSize:13,color:'rgba(255,255,255,0.6)',marginBottom:24,textAlign:'center'}}>One last step before your dashboard is ready</p>
 
       <div style={{background:'rgba(255,255,255,0.06)',borderRadius:24,padding:28,width:'100%',maxWidth:400}}>
         <label style={{fontSize:11,fontWeight:700,color:'rgba(255,255,255,0.6)',display:'block',marginBottom:4}}>Institution / Centre Name</label>
         <input value={centreName} onChange={e=>setCentreName(e.target.value)} placeholder="e.g. Bright Maths Academy"
           style={{width:'100%',padding:'12px 14px',background:'rgba(255,255,255,0.08)',border:'1.5px solid rgba(255,255,255,0.15)',borderRadius:12,color:'#fff',fontSize:14,outline:'none',marginBottom:14,boxSizing:'border-box'}}/>
 
-        <label style={{fontSize:11,fontWeight:700,color:'rgba(255,255,255,0.6)',display:'block',marginBottom:4}}>Contact Phone</label>
-        <div style={{display:'flex',alignItems:'center',background:'rgba(255,255,255,0.08)',border:'1.5px solid rgba(255,255,255,0.15)',borderRadius:12,padding:'12px 14px',marginBottom:14}}>
-          <span style={{marginRight:8,color:'rgba(255,255,255,0.6)'}}>+91</span>
-          <input maxLength={10} value={phone} onChange={e=>setPhone(e.target.value.replace(/\D/g,''))} placeholder="98765 43210"
-            style={{flex:1,background:'none',border:'none',outline:'none',color:'#fff',fontSize:14}}/>
-        </div>
-
         <label style={{fontSize:11,fontWeight:700,color:'rgba(255,255,255,0.6)',display:'block',marginBottom:4}}>City</label>
         <input value={city} onChange={e=>setCity(e.target.value)} placeholder="e.g. Coimbatore"
           style={{width:'100%',padding:'12px 14px',background:'rgba(255,255,255,0.08)',border:'1.5px solid rgba(255,255,255,0.15)',borderRadius:12,color:'#fff',fontSize:14,outline:'none',marginBottom:18,boxSizing:'border-box'}}/>
 
-        {/* Mandatory copyright agreement */}
         <div style={{background:'rgba(220,38,38,0.1)',border:'1px solid #EF4444',borderRadius:12,padding:14,marginBottom:16}}>
           <label style={{display:'flex',gap:10,cursor:'pointer',alignItems:'flex-start'}}>
             <input type="checkbox" checked={agreed} onChange={e=>setAgreed(e.target.checked)} style={{marginTop:2,flexShrink:0}}/>
@@ -70,13 +57,9 @@ export default function CentreLogin(){
 
         <button onClick={handleSubmit} disabled={loading}
           style={{width:'100%',padding:'14px',background:GOLD,color:NAVY,border:'none',borderRadius:14,fontWeight:800,fontSize:15,cursor:'pointer',opacity:loading?0.7:1}}>
-          {loading?'Setting up...':'Register Institution →'}
+          {loading?'Setting up...':'Go to Dashboard →'}
         </button>
       </div>
-
-      <p style={{fontSize:11,color:'rgba(255,255,255,0.4)',marginTop:18}}>
-        Already registered? <span style={{color:GOLD,cursor:'pointer'}} onClick={()=>navigate('/login')}>Login here</span>
-      </p>
     </div>
   )
 }

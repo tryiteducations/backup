@@ -1,174 +1,346 @@
-/**
- * Game Engine — Subject-oriented question system
- * Level 1: Generic (anyone can play — onboarding)
- * Level 2+: Questions matched to student's target exam
- * Makes students razor-sharp for their specific exam
- */
+// FILE: src/lib/gameEngine.js
+// TryIT — Shared Game Engine for all mini-games
+// Dopamine mechanics: combo multiplier, streak fire, instant feedback,
+// score popups — all exam-relevant (no random trivia, no junk content)
+//
+// COIN ECONOMY (100% admin-controlled via game_economy_config table):
+//   Entry cost, win reward, loss penalty are NEVER hardcoded.
+//   Always fetched fresh so admin can change 5→50→500 anytime, instantly.
 
-// ── Generic L1 questions (Math Blitz, Word Rush, GK Burst) ────────
-const GENERIC_POOL = {
-  math: [
-    { q:'15 + 28 = ?',             ans:43,  op:'+', a:43,  b:43  },
-    { q:'7 × 8 = ?',               ans:56,  op:'×', a:56,  b:56  },
-    { q:'144 ÷ 12 = ?',            ans:12,  op:'÷', a:12,  b:12  },
-    { q:'23% of 200 = ?',          ans:46,  op:'%', a:46,  b:46  },
-    { q:'Square root of 169 = ?',  ans:13,  op:'√', a:13,  b:13  },
-    { q:'5² + 4² = ?',             ans:41,  op:'^', a:41,  b:41  },
-    { q:'If 3x = 45, x = ?',       ans:15,  op:'=', a:15,  b:15  },
-    { q:'LCM of 4 and 6 = ?',      ans:12,  op:'L', a:12,  b:12  },
-  ],
-  word: [
-    { q:'Correct spelling?',  options:['Accomodate','Accommodate','Acommodate','Accommadate'], ans:1 },
-    { q:'Antonym of HUGE?',   options:['Tiny','Large','Vast','Giant'],   ans:0 },
-    { q:'Synonym of BRAVE?',  options:['Cowardly','Valiant','Timid','Weak'], ans:1 },
-    { q:'Plural of CHILD?',   options:['Childs','Childes','Children','Childrens'], ans:2 },
-  ],
-  gk: [
-    { q:'Capital of India?',                ans:'New Delhi',    options:['Mumbai','New Delhi','Kolkata','Chennai'] },
-    { q:'Who wrote the Indian Constitution?',ans:'B.R. Ambedkar',options:['Nehru','Gandhi','Ambedkar','Patel'] },
-    { q:'Largest planet in solar system?',  ans:'Jupiter',      options:['Saturn','Jupiter','Mars','Neptune'] },
-  ],
+import { useState, useCallback, useRef, useEffect } from 'react'
+import { supabase } from './supabase'
+
+// ── FETCH LIVE ECONOMY CONFIG (admin can change anytime, no app update needed) ──
+export async function fetchGameEconomy(gameId) {
+  try {
+    const { data, error } = await supabase.rpc('get_game_economy', { p_game_id: gameId })
+    if (error || !data?.[0]) throw error
+    return {
+      entryCost:   data[0].entry_cost,
+      winReward:   data[0].win_reward,
+      lossPenalty: data[0].loss_penalty,
+      drawReward:  data[0].draw_reward,
+    }
+  } catch {
+    // Safe fallback if config unreachable (never blocks play)
+    return { entryCost: 5, winReward: 5, lossPenalty: 5, drawReward: 0 }
+  }
 }
 
-// ── Exam-specific question pools (razor-sharp practice) ──────────
-const EXAM_POOLS = {
-  'SSC CGL': {
-    math: [
-      { q:'A shopkeeper marks goods 30% above cost. He allows 10% discount. Profit%?', ans:17, hint:'MP=1.3CP, SP=0.9×1.3CP=1.17CP' },
-      { q:'Train 200m long at 54 km/h. Time to cross a pole?', ans:13.33, hint:'Time = 200÷(54×5/18) = 200÷15 ≈ 13.33s' },
-      { q:'Find the odd one: 2,5,10,17,26,37,50,?', ans:65, hint:'Diff: 3,5,7,9,11,13,15 → next diff=15 → 50+15=65' },
-    ],
-    reasoning: [
-      { q:'ACEG : BDFH :: PRTV : ?', ans:'QSUW', type:'analogy' },
-      { q:'Find the missing: 1,1,2,3,5,8,?,21', ans:13, hint:'Fibonacci: each = sum of previous two' },
-    ],
-    english: [
-      { q:'She insisted __ going alone.', ans:'on', options:['on','in','at','for'], type:'preposition' },
-      { q:'Idiom: "Spill the beans" means?', ans:'Reveal a secret', options:['Cook food','Reveal a secret','Make mess','Be lazy'] },
-    ],
-  },
-  'UPSC CSE': {
-    gk: [
-      { q:'Which Schedule of Constitution deals with anti-defection?', ans:'Tenth', options:['Eighth','Ninth','Tenth','Eleventh'] },
-      { q:'Article 370 related to which state?', ans:'J&K', options:['Kashmir','J&K','Sikkim','Arunachal'] },
-    ],
-    polity: [
-      { q:'Directive Principles are in which Part of Constitution?', ans:'Part IV', options:['Part III','Part IV','Part V','Part VI'] },
-      { q:'Who appoints the CAG of India?', ans:'President', options:['PM','President','Parliament','SC'] },
-    ],
-  },
-  'IBPS PO': {
-    quant: [
-      { q:'Simple Interest on ₹5000 at 8% for 2.5 years?', ans:1000, hint:'SI = PRT/100 = 5000×8×2.5/100 = 1000' },
-      { q:'Pipes A and B can fill tank in 12 and 15 hrs. Together?', ans:'6⅔ hrs', hint:'1/12+1/15 = 9/60 = 3/20 → 20/3 hrs' },
-    ],
-    banking: [
-      { q:'Full form of NEFT?', ans:'National Electronic Funds Transfer', options:['National Electronic Funds Transfer','Net Electronic Fund Transaction','National Easy Fund Transfer','None'] },
-      { q:'RBI was nationalised in?', ans:1949, options:[1935,1949,1955,1969] },
-    ],
-  },
-  'NEET UG': {
-    biology: [
-      { q:'Which is the powerhouse of cell?', ans:'Mitochondria', options:['Nucleus','Mitochondria','Ribosome','Lysosome'] },
-      { q:'DNA replication is?', ans:'Semi-conservative', options:['Conservative','Semi-conservative','Dispersive','Random'] },
-    ],
-    chemistry: [
-      { q:'pH of pure water at 25°C?', ans:7, options:[6,7,8,14] },
-    ],
-  },
-  'JEE Main': {
-    physics: [
-      { q:'SI unit of electric charge?', ans:'Coulomb', options:['Ampere','Volt','Coulomb','Ohm'] },
-      { q:'Force = mass × ?', ans:'acceleration', options:['velocity','acceleration','momentum','displacement'] },
-    ],
-    math: [
-      { q:'∫sin(x)dx = ?', ans:'-cos(x)+C', options:['cos(x)+C','-cos(x)+C','sin(x)+C','-sin(x)+C'] },
-    ],
-  },
+// ── HOOK: GAME ENTRY GATE (coin check + spend before play starts) ──────────
+export function useGameEntry(gameId, { coins, spendCoins, addCoins }) {
+  const [economy,    setEconomy]    = useState(null)
+  const [canAfford,  setCanAfford]  = useState(true)
+  const [entryPaid,  setEntryPaid]  = useState(false)
+
+  useEffect(() => {
+    fetchGameEconomy(gameId).then(e => {
+      setEconomy(e)
+      setCanAfford((coins || 0) >= e.entryCost)
+    })
+  }, [gameId, coins])
+
+  const payEntry = useCallback(async () => {
+    if (!economy) return false
+    const ok = economy.entryCost === 0 || await spendCoins?.(economy.entryCost, `game_entry_${gameId}`)
+    if (ok) setEntryPaid(true)
+    return ok
+  }, [economy, gameId, spendCoins])
+
+  // Called once when game ends — settles win/loss coins
+  const settleResult = useCallback(async (result /* 'win'|'loss'|'draw' */) => {
+    if (!economy) return 0
+    let delta = 0
+    if (result === 'win')  delta = economy.winReward
+    if (result === 'loss') delta = -economy.lossPenalty
+    if (result === 'draw') delta = economy.drawReward
+
+    if (delta > 0) await addCoins?.(delta)
+    else if (delta < 0) await spendCoins?.(Math.abs(delta), `game_loss_${gameId}`, { allowZeroFloor: true })
+
+    try {
+      await supabase.from('game_sessions').update({ coins_delta: delta }).eq('game_id', gameId)
+    } catch {}
+
+    return delta
+  }, [economy, gameId, addCoins, spendCoins])
+
+  return { economy, canAfford, entryPaid, payEntry, settleResult }
 }
 
-// Fallback for exams without specific pool
-const DEFAULT_POOL = EXAM_POOLS['SSC CGL']
+// ── COMBO MULTIPLIER SYSTEM ───────────────────────────────────────────────
+// Consecutive correct answers increase multiplier: 1x → 1.5x → 2x → 3x
+export function getComboMultiplier(streak) {
+  if (streak >= 10) return { mult: 3,   label: '🔥🔥🔥 ON FIRE',  color: '#DC2626' }
+  if (streak >= 6)  return { mult: 2,   label: '🔥🔥 BLAZING',   color: '#EA580C' }
+  if (streak >= 3)  return { mult: 1.5, label: '🔥 HOT STREAK',  color: '#D97706' }
+  return                  { mult: 1,   label: '',                color: '#64748B' }
+}
 
-/**
- * Get questions for a game session
- * @param {string} gameType - math|word|gk|subject
- * @param {number} level - player level (1=generic, 2+=exam-specific)
- * @param {string} targetExam - student's target exam
- * @param {string} subject - specific subject (optional)
- */
-export function getGameQuestions({ gameType='math', level=1, targetExam='SSC CGL', subject=null, count=10 }) {
-  // Level 1: always generic (good for new users/onboarding)
-  if (level <= 1) {
-    return generateGenericQuestions(gameType, count)
+// ── HAPTIC-LIKE FEEDBACK (vibration on mobile) ────────────────────────────
+export function triggerHaptic(type = 'success') {
+  if (!navigator.vibrate) return
+  const patterns = {
+    success:    [40],
+    combo:      [30, 30, 30],
+    levelup:    [50, 30, 50, 30, 100],
+    wrong:      [80],
+    countdown:  [20],
+  }
+  navigator.vibrate(patterns[type] || patterns.success)
+}
+
+// ── GAME SESSION HOOK (shared state machine for all games) ───────────────
+export function useGameSession({ totalQuestions, duration, onComplete }) {
+  const [phase,       setPhase]       = useState('ready')  // ready|playing|done
+  const [currentIdx,  setCurrentIdx]  = useState(0)
+  const [score,       setScore]       = useState(0)
+  const [streak,      setStreak]      = useState(0)
+  const [bestStreak,  setBestStreak]  = useState(0)
+  const [correct,     setCorrect]     = useState(0)
+  const [wrong,       setWrong]       = useState(0)
+  const [timeLeft,    setTimeLeft]    = useState(duration)
+  const [lastPoints,  setLastPoints]  = useState(null)  // for popup animation
+  const [showCombo,   setShowCombo]   = useState(false)
+
+  const timerRef = useRef(null)
+
+  const start = useCallback(() => {
+    setPhase('playing')
+    setCurrentIdx(0); setScore(0); setStreak(0); setBestStreak(0)
+    setCorrect(0); setWrong(0); setTimeLeft(duration)
+
+    timerRef.current = setInterval(() => {
+      setTimeLeft(t => {
+        if (t <= 1) {
+          clearInterval(timerRef.current)
+          setPhase('done')
+          return 0
+        }
+        return t - 1
+      })
+    }, 1000)
+  }, [duration])
+
+  const answer = useCallback((isCorrect, basePoints = 10) => {
+    if (isCorrect) {
+      const newStreak = streak + 1
+      const { mult, label } = getComboMultiplier(newStreak)
+      const points = Math.round(basePoints * mult)
+
+      setStreak(newStreak)
+      setBestStreak(b => Math.max(b, newStreak))
+      setCorrect(c => c + 1)
+      setScore(s => s + points)
+      setLastPoints({ points, isCorrect: true, comboLabel: label, mult })
+
+      if (newStreak === 3 || newStreak === 6 || newStreak === 10) {
+        setShowCombo(true)
+        triggerHaptic('combo')
+        setTimeout(() => setShowCombo(false), 1200)
+      } else {
+        triggerHaptic('success')
+      }
+    } else {
+      setStreak(0)
+      setWrong(w => w + 1)
+      setLastPoints({ points: 0, isCorrect: false })
+      triggerHaptic('wrong')
+    }
+
+    setTimeout(() => setLastPoints(null), 600)
+
+    if (currentIdx + 1 >= totalQuestions) {
+      clearInterval(timerRef.current)
+      setPhase('done')
+    } else {
+      setCurrentIdx(i => i + 1)
+    }
+  }, [streak, currentIdx, totalQuestions])
+
+  const finish = useCallback(() => {
+    clearInterval(timerRef.current)
+    setPhase('done')
+  }, [])
+
+  // Call onComplete when phase becomes done
+  const completedRef = useRef(false)
+  if (phase === 'done' && !completedRef.current) {
+    completedRef.current = true
+    onComplete?.({ score, correct, wrong, bestStreak, totalQuestions })
   }
 
-  // Level 2+: exam-specific questions for razor-sharp practice
-  const examPool = EXAM_POOLS[targetExam] || DEFAULT_POOL
-  const subjectKey = subject || detectSubjectFromGame(gameType, targetExam)
-  const pool = examPool[subjectKey] || examPool[Object.keys(examPool)[0]] || []
-
-  if (pool.length >= count) {
-    return shuffleArray([...pool]).slice(0, count).map(formatQuestion)
-  }
-
-  // Mix exam-specific + generic if pool is small
-  const examQs    = shuffleArray([...pool]).map(formatQuestion)
-  const genericQs = generateGenericQuestions(gameType, count - examQs.length)
-  return [...examQs, ...genericQs].slice(0, count)
-}
-
-function detectSubjectFromGame(gameType, exam) {
-  const map = {
-    'math':    { 'SSC CGL':'math', 'UPSC CSE':'math', 'IBPS PO':'quant', 'JEE Main':'math', default:'math' },
-    'word':    { 'SSC CGL':'english', default:'english' },
-    'gk':      { 'UPSC CSE':'polity', 'IBPS PO':'banking', default:'gk' },
-    'subject': { 'NEET UG':'biology', 'JEE Main':'physics', default:'gk' },
-  }
-  return map[gameType]?.[exam] || map[gameType]?.default || 'math'
-}
-
-function generateGenericQuestions(type, count) {
-  const pool = GENERIC_POOL[type] || GENERIC_POOL.math
-  return shuffleArray([...pool]).slice(0, Math.min(count, pool.length)).map(formatQuestion)
-}
-
-function formatQuestion(q) {
-  // Generate wrong options if not provided
-  if (q.options) return { ...q, formatted: true }
-  const ans = typeof q.ans === 'number' ? q.ans : parseInt(q.ans)
-  const wrongs = [ans+1, ans-1, ans+Math.ceil(ans*0.1), ans*2].filter(x=>x!==ans&&x>0&&Number.isFinite(x))
-  const options = shuffleArray([ans, ...wrongs.slice(0,3)])
-  return { ...q, options, formatted: true }
-}
-
-function shuffleArray(arr) {
-  for (let i=arr.length-1; i>0; i--) {
-    const j = Math.floor(Math.random()*(i+1));
-    [arr[i],arr[j]] = [arr[j],arr[i]]
-  }
-  return arr
-}
-
-/**
- * Calculate XP earned from game
- * Higher level = more XP possible
- */
-export function calcGameXP({ score, level, isPerfect }) {
-  const base  = level * 10
-  const bonus = isPerfect ? base * 2 : 0
-  return base + Math.round(score * 0.2) + bonus
-}
-
-/**
- * Game difficulty curve based on level
- */
-export function getGameConfig(level) {
   return {
-    timePerQuestion: Math.max(5, 15 - level),         // seconds
-    totalQuestions:  Math.min(20, 8 + level * 2),      // more questions at higher levels
-    streakMultiplier: 1 + (level * 0.1),               // more streak bonus
-    label: level <= 1 ? 'Beginner' : level <= 3 ? 'Intermediate' : level <= 6 ? 'Advanced' : level <= 9 ? 'Expert' : 'Master',
-    hint: level <= 1 ? 'Hints shown' : level <= 4 ? 'Hints cost 5 coins' : 'No hints',
+    phase, currentIdx, score, streak, bestStreak, correct, wrong,
+    timeLeft, lastPoints, showCombo,
+    start, answer, finish,
   }
+}
+
+// ── SCORE TIER (for end screen medal) ─────────────────────────────────────
+export function getGameTier(score, maxPossible) {
+  const pct = maxPossible > 0 ? (score / maxPossible) * 100 : 0
+  if (pct >= 90) return { emoji:'🏆', label:'Legendary',  color:'#D97706' }
+  if (pct >= 75) return { emoji:'🥇', label:'Excellent',  color:'#CA8A04' }
+  if (pct >= 60) return { emoji:'🥈', label:'Great',      color:'#475569' }
+  if (pct >= 40) return { emoji:'🥉', label:'Good',       color:'#92400E' }
+  return              { emoji:'🌱', label:'Keep Going', color:'#059669' }
+}
+
+// ── DAILY HIGH SCORE TRACKING (localStorage, synced to Supabase) ──────────
+export function getLocalHighScore(gameId) {
+  try {
+    return parseInt(localStorage.getItem(`tryit_hs_${gameId}`) || '0')
+  } catch { return 0 }
+}
+
+export function setLocalHighScore(gameId, score) {
+  try {
+    const current = getLocalHighScore(gameId)
+    if (score > current) {
+      localStorage.setItem(`tryit_hs_${gameId}`, String(score))
+      return true  // new high score
+    }
+  } catch {}
+  return false
+}
+
+// ── MOMENTUM METER (original mechanic — decays, doesn't shatter) ──────────
+export const MOMENTUM_LEVELS = [
+  { level:0, label:'No Momentum', emoji:'⚪', color:'#94A3B8' },
+  { level:1, label:'Building',    emoji:'🌱', color:'#059669' },
+  { level:2, label:'Warm',        emoji:'🔥', color:'#D97706' },
+  { level:3, label:'Strong',      emoji:'🔥🔥', color:'#EA580C' },
+  { level:4, label:'Blazing',     emoji:'🔥🔥🔥', color:'#DC2626' },
+  { level:5, label:'Unstoppable', emoji:'⚡', color:'#7C3AED' },
+]
+
+export function getMomentumInfo(level) {
+  return MOMENTUM_LEVELS[Math.min(Math.max(level, 0), 5)]
+}
+
+export async function recordMomentum(userId) {
+  if (!userId) return null
+  try {
+    await supabase.rpc('update_momentum', { p_user_id: userId })
+    const { data } = await supabase.from('momentum_log').select('*').eq('user_id', userId).single()
+    return data
+  } catch { return null }
+}
+
+// ── DAILY CHALLENGE — deterministic seed (same questions for all users that day) ──
+export function getDailyChallengeSeed(dateStr = null) {
+  const date = dateStr || new Date().toISOString().slice(0, 10)  // "2026-06-20"
+  let hash = 0
+  for (let i = 0; i < date.length; i++) {
+    hash = (hash * 31 + date.charCodeAt(i)) >>> 0
+  }
+  return hash
+}
+
+// Seeded shuffle — deterministic given the same seed (so all users get same order)
+export function seededShuffle(arr, seed) {
+  const a = [...arr]
+  let s = seed
+  const random = () => {
+    s = (s * 1103515245 + 12345) & 0x7fffffff
+    return s / 0x7fffffff
+  }
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
+export async function fetchDailyChallengeQuestions() {
+  const today = new Date().toISOString().slice(0, 10)
+
+  // Check admin override first (for big exam announcement days)
+  try {
+    const { data: override } = await supabase
+      .from('daily_challenge_override').select('question_ids').eq('challenge_date', today).single()
+    if (override?.question_ids?.length) {
+      const { data: qs } = await supabase.from('question_bank').select('*').in('q_id', override.question_ids)
+      return qs || []
+    }
+  } catch {}
+
+  // Auto-generate via deterministic seed
+  const seed = getDailyChallengeSeed(today)
+  const { data: pool } = await supabase
+    .from('question_bank').select('*').eq('admin_approved', true).limit(200)
+
+  if (!pool?.length) return []
+  return seededShuffle(pool, seed).slice(0, 5)
+}
+
+export async function hasCompletedDailyChallenge(userId) {
+  if (!userId) return false
+  const today = new Date().toISOString().slice(0, 10)
+  try {
+    const { data } = await supabase
+      .from('daily_challenge_completions').select('*')
+      .eq('user_id', userId).eq('challenge_date', today).single()
+    return !!data
+  } catch { return false }
+}
+
+export async function recordDailyChallengeCompletion(userId, score, correct) {
+  const today = new Date().toISOString().slice(0, 10)
+  try {
+    await supabase.from('daily_challenge_completions')
+      .insert({ user_id: userId, challenge_date: today, score, correct })
+  } catch {}
+  await recordMomentum(userId)
+}
+
+// ── GAME NOTIFICATION TRIGGERS ──────────────────────────────────────────
+// Call these at the right moments to drive re-engagement
+export async function notifyDailyChallengeUnlock(userId) {
+  try {
+    await supabase.from('notification_queue').insert({
+      user_id: userId, notif_type: 'daily_challenge_unlock',
+      title: "📅 Today's Challenge is live!",
+      body: "5 fresh questions waiting. Keep your momentum going!",
+      deep_link: '/games/daily-challenge',
+      send_at: new Date().toISOString(),
+    })
+  } catch {}
+}
+
+export async function notifyMomentumAtRisk(userId, momentumLabel) {
+  try {
+    await supabase.from('notification_queue').insert({
+      user_id: userId, notif_type: 'momentum_at_risk',
+      title: '🔥 Your momentum is fading!',
+      body: `Play one quick game today to stay ${momentumLabel}.`,
+      deep_link: '/games',
+      send_at: new Date().toISOString(),
+    })
+  } catch {}
+}
+
+export async function notifyNewGameUnlocked(userId, gameName, gameEmoji) {
+  try {
+    await supabase.from('notification_queue').insert({
+      user_id: userId, notif_type: 'new_game_unlocked',
+      title: `🎮 New game unlocked: ${gameName}!`,
+      body: `${gameEmoji} Be among the first to play — sharpen your mind now!`,
+      deep_link: '/games',
+      send_at: new Date().toISOString(),
+    })
+  } catch {}
+}
+
+export async function notifyStickerUnlocked(userId, stickerLabel, stickerEmoji) {
+  try {
+    await supabase.from('notification_queue').insert({
+      user_id: userId, notif_type: 'sticker_unlocked',
+      title: `🏅 New sticker: ${stickerLabel}!`,
+      body: `${stickerEmoji} Check your profile to see your collection grow.`,
+      deep_link: '/profile',
+      send_at: new Date().toISOString(),
+    })
+  } catch {}
 }
