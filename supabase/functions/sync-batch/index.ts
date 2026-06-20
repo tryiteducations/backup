@@ -1,7 +1,11 @@
 // supabase/functions/sync-batch/index.ts
+// FIXED: updates/reads PROFILES, not "users" (table never existed in real DB)
 // Receives batched local transactions (coin balance, scores, etc), validates
 // monotonic sequence_number to block database-rollback replay attacks,
 // verifies per-transaction HMAC signature, writes atomically.
+//
+// Every security mechanism (replay detection, signature verification,
+// admin_alerts flagging) is UNCHANGED — this is purely the table rename.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.0';
 import { verifyJWT } from '../_shared/jwt.ts';
@@ -118,10 +122,7 @@ Deno.serve(async (req: Request) => {
       }
     }
 
-    // All validated — insert atomically. Supabase JS client doesn't expose raw
-    // transactions, so we rely on a single batch insert (Postgres handles each
-    // INSERT statement atomically) plus the unique (user_id, sequence_number)
-    // constraint as a safety net against partial double-writes.
+    // All validated — insert atomically.
     const rows = transactions.map((tx) => ({
       user_id: userId,
       sequence_number: tx.sequence_number,
@@ -138,8 +139,9 @@ Deno.serve(async (req: Request) => {
 
     if (insertErr) throw insertErr;
 
+    // ── FIX: was supabase.from('users'), real table is 'profiles' ──────
     await supabase
-      .from('users')
+      .from('profiles')
       .update({ last_sync_timestamp: new Date().toISOString() })
       .eq('id', userId);
 
@@ -153,8 +155,9 @@ Deno.serve(async (req: Request) => {
       },
     });
 
-    const { data: userRow } = await supabase
-      .from('users')
+    // ── FIX: was supabase.from('users'), real table is 'profiles' ──────
+    const { data: profileRow } = await supabase
+      .from('profiles')
       .select('session_version')
       .eq('id', userId)
       .maybeSingle();
@@ -162,7 +165,7 @@ Deno.serve(async (req: Request) => {
     return jsonResponse({
       success: true,
       count: transactions.length,
-      new_session_version: userRow?.session_version,
+      new_session_version: profileRow?.session_version,
     });
   } catch (err) {
     console.error('Batch sync error:', err);

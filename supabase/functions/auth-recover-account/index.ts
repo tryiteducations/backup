@@ -1,4 +1,5 @@
 // supabase/functions/auth-recover-account/index.ts
+// FIXED: queries PROFILES, not "users" (table never existed in real DB)
 // Verifies security answers (mother's name, alt phone, hometown).
 // On success, flags next step as re-verify (Truecaller/WhatsApp/SMS) — does NOT
 // directly issue a JWT, since identity must still be re-proven via phone ownership.
@@ -22,32 +23,33 @@ Deno.serve(async (req: Request) => {
     const { phone, mothersName, altPhone, hometown } = await req.json();
     const cleanPhone = phone.replace(/\D/g, '').slice(-10);
 
-    const { data: user, error } = await supabase
-      .from('users')
+    // ── FIX: was supabase.from('users'), real table is 'profiles' ──────
+    const { data: profile, error } = await supabase
+      .from('profiles')
       .select('id, security_questions')
       .eq('phone', cleanPhone)
       .maybeSingle();
 
-    if (error || !user) {
+    if (error || !profile) {
       await flagSOS(cleanPhone, deviceId, 'recovery_user_not_found');
       return jsonResponse({ error: 'User not found' }, 401);
     }
 
-    if (!user.security_questions) {
+    if (!profile.security_questions) {
       return jsonResponse({ error: 'No security questions on file for this account' }, 400);
     }
 
-    const questions = user.security_questions as { q1: string; q2: string; q3: string };
+    const questions = profile.security_questions as { q1: string; q2: string; q3: string };
 
     const q1Match = await bcrypt.compare(mothersName.toLowerCase().trim(), questions.q1);
     const q2Match = await bcrypt.compare(altPhone.trim(), questions.q2);
     const q3Match = await bcrypt.compare(hometown.toLowerCase().trim(), questions.q3);
 
     if (!q1Match || !q2Match || !q3Match) {
-      await flagSOS(cleanPhone, deviceId, 'recovery_failed_security_answers', user.id);
+      await flagSOS(cleanPhone, deviceId, 'recovery_failed_security_answers', profile.id);
 
       await supabase.from('audit_log').insert({
-        user_id: user.id,
+        user_id: profile.id,
         event: 'recovery_failed',
         details: { reason: 'security_answers_mismatch', deviceId },
       });
@@ -60,10 +62,10 @@ Deno.serve(async (req: Request) => {
     // verification without re-asking the questions if that step is also reached
     // within 10 minutes.
     const recoveryToken = crypto.randomUUID();
-    await upstash.setex(`recovery:${user.id}`, 10 * 60, recoveryToken);
+    await upstash.setex(`recovery:${profile.id}`, 10 * 60, recoveryToken);
 
     await supabase.from('audit_log').insert({
-      user_id: user.id,
+      user_id: profile.id,
       event: 'recovery_security_answers_verified',
       details: { deviceId },
     });

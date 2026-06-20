@@ -1,4 +1,5 @@
 // supabase/functions/admin-users/index.ts
+// FIXED: queries PROFILES, not "users" (table never existed in real DB)
 // 360° user view for admin dashboard. Auth: simple bearer token match against
 // ADMIN_TOKEN secret (fine for a solo-dev launch; swap for proper admin roles
 // + RLS once you have a team).
@@ -30,13 +31,14 @@ Deno.serve(async (req: Request) => {
 
     // Single user detail view (devices + recent audit log)
     if (userId) {
-      const { data: user, error: userErr } = await supabase
-        .from('users')
-        .select('id, phone, account_status, session_version, pin_attempts, pin_locked_until, created_at')
+      // ── FIX: was supabase.from('users'), real table is 'profiles' ────
+      const { data: profile, error: profileErr } = await supabase
+        .from('profiles')
+        .select('id, phone, account_status, session_version, pin_attempts, pin_locked_until, name, email, plan, role, created_at')
         .eq('id', userId)
         .maybeSingle();
 
-      if (userErr || !user) return jsonResponse({ error: 'User not found' }, 404);
+      if (profileErr || !profile) return jsonResponse({ error: 'User not found' }, 404);
 
       const { data: auditLog } = await supabase
         .from('audit_log')
@@ -45,7 +47,7 @@ Deno.serve(async (req: Request) => {
         .order('created_at', { ascending: false })
         .limit(20);
 
-      return jsonResponse({ user, auditLog: auditLog ?? [] });
+      return jsonResponse({ user: profile, auditLog: auditLog ?? [] });
     }
 
     // Paginated user list
@@ -53,15 +55,16 @@ Deno.serve(async (req: Request) => {
     const limit = parseInt(url.searchParams.get('limit') ?? '50');
     const offset = (page - 1) * limit;
 
-    const { data: users, count, error } = await supabase
-      .from('users')
-      .select('id, phone, account_status, created_at, updated_at', { count: 'exact' })
+    // ── FIX: was supabase.from('users'), real table is 'profiles' ──────
+    const { data: profiles, count, error } = await supabase
+      .from('profiles')
+      .select('id, phone, account_status, name, email, plan, role, created_at, updated_at', { count: 'exact' })
       .order('created_at', { ascending: false })
       .range(offset, offset + limit - 1);
 
     if (error) throw error;
 
-    return jsonResponse({ total: count, page, limit, users });
+    return jsonResponse({ total: count, page, limit, users: profiles });
   } catch (err) {
     console.error('Admin users error:', err);
     return jsonResponse({ error: 'Failed to fetch users' }, 500);

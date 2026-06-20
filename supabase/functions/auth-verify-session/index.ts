@@ -1,4 +1,5 @@
 // supabase/functions/auth-verify-session/index.ts
+// FIXED: queries PROFILES, not "users" (table never existed in real DB)
 // GET-style check: does the JWT's session_version match what's in the DB?
 // Called by client directly, or by Cloudflare Worker as a fallback when KV cache is cold.
 
@@ -28,25 +29,26 @@ Deno.serve(async (req: Request) => {
       return jsonResponse({ valid: false, error: 'Invalid or expired JWT' }, 401);
     }
 
-    const { data: user, error } = await supabase
-      .from('users')
+    // ── FIX: was supabase.from('users'), real table is 'profiles' ──────
+    const { data: profile, error } = await supabase
+      .from('profiles')
       .select('session_version, account_status')
       .eq('id', decoded.userId)
       .maybeSingle();
 
-    if (error || !user) {
+    if (error || !profile) {
       return jsonResponse({ valid: false, error: 'User not found' }, 401);
     }
 
-    if (user.account_status === 'locked') {
+    if (profile.account_status === 'locked') {
       return jsonResponse({ valid: false, error: 'Account locked', locked: true }, 403);
     }
 
-    const valid = user.session_version === decoded.sessionVersion;
+    const valid = profile.session_version === decoded.sessionVersion;
 
     return jsonResponse({
       valid,
-      current_session_version: user.session_version,
+      current_session_version: profile.session_version,
     });
   } catch (err) {
     console.error('Session verification error:', err);

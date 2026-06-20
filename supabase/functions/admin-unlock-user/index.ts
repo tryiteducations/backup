@@ -1,4 +1,5 @@
 // supabase/functions/admin-unlock-user/index.ts
+// FIXED: updates PROFILES, not "users" (table never existed in real DB)
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.0';
 import { corsHeaders, handleCors } from '../_shared/cors.ts';
@@ -21,8 +22,9 @@ Deno.serve(async (req: Request) => {
     const { userId } = await req.json();
     if (!userId) return jsonResponse({ error: 'Missing userId' }, 400);
 
+    // ── FIX: was supabase.from('users'), real table is 'profiles' ──────
     const { error } = await supabase
-      .from('users')
+      .from('profiles')
       .update({ pin_attempts: 0, pin_locked_until: null, account_status: 'active' })
       .eq('id', userId);
 

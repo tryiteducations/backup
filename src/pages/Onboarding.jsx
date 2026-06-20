@@ -590,10 +590,10 @@ export default function Onboarding() {
       // Step 1: Commit metadata modifications locally into active application memory
       await updateUser?.(patch)
 
-      // Step 2: Push database state sync transactions downstream directly into Supabase server storage pools
+    // Step 2: Push database state sync transactions downstream directly into Supabase server storage pools
       if (user?.id) {
         await supabase
-          .from('users')
+          .from('profiles')
           .update({
             name: patch.name || user.name,
             state: patch.state,
@@ -602,7 +602,6 @@ export default function Onboarding() {
           })
           .eq('id', user.id)
       }
-
       // Step 3: Flag storage local references to avoid onboarding recycle loops
       const email = user?.email || localStorage.getItem('tryit_email') || `${user?.id}@tryiteducations.net`
       localStorage.setItem(onboardingKey(email), '1')
