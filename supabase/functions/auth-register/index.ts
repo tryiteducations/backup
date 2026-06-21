@@ -1,15 +1,12 @@
 // supabase/functions/auth-register/index.ts
-// FIXED VERSION — corrects 2 bugs from the original:
-//   BUG 1: queried/wrote to a "users" table that doesn't exist
-//          (real table is "profiles", confirmed via 002_phone_auth_migration.sql)
-//   BUG 2: directly INSERTed into profiles for new users — this violates
-//          profiles.id's foreign key to auth.users(id) and would fail.
-//          Correct flow: create the identity via supabase.auth.admin.createUser()
-//          first (this auto-creates the profiles row via your existing
-//          on_auth_user_created trigger), THEN update that row with our
-//          phone-auth-specific fields.
-//
 // Registration endpoint: validates verification token, creates/updates user, issues JWT
+//
+// FIXED: previous version queried a 'users' table that doesn't exist in this
+// project's schema (real table is 'profiles', linked to auth.users via FK).
+// New users are now created via supabase.auth.admin.createUser() — this
+// creates the auth.users row, which fires the existing handle_new_user()
+// trigger to auto-create the matching profiles row. We never insert into
+// profiles directly for new signups.
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.0';
 import { upstash } from '../_shared/upstash.ts';
@@ -18,7 +15,8 @@ import { corsHeaders, handleCors } from '../_shared/cors.ts';
 
 const supabase = createClient(
   Deno.env.get('SUPABASE_URL')!,
-  Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')! // service_role bypasses RLS, Edge Function only
+  Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!, // service_role bypasses RLS, Edge Function only
+  { auth: { autoRefreshToken: false, persistSession: false } }
 );
 
 Deno.serve(async (req: Request) => {
@@ -31,7 +29,7 @@ Deno.serve(async (req: Request) => {
       return jsonResponse({ error: 'Missing X-Device-ID header' }, 400);
     }
 
-    const { phone, method, token } = await req.json();
+    const { phone, method, token, state } = await req.json();
 
     // Validate phone format (10 digit India)
     const cleanPhone = phone.replace(/\D/g, '').slice(-10);
@@ -44,7 +42,7 @@ Deno.serve(async (req: Request) => {
       return jsonResponse({ error: 'Invalid verification method' }, 400);
     }
 
-    // Check WhatsApp toggle (env flag, can disable instantly without redeploy logic)
+    // WhatsApp toggle (env flag, can disable instantly without redeploy logic)
     if (method === 'whatsapp' && Deno.env.get('ENABLE_WHATSAPP') !== 'true') {
       return jsonResponse({ error: 'WhatsApp verification currently unavailable, please use SMS or Truecaller' }, 503);
     }
@@ -60,103 +58,94 @@ Deno.serve(async (req: Request) => {
     // One-time use: delete immediately
     await upstash.del(redisKey);
 
-    // ── FIX: query PROFILES, not "users" ────────────────────────────────
-    const { data: existingProfile } = await supabase
+    // Check if a profile already exists for this phone
+    const { data: existingProfile, error: lookupErr } = await supabase
       .from('profiles')
       .select('id, session_version')
       .eq('phone', cleanPhone)
       .maybeSingle();
 
+    if (lookupErr) throw lookupErr;
+
     let userId: string;
     let sessionVersion: number;
 
     if (existingProfile) {
-      // ── Existing user logging in on a (possibly new) device ──────────
-      // bump session_version → this invalidates any other device's JWT,
-      // exactly the multi-device-eviction behavior the original design wanted.
-      sessionVersion = (existingProfile.session_version || 0) + 1;
+      // Existing user logging in on a (possibly new) device → bump session_version
+      sessionVersion = (existingProfile.session_version ?? 1) + 1;
       userId = existingProfile.id;
 
-      // ── FIX: update PROFILES, not "users" ───────────────────────────
       const { error: updateErr } = await supabase
         .from('profiles')
         .update({
           session_version: sessionVersion,
-          device_id: deviceId,
           updated_at: new Date().toISOString(),
         })
         .eq('id', userId);
 
       if (updateErr) throw updateErr;
 
+      // Track this device in the devices table
+      await supabase.from('devices').insert({
+        user_id: userId,
+        device_id: deviceId,
+        session_version: sessionVersion,
+        last_login: new Date().toISOString(),
+        is_active: true,
+      });
     } else {
-      // ── NEW user — this is the structural fix ─────────────────────────
-      // We CANNOT insert directly into profiles: profiles.id is a foreign
-      // key into auth.users(id), which is Supabase's own internal auth
-      // table. Inserting a profiles row with no matching auth.users row
-      // violates that constraint and will fail.
-      //
-      // Correct flow: create the identity via the Admin API first. This
-      // is a real, valid Supabase user with NO password and NO email
-      // requirement — phone-only, exactly as designed. The moment this
-      // succeeds, your existing on_auth_user_created trigger fires
-      // automatically and creates the matching profiles row for us
-      // (with the phone-safe tryit_id fallback logic already patched
-      // into handle_new_user() in 002_phone_auth_migration.sql).
-      sessionVersion = 1;
-
-      const { data: newAuthUser, error: createErr } = await supabase.auth.admin.createUser({
+      // New user — create the auth.users row via admin API.
+      // No email, no password. handle_new_user() trigger fires automatically
+      // and creates the matching profiles row (with email=null, tryit_id
+      // built from state metadata or falling back to 'PH').
+      const { data: created, error: createErr } = await supabase.auth.admin.createUser({
         phone: `+91${cleanPhone}`,
-        phone_confirm: true,           // we already verified via Truecaller/WhatsApp/SMS
-        user_metadata: {
-          phone: cleanPhone,
-          registration_method: method,
-        },
+        phone_confirm: true,
+        user_metadata: { state: state ?? null },
       });
 
-      if (createErr || !newAuthUser?.user) {
-        console.error('auth.admin.createUser failed:', createErr);
-        throw createErr || new Error('Failed to create user identity');
-      }
+      if (createErr) throw createErr;
+      if (!created?.user) throw new Error('User creation returned no user object');
 
-      userId = newAuthUser.user.id;
+      userId = created.user.id;
+      sessionVersion = 1;
 
-      // Small delay-free safety: the trigger fires synchronously on insert,
-      // but we still explicitly UPDATE the row right after to set our
-      // phone-auth-specific fields (phone, device_id, session_version,
-      // account_status) since handle_new_user() only sets id/email/tryit_id.
+      // Set phone + session_version on the auto-created profiles row
+      // (handle_new_user() only sets id/email/tryit_id, not our new columns)
       const { error: profileUpdateErr } = await supabase
         .from('profiles')
         .update({
           phone: cleanPhone,
-          device_id: deviceId,
           session_version: sessionVersion,
           account_status: 'active',
+          updated_at: new Date().toISOString(),
         })
         .eq('id', userId);
 
-      if (profileUpdateErr) {
-        // Profile row should exist from the trigger — if this update fails,
-        // surface it clearly rather than silently leaving an incomplete profile.
-        console.error('Post-create profile update failed:', profileUpdateErr);
-        throw profileUpdateErr;
-      }
+      if (profileUpdateErr) throw profileUpdateErr;
+
+      await supabase.from('devices').insert({
+        user_id: userId,
+        device_id: deviceId,
+        session_version: sessionVersion,
+        last_login: new Date().toISOString(),
+        is_active: true,
+      });
     }
 
-    // Issue JWT
+    // Issue our own JWT (used by Edge Functions/client for our custom auth
+    // logic — separate from Supabase's own session tokens, which we don't use)
     const jwt = await signJWT({ userId, phone: cleanPhone, sessionVersion, deviceId });
 
     // Cache JWT in Upstash (optional quick-lookup cache, 30 day TTL)
     await upstash.setex(`jwt:${userId}:${deviceId}`, 30 * 24 * 60 * 60, jwt);
 
     // Audit log (fire and forget, don't block response on failure)
-    // ── note: audit_log table already references user_id generically,
-    //    no rename needed here, it was never pointed at "users" ──
     supabase
       .from('audit_log')
       .insert({
         user_id: userId,
-        event: 'registration',
+        event: existingProfile ? 'login' : 'registration',
         details: { method, deviceId },
       })
       .then(() => {})
@@ -170,7 +159,18 @@ Deno.serve(async (req: Request) => {
     });
   } catch (err) {
     console.error('Registration error:', err);
-    return jsonResponse({ error: 'Registration failed', message: String(err) }, 500);
+    // err may be a structured Supabase error object (message/code/details
+    // properties) rather than a plain Error — String(err) on those produces
+    // the unhelpful "[object Object]". Pull out real fields if present.
+    const errObj = err as Record<string, unknown>;
+    const debugInfo = {
+      message: errObj?.message ?? String(err),
+      code: errObj?.code,
+      details: errObj?.details,
+      hint: errObj?.hint,
+      name: errObj?.name,
+    };
+    return jsonResponse({ error: 'Registration failed', message: JSON.stringify(debugInfo) }, 500);
   }
 });
 
