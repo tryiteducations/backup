@@ -55,7 +55,14 @@ function applyThemeToDOM(themeId) {
     : 'rgba(255, 255, 255, 0.9)'
   const buttonText = surfaceDark ? '#0F172A' : t.text
   const surfaceText = surfaceDark ? (t.textLight || '#F8FAFC') : t.text
-  const surfaceDarkValue = surfaceDark ? t.surface : 'rgba(0, 0, 0, 0.88)'
+  // FIX: previously fell back to flat black for all 22 light themes.
+  // Now derives the dark-card tint from this theme's own primaryDark/
+  // primary color, so the floating dark card on Landing's Hero actually
+  // changes per theme instead of always looking identical.
+  const surfaceDarkRgb = hexToRgb(t.primaryDark || t.primary)
+  const surfaceDarkValue = surfaceDark
+    ? t.surface
+    : (surfaceDarkRgb ? `rgba(${surfaceDarkRgb.r}, ${surfaceDarkRgb.g}, ${surfaceDarkRgb.b}, 0.88)` : 'rgba(0, 0, 0, 0.88)')
   const headingColor = surfaceText
   const subtextColor = t.textLight || '#94A3B8'
   const onDarkText = '#FFFFFF'
@@ -162,25 +169,6 @@ function applyThemeToDOM(themeId) {
 
 const ThemeContext = createContext({})
 
-/**
- * userStats: plain object of the metrics theme unlocks key off — see
- * src/lib/themeUnlocks.js for the expected shape. Pass whatever you
- * already have from AuthContext / CoinContext / your profile query;
- * fields you don't have yet simply default to 0 and that theme stays
- * locked until you wire the real number in.
- *
- * userPlan: 'free' | 'pro' | 'ultra' — the user's current subscription
- * tier, read from your billing source of truth. If a subscription
- * lapses and the active theme is no longer accessible, the provider
- * silently falls back to the user's last base theme — no special
- * downgrade ceremony, no blocking of cancellation, just a quiet
- * fallback to what's already free for everyone.
- *
- * onThemeUnlocked: optional callback(theme) fired the moment a new
- * theme crosses its unlock threshold AND is plan-accessible — wire
- * this to your celebration effect (confetti, coin burst, toast) in
- * CoinContext or wherever you trigger reward moments.
- */
 export function ThemeProvider({ children, userLevel = 1, userStats = {}, userPlan = 'free', onThemeUnlocked = null }) {
   const [activeTheme, setActiveThemeState] = useState(() => {
     try {
@@ -205,8 +193,6 @@ export function ThemeProvider({ children, userLevel = 1, userStats = {}, userPla
     applyThemeToDOM(activeTheme)
   }, [activeTheme])
 
-  // Whenever the stats that drive unlocks change (new test result,
-  // streak update, coins earned...), check for newly-crossed thresholds.
   useEffect(() => {
     const newly = findNewlyUnlocked(userStats, unlockedThemeIds, userPlan)
     if (newly.length === 0) return
@@ -227,10 +213,6 @@ export function ThemeProvider({ children, userLevel = 1, userStats = {}, userPla
     [userStats, unlockedThemeIds, userPlan]
   )
 
-  // If the active theme is no longer accessible (subscription lapsed,
-  // or this device never had it unlocked), fall back to a base theme.
-  // Simple and silent — no ceremony, and cancellation itself is never
-  // blocked or discouraged here, this only reacts to the resulting plan.
   useEffect(() => {
     const current = themesWithStatus.find(t => t.id === activeTheme)
     if (current && !current.unlocked) {
