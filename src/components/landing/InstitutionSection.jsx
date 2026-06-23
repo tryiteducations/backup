@@ -1,178 +1,257 @@
+// src/components/landing/InstitutionSection.jsx
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
-const STEPS = [
-  { step:'01', emoji:'🏫', title:'Register Your Centre Free',
-    desc:'Sign up in 2 minutes. No paperwork. No approval wait. Instant access.' },
-  { step:'02', emoji:'📝', title:'Create Unlimited Tests — Any Day',
-    desc:'Weekend tests, after-school tests, surprise tests. Schedule for Saturday 10AM or Sunday 2PM. Students join with a 6-digit code from their phone.' },
-  { step:'03', emoji:'📱', title:'Students Join on Their Phone',
-    desc:'No laptop needed. TryIT runs on any ₹4,000 Android phone. Students open the app, enter the code, and start the test from home or your centre.' },
-  { step:'04', emoji:'📊', title:'Instant Results — Every Student Ranked',
-    desc:'The moment the test ends — scores, All-India ranks, subject-wise breakdown, weak areas. Zero manual checking. Everything on your dashboard.' },
-  { step:'05', emoji:'💰', title:'Every Monday — You Get Paid',
-    desc:'Every active student in your centre earns you a weekly payout every Monday via UPI. Unlimited students. Unlimited tests. No cap on earnings.' },
-]
-
-const BENEFITS = [
-  { emoji:'⚡', title:'No Extra Infrastructure', desc:'Students use their own phones. No desktop lab, no projector, no printed papers needed.' },
-  { emoji:'🌍', title:'Pan-India Recognition', desc:'Your centre gets ranked nationally on TryIT. Top centres are featured on our homepage — seen by lakhs of students.' },
-  { emoji:'📈', title:'Track Every Student', desc:'Full test history from Day 1. Score trends, improvement graphs, weak topics — one screen, zero spreadsheets.' },
-  { emoji:'🔒', title:'Anti-Cheating Built-In', desc:'Questions randomised per student. Timer enforced. No copy-paste. Screenshot detection. Your exam is fully protected.' },
-  { emoji:'🏆', title:'Monthly Centre Battle', desc:'Top-performing centres win featured placement and recognition. Motivates your students and grows your reputation fast.' },
-  { emoji:'💳', title:'Monday Payouts via UPI', desc:'Every active student = weekly earnings. Direct UPI transfer every Monday morning. No minimum threshold.' },
-]
+import { useTheme } from '../../context/ThemeContext'
 
 export default function InstitutionSection() {
   const navigate = useNavigate()
-  const [active, setActive] = useState(0)
+  const { theme } = useTheme()
+  const isDark  = theme?.isDark ?? false
+  const accent  = theme?.accent ?? '#C9A84C'
+  const accentL = theme?.accentLight ?? '#E8C44A'
+  const primary = theme?.primary ?? '#1E3A5F'
+  const primD   = theme?.primaryDark ?? '#0F2140'
+
+  const [tab, setTab] = useState(0)
+
+  const txt  = isDark ? '#ffffff' : 'var(--color-text,#0F1020)'
+  const muted= isDark ? 'rgba(255,255,255,0.5)' : 'var(--color-text-light,#64748B)'
+  const card = isDark ? 'rgba(255,255,255,0.04)' : 'var(--color-surface,#ffffff)'
+  const bdr  = isDark ? 'rgba(255,255,255,0.08)' : 'var(--color-border,#E2E8F0)'
+  const surf = isDark ? 'rgba(255,255,255,0.03)' : 'var(--color-bg,#F8FAFC)'
+
+  const TABS = [
+    '📊 Analytics','📝 Test Engine','👥 Students',
+    '📈 Progress','⏰ Attendance','🌐 Languages','💸 Cost Savings',
+  ]
+
+  const CONTENT = [
+    {
+      title:'Live Student Analytics Dashboard',
+      desc:'Who attended. Who skipped. Minutes spent. Weak subjects per student. All automatic — zero manual work. Intervene early before small gaps become big exam-day failures.',
+      preview:(
+        <div style={{background:card,borderRadius:12,padding:12,border:`1px solid ${bdr}`}}>
+          <p style={{color:muted,fontSize:9,fontWeight:700,margin:'0 0 8px',letterSpacing:'1px'}}>CLASS OVERVIEW — JUNE 2026</p>
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr 1fr',gap:6,marginBottom:10}}>
+            {[['28','Students',accent],['87%','Attendance','#4ADE80'],['8','Tests Run','#60A5FA'],['19%','Avg Improvement','#F472B6']].map(([v,l,c])=>(
+              <div key={l} style={{background:isDark?`${c}10`:surf,border:`1px solid ${c}20`,borderRadius:8,padding:'6px 5px',textAlign:'center'}}>
+                <p style={{color:c,fontWeight:900,fontSize:13,margin:0}}>{v}</p>
+                <p style={{color:muted,fontSize:7,margin:'1px 0 0'}}>{l}</p>
+              </div>
+            ))}
+          </div>
+          {[{n:'Priya S.',sc:92,c:'#4ADE80',w:'Org. Chem'},{n:'Karthik',sc:84,c:accent,w:'Algebra'},{n:'Ananya',sc:76,c:'#60A5FA',w:'History'},{n:'Suresh',sc:48,c:'#F87171',w:'Physics ⚠️'}].map((r,i)=>(
+            <div key={i} style={{display:'flex',alignItems:'center',gap:7,padding:'4px 0'}}>
+              <span style={{color:txt,fontSize:9,fontWeight:600,width:52,flexShrink:0}}>{r.n}</span>
+              <div style={{flex:1,height:5,borderRadius:3,background:isDark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)',overflow:'hidden'}}>
+                <div style={{width:`${r.sc}%`,height:'100%',background:r.c}}/>
+              </div>
+              <span style={{color:r.c,fontSize:9,fontWeight:700,width:28,textAlign:'right',flexShrink:0}}>{r.sc}%</span>
+              <span style={{background:'rgba(248,113,113,0.12)',color:'#F87171',fontSize:7,fontWeight:700,padding:'1px 5px',borderRadius:20,flexShrink:0,whiteSpace:'nowrap'}}>{r.w}</span>
+            </div>
+          ))}
+        </div>
+      ),
+    },
+    {
+      title:'Conduct Tests Daily — Auto-Generated',
+      desc:'Choose subject → choose topics → set difficulty → launch. Auto-generates questions from our 1,10,000+ question bank. Share a 6-digit code. Students join from any phone. Done.',
+      preview:(
+        <div style={{background:card,borderRadius:12,padding:12,border:`1px solid ${bdr}`}}>
+          <p style={{color:muted,fontSize:9,fontWeight:700,margin:'0 0 8px',letterSpacing:'1px'}}>CREATE TEST IN 3 STEPS</p>
+          {[['1','Select Subject','Biology ✓',accent],['2','Choose Topics','Cell Division, Genetics ✓','#4ADE80'],['3','Set & Share','20Q · 30 min · Code: 847291','#60A5FA']].map(([n,l,v,c])=>(
+            <div key={n} style={{display:'flex',gap:9,padding:'8px 0',borderBottom:`1px solid ${bdr}`}}>
+              <div style={{width:20,height:20,borderRadius:'50%',background:`${c}20`,border:`1.5px solid ${c}`,display:'flex',alignItems:'center',justifyContent:'center',color:c,fontWeight:900,fontSize:9,flexShrink:0}}>{n}</div>
+              <div style={{flex:1}}>
+                <p style={{color:muted,fontSize:9,margin:0}}>{l}</p>
+                <p style={{color:c,fontSize:10,fontWeight:700,margin:'1px 0 0'}}>{v}</p>
+              </div>
+            </div>
+          ))}
+          <button style={{width:'100%',marginTop:10,background:`linear-gradient(135deg,${accent},${accentL})`,border:'none',borderRadius:9,padding:'8px',color:primD,fontWeight:800,fontSize:11,cursor:'pointer'}}>
+            🚀 Generate & Share Code
+          </button>
+        </div>
+      ),
+    },
+    {
+      title:'Student Management — Complete Control',
+      desc:'Add students, organise by batch, set exam targets, track individual progress, send alerts to parents — all from one screen. No spreadsheets. No WhatsApp groups chasing attendance.',
+      preview:(
+        <div style={{background:card,borderRadius:12,padding:12,border:`1px solid ${bdr}`}}>
+          <p style={{color:muted,fontSize:9,fontWeight:700,margin:'0 0 8px',letterSpacing:'1px'}}>BATCH: NEET 2026 · 28 STUDENTS</p>
+          {[{n:'Priya Sharma',batch:'NEET 2026',rank:'#847',status:'On Track',c:'#4ADE80'},{n:'Karthik M.',batch:'SSC CGL',rank:'#2,341',status:'Needs help',c:'#F59E0B'},{n:'Suresh P.',batch:'UPSC',rank:'#4,821',status:'Struggling',c:'#F87171'}].map((s,i)=>(
+            <div key={i} style={{display:'flex',alignItems:'center',gap:8,padding:'7px 0',borderBottom:`1px solid ${bdr}`}}>
+              <div style={{width:28,height:28,borderRadius:'50%',background:`${s.c}20`,border:`1.5px solid ${s.c}`,display:'flex',alignItems:'center',justifyContent:'center',color:s.c,fontWeight:800,fontSize:10,flexShrink:0}}>{s.n[0]}</div>
+              <div style={{flex:1}}>
+                <p style={{color:txt,fontSize:10,fontWeight:700,margin:0}}>{s.n}</p>
+                <p style={{color:muted,fontSize:8,margin:'1px 0 0'}}>{s.batch} · {s.rank}</p>
+              </div>
+              <span style={{background:`${s.c}15`,color:s.c,fontSize:8,fontWeight:700,padding:'2px 8px',borderRadius:20,flexShrink:0}}>{s.status}</span>
+            </div>
+          ))}
+        </div>
+      ),
+    },
+    {
+      title:'Jan vs June Progress Comparison',
+      desc:'See every student\'s improvement month by month, subject by subject. Share progress reports with parents in one tap. Show them the real value of your coaching.',
+      preview:(
+        <div style={{background:card,borderRadius:12,padding:12,border:`1px solid ${bdr}`}}>
+          <p style={{color:muted,fontSize:9,fontWeight:700,margin:'0 0 8px',letterSpacing:'1px'}}>JAN 2026 vs JUN 2026</p>
+          {[{n:'Priya S.',jan:52,jun:92,c:'#4ADE80'},{n:'Karthik',jan:42,jun:84,c:accent},{n:'Ananya',jan:38,jun:76,c:'#60A5FA'},{n:'Suresh',jan:30,jun:48,c:'#FB923C'}].map((r,i)=>(
+            <div key={i} style={{marginBottom:8}}>
+              <div style={{display:'flex',justifyContent:'space-between',marginBottom:3}}>
+                <span style={{color:txt,fontSize:10,fontWeight:600}}>{r.n}</span>
+                <span style={{background:'#D1FAE5',color:'#065F46',fontSize:8,fontWeight:800,padding:'1px 7px',borderRadius:20}}>↑ +{r.jun-r.jan}%</span>
+              </div>
+              <div style={{display:'grid',gridTemplateColumns:'42px 1fr 30px',gap:5,alignItems:'center',marginBottom:2}}>
+                <span style={{color:muted,fontSize:8}}>Jan</span>
+                <div style={{height:4,borderRadius:2,background:isDark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)',overflow:'hidden'}}><div style={{width:`${r.jan}%`,height:'100%',background:'#475569'}}/></div>
+                <span style={{color:muted,fontSize:8}}>{r.jan}%</span>
+              </div>
+              <div style={{display:'grid',gridTemplateColumns:'42px 1fr 30px',gap:5,alignItems:'center'}}>
+                <span style={{color:r.c,fontSize:8,fontWeight:700}}>Jun</span>
+                <div style={{height:6,borderRadius:3,background:isDark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)',overflow:'hidden'}}><div style={{width:`${r.jun}%`,height:'100%',background:r.c}}/></div>
+                <span style={{color:r.c,fontSize:9,fontWeight:700}}>{r.jun}%</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      ),
+    },
+    {
+      title:'Attendance Tracking — Automated',
+      desc:'See who attended, who was absent, for exactly how many minutes — all automatic. No manual register. No chasing students. Alert parents instantly when a student misses a session.',
+      preview:(
+        <div style={{background:card,borderRadius:12,padding:12,border:`1px solid ${bdr}`}}>
+          <p style={{color:muted,fontSize:9,fontWeight:700,margin:'0 0 8px',letterSpacing:'1px'}}>JUNE 2026 ATTENDANCE</p>
+          {[{n:'Priya S.',days:[1,1,1,1,1,0,1,1,1,1,1,1,1,1],pct:93},{n:'Karthik',days:[1,0,1,0,1,0,1,0,0,1,1,0,1,0],pct:50},{n:'Suresh',days:[1,1,1,1,1,1,1,1,1,1,1,1,1,0],pct:93}].map((s,i)=>(
+            <div key={i} style={{marginBottom:8}}>
+              <div style={{display:'flex',justifyContent:'space-between',marginBottom:3}}>
+                <span style={{color:txt,fontSize:10,fontWeight:600}}>{s.n}</span>
+                <span style={{color:s.pct>=80?'#4ADE80':s.pct>=60?accent:'#F87171',fontSize:9,fontWeight:700}}>{s.pct}%</span>
+              </div>
+              <div style={{display:'flex',gap:2}}>
+                {s.days.map((d,j)=>(
+                  <div key={j} style={{width:13,height:13,borderRadius:3,background:d?(s.pct>=80?'#4ADE80':accent):(isDark?'rgba(255,255,255,0.07)':'rgba(0,0,0,0.07)')}}/>
+                ))}
+              </div>
+            </div>
+          ))}
+          <div style={{marginTop:8,background:'rgba(248,113,113,0.08)',border:'1px solid rgba(248,113,113,0.2)',borderRadius:8,padding:'6px 10px'}}>
+            <p style={{color:'#F87171',fontSize:9,fontWeight:700,margin:0}}>⚠️ Karthik below 60% — parent alert sent automatically</p>
+          </div>
+        </div>
+      ),
+    },
+    {
+      title:'40+ Languages — Every Student Learns in Their Mother Tongue',
+      desc:'Your students from Tamil Nadu, Maharashtra, Manipur — all study in their own language. Same test, same question bank, different languages. No one is left behind.',
+      preview:(
+        <div style={{background:card,borderRadius:12,padding:12,border:`1px solid ${bdr}`}}>
+          <p style={{color:muted,fontSize:9,fontWeight:700,margin:'0 0 10px',letterSpacing:'1px'}}>LANGUAGES YOUR STUDENTS USE</p>
+          <div style={{display:'flex',flexWrap:'wrap',gap:6,marginBottom:10}}>
+            {[['Tamil','#E53E3E'],['Hindi','#DD6B20'],['Telugu','#D69E2E'],['Kannada','#38A169'],['Malayalam','#3182CE'],['Bengali','#805AD5'],['Marathi','#E53E3E'],['Odia','#DD6B20'],['Punjabi','#D69E2E'],['Assamese','#38A169'],['Manipuri','#3182CE'],['Gujarati','#805AD5']].map(([l,c])=>(
+              <span key={l} style={{background:`${c}14`,border:`1px solid ${c}28`,borderRadius:20,padding:'3px 9px',color:c,fontSize:9,fontWeight:700}}>{l}</span>
+            ))}
+            <span style={{background:`${accent}14`,border:`1px solid ${accent}28`,borderRadius:20,padding:'3px 9px',color:accent,fontSize:9,fontWeight:700}}>+30 →</span>
+          </div>
+          <div style={{background:`${accent}10`,border:`1px solid ${accent}22`,borderRadius:9,padding:'7px 10px'}}>
+            <p style={{color:accent,fontSize:9,fontWeight:700,margin:0}}>Set per-student language · Switch anytime · Works on 2G</p>
+          </div>
+        </div>
+      ),
+    },
+    {
+      title:'Save Lakhs Every Year',
+      desc:'No printing. No manual test papers. No extra staff. No travel. From ₹999/year for unlimited students — the only EdTech that actually saves institutions money.',
+      preview:(
+        <div style={{background:card,borderRadius:12,padding:12,border:`1px solid ${bdr}`}}>
+          <p style={{color:muted,fontSize:9,fontWeight:700,margin:'0 0 8px',letterSpacing:'1px'}}>ANNUAL COST — 100 STUDENTS</p>
+          {[['Test Paper Printing','₹48,000/yr','₹0'],['Manual Grading Time','₹36,000/yr','₹0'],['Extra Admin Staff','₹1,20,000/yr','₹0'],['Student Travel Cost','₹2,40,000/yr','₹0'],['TryIT Platform','—','₹999/yr']].map(([item,old,nw])=>(
+            <div key={item} style={{display:'grid',gridTemplateColumns:'1fr 70px 70px',gap:5,padding:'5px 0',borderBottom:`1px solid ${bdr}`}}>
+              <span style={{color:muted,fontSize:9}}>{item}</span>
+              <span style={{color:'#F87171',fontSize:9,fontWeight:600,textAlign:'right'}}>{old}</span>
+              <span style={{color:'#4ADE80',fontSize:9,fontWeight:700,textAlign:'right'}}>{nw}</span>
+            </div>
+          ))}
+          <div style={{background:`${accent}12`,border:`1px solid ${accent}25`,borderRadius:8,padding:'7px 10px',marginTop:8,textAlign:'center'}}>
+            <p style={{color:accent,fontWeight:800,fontSize:10,margin:0}}>Total Annual Savings: ₹4,43,001 → Pay only ₹999</p>
+          </div>
+        </div>
+      ),
+    },
+  ]
+
+  const bg = isDark
+    ? `radial-gradient(ellipse 60% 40% at 50% 50%,${primary}18,transparent),var(--color-bg,#0F172A)`
+    : 'var(--color-surface,#F8FAFC)'
 
   return (
-    <section id="institutions" style={{ padding:'72px 20px',
-      background:'linear-gradient(180deg, var(--color-bg, #F8FAFC), var(--color-surface, #FFFFFF))' }}>
-      <div style={{ maxWidth:1100, margin:'0 auto' }}>
+    <section id="institution" style={{padding:'80px clamp(16px,4vw,32px)',background:bg,scrollMarginTop:80,transition:'background 0.4s'}}>
+      <div style={{maxWidth:1140,margin:'0 auto'}}>
 
-        <div style={{ textAlign:'center', marginBottom:48 }}>
-          <div style={{ display:'inline-flex', alignItems:'center', gap:8,
-            background:'rgba(30,58,95,0.08)', border:'1px solid rgba(30,58,95,0.18)',
-            borderRadius:20, padding:'7px 18px', marginBottom:16 }}>
-            <span>🏫</span>
-            <span style={{ color:'var(--color-text, #1E3A5F)', fontSize:12, fontWeight:700,
-              fontFamily:'Poppins,sans-serif', letterSpacing:'1px' }}>
-              FOR COACHING CENTRES & SCHOOLS
-            </span>
+        <div style={{textAlign:'center',marginBottom:36}}>
+          <div style={{display:'inline-flex',alignItems:'center',gap:8,background:`${accent}12`,border:`1px solid ${accent}28`,borderRadius:20,padding:'5px 16px',marginBottom:14}}>
+            <span style={{color:accent,fontSize:11,fontWeight:700,letterSpacing:'1px'}}>🏫 FOR INSTITUTIONS</span>
           </div>
-          <h2 style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
-            fontSize:'clamp(24px,4vw,42px)', color:'var(--color-text, #1E3A5F)',
-            marginBottom:12, lineHeight:1.2 }}>
-            No More Saturdays Wasted on<br/>
-            <span style={{ color:'var(--color-accent, #D4AF37)' }}>Manual Test Papers</span>
+          <h2 style={{fontFamily:'Poppins,sans-serif',fontWeight:900,fontSize:'clamp(22px,4vw,40px)',color:txt,margin:'0 0 10px'}}>
+            End the Daily Grind. <span style={{color:accent}}>Start Teaching Smart.</span>
           </h2>
-          <p style={{ fontFamily:'Inter,sans-serif', color:'var(--color-text-light, #64748B)',
-            fontSize:'clamp(14px,2vw,17px)', maxWidth:600, margin:'0 auto' }}>
-            Your students take weekend tests on TryIT — from their own phones.
-            You get instant results. They get All-India ranked.
-            And every Monday, you get paid.
+          <p style={{color:muted,fontSize:14,maxWidth:580,margin:'0 auto',lineHeight:1.7}}>
+            No traffic. No manual test papers. No stressful weekends. Conduct daily classes and tests from home — with full student analytics. From ₹999 per year for unlimited students.
           </p>
         </div>
 
-        {/* Steps */}
-        <div style={{ display:'grid',
-          gridTemplateColumns:'repeat(auto-fill,minmax(min(100%,195px),1fr))',
-          gap:14, marginBottom:56 }}>
-          {STEPS.map((s,i) => (
-            <div key={i} onClick={() => setActive(i)} style={{
-              background: active===i ? 'linear-gradient(135deg, var(--color-primary, #1E3A5F), var(--color-primary-dark, #0F2140))' : 'var(--color-surface, #FFFFFF)',
-                borderRadius:20, padding:'18px 16px', cursor:'pointer',
-                border: `2px solid ${active===i ? 'var(--color-accent, #D4AF37)' : 'var(--color-border, #E2E8F0)'}`,
-              transition:'all 0.25s',
-              boxShadow: active===i ? '0 12px 32px rgba(30,58,95,0.2)' : '0 2px 8px rgba(0,0,0,0.04)',
-              transform: active===i ? 'translateY(-4px)' : 'none',
-            }}>
-              <div style={{ display:'flex', justifyContent:'space-between',
-                alignItems:'center', marginBottom:10 }}>
-                <span style={{ fontSize:26 }}>{s.emoji}</span>
-                <span style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
-                  fontSize:10, color: active===i ? 'rgba(212,175,55,0.5)' : 'var(--color-muted, #CBD5E1)',
-                  letterSpacing:'1px' }}>STEP {s.step}</span>
+        {/* Tabs */}
+        <div style={{display:'flex',gap:4,overflowX:'auto',marginBottom:24,paddingBottom:4}}>
+          {TABS.map((t,i)=>(
+            <button key={i} onClick={()=>setTab(i)}
+              style={{flexShrink:0,padding:'7px 13px',borderRadius:20,
+                border:`1px solid ${tab===i?accent+'50':bdr}`,
+                background:tab===i?`${accent}18`:'transparent',
+                color:tab===i?accent:muted,
+                fontSize:10,fontWeight:700,cursor:'pointer',
+                transition:'all 0.2s',whiteSpace:'nowrap'}}>
+              {t}
+            </button>
+          ))}
+        </div>
+
+        {/* Content */}
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,460px),1fr))',gap:28,alignItems:'start'}}>
+          <div>
+            <h3 style={{fontFamily:'Poppins,sans-serif',fontWeight:900,color:txt,fontSize:20,margin:'0 0 12px'}}>{CONTENT[tab].title}</h3>
+            <p style={{color:muted,fontSize:14,lineHeight:1.75,margin:'0 0 20px'}}>{CONTENT[tab].desc}</p>
+            <button onClick={()=>navigate('/register')}
+              style={{background:`linear-gradient(135deg,${accent},${accentL})`,border:'none',borderRadius:14,padding:'12px 28px',color:primD,fontWeight:800,fontSize:14,cursor:'pointer',fontFamily:'Poppins,sans-serif'}}>
+              Register Your Institution →
+            </button>
+          </div>
+          <div style={{background:card,border:`1.5px solid ${accent}20`,borderRadius:18,padding:18,boxShadow:isDark?`0 8px 32px rgba(0,0,0,0.3)`:`0 4px 20px rgba(0,0,0,0.06)`}}>
+            {CONTENT[tab].preview}
+          </div>
+        </div>
+
+        {/* Comparison strip */}
+        <div style={{marginTop:28,borderRadius:20,overflow:'hidden',border:`1px solid ${bdr}`,boxShadow:isDark?'0 8px 40px rgba(0,0,0,0.4)':'0 4px 24px rgba(0,0,0,0.08)'}}>
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1.2fr 1.2fr',background:isDark?primD:primary}}>
+            {['','❌ Traditional Way','✅ TryIT Way'].map((h,i)=>(
+              <div key={i} style={{padding:'10px 14px',borderLeft:i>0?'1px solid rgba(255,255,255,0.08)':undefined,background:i===1?'rgba(239,68,68,0.12)':i===2?`${accent}18`:'transparent'}}>
+                <span style={{color:i===0?'rgba(255,255,255,0.35)':i===1?'#FCA5A5':accent,fontSize:11,fontWeight:800}}>{h}</span>
               </div>
-              <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700,
-                color: active===i ? 'var(--color-accent, #D4AF37)' : 'var(--color-text, #1E3A5F)',
-                fontSize:13, marginBottom:6 }}>{s.title}</p>
-              <p style={{ fontFamily:'Inter,sans-serif', fontSize:12,
-                color: active===i ? 'rgba(255,255,255,0.75)' : 'var(--color-text-light, #64748B)',
-                lineHeight:1.6 }}>{s.desc}</p>
+            ))}
+          </div>
+          {[['⏰','Daily Time Lost','2–4 hrs commuting','0 mins travel'],['💸','Annual Cost','₹30K–₹3L per student','From ₹999/yr'],['📋','Test Conduction','Manual papers, Sundays','Auto-generated, anytime'],['📊','Analytics','Teacher guesses','Live per-student dashboard'],['🌙','Weekends','Exhausted, stressed','Home. Rested. Ready.'],['🌐','Languages','English / Hindi only','40+ Indian languages']].map(([icon,topic,old,nw],i)=>(
+            <div key={i} style={{display:'grid',gridTemplateColumns:'1fr 1.2fr 1.2fr',borderBottom:`1px solid ${bdr}`,background:isDark?(i%2===0?'rgba(255,255,255,0.015)':card):(i%2===0?'rgba(0,0,0,0.015)':card)}}>
+              <div style={{padding:'10px 14px',display:'flex',alignItems:'center',gap:7}}><span style={{fontSize:15}}>{icon}</span><span style={{color:muted,fontSize:11,fontWeight:600}}>{topic}</span></div>
+              <div style={{padding:'10px 14px',borderLeft:`1px solid ${bdr}`}}><span style={{color:'#F87171',fontSize:11,fontWeight:600}}>{old}</span></div>
+              <div style={{padding:'10px 14px',borderLeft:`1px solid ${bdr}`}}><span style={{color:isDark?'#4ADE80':'#15803D',fontSize:11,fontWeight:700}}>{nw}</span></div>
             </div>
           ))}
         </div>
 
-        {/* Benefits */}
-        <div style={{ marginBottom:48 }}>
-          <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800,
-            color:'var(--color-primary-dark, #1E3A5F)', fontSize:'clamp(18px,3vw,26px)',
-            textAlign:'center', marginBottom:28 }}>
-            Why 1,000+ Centres Are Switching to TryIT
-          </h3>
-          <div style={{ display:'grid',
-            gridTemplateColumns:'repeat(auto-fill,minmax(min(100%,290px),1fr))',
-            gap:14 }}>
-            {BENEFITS.map((b,i) => (
-              <div key={i} style={{ background:'#fff', borderRadius:18, padding:20,
-                border:'1.5px solid var(--color-border, #E2E8F0)',
-                boxShadow:'0 2px 8px rgba(0,0,0,0.04)' }}>
-                <span style={{ fontSize:28, display:'block', marginBottom:8 }}>{b.emoji}</span>
-                <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700,
-                  color:'var(--color-primary-dark, #1E3A5F)', fontSize:14, marginBottom:6 }}>{b.title}</p>
-                <p style={{ fontFamily:'Inter,sans-serif', color:'var(--color-muted, #64748B)',
-                  fontSize:12, lineHeight:1.65 }}>{b.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Monday Payout box */}
-        <div style={{ background:'linear-gradient(135deg, var(--color-primary, #1E3A5F), var(--color-primary-dark, #0F2140))',
-          borderRadius:24, padding:'36px 28px', marginBottom:28,
-          border:'1.5px solid rgba(212,175,55,0.3)',
-          display:'grid',
-          gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,340px),1fr))',
-          gap:28, alignItems:'center' }}>
-          <div>
-            <div style={{ display:'inline-flex', alignItems:'center', gap:8,
-              background:'rgba(212,175,55,0.12)',
-              border:'1px solid rgba(212,175,55,0.3)',
-              borderRadius:20, padding:'6px 14px', marginBottom:14 }}>
-              <span>💰</span>
-              <span style={{ color:'var(--color-accent, #D4AF37)', fontSize:10, fontWeight:800,
-                letterSpacing:'2px', fontFamily:'Poppins,sans-serif' }}>
-                EVERY MONDAY. WITHOUT FAIL.
-              </span>
-            </div>
-            <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
-              color:'var(--color-surface, #FFFFFF)', fontSize:'clamp(20px,3vw,32px)',
-              lineHeight:1.2, marginBottom:12 }}>
-              Each Student in Your Centre<br/>
-              <span style={{ color:'var(--color-accent, #D4AF37)' }}>Earns You Every Week</span>
-            </h3>
-            <p style={{ fontFamily:'Inter,sans-serif', color:'rgba(255,255,255,0.7)',
-              fontSize:'clamp(13px,1.8vw,15px)', lineHeight:1.75 }}>
-              No caps. No limits. 10 students or 10,000 — the payout scales.
-              Direct UPI transfer every Monday morning. Build a passive income
-              while your students crack India's toughest exams.
-            </p>
-          </div>
-          <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
-            {[
-              { emoji:'📅', val:'Every Monday',  label:'Payout Day'          },
-              { emoji:'🔓', val:'Unlimited',      label:'Tests Per Month'     },
-              { emoji:'📊', val:'Real-time',       label:'Student Dashboard'   },
-              { emoji:'🌍', val:'Pan-India',       label:'Centre Recognition'  },
-            ].map(s => (
-              <div key={s.label} style={{ background:'rgba(255,255,255,0.06)',
-                border:'1px solid rgba(212,175,55,0.18)',
-                borderRadius:16, padding:'16px 12px', textAlign:'center' }}>
-                <span style={{ fontSize:22, display:'block', marginBottom:4 }}>{s.emoji}</span>
-                <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800,
-                  color:'var(--color-accent, #D4AF37)', fontSize:'clamp(13px,2vw,18px)' }}>{s.val}</p>
-                <p style={{ color:'rgba(255,255,255,0.5)', fontSize:10, marginTop:2 }}>{s.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div style={{ textAlign:'center' }}>
-          <button onClick={() => navigate('/centre/login')} style={{
-            background:'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))', border:'none',
-            borderRadius:16, padding:'clamp(13px,2vw,17px) clamp(32px,4vw,52px)',
-            fontFamily:'Poppins,sans-serif', fontWeight:800,
-            fontSize:'clamp(15px,2.5vw,19px)', color:'var(--color-primary-dark, #1E3A5F)', cursor:'pointer',
-            boxShadow:'0 8px 24px rgba(212,175,55,0.3)' }}>
-            Register Your Centre Free →
-          </button>
-          <p style={{ color:'var(--color-muted, #94A3B8)', fontSize:12, marginTop:10 }}>
-            No registration fee · First payout within 7 days of first student test
-          </p>
-        </div>
       </div>
     </section>
   )
