@@ -1,217 +1,156 @@
-// TARGET_FILE: src/components/landing/Navbar.jsx
-// Compressed logo – fits perfectly without overlap when scrolled
-
+// src/components/landing/Navbar.jsx
 import { useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
-import LogoAnimated from '../LogoAnimated'
 import ThemeSwitcher from '../../components/ThemeSwitcher'
 
 function isDarkColor(hex) {
   if (!hex) return false
   const cleaned = hex.replace('#', '').trim()
-  const short = cleaned.length === 3
-    ? cleaned.split('').map((c) => c + c).join('')
-    : cleaned
-  const int = parseInt(short, 16)
+  const full = cleaned.length === 3 ? cleaned.split('').map(c => c + c).join('') : cleaned
+  const int = parseInt(full, 16)
   if (Number.isNaN(int)) return false
-  const r = (int >> 16) & 255
-  const g = (int >> 8) & 255
-  const b = int & 255
-  const normalized = [r, g, b].map((value) => {
-    const channel = value / 255
-    return channel <= 0.03928
-      ? channel / 12.92
-      : Math.pow((channel + 0.055) / 1.055, 2.4)
+  const r = (int >> 16) & 255, g = (int >> 8) & 255, b = int & 255
+  const norm = [r, g, b].map(v => {
+    const c = v / 255
+    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)
   })
-  return 0.2126 * normalized[0] + 0.7152 * normalized[1] + 0.0722 * normalized[2] < 0.45
+  return 0.2126 * norm[0] + 0.7152 * norm[1] + 0.0722 * norm[2] < 0.45
 }
 
+const ROLES = [
+  { id: 'student',     label: '🎓 Student'      },
+  { id: 'mentor',      label: '🧑‍🏫 Mentor'       },
+  { id: 'institution', label: '🏫 Institutions'  },
+  { id: 'family',      label: '👨‍👩‍👧 Family'        },
+]
+
 export default function Navbar() {
-  const navigate = useNavigate()
-  const { theme } = useTheme()
+  const navigate    = useNavigate()
+  const { theme }   = useTheme()
   const [scrolled, setScrolled] = useState(false)
-  const surfaceDark = theme ? isDarkColor(theme.surface || theme.bg) : false
-  const navTextColor = surfaceDark ? 'rgba(255,255,255,0.94)' : 'var(--color-text, #1E3A5F)'
-  const navControlText = surfaceDark ? 'rgba(255,255,255,0.9)' : 'var(--color-text, rgba(30,58,95,0.95))'
-  const navHoverBg = surfaceDark ? 'rgba(255,255,255,0.12)' : 'rgba(212,175,55,0.18)'
+  const [activeRole, setActiveRole] = useState('student')
 
-  // Compressed logo sizes & navbar heights
-  const [logoSz, setLogoSz] = useState('xs')
-  const [navH, setNavH] = useState(60)
-
-  const updateSize = () => {
-    setLogoSz('xs')
-    setNavH(60)
-  }
+  const dark = theme ? isDarkColor(theme.surface || theme.bg) : false
 
   useEffect(() => {
-    updateSize()
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', updateSize)
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', updateSize)
-    }
+    const fn = () => setScrolled(window.scrollY > 40)
+    window.addEventListener('scroll', fn, { passive: true })
+    return () => window.removeEventListener('scroll', fn)
   }, [])
 
-  const links = [
-    { label: 'Features',     href: '/landing#features'     },
-    { label: 'Exams',        href: '/exams'               },
-    { label: 'Pricing',      href: '/pricing'             },
-    { label: 'Impact',       href: '/impact'              },
-    { label: 'Free Access',  href: '/equity'              },
-    { label: 'Institutions', href: '/landing#institutions' },
-  ]
-
-  const goTo = (href) => {
-    navigate(href)
+  const scrollTo = (id) => {
+    const el = document.getElementById(id)
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
   }
+
+  const navBg = scrolled
+    ? (dark ? 'rgba(0,0,0,0.97)'  : 'rgba(255,255,255,0.97)')
+    : (dark ? 'rgba(0,0,0,0.62)'  : 'rgba(255,255,255,0.78)')
+
+  const textCol  = dark ? '#ffffff'                 : 'var(--color-text, #0F1020)'
+  const mutedCol = dark ? 'rgba(255,255,255,0.55)' : 'var(--color-text-light, #64748B)'
+  const border   = scrolled
+    ? 'rgba(var(--color-accent-rgb, 201,168,76), 0.35)'
+    : (dark ? 'rgba(255,255,255,0.10)' : 'rgba(0,0,0,0.08)')
 
   return (
     <>
       <nav style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 500,
-        height: navH,
-        background: scrolled ? 'var(--navbar-bg-scrolled, rgba(255,255,255,0.92))' : 'var(--navbar-bg, rgba(255,255,255,0.72))',
-        backdropFilter: 'blur(24px)',
-        borderBottom: '1px solid var(--navbar-border, rgba(212,175,55,0.18))',
-        display: 'flex',
-        alignItems: 'center',
-        padding: '0 clamp(12px, 3vw, 24px)',
-        gap: 'clamp(8px, 1.5vw, 16px)',
-        transition: 'background 0.3s, height 0.2s',
-        color: navTextColor,
-        boxShadow: '0 18px 45px rgba(15,23,42,0.08)',
+        position: 'sticky', top: 0, zIndex: 500,
+        background: navBg, backdropFilter: 'blur(24px)',
+        borderBottom: `1px solid ${border}`,
+        display: 'flex', alignItems: 'center',
+        padding: '10px clamp(12px,3vw,20px)', gap: 8,
+        transition: 'background 0.3s, border-color 0.3s',
+        boxShadow: scrolled ? '0 4px 24px rgba(0,0,0,0.12)' : 'none',
       }}>
-        {/* Logo – animated, dynamic contrast */}
-<div
-  onClick={() => navigate('/landing')}
-  style={{ display:'flex', alignItems:'center', gap:8, cursor:'pointer', flexShrink:0 }}>
-  <span style={{
-    fontFamily: 'Poppins,sans-serif',
-    fontWeight: 900,
-    fontSize: 20,
-    color: 'var(--color-accent, #D4AF37)',
-    letterSpacing: -0.5,
-    lineHeight: 1,
-  }}>Try IT</span>
-  <span style={{
-    fontFamily: 'Poppins,sans-serif',
-    fontWeight: 900,
-    fontSize: 20,
-    color: 'var(--color-accent, #D4AF37)',
-    letterSpacing: -0.5,
-    lineHeight: 1,
-  }}>Educations</span>
-</div>
-        {/* Desktop nav links – hidden on mobile */}
+
+        {/* ── Logo ── */}
         <div
-          className="nav-links"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 2,
-            flex: 1,
-            justifyContent: 'center',
-          }}
+          onClick={() => navigate('/landing')}
+          style={{ display: 'flex', alignItems: 'center', gap: 7, cursor: 'pointer', flexShrink: 0 }}
         >
-          {links.map(l => (
-            <button key={l.label} type="button"
-              onClick={() => goTo(l.href)}
+          <div style={{
+            width: 32, height: 32, borderRadius: 9, flexShrink: 0,
+            background: 'linear-gradient(135deg, var(--color-accent,#C9A84C), var(--color-accent-light,#E8C84A))',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontFamily: 'Poppins,sans-serif', fontWeight: 900, fontSize: 12,
+            color: 'var(--color-primary-dark,#0F2140)',
+          }}>TI</div>
+          <span style={{ fontFamily: 'Poppins,sans-serif', fontWeight: 800, fontSize: 15, color: textCol, whiteSpace: 'nowrap' }}>
+            Try<span style={{ color: 'var(--color-accent,#C9A84C)' }}>IT</span>
+          </span>
+        </div>
+
+        {/* ── Role tabs ── */}
+        <div className="nav-roles" style={{ display: 'flex', gap: 4, flex: 1, justifyContent: 'center' }}>
+          {ROLES.map(r => (
+            <button
+              key={r.id}
+              onClick={() => { setActiveRole(r.id); scrollTo(r.id) }}
               style={{
-                color: navControlText,
-                fontSize: 'clamp(11px, 1.2vw, 13px)',
-                fontFamily: 'Poppins, sans-serif',
-                fontWeight: 600,
-                padding: '6px clamp(6px, 1vw, 10px)',
-                borderRadius: 8,
-                border: 'none',
-                background: 'transparent',
-                textDecoration: 'none',
-                transition: 'color 0.2s, background 0.2s',
-                whiteSpace: 'nowrap',
-                cursor: 'pointer',
+                padding: '6px 12px', borderRadius: 20, cursor: 'pointer',
+                border: activeRole === r.id
+                  ? '1px solid var(--color-accent,#C9A84C)'
+                  : '1px solid rgba(128,128,128,0.18)',
+                background: activeRole === r.id
+                  ? 'var(--color-accent-glass, rgba(201,168,76,0.14))'
+                  : 'transparent',
+                color: activeRole === r.id ? 'var(--color-accent,#C9A84C)' : mutedCol,
+                fontSize: 11, fontWeight: 700, fontFamily: 'Poppins,sans-serif',
+                whiteSpace: 'nowrap', transition: 'all 0.2s',
               }}
-              onMouseEnter={e => {
-                e.currentTarget.style.color = surfaceDark ? 'rgba(255,255,255,0.95)' : 'var(--color-primary-dark, #1E3A5F)'
-                e.currentTarget.style.background = navHoverBg
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.color = navControlText
-                e.currentTarget.style.background = 'transparent'
-              }}
-            >
-              {l.label}
-            </button>
+            >{r.label}</button>
           ))}
         </div>
 
-        {/* Right side – live indicator + login button (compressed) */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 'clamp(6px, 1.5vw, 10px)',
-            marginLeft: 'auto',
-            flexShrink: 0,
-          }}
-        >
-          <ThemeSwitcher dark />
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 5,
-              background: 'var(--color-success-bg, rgba(34,197,94,0.1))',
-              border: '1px solid var(--color-success-border, rgba(34,197,94,0.25))',
-              borderRadius: 16,
-              padding: '3px clamp(6px, 1.5vw, 10px)',
-            }}
-          >
-            <span
-              style={{
-                width: 7,
-                height: 7,
-                borderRadius: '50%',
-                background: 'var(--color-success, #22C55E)',
-                display: 'inline-block',
-                animation: 'liveDot 1.4s ease-in-out infinite',
-              }}
-            />
-            <span
-              className="live-text"
-              style={{
-                color: surfaceDark ? 'rgba(255,255,255,0.88)' : 'var(--color-text-light, rgba(30,58,95,0.7))',
-                fontSize: 11,
-                fontFamily: 'Inter, sans-serif',
-              }}
-            >
+        {/* ── Right controls ── */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+
+          {/* Theme picker — unchanged, keeps lock icons & full dropdown */}
+          <ThemeSwitcher dark={dark} />
+
+          {/* Live indicator */}
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: 5,
+            background: 'rgba(34,197,94,0.10)', border: '1px solid rgba(34,197,94,0.25)',
+            borderRadius: 16, padding: '4px 10px',
+          }}>
+            <span style={{
+              width: 7, height: 7, borderRadius: '50%', background: '#22C55E',
+              display: 'inline-block', animation: 'liveDot 1.4s ease-in-out infinite',
+            }} />
+            <span className="live-text" style={{ color: mutedCol, fontSize: 11, fontFamily: 'Inter,sans-serif' }}>
               Live
             </span>
           </div>
 
+          {/* Login */}
           <button
             onClick={() => navigate('/login')}
             style={{
-              background: 'linear-gradient(135deg, var(--color-accent, #D4AF37), var(--color-accent-light, #E8C84A))',
-              border: 'none',
-              borderRadius: 'clamp(8px, 1.5vw, 12px)',
-              padding: 'clamp(6px, 1.5vw, 8px) clamp(12px, 2vw, 18px)',
-              fontFamily: 'Poppins, sans-serif',
-              fontWeight: 800,
-              fontSize: 'clamp(12px, 1.3vw, 14px)',
-              color: 'var(--color-primary-dark, #1E3A5F)',
-              cursor: 'pointer',
-              boxShadow: '0 3px 10px rgba(212,175,55,0.3)',
-              whiteSpace: 'nowrap',
+              background: dark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.05)',
+              border: `1px solid ${dark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.09)'}`,
+              borderRadius: 11, padding: '7px 14px',
+              color: textCol, fontSize: 12, fontWeight: 700,
+              cursor: 'pointer', fontFamily: 'Poppins,sans-serif',
             }}
-          >
-            Login →
-          </button>
+          >Login</button>
+
+          {/* Register Free */}
+          <button
+            onClick={() => navigate('/register')}
+            style={{
+              background: 'linear-gradient(135deg, var(--color-accent,#C9A84C), var(--color-accent-light,#E8C84A))',
+              border: 'none', borderRadius: 11, padding: '7px 14px',
+              color: 'var(--color-primary-dark,#0F2140)',
+              fontSize: 12, fontWeight: 800, cursor: 'pointer',
+              fontFamily: 'Poppins,sans-serif', whiteSpace: 'nowrap',
+              boxShadow: '0 4px 14px rgba(201,168,76,0.45)',
+            }}
+          >Register Free →</button>
+
         </div>
       </nav>
 
@@ -222,10 +161,7 @@ export default function Navbar() {
           100% { box-shadow: 0 0 0 0   rgba(34,197,94,0);   }
         }
         @media (max-width: 767px) {
-          .nav-links   { display: none !important; }
-          .live-text   { display: none !important; }
-        }
-        @media (max-width: 359px) {
+          .nav-roles { display: none !important; }
           .live-text { display: none !important; }
         }
       `}</style>
