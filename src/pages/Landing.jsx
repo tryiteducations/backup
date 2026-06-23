@@ -8,6 +8,7 @@ import StudentSection       from '../components/landing/StudentSection'
 import MentorSection        from '../components/landing/MentorSection'
 import InstitutionSection   from '../components/landing/InstitutionSection'
 import FamilySection        from '../components/landing/FamilySection'
+import QuestionDemo        from '../components/landing/QuestionDemo'
 import EquityPricingSection from '../components/landing/EquityPricingSection'
 import DonationSection      from '../components/landing/DonationSection'
 
@@ -492,7 +493,7 @@ export default function Landing() {
       <Navbar/>
       <Hero/>
       <StatsStrip/>
-      <TestPreview/>
+      <QuestionDemo/>
       <LeaderboardPreview navigate={navigate}/>
       <StudentSection/>
       <MentorSection/>
