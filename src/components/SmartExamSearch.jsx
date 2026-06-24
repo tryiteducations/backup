@@ -10,7 +10,6 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../lib/supabase'
-import SmartExamSearch from '../../components/SmartExamSearch'
 
 const NAVY = '#1E3A5F'
 const GOLD = '#C9A84C'
