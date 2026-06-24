@@ -218,7 +218,7 @@ export default function GamesHub(){
       <div style={{ padding:'14px 16px 0', display:'flex', gap:6, overflowX:'auto' }}>
         {allExamTags.map(tag => (
           <button key={tag} onClick={() => setFilterTag(tag)}
-            style={{ padding:'6px 14px', borderRadius:99, border:'none', cursor:'pointer', fontSize:11, fontWeight:700, whiteSpace:'nowrap',
+            style={{ padding:'6px 14px', borderRadius:99, cursor:'pointer', fontSize:11, fontWeight:700, whiteSpace:'nowrap',
               background: filterTag===tag ? NAVY : '#fff', color: filterTag===tag ? '#fff' : '#64748B',
               border: filterTag===tag ? 'none' : '1.5px solid #E2E8F0' }}>
             {tag==='all' ? '🎮 All' : EXAM_LABELS[tag] || tag}

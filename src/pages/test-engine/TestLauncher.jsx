@@ -127,7 +127,7 @@ export default function TestLauncher() {
               🆓 Free: 5 tests/day · {access.allowed ? 'Tests available' : 'Limit reached'}
             </p>
             <button onClick={() => navigate('/pro')}
-              style={{ fontSize:10, color:GOLD, background:'none', border:'none', cursor:'pointer', fontWeight:700 }}>
+              style={{ fontSize:10, color:GOLD, background:'none', cursor:'pointer', fontWeight:700 }}>
               Get unlimited →
             </button>
           </div>
@@ -185,7 +185,7 @@ export default function TestLauncher() {
           {QUESTION_COUNTS.map(n => (
             <button key={n}
               onClick={() => setCount(n)}
-              style={{ flex:1, padding:'10px 0', borderRadius:10, border:'none', cursor:'pointer',
+              style={{ flex:1, padding:'10px 0', borderRadius:10, cursor:'pointer',
                 fontWeight:700, fontSize:13,
                 background: count===n ? NAVY : '#fff',
                 color:      count===n ? '#fff' : '#64748B',
@@ -209,7 +209,7 @@ export default function TestLauncher() {
           ].map(d => (
             <button key={d.id}
               onClick={() => setDifficulty(d.id)}
-              style={{ flex:1, padding:'8px 0', borderRadius:10, border:'none', cursor:'pointer',
+              style={{ flex:1, padding:'8px 0', borderRadius:10, cursor:'pointer',
                 fontWeight:600, fontSize:11, whiteSpace:'nowrap',
                 background: difficulty===d.id ? NAVY : '#fff',
                 color:      difficulty===d.id ? '#fff' : '#64748B',
@@ -227,7 +227,7 @@ export default function TestLauncher() {
             { id:'pyq',   label:'PYQ Papers'  },
           ].map(t => (
             <button key={t.id} onClick={() => setTab(t.id)}
-              style={{ flex:1, padding:'10px 0', border:'none', cursor:'pointer',
+              style={{ flex:1, padding:'10px 0', cursor:'pointer',
                 background:'transparent', fontWeight:700, fontSize:12,
                 color: tab===t.id ? NAVY : '#94A3B8',
                 borderBottom: tab===t.id ? `2.5px solid ${GOLD}` : '2.5px solid transparent' }}>

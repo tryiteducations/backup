@@ -352,7 +352,7 @@ function PostCard({ post, onVote, isLoggedIn }) {
               {new Date(post.created_at).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}
             </p>
             <button onClick={() => setExpanded(e=>!e)}
-              style={{ fontSize:11, color:'#64748B', background:'none', border:'none', cursor:'pointer', padding:0 }}>
+              style={{ fontSize:11, color:'#64748B', background:'none', cursor:'pointer', padding:0 }}>
               {expanded ? 'Show less ↑' : 'Read more ↓'}
             </button>
           </div>
