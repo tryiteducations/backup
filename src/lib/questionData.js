@@ -31,19 +31,19 @@ export const FULL_LAYERS = {
 
   Tamil: [
     {t:'✅ Correct Answer',c:'#4ADE80',
-     content:'அண்ணா / அக்கா, கேளுங்க! Right to Property before Fundamental Right-ஆ இருந்துச்சு — Articles 19(1)(f) and 31-ல். 44th Amendment 1978-ல் Indira Gandhi government remove பண்ணிட்டாங்க. இப்போ Article 300A-ல் மட்டும் Legal Right — Supreme Court-ல் நேரடியா போக முடியாது, High Court மட்டும்தான். TNPSC, SSC எல்லாத்திலயும் வரும்!'},
+     content:'அண்ணா / அக்கா, கேளுங்க! Right to Property before Fundamental Right-ஆ இருந்துச்சு — Articles 19(1)(f) and 31. 44th Amendment 1978 Indira Gandhi government remove பண்ணிட்டாங்க. Now Article 300A மட்டும் Legal Right — Supreme Court நேரடியா போக முடியாது, High Court மட்டும்தான். TNPSC, SSC எல்லாத்திலயும் வரும்!'},
     {t:'❌ Option A Wrong',c:'#F87171',
-     content:'நல்லா கவனியுங்க! Right to Equality (Articles 14-18) இன்னும் fully intact-ஆ இருக்கு. Article 17 — Untouchability abolish. யாரும் இதை remove பண்ணலை, பண்ணவும் மாட்டாங்க!'},
+     content:'நல்லா கவனியுங்க! Right to Equality (Articles 14-18) இன்னும் fully intact-ஆ இருக்கு. Article 17 — Untouchability abolish ஆச்சு. யாரும் remove பண்ணலை, பண்ணவும் மாட்டாங்க!'},
     {t:'❌ Option C Wrong',c:'#F87171',
-     content:'Freedom of Speech Article 19(1)(a) — Indian democracy-ஓட backbone! இது போகவும் முடியாது. Article 19(2)-ல் reasonable restrictions இருக்கு, ஆனா right-ஐ remove பண்ணலை.'},
+     content:'Freedom of Speech Article 19(1)(a) — Indian democracy-ஓட backbone! இது போகவும் முடியாது. Article 19(2) reasonable restrictions இருக்கு, ஆனா right remove பண்ணலை.'},
     {t:'❌ Option D Wrong',c:'#F87171',
-     content:'Article 32 — Dr. Ambedkar “heart and soul of the Constitution” ங்னு சோன்னார். Fundamental Rights violation ஆனா Supreme Court-ல் நேரடியா போக right குடுக்குது. எந்த government-உம் இதை remove பண்ணலை!'},
+     content:'Article 32 — Dr. Ambedkar said “heart and soul of the Constitution”. Fundamental Rights violation ஆனா Supreme Court நேரடியா போக right கிடைக்கும். எந்த governmentமும் permanently remove பண்ணலை!'},
     {t:'🧠 Formula',c:'#C9A84C',
-     content:'அண்ணா/அக்கா, Note பண்ணுங்க: 44th Amendment 1978 = Right to Property OUT → Article 300A. 86th Amendment 2002 = Right to Education IN → Article 21A. இரண்டும் TNPSC, SSC-ல் கட்டாயம் வரும்!'},
-    {t:'📖 Story — 1978',c:'#A78BFA',
-     content:'1978-ல் Thanjavur-ல் ஒரு விவசாயிக்கு நிலம் இருந்துச்சு. Government அதை எடுக்க வந்துச்சு. 44th Amendment-କு before — Supreme Court-ல் நேரடியா போய் fight பண்ணலாம். After — High Court மட்டும்தான். இந்த difference-தான் examiner கேக்கிறார்!'},
+     content:'அண்ணா/அக்கா, note பண்ணுங்க: 44th Amendment 1978 = Right to Property OUT → Article 300A. 86th Amendment 2002 = Right to Education IN → Article 21A. இரண்டும் TNPSC, SSC கட்டாயம் வரும்!'},
+    {t:'📖 Story',c:'#A78BFA',
+     content:'1978 Thanjavur ஒரு farmer-க்கு land இருந்துச்சு. Government acquire பண்ண வந்துச்சு. 44th Amendment before — Supreme Court நேரடியா fight பண்ணலாம். After — High Court மட்டும்தான். இந்த difference-தான் examiner கேக்கிறார்!'},
     {t:'🎯 Exam Tip',c:'#60A5FA',
-     content:'TNPSC Group 1,2,2A,4,VAO + SSC CGL + IBPS + RRB — எல்லாத்திலயும்! 5 key points: (1) 44th Amendment 1978 (2) Indira Gandhi government (3) Article 300A (4) High Court only (5) Legal Right not Fundamental Right. இந்த 5 points note பண்ணுங்க!'},
+     content:'TNPSC Group 1,2,2A,4,VAO + SSC CGL + IBPS + RRB — எல்லாத்திலயும் வரும்! 5 key points: (1) 44th Amendment 1978 (2) Indira Gandhi government (3) Article 300A (4) High Court only (5) Legal Right not Fundamental Right. கட்டாயம் note பண்ணுங்க!'},
   ],
 
   Hindi: [

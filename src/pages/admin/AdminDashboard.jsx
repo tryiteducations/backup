@@ -1088,7 +1088,6 @@ function ViewAsTab() {
 // Create tournaments, set schedules, manage polls, dispatch prizes, announce
 // Architecture: Admin creates → CDN serves questions → Cloudflare Worker batch
 // ═══════════════════════════════════════════════════════════════════════════
-import { supabase } from '../../lib/supabase'
 
 function TournamentAdminTab(){
   const[subtab,setSubtab]=useState('upcoming')
