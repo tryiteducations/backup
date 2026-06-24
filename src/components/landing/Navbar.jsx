@@ -115,7 +115,14 @@ export default function Navbar() {
             borderRadius:30, padding:'5px 9px' }}>
           {BASE_DOTS.map(d => (
             <button key={d.id}
-              onClick={() => { console.log('DOT CLICKED:', d.id); setActiveTheme(d.id); applyTheme(d.id) }}
+              onClick={() => { console.log('DOT CLICKED:', d.id)
+              setActiveTheme(d.id)
+              applyTheme(d.id)
+              setTimeout(()=>{
+                const accent = getComputedStyle(document.documentElement).getPropertyValue('--color-accent')
+                const bg = getComputedStyle(document.documentElement).getPropertyValue('--color-bg')
+                console.log('CSS vars after click -- accent:', accent, 'bg:', bg)
+              }, 200) }}
               title={d.label}
               style={{
                 width:15, height:15, borderRadius:'50%',
