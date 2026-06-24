@@ -22,13 +22,13 @@ export const LAYERS_EN = [
 export const FULL_LAYERS = {
 
   Tamil:[
-    {t:'✅ Correct Answer — Right to Property',c:'#4ADE80',content:'அண்ணா / அக்கா, கேளுங்க! Right to Property முந்நாடு Fundamental Right-ஆ இருந்துச்சு — Articles 19(1)(f) and 31-ல். 44th Amendment 1978-ல் Indira Gandhi government அதை நீக்கிட்டாங்க. இப்போ Article 300A-ல் மட்டும் Legal Right. Supreme Court-ல் நேரடியா போக முடியாது — High Court மட்டும்தான். TNPSC, SSC எல்லாத்திலயும் வரும்!'},
-    {t:'❌ Option A Wrong — Right to Equality',c:'#F87171',content:'நல்லா கவனியுங்க! Right to Equality (Articles 14-18) இன்னும் பூரண்மையாக Fundamental Right-ஆகவே இருக்கு. Article 17 — Untouchability abolish ஆச்சு. யாரும் நீக்கலை, நீக்கவும் மாட்டாங்க!'},
-    {t:'❌ Option C Wrong — Freedom of Speech',c:'#F87171',content:'Freedom of Speech Article 19(1)(a) — Indian democracy-ஓட backbone! கவலையே படாதீங்க, இது போகவும் மாட்டாது. Article 19(2)-ல் restrictions இருக்கு, ஆனா right நீக்கவில்லை.'},
-    {t:'❌ Option D Wrong — Article 32',c:'#F87171',content:'Article 32-ஐ Dr. Ambedkar “heart and soul of the Constitution” ங்னு சோன்னாரு. Fundamental Rights violation ஆனா Supreme Court-ல் நேரடியா போக ரைட் குடுக்குது. இதை எந்த government-உம் நீக்கவில்லை!'},
-    {t:'🧠 Formula — மனசுல வச்சுக்கங்க',c:'#C9A84C',content:'அண்ணா/அக்கா, Note பண்ணிக்கங்க: 44th Amendment 1978 = Right to Property OUT → Article 300A. 86th Amendment 2002 = Right to Education IN → Article 21A (Article 21A). இரண்டும் TNPSC, SSC-ல் கட்டாயம் வரும்!'},
-    {t:'📖 Story — 1978 Thanjavur',c:'#A78BFA',content:'1978-ல் Thanjavur-ல் ஒரு விவசாயிக்கு நிலம் இருந்துச்சு. Government அதை எடுக்க வந்துச்சு. 44th Amendment-க்கு முந்னாடு — Supreme Court-ல் நேரடியா போய் fight பண்ணலாம். அதுக்கு அப்புறம்? High Court மட்டும்தான். இந்த difference-தான் examiner கேக்கிறார்!'},
-    {t:'🎯 Exam Tip — TNPSC Special',c:'#60A5FA',content:'TNPSC Group 1, 2, 2A, 4, VAO + SSC CGL + IBPS + RRB — எல்லாத்திலயும் வரும்! 5 key points: (1) 44th Amendment 1978 (2) Indira Gandhi government (3) Article 300A (4) High Court only (5) Legal Right — not Fundamental Right. இந்த 5 points different formats-ல் வரும்!'},
+    {t:'Correct Answer - Right to Property',c:'#4ADE80',content:'அண்ணா / அக்கா, கேளுங்க! Right to Property முந்நாடு Fundamental Right-ஆ இருந்துச்சு - Articles 19(1)(f) and 31-ல். 44th Amendment 1978-ல் Indira Gandhi government அதை நீக்கிட்டாங்க. இப்போ Article 300A-ல் மட்டும் Legal Right. Supreme Court-ல் நேரடியா போக முடியாது - High Court மட்டும்தான். TNPSC, SSC எல்லாத்திலயும் வரும்!'},
+    {t:'Option A Wrong - Right to Equality',c:'#F87171',content:'நல்லா கவனியுங்க! Right to Equality (Articles 14-18) இன்னும் பூரண்மையாக Fundamental Right-ஆகவே இருக்கு. Article 17 - Untouchability abolish ஆச்சு. யாரும் நீக்கலை, நீக்கவும் மாட்டாங்க!'},
+    {t:'Option C Wrong - Freedom of Speech',c:'#F87171',content:'Freedom of Speech Article 19(1)(a) - Indian democracy-ஓட backbone! கவலையே படாதீங்க, இது போகவும் மாட்டாது. Article 19(2)-ல் Reasonable restrictions இருக்கு, ஆனா right நீக்கவில்லை.'},
+    {t:'Option D Wrong - Article 32',c:'#F87171',content:'Article 32 - Dr. Ambedkar “heart and soul of the Constitution” ங்னு சோன்னாரு. Fundamental Rights violation ஆனா Supreme Court-ல் நேரடியா போக right குடுக்குது. இதை எந்த government-உம் நீக்கவில்லை!'},
+    {t:'Memory Formula',c:'#C9A84C',content:'அண்ணா/அக்கா, Note பண்ணிக்கங்க: 44th Amendment 1978 = Right to Property OUT, Article 300A-ல் போச்சு. 86th Amendment 2002 = Right to Education IN, Article 21A-ல் வந்துச்சு. இரண்டும் TNPSC, SSC-ல் கட்டாயம் வரும்!'},
+    {t:'Story - 1978 Thanjavur',c:'#A78BFA',content:'1978-ல் Thanjavur-ல் ஒரு விவசாயிக்கு நிலம் இருந்துச்சு. Government அதை எடுக்க வந்துச்சு. 44th Amendment-க்କு முந்னாடு - Supreme Court-ல் நேரடியா போய் fight பண்ணலாம். அதுக்କு அப்புறம் - High Court மட்டும்தான். இந்த difference-தான் examiner கேக்கிறார்!'},
+    {t:'Exam Tip - TNPSC Special',c:'#60A5FA',content:'TNPSC Group 1, 2, 2A, 4, VAO + SSC CGL + IBPS + RRB - எல்லாத்திலயும் வரும்! 5 key points: (1) 44th Amendment 1978 (2) Indira Gandhi government (3) Article 300A (4) High Court only (5) Legal Right - not Fundamental Right. இந்த 5 points மனசுல வச்சிக்கங்க!'},
   ],
 
   Hindi:[

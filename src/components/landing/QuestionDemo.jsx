@@ -133,9 +133,9 @@ export default function QuestionDemo() {
                     </div>
                     <span style={{color:muted,fontSize:10,fontWeight:600,flexShrink:0}}>Read in:</span>
                     <select value={lang} onChange={e=>setLang(e.target.value)}
-                      style={{background:isDark?'rgba(255,255,255,0.10)':'#fff',
+                      style={{background:isDark?'#1a1a2e':'#fff',
                         border:`1px solid ${accent}40`,borderRadius:8,padding:'4px 8px',
-                        color:txt,fontSize:11,fontWeight:700,cursor:'pointer',flex:1}}>
+                        color:isDark?'#ffffff':txt,fontSize:11,fontWeight:700,cursor:'pointer',flex:1}}>
                       <option value="English">English (7 layers)</option>
                       <option disabled>─── Full cultural tone (Anna/Akka style) ───</option>
                       {Object.entries(FULL_LANG_LABELS).map(([l,label])=>(
@@ -170,12 +170,12 @@ export default function QuestionDemo() {
                   {/* 7 layers */}
                   <div style={{display:'flex',flexDirection:'column',gap:10}}>
                     {layers.map((layer,i)=>(
-                      <div key={i} style={{background:isDark?'rgba(255,255,255,0.03)':surf,
+                      <div key={i} style={{background:isDark?'rgba(255,255,255,0.07)':surf,
                         border:`1px solid ${layer.c}25`,borderRadius:14,
                         padding:'13px 14px',borderLeft:`4px solid ${layer.c}`}}>
                         <p style={{color:layer.c,fontSize:11,fontWeight:800,
                           margin:'0 0 7px',fontFamily:'Poppins,sans-serif'}}>{layer.t}</p>
-                        <p style={{color:txt,fontSize:12,lineHeight:1.8,margin:0}}>{layer.content}</p>
+                        <p style={{color:isDark?'rgba(255,255,255,0.92)':`${txt}`,fontSize:12,lineHeight:1.8,margin:0}}>{layer.content}</p>
                       </div>
                     ))}
                   </div>

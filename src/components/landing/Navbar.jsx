@@ -22,7 +22,7 @@ const ROLES = [
 
 export default function Navbar() {
   const navigate = useNavigate()
-  const { theme, activeTheme, setActiveTheme } = useTheme()
+  const { theme, activeTheme, setActiveTheme, applyTheme } = useTheme()
   const [scrolled,    setScrolled]    = useState(false)
   const [activeRole,  setActiveRole]  = useState('student')
 
@@ -41,8 +41,8 @@ export default function Navbar() {
   // Dark / light quick toggle
   // Switches between midnight (dark) and default (light)
   const handleDarkToggle = () => {
-    if (isDark) setActiveTheme('default')
-    else        setActiveTheme('midnight')
+    if (isDark) { setActiveTheme('default');   applyTheme('default')   }
+    else        { setActiveTheme('midnight');  applyTheme('midnight')  }
   }
 
   const navBg = scrolled
@@ -115,7 +115,7 @@ export default function Navbar() {
             borderRadius:30, padding:'5px 9px' }}>
           {BASE_DOTS.map(d => (
             <button key={d.id}
-              onClick={() => setActiveTheme(d.id)}
+              onClick={() => { setActiveTheme(d.id); applyTheme(d.id) }}
               title={d.label}
               style={{
                 width:15, height:15, borderRadius:'50%',
@@ -130,9 +130,10 @@ export default function Navbar() {
                 transition:'all 0.2s',
               }}/>
           ))}
-          {/* Full theme picker for Pro/Ultra themes */}
-          <ThemeSwitcher dark={isDark}/>
         </div>
+
+        {/* Full theme picker for Pro/Ultra themes — separate from dots */}
+        <ThemeSwitcher dark={isDark}/>
 
         {/* ── Dark / Light toggle ── */}
         <button onClick={handleDarkToggle}
