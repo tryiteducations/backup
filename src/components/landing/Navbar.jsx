@@ -115,7 +115,7 @@ export default function Navbar() {
             borderRadius:30, padding:'5px 9px' }}>
           {BASE_DOTS.map(d => (
             <button key={d.id}
-              onClick={() => { setActiveTheme(d.id); applyTheme(d.id) }}
+              onClick={() => { console.log('DOT CLICKED:', d.id); setActiveTheme(d.id); applyTheme(d.id) }}
               title={d.label}
               style={{
                 width:15, height:15, borderRadius:'50%',
