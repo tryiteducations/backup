@@ -23,7 +23,7 @@ const LANGUAGES = [
 
 export default function StudentSettings() {
   const navigate  = useNavigate()
-  const { theme, applyTheme, setActiveTheme, themes } = useTheme()
+  const { theme, applyTheme, setActiveTheme, themes, themesWithStatus } = useTheme()
   const { user: authUser, logout } = useAuth()
   const fileRef = useRef()
 
@@ -68,14 +68,13 @@ export default function StudentSettings() {
     const uid = authUser.id || authUser.userId
     supabase.from('profiles').select('*').eq('id', uid).single()
       .then(({ data }) => {
-        if (data) {
-          setProfile(data)
-          setName(data.name || '')
-          setBio(data.bio || '')
-          setState(data.state || '')
-          setCity(data.city || '')
-          setLang(data.preferred_language || 'en')
-        }
+        const d = data || authUser
+        setProfile(d)
+        setName(d?.name || '')
+        setBio(d?.bio || '')
+        setState(d?.state || '')
+        setCity(d?.city || '')
+        setLang(d?.preferred_language || d?.lang || 'en')
       })
   }, [authUser])
 
@@ -155,14 +154,14 @@ export default function StudentSettings() {
     { id: 'account',       label: 'Account',         icon: '⚙️' },
   ]
 
-  const allThemes = themes || []
+  const allThemes = themesWithStatus || themes || []
   const categories = ['All', ...new Set(allThemes.map(t => t.category))]
 
   const filteredThemes = themeFilter === 'All'
     ? allThemes
     : allThemes.filter(t => t.category === themeFilter)
 
-  const isUnlocked = (t) => t.tier === 'base' || t.plan === 'free'
+  const isUnlocked = (t) => t.unlocked || t.tier === 'base' || t.plan === 'free'
 
   const handleThemeClick = (t) => {
     if (!isUnlocked(t)) return
