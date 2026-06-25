@@ -1,5 +1,4 @@
 import { lazy, Suspense, useEffect } from 'react'
-import StudentDashboard from './pages/student/StudentDashboard'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { ThemeProvider } from './context/ThemeContext'
 import { ToastProvider } from './context/ToastContext'
@@ -180,7 +179,7 @@ function ThemedApp() {
             <Route path="/role-select" element={<RoleSelect />} />
 
             {/* CORE */}
-            <Route path="/dashboard"     element={<Dashboard />} />
+            <Route path="/dashboard"     element={<Navigate to="/student" replace/>} />
             <Route path="/profile"       element={<Profile />} />
             <Route path="/settings"      element={<Settings />} />
             <Route path="/notifications" element={<Notifications />} />
