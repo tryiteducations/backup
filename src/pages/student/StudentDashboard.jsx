@@ -473,9 +473,11 @@ export default function StudentDashboard() {
 
         {/* User mini card */}
         <div style={{padding:'12px 10px',margin:'8px',
-          background:'rgba(255,255,255,0.08)',borderRadius:14,
-          border:'1px solid rgba(255,255,255,0.15)',
-          backdropFilter:'blur(8px)'}}>
+          background:'linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,255,255,0.06))',
+          borderRadius:14,
+          border:'1px solid rgba(255,255,255,0.25)',
+          backdropFilter:'blur(12px)',
+          boxShadow:'0 4px 24px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.15)'}}>
           <div style={{display:'flex',alignItems:'center',
             gap:sideVisible?10:0,justifyContent:sideVisible?'flex-start':'center'}}>
             <div onClick={handleAvatarClick}
@@ -527,7 +529,7 @@ export default function StudentDashboard() {
                   boxShadow:`0 0 8px ${accent}66`}}/>
               </div>
               <div style={{display:'flex',justifyContent:'space-between',marginTop:4}}>
-                <span style={{color:'rgba(255,255,255,0.25)',fontSize:8}}>XP {xp%500}/500</span>
+                <span style={{color:'rgba(255,255,255,0.60)',fontSize:8}}>XP {xp%500}/500</span>
                 <span style={{color:accent,fontSize:8,fontWeight:700}}>Lv.{lvl+1} →</span>
               </div>
             </div>
@@ -538,19 +540,19 @@ export default function StudentDashboard() {
         {sideVisible&&(
           <div style={{display:'flex',gap:6,padding:'0 10px',marginBottom:6}}>
             {[
-              {icon:'🔥',val:`${curStr}d`,label:'Streak',color:'#F59E0B'},
-              {icon:'🪙',val:coins,label:'Coins',color:accent,anim:true},
+              {icon:'🔥',val:`${curStr}d`,label:'Streak',color:'#FF6B00'},
+              {icon:'🪙',val:coins,label:'Coins',color:'#FFD700',anim:true},
             ].map((s,i)=>(
-              <div key={i} style={{flex:1,background:`${s.color}12`,
-                border:`1px solid ${s.color}22`,borderRadius:10,
+              <div key={i} style={{flex:1,background:`${s.color}20`,
+                border:`1px solid ${s.color}50`,borderRadius:10,
                 padding:'7px 8px',textAlign:'center',
-                boxShadow:`0 0 12px ${s.color}11`}}>
+                boxShadow:`0 0 16px ${s.color}33,inset 0 1px 0 rgba(255,255,255,0.1)`}}>
                 <p style={{color:s.color,fontWeight:900,fontSize:15,
                   fontFamily:'Poppins,sans-serif',margin:0}}>
                   {s.icon}{' '}
                   {s.anim?<AnimNum value={s.val}/>:s.val}
                 </p>
-                <p style={{color:'rgba(255,255,255,0.3)',fontSize:8,margin:'2px 0 0'}}>{s.label}</p>
+                <p style={{color:'rgba(255,255,255,0.65)',fontSize:8,margin:'2px 0 0'}}>{s.label}</p>
               </div>
             ))}
           </div>
@@ -613,13 +615,16 @@ export default function StudentDashboard() {
         </nav>
 
         {/* Upgrade CTA */}
-        {!isPro&&sideVisible&&(
+        {!isPro&&sideVisible&&showUpgradeCTA&&(
           <div style={{margin:'8px 10px 12px',
             background:`linear-gradient(135deg,${accent}25,${accent}10)`,
-            border:`1px solid ${accent}45`,borderRadius:14,padding:'12px'}}>
-            <p style={{color:accent,fontWeight:700,fontSize:11,margin:'0 0 4px'}}>
-              ⚡ Upgrade to Pro
-            </p>
+            border:`1px solid ${accent}45`,borderRadius:14,padding:'12px',
+            position:'relative',
+            position:'relative'}}>
+            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
+              <p style={{color:accent,fontWeight:700,fontSize:11,margin:0}}>⚡ Upgrade to Pro</p>
+              <button onClick={()=>setShowUpgradeCTA(false)} style={{background:'rgba(255,255,255,0.1)',border:'none',borderRadius:'50%',width:18,height:18,cursor:'pointer',color:'rgba(255,255,255,0.6)',fontSize:10,display:'flex',alignItems:'center',justifyContent:'center',padding:0}}>✕</button>
+            </div>
             <p style={{color:'rgba(255,255,255,0.35)',fontSize:10,margin:'0 0 8px',lineHeight:1.5}}>
               Unlimited tests · All themes · Full rank
             </p>
@@ -641,7 +646,8 @@ export default function StudentDashboard() {
         <div style={{
           display:'flex',alignItems:'center',justifyContent:'space-between',
           padding:'14px 24px',
-          background:isDark?'rgba(255,255,255,0.015)':'rgba(255,255,255,0.85)',
+          background:isDark?'rgba(0,0,0,0.25)':'rgba(255,255,255,0.88)',
+        backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',
           backdropFilter:'blur(20px)',
           borderBottom:`1px solid ${bdr}`,
           position:'sticky',top:0,zIndex:100,
@@ -786,7 +792,8 @@ export default function StudentDashboard() {
                   background:`linear-gradient(135deg,${accent},${accentL})`,
                   border:'none',borderRadius:10,padding:'7px 14px',
                   color:primD,fontWeight:800,fontSize:11,cursor:'pointer',
-                  boxShadow:`0 4px 14px ${accent}33`}}>
+                  boxShadow:`0 4px 14px ${accent}33`}}
+                  onClick={()=>setUpgradeFor('tests')}>
                   Upgrade ₹5/day →
                 </button>
               </div>
@@ -816,9 +823,10 @@ export default function StudentDashboard() {
                   return(
                     <button key={i}
                       onClick={()=>handleNav(a)}
-                      style={{background:atLimit?'rgba(248,113,113,0.05)':isDark?'rgba(255,255,255,0.07)':'rgba(255,255,255,0.85)',
-                        backdropFilter:'blur(8px)',
-                        border:`1.5px solid ${atLimit?'#F87171':a.color}35`,
+                      style={{background:atLimit?'rgba(248,113,113,0.05)':isDark?'rgba(255,255,255,0.10)':'rgba(255,255,255,0.95)',
+                        backdropFilter:'blur(16px)',WebkitBackdropFilter:'blur(16px)',
+                        border:`1.5px solid ${atLimit?'#F87171':a.color}50`,
+                        boxShadow:isDark?`0 4px 20px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.08)`:`0 2px 12px ${a.color}15,0 1px 0 rgba(255,255,255,0.9)`,
                         borderRadius:16,padding:'13px 10px',
                         cursor:'pointer',textAlign:'left',
                         transition:'all 0.15s',
@@ -838,8 +846,8 @@ export default function StudentDashboard() {
                         alignItems:'center',justifyContent:'center',
                         fontSize:20,marginBottom:8,
                         boxShadow:`0 0 12px ${a.color}22`}}>{a.icon}</div>
-                      <p style={{color:atLimit?'#F87171':txt,fontWeight:700,fontSize:12,margin:'0 0 2px'}}>{a.label}</p>
-                      <p style={{color:atLimit?'#F87171':muted,fontSize:9,margin:0}}>
+                      <p style={{color:atLimit?'#F87171':isDark?'#ffffff':txt,fontWeight:700,fontSize:12,margin:'0 0 2px'}}>{a.label}</p>
+                      <p style={{color:atLimit?'#F87171':isDark?'rgba(255,255,255,0.65)':muted,fontSize:9,margin:0}}>
                         {atLimit?`0/${FREE_LIMITS[a.limit]} used`:a.sub}
                       </p>
                     </button>
@@ -927,7 +935,7 @@ export default function StudentDashboard() {
             className="two-col">
             {/* Recent tests */}
             {showWidget('tests')&&attempts.length>0&&(
-              <div style={{background:card,border:`1px solid ${bdr}`,borderRadius:18,overflow:'hidden'}}>
+              <div style={{background:isDark?'rgba(255,255,255,0.07)':'rgba(255,255,255,0.9)',backdropFilter:'blur(12px)',WebkitBackdropFilter:'blur(12px)',border:`1px solid ${bdr}`,borderRadius:18,overflow:'hidden'}}>
                 <div style={{padding:'14px 16px',
                   borderBottom:`1px solid ${bdr}`,
                   display:'flex',justifyContent:'space-between',alignItems:'center'}}>
@@ -1031,7 +1039,7 @@ export default function StudentDashboard() {
 
           {/* ── LEADERBOARD ────────────────────────────────────── */}
           {showWidget('leaderboard')&&(
-            <div style={{background:`linear-gradient(135deg,${primD},${primary}88)`,
+            <div style={{background:`linear-gradient(135deg,#060D18,#0F1A2E)`,
               borderRadius:20,overflow:'hidden',marginBottom:20,
               border:`1px solid ${accent}18`,
               boxShadow:isDark?`0 8px 32px rgba(0,0,0,0.3)`:'none'}}>
@@ -1041,7 +1049,7 @@ export default function StudentDashboard() {
                   fontWeight:800,fontSize:14,margin:0}}>🏆 All-India Live Rankings</p>
                 <div style={{display:'flex',gap:8}}>
                   <button onClick={()=>setFullScreen({id:'rank',title:'Leaderboard',icon:'🏆',path:'/student/rank'})}
-                    style={{background:'transparent',border:'none',color:'rgba(255,255,255,0.4)',fontSize:14,cursor:'pointer'}}>⛶</button>
+                    style={{background:'transparent',border:'none',color:'rgba(255,255,255,0.70)',fontSize:14,cursor:'pointer'}}>⛶</button>
                   <button onClick={()=>navigate('/student/rank')} style={{
                     background:'transparent',border:'none',color:accent,
                     fontSize:11,fontWeight:700,cursor:'pointer'}}>Full Board →</button>
@@ -1071,7 +1079,7 @@ export default function StudentDashboard() {
                         overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>
                         {r.profiles?.name||'Student'}
                       </p>
-                      <p style={{color:'rgba(255,255,255,0.25)',fontSize:8,margin:0}}>
+                      <p style={{color:'rgba(255,255,255,0.60)',fontSize:8,margin:0}}>
                         {r.exam_name||'—'}
                       </p>
                     </div>
@@ -1079,7 +1087,7 @@ export default function StudentDashboard() {
                   </div>
                 )):(
                   <div style={{padding:'24px',textAlign:'center',gridColumn:'1/-1'}}>
-                    <p style={{color:'rgba(255,255,255,0.3)',fontSize:13}}>
+                    <p style={{color:'rgba(255,255,255,0.65)',fontSize:13}}>
                       Take a test to appear on the leaderboard! 🎯
                     </p>
                   </div>
@@ -1181,7 +1189,7 @@ export default function StudentDashboard() {
                   <p style={{color:'#fff',fontFamily:'Poppins,sans-serif',fontWeight:700,fontSize:13,margin:0}}>
                     🇮🇳 Bharat Pulse
                   </p>
-                  <span style={{color:'rgba(255,255,255,0.4)',fontSize:11}}>Today →</span>
+                  <span style={{color:'rgba(255,255,255,0.70)',fontSize:11}}>Today →</span>
                 </div>
                 <div style={{padding:'14px 16px'}}>
                   <p style={{color:accent,fontSize:9,fontWeight:700,letterSpacing:'1px',margin:'0 0 6px'}}>
