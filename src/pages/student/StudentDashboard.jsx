@@ -182,9 +182,9 @@ export default function StudentDashboard() {
     const load = async()=>{
       try {
         const [p,s,u,att,lp,lb] = await Promise.all([
-          getProfile(uid).catch(()=>null),
-          getStreak(uid).catch(()=>({current_streak:0,longest_streak:0})),
-          getUsage(uid).catch(()=>({tests_today:0,games_today:0,doubts_today:0})),
+          getProfile(uid).catch(()=>({name:authUser?.name||'Student',coins:0,xp:0,level:1,plan:'free',badge:'Newcomer',state:'',avatar_url:null})),
+          getStreak(uid).catch(()=>({current_streak:0,longest_streak:0,total_study_days:0})),
+          getUsage(uid).catch(()=>({tests_today:0,games_today:0,doubts_today:0,last_reset:new Date().toISOString().split('T')[0]})),
           getRecentAttempts(uid,6).catch(()=>[]),
           getLaunchpadEnrollment(uid).catch(()=>null),
           getLeaderboard(8).catch(()=>[]),
@@ -195,7 +195,7 @@ export default function StudentDashboard() {
           state:authUser.state||''})
         setStreak(s);setUsage(u);setAttempts(att);setLaunchpad(lp);setLeaders(lb)
         if(lp){const t=await getTodayTopic(lp).catch(()=>null);setTodayTopic(t)}
-        await updateStreak(uid).catch(()=>{})
+        await updateStreak(uid).catch(()=>console.log('Streak update skipped - mock user'))
       } catch(e){console.error(e)}
       finally{setLoading(false)}
     }
