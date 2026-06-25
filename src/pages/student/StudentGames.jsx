@@ -170,7 +170,9 @@ export default function StudentGames() {
     finally { setLoading(false) }
   }
 
+  const isAdmin = authUser?.is_admin || authUser?.role === 'admin' || authUser?.email?.includes('admin')
   const canPlay = (game) => {
+    if (isAdmin) return true  // Admin bypasses all restrictions
     if (game.tier === 'free') return true
     if (game.tier === 'pro' && (plan === 'pro' || plan === 'ultra')) return true
     if (game.tier === 'ultra' && plan === 'ultra') return true
@@ -354,7 +356,7 @@ export default function StudentGames() {
         {/* ── GAMES GRID ─────────────────────────────────────────── */}
         <div style={{
           display:'grid',
-          gridTemplateColumns:'repeat(auto-fill,minmax(200px,1fr))',
+          gridTemplateColumns:'repeat(auto-fill,minmax(180px,1fr))',
           gap:16,
         }}>
           {filtered.map((game) => {
@@ -386,7 +388,7 @@ export default function StudentGames() {
                 {/* Game banner */}
                 <div onClick={() => handlePlay(game)}
                   style={{
-                    height:90,
+                    height:110,
                     background:`linear-gradient(135deg,${game.color}DD,${game.color}88)`,
                     display:'flex', alignItems:'center', justifyContent:'center',
                     position:'relative', overflow:'hidden',
@@ -404,7 +406,7 @@ export default function StudentGames() {
 
                   {/* Emoji with float animation */}
                   <span style={{
-                    fontSize:44,
+                    fontSize:52,
                     animation: hovered ? 'float 2s ease-in-out infinite' : 'none',
                     filter:`drop-shadow(0 4px 12px ${game.glow}88)`,
                     position:'relative', zIndex:1,
