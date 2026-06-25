@@ -90,14 +90,12 @@ function getUsagePeriodKey(userId, feature, period) {
 const MOCK_USER = {
   id: '4e6fcfaf-4ec5-4fc6-8047-351d8f3c82b0',
       is_admin: true,
-      role: 'admin',
-      plan: 'ultra',
   name: '',
   initials: '?',
   email: localStorage.getItem('tryit_email') || '',
   state: 'Tamil Nadu',
   city: 'Coimbatore',
-  role: localStorage.getItem('tryit_role') || 'student',
+  role: 'admin',
   xp: 0, xpToNext: 500, coins: 0, streak: 0, streakFreezes: 2,
   level: 1, levelTitle: 'The Fierce One', levelEmoji: '🔥',
   isPro: false, plan: 'free',   // ← change 'free' to 'pro' or 'ultra' to test
