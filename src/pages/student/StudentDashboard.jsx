@@ -620,7 +620,6 @@ export default function StudentDashboard() {
           <div style={{margin:'8px 10px 12px',
             background:`linear-gradient(135deg,${accent}25,${accent}10)`,
             border:`1px solid ${accent}45`,borderRadius:14,padding:'12px',
-            position:'relative',
             position:'relative'}}>
             <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
               <p style={{color:accent,fontWeight:700,fontSize:11,margin:0}}>⚡ Upgrade to Pro</p>
