@@ -145,9 +145,9 @@ export function AnswerOption({ option, index, selected, correct, wrong, revealed
   const isWrong   = revealed && wrong && selected
   const isSelected= selected && !revealed
 
-  let bg = 'rgba(255,255,255,0.06)'
-  let border = 'rgba(255,255,255,0.12)'
-  let color = '#fff'
+  let bg = 'rgba(255,255,255,0.08)'
+  let border = 'rgba(255,255,255,0.20)'
+  let color = '#ffffff'
   let glow = 'none'
 
   if (isCorrect) { bg='rgba(74,222,128,0.2)'; border='#4ADE80'; glow='0 0 20px #4ADE8044'; color='#4ADE80' }
@@ -231,7 +231,7 @@ export function GameHeader({ title, emoji, score, combo, timeLeft, totalTime,
     <div style={{
       display:'flex', alignItems:'center', justifyContent:'space-between',
       padding:'12px 16px',
-      background:'rgba(0,0,0,0.4)',
+      background:'rgba(0,0,0,0.35)',
       backdropFilter:'blur(20px)',
       borderBottom:'1px solid rgba(255,255,255,0.08)',
       position:'sticky', top:0, zIndex:100,

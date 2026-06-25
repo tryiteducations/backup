@@ -95,7 +95,7 @@ export default function GKBlitz() {
       setCombo(c => c + 1)
       setBurst(true)
       setPopup({ pts, correct:true })
-      setTimeout(() => { setBurst(false); setPopup(null) }, 1200)
+      setTimeout(() => { setBurst(false); setPopup(null) }, 1500)
     } else {
       setCombo(0)
       setPopup({ pts:0, correct:false })

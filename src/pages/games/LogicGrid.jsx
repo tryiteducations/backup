@@ -27,6 +27,7 @@ export default function LogicGrid() {
   const { theme } = useTheme()
   const { user: authUser } = useAuth()
   const primD = theme?.primaryDark ?? '#0F2140'
+  const isDark = theme?.isDark ?? false
 
   const [phase, setPhase] = useState('intro')
   const [qIdx, setQIdx] = useState(0)
@@ -69,7 +70,7 @@ export default function LogicGrid() {
       setMaxCombo(m => Math.max(m, nc))
       setBurst(true)
       setPopup({ pts, correct: true })
-      setTimeout(() => { setBurst(false); setPopup(null) }, 1200)
+      setTimeout(() => { setBurst(false); setPopup(null) }, 1500)
     } else {
       setCombo(0)
       setPopup({ pts: 0, correct: false })
@@ -80,7 +81,7 @@ export default function LogicGrid() {
       if (qIdx < questions.length - 1) {
         setQIdx(idx => idx + 1); setSelected(null); setRevealed(false)
       } else { clearInterval(timerRef.current); finishGame() }
-    }, 1300)
+    }, 2800)
   }
 
   const finishGame = useCallback(async () => {
@@ -109,7 +110,8 @@ export default function LogicGrid() {
   }
 
   const correct = results.filter(r => r.selected === r.correct).length
-  const bg = `radial-gradient(ellipse 100% 60% at 50% -10%,${C1}33,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 100%,${C2}22,transparent 50%),${primD}`
+  const themeBg = theme?.isDark ? theme?.primaryDark ?? '#0F2140' : '#F0F4F8'
+  const bg = `radial-gradient(ellipse 120% 60% at 50% -5%,${C1}28,transparent 55%),radial-gradient(ellipse 60% 40% at 90% 110%,${C2}18,transparent 50%),${themeBg}`
 
   if (phase === 'intro') return (
     <div style={{ minHeight:'100vh', background:bg, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24, fontFamily:'Inter,sans-serif' }}>
@@ -181,7 +183,7 @@ export default function LogicGrid() {
           {questions.map((_,i) => (<div key={i} style={{ width:i===qIdx?24:8,height:8,borderRadius:4,background:i<qIdx?(results[i]?.selected===results[i]?.correct?'#4ADE80':'#F87171'):i===qIdx?C1:'rgba(255,255,255,0.15)',transition:'all 0.3s',boxShadow:i===qIdx?`0 0 8px ${C1}`:'none' }}/>))}
         </div>
         <div style={{ marginBottom:14 }}><XPBar current={score} max={questions.length*13} color={C1} label={`Score: ${score}`}/></div>
-        <div style={{ background:'rgba(255,255,255,0.07)',backdropFilter:'blur(20px)',border:`1px solid ${C1}33`,borderRadius:20,padding:'20px',marginBottom:14,boxShadow:'0 8px 32px rgba(0,0,0,0.3)' }}>
+        <div style={{ background:isDark?'rgba(255,255,255,0.08)':'rgba(255,255,255,0.92)',backdropFilter:'blur(20px)',border:`1px solid ${C1}33`,borderRadius:20,padding:'20px',marginBottom:14,boxShadow:'0 8px 32px rgba(0,0,0,0.3)' }}>
           <div style={{ display:'flex',gap:10,alignItems:'center',marginBottom:12 }}>
             <span style={{ background:`${C1}22`,color:C1,fontSize:10,fontWeight:700,padding:'3px 10px',borderRadius:20,border:`1px solid ${C1}33` }}>Reasoning</span>
             {combo>0 && <span style={{ color:C1,fontSize:10,fontWeight:700 }}>🔥 x{combo}</span>}
