@@ -32,7 +32,7 @@ const StudentAnalytics     = lazy(() => import('./pages/student/StudentAnalytics
 const StudentCareer        = lazy(() => import('./pages/student/StudentCareer'))
 const StudentCommunity     = lazy(() => import('./pages/student/StudentCommunity'))
 const StudentNotifications = lazy(() => import('./pages/student/StudentNotifications'))
-const StudentHistory       = lazy(() => import('./pages/student/StudentHistory'))
+const MyHistory            = lazy(() => import('./pages/student/StudentHistory'))
 const StudentMentor        = lazy(() => import('./pages/student/StudentMentor'))
 const Notifications   = lazy(() => import('./pages/Notifications'))
 const JourneyPassport = lazy(() => import('./pages/JourneyPassport'))
