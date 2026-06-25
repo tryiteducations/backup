@@ -791,8 +791,7 @@ export default function StudentDashboard() {
                   background:`linear-gradient(135deg,${accent},${accentL})`,
                   border:'none',borderRadius:10,padding:'7px 14px',
                   color:primD,fontWeight:800,fontSize:11,cursor:'pointer',
-                  boxShadow:`0 4px 14px ${accent}33`}}
-                  onClick={()=>setUpgradeFor('tests')}>
+                  boxShadow:`0 4px 14px ${accent}33`}}>
                   Upgrade ₹5/day →
                 </button>
               </div>

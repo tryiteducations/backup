@@ -227,9 +227,9 @@ export default function ShareCard({type,data,onClose}){
             style={{padding:'11px',background:'rgba(255,255,255,0.08)',color:'#fff',border:'1px solid rgba(255,255,255,0.1)',borderRadius:12,fontWeight:600,fontSize:13,cursor:'pointer'}}>
             📋 Copy Text
           </button>
-          <button onClick={()=>handleShare('whatsapp')} disabled={sharing}
+          <button onClick={()=>{window.open(`https://wa.me/?text=${encodeURIComponent(getText())}`,"_blank");handleShare("whatsapp")}} disabled={sharing}
             style={{padding:'11px',background:'#25D366',color:'#fff',border:'none',borderRadius:12,fontWeight:700,fontSize:13,cursor:'pointer'}}
-            onClick={()=>{window.open(`https://wa.me/?text=${encodeURIComponent(getText())}`,'_blank');handleShare('whatsapp')}}>
+            >
             💬 WhatsApp
           </button>
           <button onClick={onClose}
