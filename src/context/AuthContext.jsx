@@ -105,7 +105,7 @@ const MOCK_USER = {
   subjects: [],
 }
 
-const IS_DEV = true
+const IS_DEV = false
 
 const SIGNUP_BONUS = 200
 
