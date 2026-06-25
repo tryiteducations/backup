@@ -191,7 +191,7 @@ export default function CommunityPage() {
         <div style={{ display:'flex', overflowX:'auto', gap:6, paddingBottom:8, scrollbarWidth:'none' }}>
           {CATEGORIES.map(cat => (
             <button key={cat.id} onClick={() => setActiveCat(cat.id)}
-              style={{ flexShrink:0, padding:'6px 12px', borderRadius:99, border:'none',
+              style={{ flexShrink:0, padding:'6px 12px', borderRadius:99,
                 fontSize:12, fontWeight:600, cursor:'pointer',
                 background: activecat===cat.id ? NAVY : '#fff',
                 color:      activecat===cat.id ? '#fff' : '#64748B',
