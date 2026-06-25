@@ -648,7 +648,6 @@ export default function StudentDashboard() {
           padding:'14px 24px',
           background:isDark?'rgba(0,0,0,0.25)':'rgba(255,255,255,0.88)',
         backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',
-          backdropFilter:'blur(20px)',
           borderBottom:`1px solid ${bdr}`,
           position:'sticky',top:0,zIndex:100,
           boxShadow:isDark?'0 1px 0 rgba(255,255,255,0.04)':'0 1px 20px rgba(0,0,0,0.06)',
@@ -829,8 +828,7 @@ export default function StudentDashboard() {
                         boxShadow:isDark?`0 4px 20px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.08)`:`0 2px 12px ${a.color}15,0 1px 0 rgba(255,255,255,0.9)`,
                         borderRadius:16,padding:'13px 10px',
                         cursor:'pointer',textAlign:'left',
-                        transition:'all 0.15s',
-                        boxShadow:isDark?'none':`0 2px 8px ${a.color}10`}}
+                        transition:'all 0.15s'}}
                       onMouseEnter={e=>{
                         e.currentTarget.style.transform='translateY(-3px)'
                         e.currentTarget.style.boxShadow=`0 10px 28px ${a.color}28`
