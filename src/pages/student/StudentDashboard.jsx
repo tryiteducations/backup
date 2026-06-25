@@ -155,6 +155,7 @@ export default function StudentDashboard() {
   const [upgradeFor, setUpgradeFor] = useState(null)
   const [coinPop,    setCoinPop]    = useState(null)
   const [uploading,  setUploading]  = useState(false)
+  const [showUpgradeCTA, setShowUpgradeCTA] = useState(true)
   // Sidebar
   const [sideOpen,   setSideOpen]   = useState(true)
   const [sideHover,  setSideHover]  = useState(false)
