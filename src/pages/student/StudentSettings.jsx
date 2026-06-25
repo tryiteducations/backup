@@ -194,40 +194,36 @@ export default function StudentSettings() {
         </div>
       </div>
 
-      <div style={{ display: 'flex', maxWidth: 1100, margin: '0 auto',
-        padding: '24px', gap: 24 }} className="settings-layout">
+      {/* Horizontal tabs — works on all screen sizes */}
+      <div style={{
+        display: 'flex', gap: 6, overflowX: 'auto',
+        padding: '12px 24px', borderBottom: `1px solid ${bdr}`,
+        background: isDark ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.8)',
+        backdropFilter: 'blur(10px)',
+        position: 'sticky', top: 60, zIndex: 99,
+        scrollbarWidth: 'none',
+      }}>
+        {TABS.map(tab => (
+          <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 6,
+              padding: '8px 16px', borderRadius: 20, cursor: 'pointer',
+              border: `1.5px solid ${activeTab===tab.id ? accent : bdr}`,
+              background: activeTab === tab.id
+                ? `linear-gradient(135deg,${accent},${accentL})`
+                : card,
+              color: activeTab === tab.id ? primD : muted,
+              fontSize: 12, fontWeight: 700, whiteSpace: 'nowrap',
+              transition: 'all 0.15s', flexShrink: 0,
+            }}>
+            <span>{tab.icon}</span>
+            <span>{tab.label}</span>
+          </button>
+        ))}
+      </div>
 
-        {/* Tab sidebar */}
-        <div style={{ width: 200, flexShrink: 0 }} className="settings-tabs">
-          <div style={{ background: card, border: `1px solid ${bdr}`,
-            borderRadius: 16, overflow: 'hidden',
-            position: 'sticky', top: 80 }}>
-            {TABS.map(tab => (
-              <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 10,
-                  width: '100%', padding: '13px 16px',
-                  background: activeTab === tab.id
-                    ? `linear-gradient(135deg,${accent}18,${accent}08)`
-                    : 'transparent',
-                  borderLeft: activeTab === tab.id
-                    ? `3px solid ${accent}` : '3px solid transparent',
-                  border: 'none', cursor: 'pointer',
-                  borderBottom: `1px solid ${bdr}`,
-                  transition: 'all 0.15s',
-                }}>
-                <span style={{ fontSize: 18 }}>{tab.icon}</span>
-                <span style={{
-                  color: activeTab === tab.id ? accent : muted,
-                  fontSize: 13, fontWeight: activeTab === tab.id ? 700 : 400,
-                }}>{tab.label}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Content */}
-        <div style={{ flex: 1, minWidth: 0 }}>
+      <div style={{ maxWidth: 900, margin: '0 auto', padding: '24px' }}>
+        <div>
 
           {/* ── PROFILE TAB ────────────────────────────────────── */}
           {activeTab === 'profile' && (
@@ -731,12 +727,7 @@ export default function StudentSettings() {
 
       <style>{`
         @keyframes spin{to{transform:rotate(360deg)}}
-        .settings-layout{flex-direction:row}
-        .settings-tabs{display:block}
-        @media(max-width:700px){
-          .settings-layout{flex-direction:column !important}
-          .settings-tabs{width:100% !important}
-        }
+        div::-webkit-scrollbar{display:none}
       `}</style>
     </div>
   )
