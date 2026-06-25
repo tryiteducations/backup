@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
+import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import UpgradePopup from '../../components/student/UpgradePopup'
 import {
@@ -105,19 +106,25 @@ export default function StudentDashboard() {
     : `radial-gradient(ellipse 80% 40% at 50% 0%,${accent}08,transparent),#F8FAFC`
 
   // ── Load all data ───────────────────────────────────────────────
+  const { user: authUser } = useAuth()
+
   useEffect(() => {
-    supabase.auth.getSession().then(async ({ data }) => {
-      const u = data?.session?.user
-      if (!u) { navigate('/login'); return }
-      setUser(u)
+    if (!authUser) {
+      navigate('/landing', { replace: true })
+      return
+    }
+    const uid = authUser.id || authUser.userId
+    setUser(authUser)
+
+    const load = async () => {
       try {
         const [p, s, use, att, lp, lb] = await Promise.all([
-          getProfile(u.id),
-          getStreak(u.id),
-          getUsage(u.id),
-          getRecentAttempts(u.id),
-          getLaunchpadEnrollment(u.id),
-          getLeaderboard(5),
+          getProfile(uid).catch(() => authUser),
+          getStreak(uid).catch(() => ({ current_streak:0, longest_streak:0 })),
+          getUsage(uid).catch(() => ({ tests_today:0, games_today:0, doubts_today:0 })),
+          getRecentAttempts(uid).catch(() => []),
+          getLaunchpadEnrollment(uid).catch(() => null),
+          getLeaderboard(5).catch(() => []),
         ])
         setProfile(p)
         setStreak(s)
@@ -130,12 +137,12 @@ export default function StudentDashboard() {
           const topic = await getTodayTopic(lp)
           setTodayTopic(topic)
         }
-        // Update streak on open
-        await updateStreak(u.id)
+        await updateStreak(uid).catch(() => {})
       } catch(e) { console.error(e) }
       finally { setLoading(false) }
-    })
-  }, [])
+    }
+    load()
+  }, [authUser, navigate])
 
   // ── Handle action with limit check ─────────────────────────────
   const handleAction = useCallback((action) => {
