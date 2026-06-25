@@ -182,13 +182,15 @@ export default function StudentGames() {
     // Log game start to Supabase
     if (authUser) {
       const uid = authUser.id || authUser.userId
-      await supabase.from('test_attempts').insert({
-        user_id: uid,
-        exam_name: `game_${game.id}`,
-        subject: game.skill,
-        score: 0, total: 10,
-        coins_earned: 0, xp_earned: 0,
-      }).catch(() => {})
+      try {
+        await supabase.from('test_attempts').insert({
+          user_id: uid,
+          exam_name: `game_${game.id}`,
+          subject: game.skill,
+          score: 0, total: 10,
+          coins_earned: 0, xp_earned: 0,
+        })
+      } catch(e) { console.log('Game log skipped:', e.message) }
     }
     navigate(game.path)
   }
