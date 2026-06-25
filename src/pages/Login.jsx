@@ -122,15 +122,7 @@ export default function Login() {
     const generatedEmail = `${phone}@phone.tryiteducations.net`
     try {
       await login(generatedEmail, selectedRole)
-      const done = localStorage.getItem(onboardingKey(generatedEmail))
-      
-      const ROLE_HOME = {
-        student: '/student',
-        mentor: '/mentor-hub',
-        institution: '/centre/dashboard',
-        family: '/family',
-      }
-      navigate(done ? (ROLE_HOME[selectedRole] || '/student') : '/onboarding')
+      setStep('otp')
     } catch (err) {
       setError('Something went wrong. Please try again.')
     } finally {

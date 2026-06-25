@@ -15,6 +15,8 @@ const Dashboard          = lazy(() => import('./pages/Dashboard'))
 const StudentDashboard   = lazy(() => import('./pages/student/StudentDashboard'))
 const Profile         = lazy(() => import('./pages/Profile'))
 const Settings        = lazy(() => import('./pages/settings/Settings'))
+const StudentSettings = lazy(() => import('./pages/student/StudentSettings'))
+const StudentProfile  = lazy(() => import('./pages/student/StudentProfile'))
 const Notifications   = lazy(() => import('./pages/Notifications'))
 const JourneyPassport = lazy(() => import('./pages/JourneyPassport'))
 const TestLauncher    = lazy(() => import('./pages/test-engine/TestLauncher'))
@@ -315,8 +317,10 @@ function ThemedApp() {
             <Route path="/community-standards" element={<CommunityStandards />} />
 
             {/* CATCH-ALL */}
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/landing" replace />} />
             <Route path='/student' element={<StudentDashboard/>}/>
+            <Route path='/student/settings' element={<StudentSettings/>}/>
+            <Route path='/student/profile' element={<StudentProfile/>}/>
 </Routes>
         </Suspense>
       </BrowserRouter>
