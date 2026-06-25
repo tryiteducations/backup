@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react'
+﻿import { lazy, Suspense, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { ThemeProvider } from './context/ThemeContext'
 import { ToastProvider } from './context/ToastContext'
@@ -46,7 +46,7 @@ const ExamUniverse    = lazy(() => import('./pages/exams/ExamUniverse'))
 const RoadmapPage     = lazy(() => import('./pages/roadmap/RoadmapPage'))
 const ExamAlerts      = lazy(() => import('./pages/exam-alerts/ExamAlerts'))
 
-// ── CONCEPT LEARNING (NEW) ─────────────────────────────────────
+// â”€â”€ CONCEPT LEARNING (NEW) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const ConceptCard        = lazy(() => import('./pages/concept/ConceptCard'))
 const ConceptCheckpoint  = lazy(() => import('./pages/concept/ConceptCheckpoint'))
 const PrepPathway        = lazy(() => import('./pages/roadmap/PrepPathway'))
@@ -139,12 +139,12 @@ const Stub = ({ title = 'Coming Soon' }) => (
     alignItems:'center', justifyContent:'center', gap:16, padding:24,
     fontFamily:'Poppins,sans-serif',
     background:'linear-gradient(135deg,#1E3A5F,#0F2140)' }}>
-    <div style={{ fontSize:56 }}>🔧</div>
+    <div style={{ fontSize:56 }}>ðŸ”§</div>
     <h2 style={{ color:'#C9A84C', fontSize:24, fontWeight:800, textAlign:'center' }}>{title}</h2>
     <p style={{ color:'rgba(255,255,255,0.6)', fontSize:14 }}>Being built. Check back soon!</p>
     <a href="/dashboard" style={{ background:'linear-gradient(135deg,#C9A84C,#E8C84A)',
       borderRadius:14, padding:'12px 28px', fontWeight:700, fontSize:15,
-      color:'#1E3A5F', textDecoration:'none', marginTop:8 }}>← Back to Dashboard</a>
+      color:'#1E3A5F', textDecoration:'none', marginTop:8 }}>â† Back to Dashboard</a>
   </div>
 )
 
@@ -299,7 +299,7 @@ function ThemedApp() {
             <Route path="/circles/school"     element={<SchoolCircle />} />
             <Route path="/circles/sisterhood" element={<SisterhoodCircle />} />
             <Route path="/impact"             element={<LiveImpactTracker />} />
-            <Route path="/donate"             element={<Stub title="Donation Page 💛" />} />
+            <Route path="/donate"             element={<Stub title="Donation Page ðŸ’›" />} />
 
             {/* CENTRE */}
             <Route path="/centre/login"        element={<CentreLogin />} />
@@ -334,10 +334,31 @@ function ThemedApp() {
             <Route path="/community-standards" element={<CommunityStandards />} />
 
             {/* CATCH-ALL */}
-            <Route path="*" element={<Navigate to="/landing" replace />} />
+            
             <Route path='/student' element={<StudentDashboard/>}/>
+            <Route path='/student/test' element={<StudentTest/>}/>
+            <Route path='/student/rank' element={<StudentRank/>}/>
+            <Route path='/student/launchpad' element={<StudentLaunchpad/>}/>
+            <Route path='/student/launchpad/join' element={<StudentLaunchpadJoin/>}/>
+            <Route path='/student/games' element={<StudentGames/>}/>
+            <Route path='/student/hall' element={<StudentHall/>}/>
+            <Route path='/student/tournament' element={<StudentTournament/>}/>
+            <Route path='/student/guruhub' element={<StudentGuruHub/>}/>
+            <Route path='/student/classroom' element={<StudentClassroom/>}/>
+            <Route path='/student/bookmarks' element={<StudentBookmarks/>}/>
+            <Route path='/student/pulse' element={<StudentPulse/>}/>
+            <Route path='/student/analytics' element={<StudentAnalytics/>}/>
+            <Route path='/student/career' element={<StudentCareer/>}/>
+            <Route path='/student/community' element={<StudentCommunity/>}/>
+            <Route path='/student/notifications' element={<StudentNotifications/>}/>
+            <Route path='/student/history' element={<MyHistory/>}/>
+            <Route path='/student/mentor' element={<StudentMentor/>}/>
             <Route path='/student/settings' element={<StudentSettings/>}/>
             <Route path='/student/profile' element={<StudentProfile/>}/>
+            <Route path="*" element={<Navigate to="/landing" replace />} />
+            
+            
+            
 </Routes>
         </Suspense>
       </BrowserRouter>
