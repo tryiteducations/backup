@@ -194,7 +194,7 @@ export function ThemeProvider({ children, userLevel = 1, userStats = {}, userPla
   }, [activeTheme])
 
   useEffect(() => {
-    const newly = findNewlyUnlocked(userStats, unlockedThemeIds, userPlan)
+    const newly = findNewlyUnlocked(userStats, unlockedThemeIds, isAdmin ? 'ultra' : userPlan)
     if (newly.length === 0) return
     setUnlockedThemeIds(prev => {
       let next = prev
@@ -211,7 +211,7 @@ export function ThemeProvider({ children, userLevel = 1, userStats = {}, userPla
   const isAdmin = localStorage.getItem('tryit_is_admin') === 'true'
 
   const themesWithStatus = useMemo(
-    () => getThemesWithStatus(userStats, unlockedThemeIds, userPlan),
+    () => getThemesWithStatus(userStats, unlockedThemeIds, isAdmin ? 'ultra' : userPlan),
     [userStats, unlockedThemeIds, userPlan]
   )
 
