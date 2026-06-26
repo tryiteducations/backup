@@ -192,9 +192,9 @@ const BASE_THEMES = [
   }),
   buildTheme({
     id: 'karur-sunset', name: 'Karur Sunset', emoji: '🌇', category: 'Indian Pride', tier: 'base', plan: 'free',
-    primary: '#9A3412', primaryDark: '#7C2D12',
-    accent: '#FB923C', accentLight: '#FDBA74',
-    bg: '#FFF7ED', surface: '#FFFFFF', isDark: false,
+    primary: '#C2410C', primaryDark: '#9A3412',
+    accent: '#FB923C', accentLight: '#FFEDD5',
+    bg: '#FFF4E6', surface: '#FFFFFF', isDark: false,
   }),
   buildTheme({
     id: 'midnight', name: 'Midnight Blue', emoji: '🌙', category: 'Base', tier: 'base', plan: 'free',
@@ -292,13 +292,13 @@ const BASE_THEMES = [
     bg: '#F0F9FF', surface: '#FFFFFF', isDark: false,
   }),
   buildTheme({
-    id: 'sunrise-dark', name: 'Sunrise Dark', emoji: '🌅', category: 'Base', tier: 'base', plan: 'free',
+    id: 'sunrise-dark-DISABLED', name: 'Sunrise Dark', emoji: '🌅', category: 'Base', tier: 'base', plan: 'free',
     primary: '#92400E', primaryDark: '#78350F',
     accent: '#F59E0B', accentLight: '#FCD34D',
     bg: '#1A0E00', surface: '#2D1800', isDark: true,
   }),
   buildTheme({
-    id: 'ocean-dark', name: 'Ocean Night', emoji: '🌊', category: 'Base', tier: 'base', plan: 'free',
+    id: 'ocean-dark-DISABLED', name: 'Ocean Night', emoji: '🌊', category: 'Base', tier: 'base', plan: 'free',
     primary: '#0C4A6E', primaryDark: '#082F49',
     accent: '#0EA5E9', accentLight: '#38BDF8',
     bg: '#020F1A', surface: '#0C1F33', isDark: true,
