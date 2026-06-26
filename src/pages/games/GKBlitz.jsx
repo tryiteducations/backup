@@ -321,7 +321,7 @@ export default function GKBlitz() {
               width: i===qIdx ? 24 : 8, height:8, borderRadius:4,
               background: i < qIdx
                 ? (results[i]?.selected===results[i]?.correct ? '#4ADE80' : '#F87171')
-                : i===qIdx ? '#3B82F6' : 'rgba(255,255,255,0.15)',
+                : i===qIdx ? '#3B82F6' : 'rgba(255,255,255,0.20)',
               transition:'all 0.3s ease',
               boxShadow: i===qIdx ? '0 0 8px #3B82F6' : 'none',
             }}/>

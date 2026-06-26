@@ -158,6 +158,8 @@ export function AuthProvider({ children }) {
     setLoading(true)
 
     if (IS_DEV) {
+      // Set admin flag for theme unlock
+      localStorage.setItem('tryit_is_admin', 'true')
       const email = localStorage.getItem('tryit_email')
       if (email) {
         let saved = null
@@ -224,6 +226,8 @@ export function AuthProvider({ children }) {
     localStorage.setItem('tryit_role', role)
 
     if (IS_DEV) {
+      // Set admin flag for theme unlock
+      localStorage.setItem('tryit_is_admin', 'true')
       let u = { ...MOCK_USER, email: e, role }
       u.name = e.split('@')[0]
       u.initials = makeInitials(u.name, e)

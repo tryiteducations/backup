@@ -97,7 +97,7 @@ export default function MemoryMatch(){
           const isMatched=matched.includes(card.pairId)
           return(
             <button key={card.id} onClick={()=>handleFlip(card)}
-              style={{aspectRatio:'1',borderRadius:12,border:`2px solid ${isMatched?'#22C55E':isFlipped?GOLD:'rgba(255,255,255,0.15)'}`,
+              style={{aspectRatio:'1',borderRadius:12,border:`2px solid ${isMatched?'#22C55E':isFlipped?GOLD:'rgba(255,255,255,0.20)'}`,
                 background:isMatched?'rgba(34,197,94,0.15)':isFlipped?'rgba(201,168,76,0.15)':'rgba(255,255,255,0.05)',
                 display:'flex',alignItems:'center',justifyContent:'center',padding:6,cursor:'pointer'}}>
               {isFlipped?(

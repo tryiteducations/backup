@@ -208,6 +208,8 @@ export function ThemeProvider({ children, userLevel = 1, userStats = {}, userPla
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [JSON.stringify(userStats), userPlan])
 
+  const isAdmin = localStorage.getItem('tryit_is_admin') === 'true'
+
   const themesWithStatus = useMemo(
     () => getThemesWithStatus(userStats, unlockedThemeIds, userPlan),
     [userStats, unlockedThemeIds, userPlan]

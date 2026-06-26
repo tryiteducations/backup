@@ -124,7 +124,7 @@ export default function VisualIdentify(){
         </div>
       </div>
       <div style={{padding:20,maxWidth:480,margin:'0 auto'}}>
-        <div style={{background:isDark?'rgba(255,255,255,0.06)':'rgba(255,255,255,0.85)',borderRadius:16,aspectRatio:'16/9',display:'flex',alignItems:'center',justifyContent:'center',marginBottom:16}}>
+        <div style={{background:'rgba(255,255,255,0.07)',borderRadius:16,aspectRatio:'16/9',display:'flex',alignItems:'center',justifyContent:'center',marginBottom:16}}>
           {img.image_url ? <img src={img.image_url} alt="" style={{width:'100%',height:'100%',objectFit:'cover',borderRadius:16}}/> :
             <p style={{fontSize:48}}>{config?.emoji||'🗺️'}</p>}
         </div>

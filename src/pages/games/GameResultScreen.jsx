@@ -172,7 +172,7 @@ export default function GameResultScreen({ gameId, gameName, gameEmoji, score, m
         {playedLevel && (
           <div className="tryit-pop-in" style={{ display:'flex', justifyContent:'center', gap:6, marginBottom:16 }}>
             {[1,2,3].map(i => (
-              <span key={i} style={{ fontSize:32, color: i<=starsEarned ? '#FBBF24' : 'rgba(255,255,255,0.15)',
+              <span key={i} style={{ fontSize:32, color: i<=starsEarned ? '#FBBF24' : 'rgba(255,255,255,0.20)',
                 filter: i<=starsEarned ? 'drop-shadow(0 0 8px #FBBF2488)' : 'none' }}>★</span>
             ))}
           </div>
@@ -251,7 +251,7 @@ export default function GameResultScreen({ gameId, gameName, gameEmoji, score, m
         </div>
 
         <button onClick={() => setShowShare(true)}
-          style={{ width:'100%', maxWidth:320, padding:'12px', background:isDark?'rgba(255,255,255,0.06)':'rgba(255,255,255,0.85)', color:GOLD, border:`1px solid ${GOLD}44`, borderRadius:14, fontWeight:700, fontSize:13, cursor:'pointer' }}>
+          style={{ width:'100%', maxWidth:320, padding:'12px', background:'rgba(255,255,255,0.07)', color:GOLD, border:`1px solid ${GOLD}44`, borderRadius:14, fontWeight:700, fontSize:13, cursor:'pointer' }}>
           📤 Share My Result
         </button>
       </div>
