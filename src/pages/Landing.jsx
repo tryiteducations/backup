@@ -45,7 +45,7 @@ function StatsStrip() {
           { ref:r1, value:`${c1.toLocaleString()}+`, label:'Exam Pathways' },
           { ref:r2, value:`${c2}+`,                  label:'Indian Languages' },
           { ref:null, value:'28/28',                 label:'States Covered' },
-          { ref:null, value:'Class 6+',              label:'All Ages Welcome' },
+          { ref:null, value:'Class 1+',              label:'Primary to SWAYAM' },
         ].map((s,i) => (
           <div key={i} ref={s.ref}
             style={{ flex:'1 1 160px', textAlign:'center', padding:'18px 16px',
@@ -156,7 +156,7 @@ function FellowshipSection({ navigate }) {
           <div style={{ fontSize:'clamp(28px,5vw,48px)', marginBottom:10 }}>🇮🇳</div>
           <h2 style={{ fontFamily:'Poppins,sans-serif', fontWeight:900,
             fontSize:'clamp(24px,4vw,40px)', color:'#ffffff', margin:'0 0 10px' }}>
-            TryIT Fellowship — <span style={{ color:'var(--color-accent,#D4AF37)' }}>One Subscribes. Another Studies Free.</span>
+            TryIT Fellowship — <span style={{ color:'var(--color-accent,#D4AF37)' }}>1 Subscription = 1 Scholarship. Every premium user sponsors a deserving student.</span>
           </h2>
           <p style={{ color:'rgba(255,255,255,0.65)', fontSize:15,
             maxWidth:560, margin:'0 auto', lineHeight:1.8 }}>
@@ -310,8 +310,8 @@ function FinalCTA({ navigate }) {
         </h2>
         <p style={{ color:'rgba(255,255,255,0.65)', fontSize:16,
           maxWidth:520, margin:'0 auto 32px', lineHeight:1.7 }}>
-          1,10,000+ exams. 42+ languages. Real All-India rankings. Free for 6 communities.
-          From Class 6 to PhD — for every Indian, at every age.
+          1,10,000+ exams. 42+ languages. Real All-India rankings. Scholarships for deserving students.
+          From Class 1 to SWAYAM — for every Indian, at every age.
         </p>
         <div style={{ display:'flex', gap:12, justifyContent:'center', flexWrap:'wrap', marginBottom:16 }}>
           <button onClick={() => navigate('/register')} style={{
@@ -386,7 +386,7 @@ export default function Landing() {
       <FellowshipSection navigate={navigate}/>
       <EquityPricingSection/>
       <DonationSection/>
-      <Testimonials/>
+      {/* Testimonials hidden until real data available */}
       <FinalCTA navigate={navigate}/>
       <Footer/>
 

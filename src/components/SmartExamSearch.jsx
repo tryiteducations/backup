@@ -503,7 +503,7 @@ function ExamNotListedModal({ initialName, onClose, userId }) {
               <p style={{ fontSize:12, color:'#065F46', lineHeight:1.6 }}>
                 ✅ Exam added to our upload queue<br/>
                 ✅ Questions being generated (AI pipeline)<br/>
-                ✅ Translating to 40 languages<br/>
+                ✅ Translating to 42 languages<br/>
                 ✅ You'll be notified when live
               </p>
             </div>

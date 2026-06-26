@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 const NAVY='#1E3A5F'
 
 const SECTIONS=[
-  {h:'1. About TryIT Educations',b:'TryIT Educations (tryiteducations.net) is a zero-cost competitive exam preparation platform covering 770+ exams across 40 Indian languages. By creating an account, you agree to these Terms of Service.'},
+  {h:'1. About TryIT Educations',b:'TryIT Educations (tryiteducations.net) is a zero-cost competitive exam preparation platform covering 1,10,000+ exams across 40 Indian languages. By creating an account, you agree to these Terms of Service.'},
   {h:'2. Account & Eligibility',b:'You must register with a verified phone number. One account per phone number. Users under 18 require parental awareness via the Family Hub. Providing false information may result in account suspension.'},
   {h:'3. Free Access Commitment',b:'Core practice tests, PYQs, and basic features remain free, forever. Optional Pro/Ultra subscriptions and coin purchases unlock additional features but never gate basic exam preparation.'},
   {h:'4. Tournaments & Anti-Cheat',b:'Tournament participation requires fair play. We use device-locking, unique paper assembly per student, speed-anomaly detection, and cluster analysis to detect cheating. Violations result in disqualification and may include permanent account suspension.'},

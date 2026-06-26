@@ -71,7 +71,7 @@ export default function ReferralPage() {
 
   const shareWhatsApp = () => {
     const text = `🎓 Join me on TryIT Educations — India's best exam prep platform!\n\n` +
-      `✅ 770+ competitive exams\n` +
+      `✅ 1,10,000+ competitive exams\n` +
       `✅ PYQ-based practice tests\n` +
       `✅ All India Tournaments\n` +
       `✅ Learn in your language\n\n` +

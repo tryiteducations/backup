@@ -389,7 +389,7 @@ export default function Login() {
 
         {/* Corporate Copyright Tagline */}
         <p className="text-center mt-6 text-xs font-medium tracking-wide opacity-50" style={{ color: '#FFFFFF', fontFamily: 'Inter, sans-serif' }}>
-          770+ exams · 40 languages · TryIT Educations © {new Date().getFullYear()}
+          1,10,000+ exams · 42 languages · TryIT Educations © {new Date().getFullYear()}
         </p>
       </div>
     </div>
