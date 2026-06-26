@@ -185,7 +185,11 @@ function ThemedApp() {
   useGlobalGlitter()
 
   return (
-    <ThemeProvider userLevel={user?.level ?? 1}>
+    <ThemeProvider
+      userLevel={user?.level ?? 1}
+      userPlan={user?.is_admin || localStorage.getItem('tryit_is_admin')==='true' ? 'ultra' : (user?.plan ?? 'free')}
+      userStats={{ tests_completed: user?.testsCompleted ?? 0, streak_days: user?.streak ?? 0, coins_earned: user?.coins ?? 0 }}
+    >
       <BrowserRouter>
         <ImpersonationBanner />
         <NotificationBar />
