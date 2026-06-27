@@ -2,77 +2,95 @@
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
 
+const CATS = [
+  {e:'📐',l:'Mathematics',n:124},{e:'🔬',l:'Science',n:89},
+  {e:'🏛️',l:'Polity',n:156},{e:'🌍',l:'Geography',n:78},
+  {e:'💡',l:'General Knowledge',n:201},{e:'🧠',l:'Reasoning',n:92},
+  {e:'📊',l:'Economy',n:67},{e:'📝',l:'English',n:45},
+]
+const DOUBTS = [
+  {q:'Difference between Fundamental Rights and DPSP?',sub:'Polity',ans:3,t:'2h ago'},
+  {q:'How to solve time & work in under 30 seconds?',sub:'Maths',ans:7,t:'4h ago'},
+  {q:'Significance of the Preamble explained simply?',sub:'Polity',ans:2,t:'6h ago'},
+]
+
 export default function StudentGuruHub() {
-  const navigate = useNavigate()
+  const nav = useNavigate()
   const { theme } = useTheme()
-  const isDark  = theme?.isDark ?? false
-  const accent  = theme?.accent ?? '#C9A84C'
-  const accentL = theme?.accentLight ?? '#E8C44A'
-  const primD   = theme?.primaryDark ?? '#0F2140'
-  const primary = theme?.primary ?? '#1E3A5F'
-  const txt     = isDark ? '#F8FAFC' : '#0F1020'
-  const muted   = isDark ? 'rgba(255,255,255,0.55)' : '#64748B'
-  const card    = isDark ? 'rgba(255,255,255,0.06)' : '#ffffff'
-  const bdr     = isDark ? 'rgba(255,255,255,0.1)' : '#E2E8F0'
-  const bg      = isDark
-    ? `radial-gradient(ellipse 80% 50% at 20% 0%,${primary}25,transparent),${primD}`
-    : '#F0F4F8'
-
+  const p = theme?.primary||'#1E3A5F', a = theme?.accent||'#C9A84C'
+  const t = theme?.text||'#1E293B', m = theme?.textLight||'#64748B'
+  const bg = theme?.background||'#F8FAFC', c = theme?.surface||'#FFFFFF', b = theme?.border||'#E2E8F0'
   return (
-    <div style={{ minHeight:'100vh', background:bg, fontFamily:'Inter,sans-serif' }}>
-      {/* Header */}
-      <div style={{
-        display:'flex', alignItems:'center', gap:14, padding:'16px 24px',
-        background:isDark?'rgba(255,255,255,0.02)':'rgba(255,255,255,0.9)',
-        backdropFilter:'blur(20px)', borderBottom:`1px solid ${bdr}`,
-        position:'sticky', top:0, zIndex:100,
-      }}>
-        <button onClick={()=>navigate('/student')} style={{
-          background:card, border:`1px solid ${bdr}`, borderRadius:10,
-          width:38, height:38, cursor:'pointer',
-          display:'flex', alignItems:'center', justifyContent:'center',
-          fontSize:18, color:txt }}>←</button>
-        <div>
-          <p style={{ color:txt, fontFamily:'Poppins,sans-serif',
-            fontWeight:800, fontSize:18, margin:0 }}>
-            🤝 GuruHub
-          </p>
-          <p style={{ color:muted, fontSize:11, margin:0 }}>Post doubts and get answers from mentors</p>
+    <div style={{minHeight:'100vh',background:bg,fontFamily:'Poppins,sans-serif'}}>
+      <div style={{background:c,borderBottom:`1px solid ${b}`,padding:'16px 20px',
+        display:'flex',alignItems:'center',gap:12,position:'sticky',top:0,zIndex:10}}>
+        <button onClick={()=>nav('/student')} style={{background:'transparent',border:`1px solid ${b}`,
+          borderRadius:10,padding:'6px 14px',color:m,fontSize:13,cursor:'pointer'}}>← Back</button>
+        <div style={{flex:1}}>
+          <h1 style={{color:t,fontSize:18,fontWeight:800,margin:0}}>🤝 GuruHub</h1>
+          <p style={{color:m,fontSize:11,margin:0}}>Ask doubts · Get answers from mentors & peers</p>
         </div>
+        <button onClick={()=>nav('/guru-hub/post-doubt')} style={{background:`linear-gradient(135deg,${p},${a})`,
+          border:'none',borderRadius:12,padding:'10px 18px',color:'#fff',fontWeight:700,fontSize:13,cursor:'pointer'}}>
+          + Ask Doubt
+        </button>
       </div>
-
-      {/* Coming soon content */}
-      <div style={{
-        display:'flex', flexDirection:'column', alignItems:'center',
-        justifyContent:'center', minHeight:'70vh', padding:'24px', textAlign:'center'
-      }}>
-        <div style={{
-          background:card, border:`1px solid ${accent}25`,
-          borderRadius:24, padding:'40px 32px', maxWidth:400,
-          boxShadow:`0 8px 32px ${accent}12`
-        }}>
-          <p style={{ fontSize:56, margin:'0 0 16px' }}>🤝</p>
-          <p style={{ color:txt, fontFamily:'Poppins,sans-serif',
-            fontWeight:800, fontSize:22, margin:'0 0 8px' }}>
-            GuruHub
-          </p>
-          <p style={{ color:muted, fontSize:14, margin:'0 0 24px', lineHeight:1.7 }}>
-            Post doubts and get answers from mentors.<br/>This section is being built and will be live soon.
-          </p>
-          <div style={{ display:'flex', gap:10, justifyContent:'center', flexWrap:'wrap' }}>
-            <button onClick={()=>navigate('/student')} style={{
-              background:`linear-gradient(135deg,${accent},${accentL})`,
-              border:'none', borderRadius:12, padding:'12px 24px',
-              color:primD, fontWeight:800, fontSize:14, cursor:'pointer',
-              boxShadow:`0 4px 16px ${accent}44`
-            }}>← Back to Dashboard</button>
-            <button onClick={()=>navigate('/student/settings')} style={{
-              background:'transparent', border:`1px solid ${bdr}`,
-              borderRadius:12, padding:'12px 20px',
-              color:muted, fontSize:13, cursor:'pointer'
-            }}>Settings ⚙️</button>
-          </div>
+      <div style={{padding:'20px',maxWidth:760,margin:'0 auto'}}>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:12,marginBottom:20}}>
+          {[{l:'Doubts Answered',v:'1,240',e:'✅'},{l:'Active Mentors',v:'86',e:'👨‍🏫'},{l:'Avg Response',v:'< 2 hrs',e:'⚡'}].map((x,i)=>(
+            <div key={i} style={{background:c,border:`1px solid ${b}`,borderRadius:14,padding:'14px',textAlign:'center'}}>
+              <div style={{fontSize:22,marginBottom:4}}>{x.e}</div>
+              <p style={{color:t,fontWeight:800,fontSize:15,margin:'0 0 2px'}}>{x.v}</p>
+              <p style={{color:m,fontSize:10,margin:0}}>{x.l}</p>
+            </div>
+          ))}
         </div>
+        <p style={{color:t,fontWeight:700,fontSize:14,marginBottom:10}}>Browse by Subject</p>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(130px,1fr))',gap:8,marginBottom:20}}>
+          {CATS.map((x,i)=>(
+            <button key={i} onClick={()=>nav('/guru-hub/my-doubts')}
+              style={{background:c,border:`1px solid ${b}`,borderRadius:14,padding:'12px 8px',
+                cursor:'pointer',textAlign:'center',transition:'all 0.2s'}}
+              onMouseEnter={e=>{e.currentTarget.style.borderColor=a;e.currentTarget.style.transform='translateY(-2px)'}}
+              onMouseLeave={e=>{e.currentTarget.style.borderColor=b;e.currentTarget.style.transform='translateY(0)'}}>
+              <div style={{fontSize:22,marginBottom:4}}>{x.e}</div>
+              <p style={{color:t,fontWeight:600,fontSize:11,margin:'0 0 2px'}}>{x.l}</p>
+              <p style={{color:m,fontSize:9,margin:0}}>{x.n} doubts</p>
+            </button>
+          ))}
+        </div>
+        <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:10}}>
+          <p style={{color:t,fontWeight:700,fontSize:14,margin:0}}>Recent Doubts</p>
+          <button onClick={()=>nav('/guru-hub/my-doubts')} style={{background:'transparent',
+            border:'none',color:a,fontSize:12,fontWeight:700,cursor:'pointer'}}>View All →</button>
+        </div>
+        {DOUBTS.map((r,i)=>(
+          <div key={i} onClick={()=>nav('/guru-hub/my-doubts')}
+            style={{background:c,border:`1px solid ${b}`,borderRadius:14,padding:'14px 16px',
+              cursor:'pointer',marginBottom:8,transition:'all 0.2s'}}
+            onMouseEnter={e=>e.currentTarget.style.borderColor=a}
+            onMouseLeave={e=>e.currentTarget.style.borderColor=b}>
+            <div style={{display:'flex',gap:8,alignItems:'flex-start',marginBottom:8}}>
+              <p style={{color:t,fontSize:13,fontWeight:600,margin:0,flex:1,lineHeight:1.5}}>{r.q}</p>
+              <span style={{background:`${a}18`,color:a,fontSize:9,fontWeight:700,
+                padding:'2px 8px',borderRadius:20,flexShrink:0}}>{r.sub}</span>
+            </div>
+            <span style={{color:m,fontSize:11}}>💬 {r.ans} answers &nbsp;&nbsp; 🕐 {r.t}</span>
+          </div>
+        ))}
+        <div style={{background:`linear-gradient(135deg,${p},${p}cc)`,borderRadius:18,
+          padding:'24px',marginTop:20,textAlign:'center'}}>
+          <p style={{color:'#fff',fontWeight:800,fontSize:15,margin:'0 0 6px'}}>Have a doubt? 🤔</p>
+          <p style={{color:'rgba(255,255,255,0.7)',fontSize:12,margin:'0 0 14px'}}>
+            Get answers from verified mentors within 2 hours
+          </p>
+          <button onClick={()=>nav('/guru-hub/post-doubt')}
+            style={{background:`linear-gradient(135deg,${a},#E8C44A)`,border:'none',borderRadius:12,
+              padding:'10px 24px',color:p,fontWeight:800,fontSize:13,cursor:'pointer'}}>
+            Ask a Doubt →
+          </button>
+        </div>
+        <div style={{height:80}}/>
       </div>
     </div>
   )

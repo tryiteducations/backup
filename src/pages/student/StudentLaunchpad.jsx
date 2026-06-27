@@ -2,77 +2,73 @@
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
 
-export default function StudentLaunchpad() {
-  const navigate = useNavigate()
-  const { theme } = useTheme()
-  const isDark  = theme?.isDark ?? false
-  const accent  = theme?.accent ?? '#C9A84C'
-  const accentL = theme?.accentLight ?? '#E8C44A'
-  const primD   = theme?.primaryDark ?? '#0F2140'
-  const primary = theme?.primary ?? '#1E3A5F'
-  const txt     = isDark ? '#F8FAFC' : '#0F1020'
-  const muted   = isDark ? 'rgba(255,255,255,0.55)' : '#64748B'
-  const card    = isDark ? 'rgba(255,255,255,0.06)' : '#ffffff'
-  const bdr     = isDark ? 'rgba(255,255,255,0.1)' : '#E2E8F0'
-  const bg      = isDark
-    ? `radial-gradient(ellipse 80% 50% at 20% 0%,${primary}25,transparent),${primD}`
-    : '#F0F4F8'
+const TRACKS = [
+  {id:'upsc',label:'UPSC Civil Services',icon:'🏛️',days:365,desc:'Complete GS + Optional syllabus'},
+  {id:'ssc',label:'SSC CGL / CHSL',icon:'📋',days:180,desc:'Quant, Reasoning, English, GK'},
+  {id:'tnpsc',label:'TNPSC Group 1/2/4',icon:'🌿',days:120,desc:'Tamil Nadu state service exams'},
+  {id:'banking',label:'IBPS / SBI Banking',icon:'🏦',days:90,desc:'PO, Clerk, SO — all patterns'},
+  {id:'neet',label:'NEET / JEE',icon:'🔬',days:270,desc:'Medical & Engineering entrance'},
+  {id:'railway',label:'Railway RRB / NTPC',icon:'🚂',days:90,desc:'Group D, NTPC, ALP tracks'},
+]
 
+export default function StudentLaunchpad() {
+  const nav = useNavigate()
+  const { theme } = useTheme()
+  const p = theme?.primary||'#1E3A5F', a = theme?.accent||'#C9A84C'
+  const t = theme?.text||'#1E293B', m = theme?.textLight||'#64748B'
+  const bg = theme?.background||'#F8FAFC', c = theme?.surface||'#FFFFFF', b = theme?.border||'#E2E8F0'
   return (
-    <div style={{ minHeight:'100vh', background:bg, fontFamily:'Inter,sans-serif' }}>
-      {/* Header */}
-      <div style={{
-        display:'flex', alignItems:'center', gap:14, padding:'16px 24px',
-        background:isDark?'rgba(255,255,255,0.02)':'rgba(255,255,255,0.9)',
-        backdropFilter:'blur(20px)', borderBottom:`1px solid ${bdr}`,
-        position:'sticky', top:0, zIndex:100,
-      }}>
-        <button onClick={()=>navigate('/student')} style={{
-          background:card, border:`1px solid ${bdr}`, borderRadius:10,
-          width:38, height:38, cursor:'pointer',
-          display:'flex', alignItems:'center', justifyContent:'center',
-          fontSize:18, color:txt }}>←</button>
-        <div>
-          <p style={{ color:txt, fontFamily:'Poppins,sans-serif',
-            fontWeight:800, fontSize:18, margin:0 }}>
-            🚀 TryIT Launchpad
-          </p>
-          <p style={{ color:muted, fontSize:11, margin:0 }}>Daily topics, weekly tests, personal mentor</p>
+    <div style={{minHeight:'100vh',background:bg,fontFamily:'Poppins,sans-serif'}}>
+      <div style={{background:c,borderBottom:`1px solid ${b}`,padding:'16px 20px',
+        display:'flex',alignItems:'center',gap:12,position:'sticky',top:0,zIndex:10}}>
+        <button onClick={()=>nav('/student')} style={{background:'transparent',border:`1px solid ${b}`,
+          borderRadius:10,padding:'6px 14px',color:m,fontSize:13,cursor:'pointer'}}>← Back</button>
+        <div style={{flex:1}}>
+          <h1 style={{color:t,fontSize:18,fontWeight:800,margin:0}}>🚀 TryIT Launchpad</h1>
+          <p style={{color:m,fontSize:11,margin:0}}>Daily topics · Weekly tests · Personal mentor</p>
         </div>
       </div>
-
-      {/* Coming soon content */}
-      <div style={{
-        display:'flex', flexDirection:'column', alignItems:'center',
-        justifyContent:'center', minHeight:'70vh', padding:'24px', textAlign:'center'
-      }}>
-        <div style={{
-          background:card, border:`1px solid ${accent}25`,
-          borderRadius:24, padding:'40px 32px', maxWidth:400,
-          boxShadow:`0 8px 32px ${accent}12`
-        }}>
-          <p style={{ fontSize:56, margin:'0 0 16px' }}>🚀</p>
-          <p style={{ color:txt, fontFamily:'Poppins,sans-serif',
-            fontWeight:800, fontSize:22, margin:'0 0 8px' }}>
-            TryIT Launchpad
+      <div style={{padding:'20px',maxWidth:760,margin:'0 auto'}}>
+        <div style={{background:`linear-gradient(135deg,${p},${p}dd)`,borderRadius:20,
+          padding:'24px',marginBottom:24,textAlign:'center'}}>
+          <div style={{fontSize:48,marginBottom:8}}>🚀</div>
+          <h2 style={{color:'#fff',fontWeight:900,fontSize:22,margin:'0 0 8px'}}>Join TryIT Launchpad</h2>
+          <p style={{color:'rgba(255,255,255,0.75)',fontSize:13,margin:'0 0 6px'}}>
+            Structured daily study plan · Auto-scheduled topics · Weekly mock tests
           </p>
-          <p style={{ color:muted, fontSize:14, margin:'0 0 24px', lineHeight:1.7 }}>
-            Daily topics, weekly tests, personal mentor.<br/>This section is being built and will be live soon.
-          </p>
-          <div style={{ display:'flex', gap:10, justifyContent:'center', flexWrap:'wrap' }}>
-            <button onClick={()=>navigate('/student')} style={{
-              background:`linear-gradient(135deg,${accent},${accentL})`,
-              border:'none', borderRadius:12, padding:'12px 24px',
-              color:primD, fontWeight:800, fontSize:14, cursor:'pointer',
-              boxShadow:`0 4px 16px ${accent}44`
-            }}>← Back to Dashboard</button>
-            <button onClick={()=>navigate('/student/settings')} style={{
-              background:'transparent', border:`1px solid ${bdr}`,
-              borderRadius:12, padding:'12px 20px',
-              color:muted, fontSize:13, cursor:'pointer'
-            }}>Settings ⚙️</button>
+          <p style={{color:a,fontWeight:800,fontSize:16,margin:'0 0 20px'}}>₹79/month · Cancel anytime</p>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:10,marginBottom:20}}>
+            {[{e:'📅',l:'Daily Topics'},{e:'📝',l:'Weekly Tests'},{e:'👨‍🏫',l:'Mentor Support'}].map((x,i)=>(
+              <div key={i} style={{background:'rgba(255,255,255,0.08)',borderRadius:12,padding:'12px 8px',textAlign:'center'}}>
+                <div style={{fontSize:20,marginBottom:4}}>{x.e}</div>
+                <p style={{color:'rgba(255,255,255,0.9)',fontSize:11,fontWeight:600,margin:0}}>{x.l}</p>
+              </div>
+            ))}
           </div>
+          <button onClick={()=>nav('/student/launchpad/join')}
+            style={{background:`linear-gradient(135deg,${a},#E8C44A)`,border:'none',borderRadius:14,
+              padding:'14px 36px',color:p,fontWeight:900,fontSize:15,cursor:'pointer',
+              boxShadow:`0 6px 20px ${a}44`}}>
+            Join Launchpad →
+          </button>
         </div>
+        <p style={{color:t,fontWeight:700,fontSize:15,marginBottom:12}}>Choose Your Track</p>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(220px,1fr))',gap:12}}>
+          {TRACKS.map((tr,i)=>(
+            <div key={i} onClick={()=>nav('/student/launchpad/join')}
+              style={{background:c,border:`1px solid ${b}`,borderRadius:16,padding:'16px',
+                cursor:'pointer',transition:'all 0.2s'}}
+              onMouseEnter={e=>{e.currentTarget.style.borderColor=a;e.currentTarget.style.transform='translateY(-2px)'}}
+              onMouseLeave={e=>{e.currentTarget.style.borderColor=b;e.currentTarget.style.transform='translateY(0)'}}>
+              <div style={{fontSize:28,marginBottom:8}}>{tr.icon}</div>
+              <p style={{color:t,fontWeight:700,fontSize:13,margin:'0 0 4px'}}>{tr.label}</p>
+              <p style={{color:m,fontSize:11,margin:'0 0 8px',lineHeight:1.5}}>{tr.desc}</p>
+              <span style={{background:`${a}15`,color:a,fontSize:10,fontWeight:700,
+                padding:'2px 10px',borderRadius:20}}>{tr.days}-day plan</span>
+            </div>
+          ))}
+        </div>
+        <div style={{height:80}}/>
       </div>
     </div>
   )

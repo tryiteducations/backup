@@ -2,77 +2,85 @@
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
 
+const HALLS = [
+  {name:'UPSC Warriors',members:234,level:'Advanced',tag:'UPSC',online:12},
+  {name:'SSC Challengers',members:891,level:'Intermediate',tag:'SSC',online:34},
+  {name:'Tamil Nadu Toppers',members:456,level:'All levels',tag:'TNPSC',online:18},
+  {name:'Banking Blitz Squad',members:312,level:'Beginner',tag:'IBPS',online:9},
+]
+
 export default function StudentHall() {
-  const navigate = useNavigate()
+  const nav = useNavigate()
   const { theme } = useTheme()
-  const isDark  = theme?.isDark ?? false
-  const accent  = theme?.accent ?? '#C9A84C'
-  const accentL = theme?.accentLight ?? '#E8C44A'
-  const primD   = theme?.primaryDark ?? '#0F2140'
-  const primary = theme?.primary ?? '#1E3A5F'
-  const txt     = isDark ? '#F8FAFC' : '#0F1020'
-  const muted   = isDark ? 'rgba(255,255,255,0.55)' : '#64748B'
-  const card    = isDark ? 'rgba(255,255,255,0.06)' : '#ffffff'
-  const bdr     = isDark ? 'rgba(255,255,255,0.1)' : '#E2E8F0'
-  const bg      = isDark
-    ? `radial-gradient(ellipse 80% 50% at 20% 0%,${primary}25,transparent),${primD}`
-    : '#F0F4F8'
-
+  const p = theme?.primary||'#1E3A5F', a = theme?.accent||'#C9A84C'
+  const t = theme?.text||'#1E293B', m = theme?.textLight||'#64748B'
+  const bg = theme?.background||'#F8FAFC', c = theme?.surface||'#FFFFFF', b = theme?.border||'#E2E8F0'
   return (
-    <div style={{ minHeight:'100vh', background:bg, fontFamily:'Inter,sans-serif' }}>
-      {/* Header */}
-      <div style={{
-        display:'flex', alignItems:'center', gap:14, padding:'16px 24px',
-        background:isDark?'rgba(255,255,255,0.02)':'rgba(255,255,255,0.9)',
-        backdropFilter:'blur(20px)', borderBottom:`1px solid ${bdr}`,
-        position:'sticky', top:0, zIndex:100,
-      }}>
-        <button onClick={()=>navigate('/student')} style={{
-          background:card, border:`1px solid ${bdr}`, borderRadius:10,
-          width:38, height:38, cursor:'pointer',
-          display:'flex', alignItems:'center', justifyContent:'center',
-          fontSize:18, color:txt }}>←</button>
-        <div>
-          <p style={{ color:txt, fontFamily:'Poppins,sans-serif',
-            fontWeight:800, fontSize:18, margin:0 }}>
-            ⚔️ Battle Hall
-          </p>
-          <p style={{ color:muted, fontSize:11, margin:0 }}>Create or join a study hall and compete</p>
+    <div style={{minHeight:'100vh',background:bg,fontFamily:'Poppins,sans-serif'}}>
+      <div style={{background:c,borderBottom:`1px solid ${b}`,padding:'16px 20px',
+        display:'flex',alignItems:'center',gap:12,position:'sticky',top:0,zIndex:10}}>
+        <button onClick={()=>nav('/student')} style={{background:'transparent',border:`1px solid ${b}`,
+          borderRadius:10,padding:'6px 14px',color:m,fontSize:13,cursor:'pointer'}}>← Back</button>
+        <div style={{flex:1}}>
+          <h1 style={{color:t,fontSize:18,fontWeight:800,margin:0}}>⚔️ Battle Hall</h1>
+          <p style={{color:m,fontSize:11,margin:0}}>Study halls · Live battles · Compete</p>
         </div>
+        <button onClick={()=>nav('/hall/create')} style={{background:`linear-gradient(135deg,${p},${a})`,
+          border:'none',borderRadius:12,padding:'8px 16px',color:'#fff',fontWeight:700,fontSize:12,cursor:'pointer'}}>
+          + Create Hall
+        </button>
       </div>
-
-      {/* Coming soon content */}
-      <div style={{
-        display:'flex', flexDirection:'column', alignItems:'center',
-        justifyContent:'center', minHeight:'70vh', padding:'24px', textAlign:'center'
-      }}>
-        <div style={{
-          background:card, border:`1px solid ${accent}25`,
-          borderRadius:24, padding:'40px 32px', maxWidth:400,
-          boxShadow:`0 8px 32px ${accent}12`
-        }}>
-          <p style={{ fontSize:56, margin:'0 0 16px' }}>⚔️</p>
-          <p style={{ color:txt, fontFamily:'Poppins,sans-serif',
-            fontWeight:800, fontSize:22, margin:'0 0 8px' }}>
-            Battle Hall
-          </p>
-          <p style={{ color:muted, fontSize:14, margin:'0 0 24px', lineHeight:1.7 }}>
-            Create or join a study hall and compete.<br/>This section is being built and will be live soon.
-          </p>
-          <div style={{ display:'flex', gap:10, justifyContent:'center', flexWrap:'wrap' }}>
-            <button onClick={()=>navigate('/student')} style={{
-              background:`linear-gradient(135deg,${accent},${accentL})`,
-              border:'none', borderRadius:12, padding:'12px 24px',
-              color:primD, fontWeight:800, fontSize:14, cursor:'pointer',
-              boxShadow:`0 4px 16px ${accent}44`
-            }}>← Back to Dashboard</button>
-            <button onClick={()=>navigate('/student/settings')} style={{
-              background:'transparent', border:`1px solid ${bdr}`,
-              borderRadius:12, padding:'12px 20px',
-              color:muted, fontSize:13, cursor:'pointer'
-            }}>Settings ⚙️</button>
-          </div>
+      <div style={{padding:'20px',maxWidth:760,margin:'0 auto'}}>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:10,marginBottom:20}}>
+          {[{l:'Active Halls',v:'142',e:'🏛️'},{l:'Students Online',v:'2,840',e:'👥'},{l:'Battles Today',v:'38',e:'⚔️'}].map((x,i)=>(
+            <div key={i} style={{background:c,border:`1px solid ${b}`,borderRadius:14,padding:'14px',textAlign:'center'}}>
+              <div style={{fontSize:22,marginBottom:4}}>{x.e}</div>
+              <p style={{color:t,fontWeight:800,fontSize:15,margin:'0 0 2px'}}>{x.v}</p>
+              <p style={{color:m,fontSize:10,margin:0}}>{x.l}</p>
+            </div>
+          ))}
         </div>
+        <div style={{background:`linear-gradient(135deg,${p},${p}cc)`,borderRadius:18,
+          padding:'18px',marginBottom:20,display:'flex',gap:12,alignItems:'center'}}>
+          <div style={{fontSize:36}}>⚔️</div>
+          <div style={{flex:1}}>
+            <p style={{color:'#fff',fontWeight:800,fontSize:14,margin:'0 0 4px'}}>Start a Live Battle</p>
+            <p style={{color:'rgba(255,255,255,0.7)',fontSize:11,margin:0}}>
+              Challenge any student to a 10-question rapid duel
+            </p>
+          </div>
+          <button onClick={()=>nav('/hall')} style={{background:`linear-gradient(135deg,${a},#E8C44A)`,
+            border:'none',borderRadius:12,padding:'10px 16px',color:p,fontWeight:700,fontSize:12,cursor:'pointer',flexShrink:0}}>
+            Battle →
+          </button>
+        </div>
+        <p style={{color:t,fontWeight:700,fontSize:14,marginBottom:10}}>Popular Halls</p>
+        {HALLS.map((h,i)=>(
+          <div key={i} onClick={()=>nav('/hall')}
+            style={{background:c,border:`1px solid ${b}`,borderRadius:16,padding:'14px 16px',
+              marginBottom:8,cursor:'pointer',display:'flex',alignItems:'center',gap:12,
+              transition:'all 0.2s'}}
+            onMouseEnter={e=>e.currentTarget.style.borderColor=a}
+            onMouseLeave={e=>e.currentTarget.style.borderColor=b}>
+            <div style={{width:44,height:44,borderRadius:12,background:`${p}15`,
+              display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,flexShrink:0}}>🏛️</div>
+            <div style={{flex:1}}>
+              <p style={{color:t,fontWeight:700,fontSize:13,margin:'0 0 4px'}}>{h.name}</p>
+              <div style={{display:'flex',gap:10}}>
+                <span style={{color:m,fontSize:11}}>👥 {h.members}</span>
+                <span style={{color:'#22C55E',fontSize:11}}>● {h.online} online</span>
+                <span style={{background:`${a}15`,color:a,fontSize:9,fontWeight:700,
+                  padding:'2px 8px',borderRadius:20}}>{h.tag}</span>
+              </div>
+            </div>
+            <button onClick={e=>{e.stopPropagation();nav('/hall')}}
+              style={{background:`${p}10`,border:`1px solid ${p}30`,borderRadius:10,
+                padding:'6px 14px',color:p,fontWeight:600,fontSize:11,cursor:'pointer',flexShrink:0}}>
+              Join
+            </button>
+          </div>
+        ))}
+        <div style={{height:80}}/>
       </div>
     </div>
   )
