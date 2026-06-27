@@ -1,5 +1,5 @@
-// src/pages/student/StudentDashboard.jsx
-// TRYIT PREMIUM DASHBOARD v3 — Full featured world-class
+﻿// src/pages/student/StudentDashboard.jsx
+// TRYIT PREMIUM DASHBOARD v3 â€” Full featured world-class
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
@@ -12,7 +12,7 @@ import {
   uploadAvatar, updateProfile, getLeaderboard
 } from '../../lib/studentLib'
 
-// ── Helpers ───────────────────────────────────────────────────────
+// â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function AnimNum({ value=0, duration=900, prefix='', suffix='' }) {
   const [n, setN] = useState(0)
   useEffect(() => {
@@ -54,13 +54,13 @@ function CoinPop({ amount, onDone }) {
       color:theme?.primaryDark??'#0F2140',fontFamily:'Poppins,sans-serif',fontWeight:900,fontSize:20,
       padding:'10px 20px',borderRadius:24,boxShadow:`0 8px 32px ${theme?.accent??'#C9A84C'}44`,
       animation:'coinPop 1.4s ease-out forwards',pointerEvents:'none'}}>
-      +{amount} 🪙
+      +{amount} ðŸª™
       <style>{`@keyframes coinPop{0%{opacity:1;transform:translateY(0) scale(1)}60%{opacity:1;transform:translateY(-50px) scale(1.2)}100%{opacity:0;transform:translateY(-90px) scale(0.8)}}`}</style>
     </div>
   )
 }
 
-// ── Full screen wrapper ───────────────────────────────────────────
+// â”€â”€ Full screen wrapper â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 function FullScreen({ title, onClose, children, accent }) {
   useEffect(()=>{
     const esc = e => { if(e.key==='Escape') onClose() }
@@ -75,29 +75,29 @@ function FullScreen({ title, onClose, children, accent }) {
         <p style={{color:'#fff',fontFamily:'Poppins,sans-serif',fontWeight:800,fontSize:18,margin:0}}>{title}</p>
         <button onClick={onClose} style={{background:'rgba(255,255,255,0.08)',border:'none',
           borderRadius:10,width:36,height:36,color:'#fff',fontSize:18,cursor:'pointer',
-          display:'flex',alignItems:'center',justifyContent:'center'}}>✕</button>
+          display:'flex',alignItems:'center',justifyContent:'center'}}>âœ•</button>
       </div>
       <div style={{flex:1,overflowY:'auto',padding:'24px'}}>{children}</div>
     </div>
   )
 }
 
-// ── Nav config ────────────────────────────────────────────────────
+// â”€â”€ Nav config â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const NAV = [
-  {id:'home',      icon:'🏠',label:'Home',       path:'/student'},
-  {id:'test',      icon:'📝',label:'Tests',       path:'/student/test',      limit:'tests'},
-  {id:'rank',      icon:'🏆',label:'Rank',        path:'/student/rank'},
-  {id:'launchpad', icon:'🚀',label:'Launchpad',   path:'/student/launchpad'},
-  {id:'games',     icon:'🎮',label:'Games',        path:'/student/games',     limit:'games'},
-  {id:'hall',      icon:'⚔️',label:'Battle Hall',  path:'/student/hall'},
-  {id:'tournament',icon:'🏟️',label:'Tournaments', path:'/student/tournament'},
-  {id:'guruhub',   icon:'🤝',label:'GuruHub',     path:'/student/guruhub',   limit:'doubts'},
-  {id:'classroom', icon:'📚',label:'Classroom',   path:'/student/classroom'},
-  {id:'bookmarks', icon:'🔖',label:'Bookmarks',   path:'/student/bookmarks'},
-  {id:'pulse',     icon:'🇮🇳',label:'Bharat Pulse',path:'/student/pulse'},
-  {id:'analytics', icon:'📊',label:'Analytics',   path:'/student/analytics'},
-  {id:'career',    icon:'🧭',label:'Career AI',   path:'/student/career'},
-  {id:'community', icon:'💬',label:'Community',   path:'/student/community'},
+  {id:'home',      icon:'ðŸ ',label:'Home',       path:'/student'},
+  {id:'test',      icon:'ðŸ“',label:'Tests',       path:'/student/test',      limit:'tests'},
+  {id:'rank',      icon:'ðŸ†',label:'Rank',        path:'/student/rank'},
+  {id:'launchpad', icon:'ðŸš€',label:'Launchpad',   path:'/student/launchpad'},
+  {id:'games',     icon:'ðŸŽ®',label:'Games',        path:'/student/games',     limit:'games'},
+  {id:'hall',      icon:'âš”ï¸',label:'Battle Hall',  path:'/student/hall'},
+  {id:'tournament',icon:'ðŸŸï¸',label:'Tournaments', path:'/student/tournament'},
+  {id:'guruhub',   icon:'ðŸ¤',label:'GuruHub',     path:'/student/guruhub',   limit:'doubts'},
+  {id:'classroom', icon:'ðŸ“š',label:'Classroom',   path:'/student/classroom'},
+  {id:'bookmarks', icon:'ðŸ”–',label:'Bookmarks',   path:'/student/bookmarks'},
+  {id:'pulse',     icon:'ðŸ‡®ðŸ‡³',label:'Bharat Pulse',path:'/student/pulse'},
+  {id:'analytics', icon:'ðŸ“Š',label:'Analytics',   path:'/student/analytics'},
+  {id:'career',    icon:'ðŸ§­',label:'Career AI',   path:'/student/career'},
+  {id:'community', icon:'ðŸ’¬',label:'Community',   path:'/student/community'},
 ]
 
 const FREE_LIMITS = {tests:3,games:3,doubts:3}
@@ -183,12 +183,12 @@ export default function StudentDashboard() {
     const load = async()=>{
       try {
         const [p,s,u,att,lp,lb] = await Promise.all([
-          getProfile(uid).catch(()=>({name:authUser?.name||'Student',coins:0,xp:0,level:1,plan:'free',badge:'Newcomer',state:'',avatar_url:null})),
-          getStreak(uid).catch(()=>({current_streak:0,longest_streak:0,total_study_days:0})),
-          getUsage(uid).catch(()=>({tests_today:0,games_today:0,doubts_today:0,last_reset:new Date().toISOString().split('T')[0]})),
+          withTimeout(getProfile(uid),3500,{name:authUser?.name||'Student',coins:0,xp:0,level:1,plan:'free',badge:'Newcomer',state:'',avatar_url:null}).catch(()=>({name:authUser?.name||'Student',coins:0,xp:0,level:1,plan:'free',badge:'Newcomer',state:'',avatar_url:null})),
+          withTimeout(getStreak(uid),3500,{current_streak:0,longest_streak:0,total_study_days:0}).catch(()=>({current_streak:0,longest_streak:0,total_study_days:0})),
+          withTimeout(getUsage(uid),3500,{tests_today:0,games_today:0,doubts_today:0}).catch(()=>({tests_today:0,games_today:0,doubts_today:0,last_reset:new Date().toISOString().split('T')[0]})),
           getRecentAttempts(uid,6).catch(()=>[]),
-          getLaunchpadEnrollment(uid).catch(()=>null),
-          getLeaderboard(8).catch(()=>[]),
+          withTimeout(getLaunchpadEnrollment(uid),3500,null).catch(()=>null),
+          withTimeout(getLeaderboard(8),3500,[]).catch(()=>[]),
         ])
         setProfile(p||{name:authUser.name||'Student',avatar_url:null,
           coins:authUser.coins||0,xp:authUser.xp||0,level:authUser.level||1,
@@ -239,7 +239,7 @@ export default function StudentDashboard() {
   }
 
   const share=()=>{
-    const text=`I scored ${attempts[0]?.score||0}/${attempts[0]?.total||100} on ${attempts[0]?.exam_name||'TryIT exam'}! Rank #${profile?.rank||'—'} All-India. 🎓 tryiteducations.net`
+    const text=`I scored ${attempts[0]?.score||0}/${attempts[0]?.total||100} on ${attempts[0]?.exam_name||'TryIT exam'}! Rank #${profile?.rank||'â€”'} All-India. ðŸŽ“ tryiteducations.net`
     if(navigator.share){navigator.share({title:'My TryIT Score',text})}
     else{navigator.clipboard?.writeText(text)}
   }
@@ -247,8 +247,8 @@ export default function StudentDashboard() {
   if(loading)return(
     <div style={{minHeight:'100vh',background:isDark?primD:'#F0F4F8',
       display:'flex',alignItems:'center',justifyContent:'center',flexDirection:'column',gap:16}}>
-      <Ring pct={75} size={64} color={accent}><span style={{fontSize:22}}>🎓</span></Ring>
-      <p style={{color:muted,fontFamily:'Poppins,sans-serif',fontSize:14}}>Loading your dashboard…</p>
+      <Ring pct={75} size={64} color={accent}><span style={{fontSize:22}}>ðŸŽ“</span></Ring>
+      <p style={{color:muted,fontFamily:'Poppins,sans-serif',fontSize:14}}>Loading your dashboardâ€¦</p>
       <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
     </div>
   )
@@ -270,7 +270,7 @@ export default function StudentDashboard() {
       background:isDark?`radial-gradient(ellipse 80% 60% at 20% -10%,${primary}40,transparent 60%),${primD}`:'#F0F4F8',
       fontFamily:'Inter,sans-serif',position:'relative'}}>
 
-      {/* ── Overlays ──────────────────────────────────────────── */}
+      {/* â”€â”€ Overlays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       {coinPop&&<CoinPop amount={coinPop} onDone={()=>setCoinPop(null)}/>}
       {upgradeFor&&(
         <UpgradePopup type={upgradeFor}
@@ -294,7 +294,7 @@ export default function StudentDashboard() {
               style={{background:`linear-gradient(135deg,${accent},${accentL})`,
                 border:'none',borderRadius:14,padding:'12px 32px',
                 color:primD,fontWeight:800,fontSize:15,cursor:'pointer'}}>
-              Open {fullScreen.title} →
+              Open {fullScreen.title} â†’
             </button>
           </div>
         </FullScreen>
@@ -310,7 +310,7 @@ export default function StudentDashboard() {
             border:`1px solid ${accent}30`,width:280,
             boxShadow:'0 20px 60px rgba(0,0,0,0.3)'}}>
             <p style={{color:txt,fontFamily:'Poppins,sans-serif',fontWeight:800,
-              fontSize:14,margin:'0 0 16px'}}>🎨 Choose Theme</p>
+              fontSize:14,margin:'0 0 16px'}}>ðŸŽ¨ Choose Theme</p>
             <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10,marginBottom:16}}>
               {BASE_THEMES.map(t=>(
                 <button key={t.id} onClick={()=>switchTheme(t)} style={{
@@ -329,7 +329,7 @@ export default function StudentDashboard() {
               background:isDark?'rgba(255,255,255,0.06)':'#F1F5F9',
               borderRadius:12,padding:'10px 14px'}}>
               <span style={{color:txt,fontSize:13,fontWeight:600}}>
-                {isDark?'🌙 Dark':'☀️ Light'} Mode
+                {isDark?'ðŸŒ™ Dark':'â˜€ï¸ Light'} Mode
               </span>
               <button onClick={()=>{
                 const newId=isDark?(BASE_THEMES.find(t=>t.dark===theme?.id)?BASE_THEMES.find(t=>t.dark===theme?.id)?.id:'default')
@@ -357,10 +357,10 @@ export default function StudentDashboard() {
             <div style={{display:'flex',justifyContent:'space-between',
               alignItems:'center',marginBottom:16}}>
               <p style={{color:txt,fontFamily:'Poppins,sans-serif',fontWeight:800,
-                fontSize:16,margin:0}}>⚙️ Customize Dashboard</p>
+                fontSize:16,margin:0}}>âš™ï¸ Customize Dashboard</p>
               <button onClick={()=>setShowCustomize(false)} style={{
                 background:'transparent',border:'none',color:muted,
-                fontSize:20,cursor:'pointer'}}>✕</button>
+                fontSize:20,cursor:'pointer'}}>âœ•</button>
             </div>
             <p style={{color:muted,fontSize:12,margin:'0 0 16px'}}>
               Toggle widgets to show/hide on your dashboard
@@ -397,11 +397,11 @@ export default function StudentDashboard() {
             border:`1px solid ${bdr}`,
             boxShadow:'0 20px 60px rgba(0,0,0,0.2)'}}>
             <p style={{color:txt,fontFamily:'Poppins,sans-serif',fontWeight:800,
-              fontSize:14,margin:'0 0 12px'}}>🔔 Notifications</p>
+              fontSize:14,margin:'0 0 12px'}}>ðŸ”” Notifications</p>
             {[
-              {icon:'🔥',msg:'Your streak is at risk! Study today.',time:'2h ago',color:'#F59E0B'},
-              {icon:'🏆',msg:'New All-India rank update available.',time:'5h ago',color:accent},
-              {icon:'📝',msg:'Weekly test is now live — attempt it!',time:'1d ago',color:'#60A5FA'},
+              {icon:'ðŸ”¥',msg:'Your streak is at risk! Study today.',time:'2h ago',color:'#F59E0B'},
+              {icon:'ðŸ†',msg:'New All-India rank update available.',time:'5h ago',color:accent},
+              {icon:'ðŸ“',msg:'Weekly test is now live â€” attempt it!',time:'1d ago',color:'#60A5FA'},
             ].map((n,i)=>(
               <div key={i} style={{display:'flex',gap:10,padding:'10px 0',
                 borderBottom:`1px solid ${bdr}`}}>
@@ -425,7 +425,7 @@ export default function StudentDashboard() {
         </div>
       )}
 
-      {/* ── LEFT SIDEBAR ────────────────────────────────────────── */}
+      {/* â”€â”€ LEFT SIDEBAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <aside
         ref={sideRef}
         onMouseEnter={()=>setSideHover(true)}
@@ -468,7 +468,7 @@ export default function StudentDashboard() {
             transition:'background 0.15s'}}
             onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,0.12)'}
             onMouseLeave={e=>e.currentTarget.style.background='rgba(255,255,255,0.07)'}>
-            {sideOpen?'←':'→'}
+            {sideOpen?'â†':'â†’'}
           </button>
         </div>
 
@@ -531,7 +531,7 @@ export default function StudentDashboard() {
               </div>
               <div style={{display:'flex',justifyContent:'space-between',marginTop:4}}>
                 <span style={{color:'rgba(255,255,255,0.60)',fontSize:8}}>XP {xp%500}/500</span>
-                <span style={{color:accent,fontSize:8,fontWeight:700}}>Lv.{lvl+1} →</span>
+                <span style={{color:accent,fontSize:8,fontWeight:700}}>Lv.{lvl+1} â†’</span>
               </div>
             </div>
           )}
@@ -541,8 +541,8 @@ export default function StudentDashboard() {
         {sideVisible&&(
           <div style={{display:'flex',gap:6,padding:'0 10px',marginBottom:6}}>
             {[
-              {icon:'🔥',val:`${curStr}d`,label:'Streak',color:'#FF6B00'},
-              {icon:'🪙',val:coins,label:'Coins',color:'#FFD700',anim:true},
+              {icon:'ðŸ”¥',val:`${curStr}d`,label:'Streak',color:'#FF6B00'},
+              {icon:'ðŸª™',val:coins,label:'Coins',color:'#FFD700',anim:true},
             ].map((s,i)=>(
               <div key={i} style={{flex:1,background:`${s.color}20`,
                 border:`1px solid ${s.color}50`,borderRadius:10,
@@ -622,24 +622,24 @@ export default function StudentDashboard() {
             border:`1px solid ${accent}45`,borderRadius:14,padding:'12px',
             position:'relative'}}>
             <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
-              <p style={{color:accent,fontWeight:700,fontSize:11,margin:0}}>⚡ Upgrade to Pro</p>
-              <button onClick={()=>setShowUpgradeCTA(false)} style={{background:'rgba(255,255,255,0.1)',border:'none',borderRadius:'50%',width:18,height:18,cursor:'pointer',color:'rgba(255,255,255,0.6)',fontSize:10,display:'flex',alignItems:'center',justifyContent:'center',padding:0}}>✕</button>
+              <p style={{color:accent,fontWeight:700,fontSize:11,margin:0}}>âš¡ Upgrade to Pro</p>
+              <button onClick={()=>setShowUpgradeCTA(false)} style={{background:'rgba(255,255,255,0.1)',border:'none',borderRadius:'50%',width:18,height:18,cursor:'pointer',color:'rgba(255,255,255,0.6)',fontSize:10,display:'flex',alignItems:'center',justifyContent:'center',padding:0}}>âœ•</button>
             </div>
             <p style={{color:'rgba(255,255,255,0.35)',fontSize:10,margin:'0 0 8px',lineHeight:1.5}}>
-              Unlimited tests · All themes · Full rank
+              Unlimited tests Â· All themes Â· Full rank
             </p>
             <button onClick={()=>navigate('/pricing')} style={{
               width:'100%',background:`linear-gradient(135deg,${accent},${accentL})`,
               border:'none',borderRadius:8,padding:'8px',
               color:primD,fontWeight:800,fontSize:11,cursor:'pointer',
               boxShadow:`0 4px 14px ${accent}44`}}>
-              From ₹5/day →
+              From â‚¹5/day â†’
             </button>
           </div>
         )}
       </aside>
 
-      {/* ── MAIN CONTENT ────────────────────────────────────────── */}
+      {/* â”€â”€ MAIN CONTENT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <main style={{flex:1,minWidth:0,overflowY:'auto',maxHeight:'100vh'}}>
 
         {/* Top bar */}
@@ -655,7 +655,7 @@ export default function StudentDashboard() {
           <div>
             <p style={{color:txt,fontFamily:'Poppins,sans-serif',fontWeight:700,fontSize:17,margin:0}}>
               {new Date().getHours()<12?'Good Morning':new Date().getHours()<17?'Good Afternoon':'Good Evening'}{' '}
-              <span style={{color:accent}}>{profile?.name?.split(' ')[0]||'Student'}</span> 👋
+              <span style={{color:accent}}>{profile?.name?.split(' ')[0]||'Student'}</span> ðŸ‘‹
             </p>
             <p style={{color:muted,fontSize:11,margin:'2px 0 0'}}>
               {new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'})}
@@ -683,7 +683,7 @@ export default function StudentDashboard() {
               title="Customize dashboard"
               onMouseEnter={e=>{e.currentTarget.style.border=`1px solid ${accent}40`}}
               onMouseLeave={e=>{e.currentTarget.style.border=`1px solid ${bdr}`}}>
-              🎛️
+              ðŸŽ›ï¸
             </button>
             {/* Share */}
             {attempts.length>0&&(
@@ -692,7 +692,7 @@ export default function StudentDashboard() {
                 width:38,height:38,cursor:'pointer',
                 display:'flex',alignItems:'center',justifyContent:'center',fontSize:16}}
                 title="Share my score">
-                📤
+                ðŸ“¤
               </button>
             )}
             {/* Notifications */}
@@ -700,7 +700,7 @@ export default function StudentDashboard() {
               position:'relative',background:card,border:`1px solid ${bdr}`,
               borderRadius:10,width:38,height:38,cursor:'pointer',
               display:'flex',alignItems:'center',justifyContent:'center',fontSize:16}}>
-              🔔
+              ðŸ””
               <div style={{position:'absolute',top:6,right:6,width:8,height:8,
                 borderRadius:'50%',background:'#F87171',
                 border:`2px solid ${isDark?primD:'#fff'}`}}/>
@@ -726,20 +726,20 @@ export default function StudentDashboard() {
 
         <div style={{padding:'20px 24px',maxWidth:960,margin:'0 auto'}}>
 
-          {/* ── STATS ─────────────────────────────────────────── */}
+          {/* â”€â”€ STATS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           {showWidget('stats')&&(
             <div style={{display:'grid',
               gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,190px),1fr))',
               gap:12,marginBottom:20}}>
               {[
-                {label:'All-India Rank',val:rank,display:rank?`#${rank.toLocaleString('en-IN')}`:'—',
-                  icon:'🏆',color:'#FFD700',ring:rank?Math.min(100,100-(rank/100000)*100):0,sub:'After last test'},
+                {label:'All-India Rank',val:rank,display:rank?`#${rank.toLocaleString('en-IN')}`:'â€”',
+                  icon:'ðŸ†',color:'#FFD700',ring:rank?Math.min(100,100-(rank/100000)*100):0,sub:'After last test'},
                 {label:'Day Streak',val:curStr,display:curStr,
-                  icon:'🔥',color:'#F59E0B',ring:Math.min(100,curStr*3),sub:`Best: ${streak?.longest_streak||0}d`},
+                  icon:'ðŸ”¥',color:'#F59E0B',ring:Math.min(100,curStr*3),sub:`Best: ${streak?.longest_streak||0}d`},
                 {label:'Coins',val:coins,display:coins,
-                  icon:'🪙',color:accent,ring:Math.min(100,(coins/1000)*100),sub:'Spend in store',anim:true},
+                  icon:'ðŸª™',color:accent,ring:Math.min(100,(coins/1000)*100),sub:'Spend in store',anim:true},
                 {label:'Tests Done',val:attempts.length,display:attempts.length,
-                  icon:'📝',color:'#60A5FA',ring:Math.min(100,attempts.length*10),sub:`Level ${lvl}`,anim:true},
+                  icon:'ðŸ“',color:'#60A5FA',ring:Math.min(100,attempts.length*10),sub:`Level ${lvl}`,anim:true},
               ].map((s,i)=>(
                 <div key={i} style={{background:isDark?'rgba(255,255,255,0.07)':'rgba(255,255,255,0.9)',
                   backdropFilter:'blur(12px)',
@@ -767,7 +767,7 @@ export default function StudentDashboard() {
             </div>
           )}
 
-          {/* ── FREE PLAN BAR ────────────────────────────────── */}
+          {/* â”€â”€ FREE PLAN BAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           {!isPro&&(
             <div style={{background:isDark?`${accent}07`:`${accent}06`,
               border:`1px solid ${accent}25`,borderRadius:14,
@@ -776,10 +776,10 @@ export default function StudentDashboard() {
               justifyContent:'space-between',gap:12,flexWrap:'wrap'}}>
               <div>
                 <p style={{color:accent,fontWeight:700,fontSize:12,margin:0}}>
-                  Free Plan — {FREE_LIMITS.tests-(usage?.tests_today||0)} tests left today
+                  Free Plan â€” {FREE_LIMITS.tests-(usage?.tests_today||0)} tests left today
                 </p>
                 <p style={{color:muted,fontSize:10,margin:'2px 0 0'}}>
-                  Refer a friend who buys Pro → 7 days Pro free for both
+                  Refer a friend who buys Pro â†’ 7 days Pro free for both
                 </p>
               </div>
               <div style={{display:'flex',gap:8}}>
@@ -792,13 +792,13 @@ export default function StudentDashboard() {
                   border:'none',borderRadius:10,padding:'7px 14px',
                   color:primD,fontWeight:800,fontSize:11,cursor:'pointer',
                   boxShadow:`0 4px 14px ${accent}33`}}>
-                  Upgrade ₹5/day →
+                  Upgrade â‚¹5/day â†’
                 </button>
               </div>
             </div>
           )}
 
-          {/* ── QUICK ACTIONS ─────────────────────────────────── */}
+          {/* â”€â”€ QUICK ACTIONS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           {showWidget('actions')&&(
             <>
               <p style={{color:muted,fontSize:9,fontWeight:700,
@@ -807,14 +807,14 @@ export default function StudentDashboard() {
                 gridTemplateColumns:'repeat(auto-fill,minmax(130px,1fr))',
                 gap:10,marginBottom:20}}>
                 {[
-                  {icon:'⚡',label:'Quick Test',sub:'10 questions',color:'#60A5FA',path:'/student/test',limit:'tests'},
-                  {icon:'🚀',label:'Launchpad',sub:"Today's topic",color:accent,path:'/student/launchpad'},
-                  {icon:'🎮',label:'Play Game',sub:'+coins',color:'#4ADE80',path:'/student/games',limit:'games'},
-                  {icon:'🤝',label:'Ask Doubt',sub:'Get answer',color:'#A78BFA',path:'/student/guruhub',limit:'doubts'},
-                  {icon:'📚',label:'Classroom',sub:'PDFs & Notes',color:'#FB923C',path:'/student/classroom'},
-                  {icon:'🏟️',label:'Tournament',sub:'Compete live',color:'#F87171',path:'/student/tournament'},
-                  {icon:'🔖',label:'Bookmarks',sub:'Saved items',color:'#34D399',path:'/student/bookmarks'},
-                  {icon:'🧭',label:'Career AI',sub:'Best exam for you',color:'#60A5FA',path:'/student/career'},
+                  {icon:'âš¡',label:'Quick Test',sub:'10 questions',color:'#60A5FA',path:'/student/test',limit:'tests'},
+                  {icon:'ðŸš€',label:'Launchpad',sub:"Today's topic",color:accent,path:'/student/launchpad'},
+                  {icon:'ðŸŽ®',label:'Play Game',sub:'+coins',color:'#4ADE80',path:'/student/games',limit:'games'},
+                  {icon:'ðŸ¤',label:'Ask Doubt',sub:'Get answer',color:'#A78BFA',path:'/student/guruhub',limit:'doubts'},
+                  {icon:'ðŸ“š',label:'Classroom',sub:'PDFs & Notes',color:'#FB923C',path:'/student/classroom'},
+                  {icon:'ðŸŸï¸',label:'Tournament',sub:'Compete live',color:'#F87171',path:'/student/tournament'},
+                  {icon:'ðŸ”–',label:'Bookmarks',sub:'Saved items',color:'#34D399',path:'/student/bookmarks'},
+                  {icon:'ðŸ§­',label:'Career AI',sub:'Best exam for you',color:'#60A5FA',path:'/student/career'},
                 ].map((a,i)=>{
                   const used=usage?.[`${a.limit}_today`]||0
                   const atLimit=plan==='free'&&a.limit&&used>=FREE_LIMITS[a.limit]
@@ -854,7 +854,7 @@ export default function StudentDashboard() {
             </>
           )}
 
-          {/* ── LAUNCHPAD ──────────────────────────────────────── */}
+          {/* â”€â”€ LAUNCHPAD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           {showWidget('launchpad')&&(
             launchpad&&todayTopic?(
               <div style={{background:`linear-gradient(135deg,${primary},${primD})`,
@@ -868,14 +868,14 @@ export default function StudentDashboard() {
                   <div>
                     <p style={{color:accent,fontSize:8,fontWeight:700,
                       letterSpacing:'1.5px',margin:'0 0 4px'}}>
-                      🚀 LAUNCHPAD — {launchpad.track?.toUpperCase()} TRACK
+                      ðŸš€ LAUNCHPAD â€” {launchpad.track?.toUpperCase()} TRACK
                     </p>
                     <p style={{color:'#fff',fontFamily:'Poppins,sans-serif',
                       fontWeight:800,fontSize:15,margin:'0 0 4px'}}>
                       Today: {todayTopic.topic_name}
                     </p>
                     <p style={{color:'rgba(255,255,255,0.45)',fontSize:11,margin:0}}>
-                      {todayTopic.subject} · Day {launchpad.current_topic_index+1}
+                      {todayTopic.subject} Â· Day {launchpad.current_topic_index+1}
                     </p>
                   </div>
                   <Ring pct={launchpad.syllabus_completion||0} size={54} stroke={4} color={accent}>
@@ -897,37 +897,37 @@ export default function StudentDashboard() {
                     border:'none',borderRadius:10,padding:'9px 18px',
                     color:primD,fontWeight:800,fontSize:12,cursor:'pointer',
                     boxShadow:`0 4px 16px ${accent}44`}}>
-                    Start Topic →
+                    Start Topic â†’
                   </button>
-                  <button onClick={()=>setFullScreen({id:'launchpad',title:'Launchpad',icon:'🚀',path:'/student/launchpad'})}
+                  <button onClick={()=>setFullScreen({id:'launchpad',title:'Launchpad',icon:'ðŸš€',path:'/student/launchpad'})}
                     style={{background:'rgba(255,255,255,0.08)',border:'1px solid rgba(255,255,255,0.12)',
                       borderRadius:10,padding:'9px 14px',color:'rgba(255,255,255,0.6)',
                       fontWeight:600,fontSize:12,cursor:'pointer'}}>
-                    ⛶ Full View
+                    â›¶ Full View
                   </button>
                 </div>
               </div>
             ):(
               <div style={{background:card,border:`1.5px dashed ${accent}35`,
                 borderRadius:20,padding:'20px',marginBottom:20,textAlign:'center'}}>
-                <p style={{fontSize:30,margin:'0 0 8px'}}>🚀</p>
+                <p style={{fontSize:30,margin:'0 0 8px'}}>ðŸš€</p>
                 <p style={{color:txt,fontFamily:'Poppins,sans-serif',fontWeight:800,fontSize:15,margin:'0 0 4px'}}>
                   Join TryIT Launchpad
                 </p>
                 <p style={{color:muted,fontSize:12,margin:'0 0 12px'}}>
-                  Daily topics · Weekly tests · Personal mentor · ₹79/month
+                  Daily topics Â· Weekly tests Â· Personal mentor Â· â‚¹79/month
                 </p>
                 <button onClick={()=>navigate('/student/launchpad/join')} style={{
                   background:`linear-gradient(135deg,${accent},${accentL})`,
                   border:'none',borderRadius:12,padding:'10px 24px',
                   color:primD,fontWeight:800,fontSize:13,cursor:'pointer'}}>
-                  Join Launchpad →
+                  Join Launchpad â†’
                 </button>
               </div>
             )
           )}
 
-          {/* ── RECENT TESTS + ANALYTICS ROW ──────────────────── */}
+          {/* â”€â”€ RECENT TESTS + ANALYTICS ROW â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16,marginBottom:20}}
             className="two-col">
             {/* Recent tests */}
@@ -937,14 +937,14 @@ export default function StudentDashboard() {
                   borderBottom:`1px solid ${bdr}`,
                   display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                   <p style={{color:txt,fontFamily:'Poppins,sans-serif',fontWeight:700,fontSize:13,margin:0}}>
-                    📝 Recent Tests
+                    ðŸ“ Recent Tests
                   </p>
                   <div style={{display:'flex',gap:6}}>
-                    <button onClick={()=>setFullScreen({id:'tests',title:'All Tests',icon:'📝',path:'/student/history'})}
-                      style={{background:'transparent',border:'none',color:muted,fontSize:14,cursor:'pointer'}}>⛶</button>
+                    <button onClick={()=>setFullScreen({id:'tests',title:'All Tests',icon:'ðŸ“',path:'/student/history'})}
+                      style={{background:'transparent',border:'none',color:muted,fontSize:14,cursor:'pointer'}}>â›¶</button>
                     <button onClick={()=>navigate('/student/history')} style={{
                       background:'transparent',border:'none',color:accent,fontSize:11,fontWeight:700,cursor:'pointer'}}>
-                      All →
+                      All â†’
                     </button>
                   </div>
                 </div>
@@ -964,7 +964,7 @@ export default function StudentDashboard() {
                           {a.exam_name||'Practice Test'}
                         </p>
                         <p style={{color:muted,fontSize:9,margin:'2px 0 0'}}>
-                          {a.score}/{a.total} · {new Date(a.created_at).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}
+                          {a.score}/{a.total} Â· {new Date(a.created_at).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}
                         </p>
                       </div>
                       {a.rank&&<span style={{color:accent,fontWeight:700,fontSize:10,flexShrink:0}}>#{a.rank}</span>}
@@ -980,11 +980,11 @@ export default function StudentDashboard() {
                 <div style={{padding:'14px 16px',borderBottom:`1px solid ${bdr}`,
                   display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                   <p style={{color:txt,fontFamily:'Poppins,sans-serif',fontWeight:700,fontSize:13,margin:0}}>
-                    📊 Analytics
+                    ðŸ“Š Analytics
                   </p>
                   <button onClick={()=>navigate('/student/analytics')} style={{
                     background:'transparent',border:'none',color:accent,fontSize:11,fontWeight:700,cursor:'pointer'}}>
-                    Full →
+                    Full â†’
                   </button>
                 </div>
                 <div style={{padding:'16px'}}>
@@ -1011,7 +1011,7 @@ export default function StudentDashboard() {
                           const pct=a.total?Math.round((a.score/a.total)*100):0
                           const c=pct>=80?'#4ADE80':pct>=60?accent:'#F87171'
                           return(
-                            <div key={i} title={`${pct}% — ${a.exam_name||'Test'}`}
+                            <div key={i} title={`${pct}% â€” ${a.exam_name||'Test'}`}
                               style={{flex:1,background:`${c}22`,borderRadius:4,
                                 height:`${Math.max(10,pct*0.48)}px`,
                                 border:`1px solid ${c}33`,cursor:'pointer',
@@ -1025,7 +1025,7 @@ export default function StudentDashboard() {
                     </>
                   ):(
                     <div style={{textAlign:'center',padding:'20px 0'}}>
-                      <p style={{fontSize:28,margin:'0 0 8px'}}>📊</p>
+                      <p style={{fontSize:28,margin:'0 0 8px'}}>ðŸ“Š</p>
                       <p style={{color:muted,fontSize:12}}>Take a test to see analytics</p>
                     </div>
                   )}
@@ -1034,7 +1034,7 @@ export default function StudentDashboard() {
             )}
           </div>
 
-          {/* ── LEADERBOARD ────────────────────────────────────── */}
+          {/* â”€â”€ LEADERBOARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           {showWidget('leaderboard')&&(
             <div style={{background:`linear-gradient(135deg,#060D18,#0F1A2E)`,
               borderRadius:20,overflow:'hidden',marginBottom:20,
@@ -1043,13 +1043,13 @@ export default function StudentDashboard() {
               <div style={{padding:'14px 16px',background:'rgba(0,0,0,0.2)',
                 display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                 <p style={{color:'#fff',fontFamily:'Poppins,sans-serif',
-                  fontWeight:800,fontSize:14,margin:0}}>🏆 All-India Live Rankings</p>
+                  fontWeight:800,fontSize:14,margin:0}}>ðŸ† All-India Live Rankings</p>
                 <div style={{display:'flex',gap:8}}>
-                  <button onClick={()=>setFullScreen({id:'rank',title:'Leaderboard',icon:'🏆',path:'/student/rank'})}
-                    style={{background:'transparent',border:'none',color:'rgba(255,255,255,0.70)',fontSize:14,cursor:'pointer'}}>⛶</button>
+                  <button onClick={()=>setFullScreen({id:'rank',title:'Leaderboard',icon:'ðŸ†',path:'/student/rank'})}
+                    style={{background:'transparent',border:'none',color:'rgba(255,255,255,0.70)',fontSize:14,cursor:'pointer'}}>â›¶</button>
                   <button onClick={()=>navigate('/student/rank')} style={{
                     background:'transparent',border:'none',color:accent,
-                    fontSize:11,fontWeight:700,cursor:'pointer'}}>Full Board →</button>
+                    fontSize:11,fontWeight:700,cursor:'pointer'}}>Full Board â†’</button>
                 </div>
               </div>
               <div style={{display:'grid',
@@ -1060,7 +1060,7 @@ export default function StudentDashboard() {
                     display:'flex',alignItems:'center',gap:10}}>
                     <span style={{color:i===0?'#FFD700':i===1?'#C0C0C0':i===2?'#CD7F32':'rgba(255,255,255,0.25)',
                       fontWeight:900,fontSize:i<3?15:11,width:22,flexShrink:0,textAlign:'center'}}>
-                      {i===0?'🥇':i===1?'🥈':i===2?'🥉':`#${r.rank||i+1}`}
+                      {i===0?'ðŸ¥‡':i===1?'ðŸ¥ˆ':i===2?'ðŸ¥‰':`#${r.rank||i+1}`}
                     </span>
                     <div style={{width:28,height:28,borderRadius:'50%',flexShrink:0,
                       background:`linear-gradient(135deg,${accent},${accentL})`,
@@ -1077,15 +1077,15 @@ export default function StudentDashboard() {
                         {r.profiles?.name||'Student'}
                       </p>
                       <p style={{color:'rgba(255,255,255,0.60)',fontSize:8,margin:0}}>
-                        {r.exam_name||'—'}
+                        {r.exam_name||'â€”'}
                       </p>
                     </div>
-                    <span style={{color:accent,fontWeight:700,fontSize:11,flexShrink:0}}>{r.score||'—'}</span>
+                    <span style={{color:accent,fontWeight:700,fontSize:11,flexShrink:0}}>{r.score||'â€”'}</span>
                   </div>
                 )):(
                   <div style={{padding:'24px',textAlign:'center',gridColumn:'1/-1'}}>
                     <p style={{color:'rgba(255,255,255,0.65)',fontSize:13}}>
-                      Take a test to appear on the leaderboard! 🎯
+                      Take a test to appear on the leaderboard! ðŸŽ¯
                     </p>
                   </div>
                 )}
@@ -1093,24 +1093,24 @@ export default function StudentDashboard() {
             </div>
           )}
 
-          {/* ── BOOKMARKS ─────────────────────────────────────── */}
+          {/* â”€â”€ BOOKMARKS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           {showWidget('bookmarks')&&(
             <div style={{background:card,border:`1px solid ${bdr}`,borderRadius:18,marginBottom:20}}>
               <div style={{padding:'14px 16px',borderBottom:`1px solid ${bdr}`,
                 display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                 <p style={{color:txt,fontFamily:'Poppins,sans-serif',fontWeight:700,fontSize:13,margin:0}}>
-                  🔖 Bookmarks
+                  ðŸ”– Bookmarks
                 </p>
                 <button onClick={()=>navigate('/student/bookmarks')} style={{
                   background:'transparent',border:'none',color:accent,fontSize:11,fontWeight:700,cursor:'pointer'}}>
-                  View all →
+                  View all â†’
                 </button>
               </div>
               <div style={{padding:'16px',display:'flex',flexDirection:'column',gap:8}}>
                 {[
-                  {icon:'📝',type:'Question',title:'Article 300A — Right to Property distinctions',exam:'TNPSC',color:'#60A5FA'},
-                  {icon:'📰',type:'Current Affairs',title:'India signs semiconductor deal with Japan',exam:'SSC CGL',color:accent},
-                  {icon:'📚',type:'Material',title:'SSC CGL Maths Formula Sheet',exam:'SSC',color:'#4ADE80'},
+                  {icon:'ðŸ“',type:'Question',title:'Article 300A â€” Right to Property distinctions',exam:'TNPSC',color:'#60A5FA'},
+                  {icon:'ðŸ“°',type:'Current Affairs',title:'India signs semiconductor deal with Japan',exam:'SSC CGL',color:accent},
+                  {icon:'ðŸ“š',type:'Material',title:'SSC CGL Maths Formula Sheet',exam:'SSC',color:'#4ADE80'},
                 ].map((b,i)=>(
                   <div key={i} style={{display:'flex',alignItems:'center',gap:10,
                     padding:'10px',borderRadius:12,
@@ -1127,16 +1127,16 @@ export default function StudentDashboard() {
                         overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>
                         {b.title}
                       </p>
-                      <p style={{color:muted,fontSize:9,margin:'2px 0 0'}}>{b.type} · {b.exam}</p>
+                      <p style={{color:muted,fontSize:9,margin:'2px 0 0'}}>{b.type} Â· {b.exam}</p>
                     </div>
-                    <span style={{fontSize:16,color:muted,flexShrink:0}}>›</span>
+                    <span style={{fontSize:16,color:muted,flexShrink:0}}>â€º</span>
                   </div>
                 ))}
               </div>
             </div>
           )}
 
-          {/* ── TOURNAMENT + BHARAT PULSE ROW ─────────────────── */}
+          {/* â”€â”€ TOURNAMENT + BHARAT PULSE ROW â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16,marginBottom:20}}
             className="two-col">
             {showWidget('tournament')&&(
@@ -1146,16 +1146,16 @@ export default function StudentDashboard() {
                   borderBottom:`1px solid ${bdr}`,
                   display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                   <p style={{color:txt,fontFamily:'Poppins,sans-serif',fontWeight:700,fontSize:13,margin:0}}>
-                    🏟️ Tournaments
+                    ðŸŸï¸ Tournaments
                   </p>
                   <button onClick={()=>navigate('/student/tournament')} style={{
                     background:'transparent',border:'none',color:accent,
-                    fontSize:11,fontWeight:700,cursor:'pointer'}}>Join →</button>
+                    fontSize:11,fontWeight:700,cursor:'pointer'}}>Join â†’</button>
                 </div>
                 <div style={{padding:'12px 16px'}}>
                   {[
-                    {name:'SSC CGL Weekly Battle',date:'Tomorrow 10AM',participants:1240,prize:'1000🪙',live:false},
-                    {name:'TNPSC Grand Challenge',date:'Live Now',participants:8432,prize:'5000🪙',live:true},
+                    {name:'SSC CGL Weekly Battle',date:'Tomorrow 10AM',participants:1240,prize:'1000ðŸª™',live:false},
+                    {name:'TNPSC Grand Challenge',date:'Live Now',participants:8432,prize:'5000ðŸª™',live:true},
                   ].map((t,i)=>(
                     <div key={i} style={{padding:'10px',borderRadius:12,marginBottom:8,
                       background:t.live?`${accent}10`:isDark?'rgba(255,255,255,0.03)':'#F8FAFC',
@@ -1164,11 +1164,11 @@ export default function StudentDashboard() {
                       {t.live&&(
                         <span style={{background:`${accent}20`,color:accent,
                           fontSize:8,fontWeight:700,padding:'1px 6px',
-                          borderRadius:20,display:'inline-block',marginBottom:4}}>🔴 LIVE</span>
+                          borderRadius:20,display:'inline-block',marginBottom:4}}>ðŸ”´ LIVE</span>
                       )}
                       <p style={{color:txt,fontSize:11,fontWeight:700,margin:'0 0 4px'}}>{t.name}</p>
                       <div style={{display:'flex',justifyContent:'space-between'}}>
-                        <span style={{color:muted,fontSize:9}}>{t.date} · {t.participants.toLocaleString()} students</span>
+                        <span style={{color:muted,fontSize:9}}>{t.date} Â· {t.participants.toLocaleString()} students</span>
                         <span style={{color:accent,fontSize:9,fontWeight:700}}>{t.prize}</span>
                       </div>
                     </div>
@@ -1184,9 +1184,9 @@ export default function StudentDashboard() {
                 <div style={{padding:'14px 16px',borderBottom:'1px solid rgba(255,255,255,0.06)',
                   display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                   <p style={{color:'#fff',fontFamily:'Poppins,sans-serif',fontWeight:700,fontSize:13,margin:0}}>
-                    🇮🇳 Bharat Pulse
+                    ðŸ‡®ðŸ‡³ Bharat Pulse
                   </p>
-                  <span style={{color:'rgba(255,255,255,0.70)',fontSize:11}}>Today →</span>
+                  <span style={{color:'rgba(255,255,255,0.70)',fontSize:11}}>Today â†’</span>
                 </div>
                 <div style={{padding:'14px 16px'}}>
                   <p style={{color:accent,fontSize:9,fontWeight:700,letterSpacing:'1px',margin:'0 0 6px'}}>
@@ -1197,7 +1197,7 @@ export default function StudentDashboard() {
                     India's semiconductor mission: 5 fabs to be operational by 2026
                   </p>
                   <p style={{color:'rgba(255,255,255,0.45)',fontSize:10,margin:'0 0 12px',lineHeight:1.5}}>
-                    Relates to GS3 Economy, Science & Tech — appears in UPSC, SSC, IBPS
+                    Relates to GS3 Economy, Science & Tech â€” appears in UPSC, SSC, IBPS
                   </p>
                   <div style={{display:'flex',alignItems:'center',gap:8}}>
                     <span style={{background:`${accent}22`,color:accent,fontSize:9,
@@ -1212,21 +1212,21 @@ export default function StudentDashboard() {
             )}
           </div>
 
-          {/* ── MENTOR CARD ────────────────────────────────────── */}
+          {/* â”€â”€ MENTOR CARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
           {showWidget('mentor')&&(
             <div style={{background:card,border:`1px solid ${bdr}`,borderRadius:18,
               padding:'16px',marginBottom:20}}>
               <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:12}}>
                 <p style={{color:txt,fontFamily:'Poppins,sans-serif',fontWeight:700,fontSize:13,margin:0}}>
-                  🧑‍🏫 Your Mentor
+                  ðŸ§‘â€ðŸ« Your Mentor
                 </p>
                 <button onClick={()=>navigate('/student/mentor')} style={{
                   background:'transparent',border:'none',color:accent,
-                  fontSize:11,fontWeight:700,cursor:'pointer'}}>Find Mentor →</button>
+                  fontSize:11,fontWeight:700,cursor:'pointer'}}>Find Mentor â†’</button>
               </div>
               <div style={{background:isDark?'rgba(255,255,255,0.03)':'#F8FAFC',
                 border:`1px solid ${bdr}`,borderRadius:14,padding:'14px',textAlign:'center'}}>
-                <p style={{fontSize:32,margin:'0 0 6px'}}>👋</p>
+                <p style={{fontSize:32,margin:'0 0 6px'}}>ðŸ‘‹</p>
                 <p style={{color:muted,fontSize:12,margin:'0 0 10px'}}>
                   No mentor assigned yet
                 </p>
@@ -1238,7 +1238,7 @@ export default function StudentDashboard() {
                   border:'none',borderRadius:10,padding:'8px 20px',
                   color:primD,fontWeight:700,fontSize:12,cursor:'pointer',
                   boxShadow:`0 4px 14px ${accent}33`}}>
-                  Browse Mentors →
+                  Browse Mentors â†’
                 </button>
               </div>
             </div>
@@ -1248,7 +1248,7 @@ export default function StudentDashboard() {
         </div>
       </main>
 
-      {/* ── BOTTOM NAV (mobile) ──────────────────────────────────── */}
+      {/* â”€â”€ BOTTOM NAV (mobile) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <div style={{position:'fixed',bottom:0,left:0,right:0,zIndex:200,
         background:isDark?'rgba(15,23,42,0.97)':'rgba(255,255,255,0.97)',
         backdropFilter:'blur(20px)',
@@ -1257,11 +1257,11 @@ export default function StudentDashboard() {
         padding:'8px 0 max(8px,env(safe-area-inset-bottom))'
       }} className="bottom-nav-mobile">
         {[
-          {icon:'🏠',label:'Home',    path:'/student'},
-          {icon:'📝',label:'Test',    path:'/student/test'},
-          {icon:'🏆',label:'Rank',    path:'/student/rank'},
-          {icon:'🎮',label:'Games',   path:'/student/games'},
-          {icon:'📊',label:'Analytics',path:'/student/analytics'},
+          {icon:'ðŸ ',label:'Home',    path:'/student'},
+          {icon:'ðŸ“',label:'Test',    path:'/student/test'},
+          {icon:'ðŸ†',label:'Rank',    path:'/student/rank'},
+          {icon:'ðŸŽ®',label:'Games',   path:'/student/games'},
+          {icon:'ðŸ“Š',label:'Analytics',path:'/student/analytics'},
         ].map((n,i)=>(
           <button key={i} onClick={()=>navigate(n.path)} style={{
             display:'flex',flexDirection:'column',
@@ -1295,3 +1295,4 @@ export default function StudentDashboard() {
     </div>
   )
 }
+
