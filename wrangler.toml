@@ -1,8 +1,3 @@
 ﻿name = "backup"
 compatibility_date = "2026-06-27"
 assets = { directory = "dist" }
-
-routes = [
-  { pattern = "tryiteducations.net/*", zone_name = "tryiteducations.net" },
-  { pattern = "www.tryiteducations.net/*", zone_name = "tryiteducations.net" }
-]
