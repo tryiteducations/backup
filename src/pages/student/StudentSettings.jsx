@@ -390,14 +390,13 @@ export default function StudentSettings() {
                         onMouseEnter={e => { if(unlocked) e.currentTarget.style.transform='scale(1.03)' }}
                         onMouseLeave={e => e.currentTarget.style.transform='scale(1)'}>
 
-                        {/* Theme preview */}
+                        {/* Theme preview — Mini Mockup */}
                         <div style={{
-                          height: 70,
-                          background: t.isDark
-                            ? `linear-gradient(135deg,${t.primaryDark||t.primary||'#0F2140'},${t.accent||'#C9A84C'}88)`
-                            : `linear-gradient(135deg,${t.bg||'#F8FAFC'},${t.accent||'#2563EB'}44)`,
-                          display: 'flex', alignItems: 'center',
-                          justifyContent: 'center', fontSize: 28,
+                          height: 110,
+                          background: t.bg || '#F8FAFC',
+                          display: 'flex', flexDirection: 'column',
+                          overflow: 'hidden', position: 'relative',
+                          fontSize: 28,
                           position: 'relative',
                         }}>
                           {t.emoji}
