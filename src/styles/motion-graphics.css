@@ -1,0 +1,48 @@
+﻿/* GLOBAL MOTION GRAPHICS - TryIT Educations */
+
+.mg-layer { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+
+.mg-orb { position: absolute; border-radius: 50%; filter: blur(90px); }
+.mg-orb-0 { width:520px; height:520px; top:-140px; left:-120px; background:var(--color-primary,#1E3A5F); opacity:0.07; animation:mg-drift-0 26s ease-in-out infinite; }
+.mg-orb-1 { width:420px; height:420px; bottom:-100px; right:-100px; background:var(--color-accent,#C9A84C); opacity:0.06; animation:mg-drift-1 32s ease-in-out infinite; }
+.mg-orb-2 { width:320px; height:320px; top:45%; left:48%; background:var(--color-primary,#1E3A5F); opacity:0.04; animation:mg-drift-2 38s ease-in-out infinite; }
+
+@keyframes mg-drift-0 { 0%,100%{transform:translate(0,0) scale(1);} 33%{transform:translate(70px,55px) scale(1.08);} 66%{transform:translate(-35px,90px) scale(0.95);} }
+@keyframes mg-drift-1 { 0%,100%{transform:translate(0,0) scale(1);} 33%{transform:translate(-55px,-75px) scale(1.06);} 66%{transform:translate(35px,-35px) scale(0.92);} }
+@keyframes mg-drift-2 { 0%,100%{transform:translate(-50%,-50%) scale(1);} 50%{transform:translate(-58%,-42%) scale(1.14);} }
+
+.mg-dot { position:absolute; bottom:-10px; width:4px; height:4px; border-radius:50%; background:var(--color-primary,#1E3A5F); opacity:0; animation:mg-rise 10s ease-in-out infinite; }
+.mg-dot-0 { left:4%;  animation-delay:0s;   animation-duration:11s; }
+.mg-dot-1 { left:14%; animation-delay:1.8s; animation-duration:13s; }
+.mg-dot-2 { left:26%; animation-delay:3.2s; animation-duration:9s;  background:var(--color-accent,#C9A84C); width:5px; height:5px; }
+.mg-dot-3 { left:38%; animation-delay:0.6s; animation-duration:12s; }
+.mg-dot-4 { left:52%; animation-delay:2.5s; animation-duration:10s; }
+.mg-dot-5 { left:66%; animation-delay:4.1s; animation-duration:14s; background:var(--color-accent,#C9A84C); width:5px; height:5px; }
+.mg-dot-6 { left:79%; animation-delay:1.2s; animation-duration:11s; }
+.mg-dot-7 { left:92%; animation-delay:3.6s; animation-duration:9s;  }
+
+@keyframes mg-rise { 0%{transform:translateY(0) scale(0);opacity:0;} 8%{opacity:0.45;} 88%{opacity:0.18;} 100%{transform:translateY(-100vh) scale(1.2);opacity:0;} }
+
+.mg-reveal { opacity:0; transform:translateY(26px); transition:opacity 0.55s ease,transform 0.55s ease; }
+.mg-reveal.mg-visible { opacity:1; transform:translateY(0); }
+.mg-reveal-delay-1 { transition-delay:0.1s; }
+.mg-reveal-delay-2 { transition-delay:0.2s; }
+.mg-reveal-delay-3 { transition-delay:0.3s; }
+.mg-reveal-delay-4 { transition-delay:0.4s; }
+
+.mg-card { transition:transform 0.25s ease,box-shadow 0.25s ease; }
+.mg-card:hover { transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,0.13); }
+
+.mg-btn { position:relative; overflow:hidden; }
+.mg-btn::after { content:''; position:absolute; top:0; left:-100%; width:60%; height:100%; background:rgba(255,255,255,0.18); transform:skewX(-20deg); transition:left 0.5s ease; }
+.mg-btn:hover::after { left:160%; }
+
+.mg-pulse { position:relative; }
+.mg-pulse::before { content:''; position:absolute; inset:-5px; border-radius:inherit; border:2px solid var(--color-primary,#1E3A5F); opacity:0; animation:mg-ring 2.8s ease-out infinite; }
+@keyframes mg-ring { 0%{transform:scale(1);opacity:0.55;} 100%{transform:scale(1.18);opacity:0;} }
+
+.mg-stat-pop { animation:mg-pop 0.65s cubic-bezier(0.34,1.56,0.64,1) both; }
+@keyframes mg-pop { from{transform:scale(0.75);opacity:0;} to{transform:scale(1);opacity:1;} }
+
+.mg-shimmer { background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.22) 50%,transparent 100%); background-size:200% 100%; animation:mg-shimmer 2.4s linear infinite; }
+@keyframes mg-shimmer { 0%{background-position:-200% 0;} 100%{background-position:200% 0;} }

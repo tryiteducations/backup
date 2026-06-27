@@ -4,6 +4,8 @@ import { ThemeProvider } from './context/ThemeContext'
 import { ToastProvider } from './context/ToastContext'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import ImpersonationBanner from './components/ImpersonationBanner'
+import { AnimatePresence } from 'framer-motion'
+import MotionLayer from './components/global/MotionLayer'
 import NotificationBar from './components/NotificationBar'
 
 const Splash          = lazy(() => import('./pages/Splash'))
@@ -190,11 +192,13 @@ function ThemedApp() {
       userPlan={user?.is_admin || localStorage.getItem('tryit_is_admin')==='true' ? 'ultra' : (user?.plan ?? 'free')}
       userStats={{ tests_completed: user?.testsCompleted ?? 0, streak_days: user?.streak ?? 0, coins_earned: user?.coins ?? 0 }}
     >
+      <MotionLayer />
       <BrowserRouter>
         <ImpersonationBanner />
         <NotificationBar />
         <Suspense fallback={<Loader />}>
-          <Routes>
+          <AnimatePresence mode="wait">
+        <Routes>
             {/* AUTH */}
             <Route path="/"            element={<Splash />} />
             <Route path="/landing"     element={<Landing />} />
@@ -364,6 +368,7 @@ function ThemedApp() {
             
             
 </Routes>
+        </AnimatePresence>
         </Suspense>
       </BrowserRouter>
     </ThemeProvider>
@@ -379,3 +384,4 @@ export default function App() {
     </ToastProvider>
   )
 }
+
