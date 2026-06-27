@@ -25,7 +25,7 @@ export default function StudentHall() {
           <h1 style={{color:t,fontSize:18,fontWeight:800,margin:0}}>⚔️ Battle Hall</h1>
           <p style={{color:m,fontSize:11,margin:0}}>Study halls · Live battles · Compete</p>
         </div>
-        <button onClick={()=>nav('/hall')} style={{background:`linear-gradient(135deg,${p},${a})`,
+        <button onClick={()=>nav('/games/battle')} style={{background:`linear-gradient(135deg,${p},${a})`,
           border:'none',borderRadius:12,padding:'8px 16px',color:'#fff',fontWeight:700,fontSize:12,cursor:'pointer'}}>
           + Create Hall
         </button>
@@ -49,14 +49,14 @@ export default function StudentHall() {
               Challenge any student to a 10-question rapid duel
             </p>
           </div>
-          <button onClick={()=>nav('/hall')} style={{background:`linear-gradient(135deg,${a},#E8C44A)`,
+          <button onClick={()=>nav('/games/battle')} style={{background:`linear-gradient(135deg,${a},#E8C44A)`,
             border:'none',borderRadius:12,padding:'10px 16px',color:p,fontWeight:700,fontSize:12,cursor:'pointer',flexShrink:0}}>
             Battle →
           </button>
         </div>
         <p style={{color:t,fontWeight:700,fontSize:14,marginBottom:10}}>Popular Halls</p>
         {HALLS.map((h,i)=>(
-          <div key={i} onClick={()=>nav('/hall')}
+          <div key={i} onClick={()=>nav('/games/battle')}
             style={{background:c,border:`1px solid ${b}`,borderRadius:16,padding:'14px 16px',
               marginBottom:8,cursor:'pointer',display:'flex',alignItems:'center',gap:12,
               transition:'all 0.2s'}}
@@ -73,7 +73,7 @@ export default function StudentHall() {
                   padding:'2px 8px',borderRadius:20}}>{h.tag}</span>
               </div>
             </div>
-            <button onClick={e=>{e.stopPropagation();nav('/hall')}}
+            <button onClick={e=>{e.stopPropagation();nav('/games/battle')}}
               style={{background:`${p}10`,border:`1px solid ${p}30`,borderRadius:10,
                 padding:'6px 14px',color:p,fontWeight:600,fontSize:11,cursor:'pointer',flexShrink:0}}>
               Join
