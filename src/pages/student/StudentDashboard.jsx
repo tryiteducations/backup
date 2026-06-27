@@ -139,7 +139,7 @@ export default function StudentDashboard() {
   const primD   = theme?.primaryDark??'#0F2140'
 
   const txt   = isDark?'#fff':'#0F1020'
-  const muted = isDark?'rgba(255,255,255,0.45)':'#64748B'
+  const muted = isDark?'rgba(255,255,255,0.80)':'#64748B'
   const card  = isDark?'rgba(255,255,255,0.04)':'#fff'
   const bdr   = isDark?'rgba(255,255,255,0.07)':'#E2E8F0'
 
@@ -874,7 +874,7 @@ export default function StudentDashboard() {
                       fontWeight:800,fontSize:15,margin:'0 0 4px'}}>
                       Today: {todayTopic.topic_name}
                     </p>
-                    <p style={{color:'rgba(255,255,255,0.45)',fontSize:11,margin:0}}>
+                    <p style={{color:'rgba(255,255,255,0.80)',fontSize:11,margin:0}}>
                       {todayTopic.subject} · Day {launchpad.current_topic_index+1}
                     </p>
                   </div>
@@ -1196,7 +1196,7 @@ export default function StudentDashboard() {
                     fontSize:13,lineHeight:1.5,margin:'0 0 10px'}}>
                     India's semiconductor mission: 5 fabs to be operational by 2026
                   </p>
-                  <p style={{color:'rgba(255,255,255,0.45)',fontSize:10,margin:'0 0 12px',lineHeight:1.5}}>
+                  <p style={{color:'rgba(255,255,255,0.80)',fontSize:10,margin:'0 0 12px',lineHeight:1.5}}>
                     Relates to GS3 Economy, Science & Tech — appears in UPSC, SSC, IBPS
                   </p>
                   <div style={{display:'flex',alignItems:'center',gap:8}}>
