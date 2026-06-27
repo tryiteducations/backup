@@ -160,6 +160,7 @@ export default function StudentSettings() {
     ? allThemes
     : allThemes.filter(t => t.category === themeFilter)
 
+  const isAdmin = localStorage.getItem('tryit_is_admin') === 'true'
   const isUnlocked = (t) => isAdmin || t.tier === 'base' || !t.unlock
 
   const handleThemeClick = (t) => {
