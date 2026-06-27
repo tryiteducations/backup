@@ -27,7 +27,7 @@ export default function AppLayout({ children, title = 'Dashboard' }) {
       <Topbar onMenuClick={() => setSidebarOpen(true)} title={title} />
       <main
         className="lg:ml-[260px]"
-        style={{ paddingTop: '68px', minHeight: '100vh', background: 'var(--color-bg, #F8FAFC)', color: 'var(--color-text, #1E3A5F)' }}>
+        style={{ paddingTop: '68px', minHeight: '100vh', background: 'var(--color-background, #F8FAFC)', color: 'var(--color-text, #1E293B)' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto', padding: '24px 20px 40px' }}>
           {children}
         </div>

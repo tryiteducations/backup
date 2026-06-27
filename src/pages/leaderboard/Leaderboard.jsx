@@ -5,6 +5,7 @@
 // Route: /leaderboard
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTheme } from '../../context/ThemeContext'
 import { useAuth }     from '../../context/AuthContext'
 import { supabase }    from '../../lib/supabase'
 import { formatActivityText, rankEmoji, scoreMedal } from '../../components/EmojiSystem'
@@ -95,6 +96,15 @@ function Avatar({name,photoUrl,size=40,isOwner=false}){
 
 // ── MAIN LEADERBOARD ──────────────────────────────────────────────────────
 export default function Leaderboard(){
+  const { theme } = useTheme()
+  const primary = theme?.primary || '#1E3A5F'
+  const accent = theme?.accent || '#C9A84C'
+  const txt = theme?.text || '#1E293B'
+  const muted = theme?.textLight || '#64748B'
+  const bg = theme?.background || '#F8FAFC'
+  const surface = theme?.surface || '#FFFFFF'
+  const border = theme?.border || '#E2E8F0'
+
   const navigate=useNavigate()
   const{user}=useAuth()
   const[feed,setFeed]=useState(MOCK_FEED)

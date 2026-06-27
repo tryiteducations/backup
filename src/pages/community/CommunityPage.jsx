@@ -5,6 +5,7 @@
 // Accepted request → User gets pinned greeting card
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
 import { supabase } from '../../lib/supabase'
 
@@ -103,6 +104,15 @@ const MOCK_POSTS = [
 ]
 
 export default function CommunityPage() {
+  const { theme } = useTheme()
+  const primary = theme?.primary || '#1E3A5F'
+  const accent = theme?.accent || '#C9A84C'
+  const txt = theme?.text || '#1E293B'
+  const muted = theme?.textLight || '#64748B'
+  const bg = theme?.background || '#F8FAFC'
+  const surface = theme?.surface || '#FFFFFF'
+  const border = theme?.border || '#E2E8F0'
+
   const navigate = useNavigate()
   const { user } = useAuth()
 

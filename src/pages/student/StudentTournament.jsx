@@ -74,7 +74,7 @@ export default function StudentTournament() {
         {LIVE.map((l,i)=>(
           <div key={i} style={{background:p,border:'2px solid '+a+'50',
             borderRadius:18,padding:'18px',marginBottom:12,cursor:'pointer'}}
-            onClick={()=>nav('/student/tournament')}
+            onClick={()=>nav('/tournament')}
             onMouseEnter={e=>e.currentTarget.style.transform='translateY(-2px)'}
             onMouseLeave={e=>e.currentTarget.style.transform='translateY(0)'}>
 
@@ -108,7 +108,7 @@ export default function StudentTournament() {
               </div>
             </div>
 
-            <button onClick={e=>{e.stopPropagation();nav('/student/tournament')}}
+            <button onClick={e=>{e.stopPropagation();nav('/tournament')}}
               style={{background:'linear-gradient(135deg,'+a+',#E8C44A)',
                 border:'none',borderRadius:12,padding:'10px 24px',
                 color:p,fontWeight:800,fontSize:13,cursor:'pointer',
@@ -124,7 +124,7 @@ export default function StudentTournament() {
         </p>
 
         {UPCOMING.map((u,i)=>(
-          <div key={i} onClick={()=>nav('/student/tournament')}
+          <div key={i} onClick={()=>nav('/tournament')}
             style={{background:isDark?'rgba(255,255,255,0.08)':c,
               border:'1px solid '+b,borderRadius:16,padding:'16px',
               marginBottom:10,cursor:'pointer',
