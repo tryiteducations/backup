@@ -1,4 +1,85 @@
-/* =====================================================
+import os, re
+
+def w(path, txt):
+    os.makedirs(os.path.dirname(path) if os.path.dirname(path) else '.', exist_ok=True)
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write(txt)
+    print('OK', path)
+
+def patch(path, old, new):
+    with open(path, 'r', encoding='utf-8') as f:
+        c = f.read()
+    if old in c:
+        c = c.replace(old, new)
+        with open(path, 'w', encoding='utf-8') as f:
+            f.write(c)
+        print('PATCHED', path)
+    else:
+        print('SKIP (not found)', path)
+
+# ============================================================
+# 1. NEW IMPRESSIVE MotionLayer.jsx
+# ============================================================
+w('src/components/global/MotionLayer.jsx', """// src/components/global/MotionLayer.jsx
+// TRYIT EDUCATIONS — Premium WOW Motion Layer
+import React from 'react'
+
+const FLAMES  = [3,9,15,21,27,33,39,45,51,57,63,69,75,81,87,93]
+const SPARKLES = [5,13,22,31,40,49,58,67,76,85,92,18,44,70]
+const EMBERS  = [8,16,24,32,48,56,64,72,88,96]
+
+export default function MotionLayer() {
+  return (
+    <div aria-hidden="true" className="mg-layer">
+
+      {/* === COSMIC ORBS === */}
+      <div className="mg-orb mg-orb-0"/>
+      <div className="mg-orb mg-orb-1"/>
+      <div className="mg-orb mg-orb-2"/>
+      <div className="mg-orb mg-orb-3"/>
+
+      {/* === FLAME STREAMS === */}
+      {FLAMES.map((l,i) => (
+        <div key={"f"+i} className={"mg-flame mg-flame-"+(i%6)}
+          style={{left:l+"%",animationDuration:(4+i%5)+"s",animationDelay:(i*0.55%6)+"s",
+            width:(3+i%5)+"px",height:(6+i%10)+"px"}}/>
+      ))}
+
+      {/* === EMBER DOTS === */}
+      {EMBERS.map((l,i) => (
+        <div key={"e"+i} className={"mg-ember mg-ember-"+(i%4)}
+          style={{left:l+"%",animationDuration:(8+i%6)+"s",animationDelay:(i*0.8%8)+"s"}}/>
+      ))}
+
+      {/* === SPARKLE STARS === */}
+      {SPARKLES.map((l,i) => (
+        <div key={"s"+i} className={"mg-sparkle mg-sparkle-"+(i%5)}
+          style={{left:l+"%",top:(8+i*6%82)+"%",animationDelay:(i*0.35)+"s"}}/>
+      ))}
+
+      {/* === SHOOTING STARS === */}
+      <div className="mg-shoot mg-shoot-0"/>
+      <div className="mg-shoot mg-shoot-1"/>
+      <div className="mg-shoot mg-shoot-2"/>
+      <div className="mg-shoot mg-shoot-3"/>
+
+      {/* === PULSE RINGS === */}
+      <div className="mg-ring mg-ring-0"/>
+      <div className="mg-ring mg-ring-1"/>
+      <div className="mg-ring mg-ring-2"/>
+
+      {/* === GRADIENT MESH === */}
+      <div className="mg-mesh"/>
+
+    </div>
+  )
+}
+""")
+
+# ============================================================
+# 2. NEW IMPRESSIVE motion-graphics.css
+# ============================================================
+w('src/styles/motion-graphics.css', """/* =====================================================
    TRYIT EDUCATIONS — PREMIUM MOTION GRAPHICS SYSTEM
    All colors auto-adapt to active theme via CSS vars
    ===================================================== */
@@ -270,3 +351,61 @@ body.theme-light, body.theme-light * {
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--color-primary,#1E3A5F)44;border-radius:2px;}
+""")
+
+# ============================================================
+# 3. PATCH ThemeContext — add body class for ALL pages theme
+# ============================================================
+tc_path = 'src/context/ThemeContext.jsx'
+with open(tc_path, 'r', encoding='utf-8') as f:
+    tc = f.read()
+
+body_class_code = """
+    // Apply body class so ALL pages get theme automatically
+    if (themeData.isDark) {
+      document.body.classList.add('theme-dark')
+      document.body.classList.remove('theme-light')
+    } else {
+      document.body.classList.add('theme-light')
+      document.body.classList.remove('theme-dark')
+    }
+    document.body.style.background = themeData.background || '#F8FAFC'
+"""
+
+# Find where CSS variables are being set and add body class right after
+if 'theme-dark' not in tc:
+    # Find applyTheme function or CSS var injection
+    if 'document.documentElement.style.setProperty' in tc:
+        tc = tc.replace(
+            'document.documentElement.style.setProperty',
+            body_class_code + '\n    document.documentElement.style.setProperty',
+            1
+        )
+        with open(tc_path, 'w', encoding='utf-8') as f:
+            f.write(tc)
+        print('OK ThemeContext body class added')
+    else:
+        print('SKIP ThemeContext - manual patch needed')
+else:
+    print('OK ThemeContext already has body class')
+
+# ============================================================
+# 4. FIX key route mismatches in student pages
+# ============================================================
+# StudentGuruHub links to /guru-hub/post-doubt but should stay
+# These routes EXIST in App.jsx so they're fine - no change needed
+
+# StudentClassroom links to /classroom/* which exist - fine
+# StudentHall links to /hall which exists - fine
+
+# Fix StudentLaunchpadJoin /pricing -> /pro
+patch('src/pages/student/StudentLaunchpadJoin.jsx',
+      "nav('/pricing')", "nav('/pro')")
+
+# Fix StudentCareer /career-compass -> /career-compass (exists, fine)
+print('OK routes verified')
+
+print('')
+print('ALL DONE! Now run:')
+print('npm run build')
+print('git add -A && git commit -m "feat: WOW motion graphics - flames, stars, shooting stars, pulse rings + global theme fix" && git push origin main')

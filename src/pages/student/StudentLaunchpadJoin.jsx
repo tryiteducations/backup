@@ -29,7 +29,7 @@ export default function StudentLaunchpadJoin() {
             </div>
           ))}
         </div>
-        <button onClick={()=>nav('/pricing')} style={{width:'100%',
+        <button onClick={()=>nav('/pro')} style={{width:'100%',
           background:`linear-gradient(135deg,${p},${a})`,border:'none',borderRadius:16,
           padding:'16px',color:'#fff',fontWeight:800,fontSize:16,cursor:'pointer',
           boxShadow:`0 8px 24px ${p}33`,marginBottom:12}}>
