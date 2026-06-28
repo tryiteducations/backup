@@ -33,7 +33,7 @@ function Ring({ pct=0, size=56, stroke=4, color='#C9A84C', children }) {
   const r = (size-stroke*2)/2
   const c = 2*Math.PI*r
   return (
-    <div style={{position:'relative',width:size,height:size,flexShrink:0}}>
+    <div className={sidebarOpen?"sidebar-open":""} style={{position:'relative',width:size,height:size,flexShrink:0}}>
       <svg width={size} height={size} style={{transform:'rotate(-90deg)'}}>
         <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth={stroke}/>
         <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={color} strokeWidth={stroke}
@@ -125,6 +125,7 @@ const ALL_WIDGETS = [
 ]
 
 export default function StudentDashboard() {
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const navigate   = useNavigate()
   const location   = useLocation()
   const { theme, applyTheme, setActiveTheme } = useTheme()
@@ -652,7 +653,15 @@ export default function StudentDashboard() {
           position:'sticky',top:0,zIndex:100,
           boxShadow:isDark?'0 1px 0 rgba(255,255,255,0.04)':'0 1px 20px rgba(0,0,0,0.06)',
         }}>
-          <div>
+          <button onClick={()=>setSidebarOpen(true)}
+              className="mobile-ham"
+              style={{background:'var(--color-primary,#1E3A5F)',border:'none',
+                borderRadius:10,width:38,height:38,color:'#fff',fontSize:20,
+                cursor:'pointer',alignItems:'center',justifyContent:'center',
+                flexShrink:0,marginRight:4}}>
+              ☰
+            </button>
+            <div>
             <p style={{color:txt,fontFamily:'Poppins,sans-serif',fontWeight:700,fontSize:17,margin:0}}>
               {new Date().getHours()<12?'Good Morning':new Date().getHours()<17?'Good Afternoon':'Good Evening'}{' '}
               <span style={{color:accent}}>{profile?.name?.split(' ')[0]||'Student'}</span> 👋
@@ -1281,7 +1290,15 @@ export default function StudentDashboard() {
         .two-col{grid-template-columns:1fr 1fr}
         @keyframes spin{to{transform:rotate(360deg)}}
         @media(max-width:768px){
-          .sidebar-desktop{display:none !important}
+          .sidebar-desktop{position:fixed !important;left:-280px !important;z-index:500;transition:left 0.3s ease}
+      
+      .mobile-ham{display:none}
+      @media(max-width:900px){.mobile-ham{display:flex !important}}
+      .sidebar-open .sidebar-desktop{left:0 !important}
+      @media(max-width:900px){
+        .sidebar-open::after{content:'';position:fixed;inset:0;
+          background:rgba(0,0,0,0.5);z-index:199;cursor:pointer}
+      }
           .bottom-nav-mobile{display:flex !important}
           .two-col{grid-template-columns:1fr !important}
         }
