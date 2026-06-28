@@ -724,7 +724,52 @@ const UNLOCK_THEMES = [
 // Public export
 // ─────────────────────────────────────────────────────────────────
 
-export const THEME_LIST = [...BASE_THEMES, ...UNLOCK_THEMES]
+
+// ── MENTOR PROFESSIONAL THEMES ─────────────────────────────
+const MENTOR_THEMES = [
+  buildTheme({ id:'mentor-kashi-dawn',   name:'Kashi Dawn',      emoji:'🏛️',
+    category:'Mentor Light', tier:'mentor', plan:'free',
+    primary:'#92400E', primaryDark:'#78350F', accent:'#D97706', accentLight:'#FCD34D',
+    bg:'#FFFBEB', surface:'#FFFFFF', isDark:false }),
+  buildTheme({ id:'mentor-nilgiri-mist', name:'Nilgiri Mist',    emoji:'🌿',
+    category:'Mentor Light', tier:'mentor', plan:'free',
+    primary:'#065F46', primaryDark:'#064E3B', accent:'#059669', accentLight:'#6EE7B7',
+    bg:'#F0FDF4', surface:'#FFFFFF', isDark:false }),
+  buildTheme({ id:'mentor-himalayan',    name:'Himalayan Snow',  emoji:'🏔️',
+    category:'Mentor Light', tier:'mentor', plan:'free',
+    primary:'#1E40AF', primaryDark:'#1E3A8A', accent:'#3B82F6', accentLight:'#BFDBFE',
+    bg:'#EFF6FF', surface:'#FFFFFF', isDark:false }),
+  buildTheme({ id:'mentor-pearl',        name:'Pearl Classic',   emoji:'🎓',
+    category:'Mentor Light', tier:'mentor', plan:'free',
+    primary:'#1E3A5F', primaryDark:'#0F2140', accent:'#C9A84C', accentLight:'#E8C44A',
+    bg:'#F8FAFC', surface:'#FFFFFF', isDark:false }),
+  buildTheme({ id:'mentor-vedic',        name:'Vedic Scroll',    emoji:'📜',
+    category:'Mentor Light', tier:'mentor', plan:'free',
+    primary:'#3B1F08', primaryDark:'#2D1606', accent:'#B45309', accentLight:'#FDE68A',
+    bg:'#FFFBF0', surface:'#FEF9EE', isDark:false }),
+  buildTheme({ id:'mentor-midnight',     name:'Midnight Indigo', emoji:'🌌',
+    category:'Mentor Dark',  tier:'mentor', plan:'free',
+    primary:'#4338CA', primaryDark:'#3730A3', accent:'#818CF8', accentLight:'#A5B4FC',
+    bg:'#0F0F1A', surface:'#1A1A2E', isDark:true }),
+  buildTheme({ id:'mentor-graphite',     name:'Graphite Pro',    emoji:'⚙️',
+    category:'Mentor Dark',  tier:'mentor', plan:'free',
+    primary:'#4B5563', primaryDark:'#374151', accent:'#60A5FA', accentLight:'#93C5FD',
+    bg:'#111827', surface:'#1F2937', isDark:true }),
+  buildTheme({ id:'mentor-teak',         name:'Teak Forest',     emoji:'🌳',
+    category:'Mentor Dark',  tier:'mentor', plan:'free',
+    primary:'#065F46', primaryDark:'#064E3B', accent:'#34D399', accentLight:'#6EE7B7',
+    bg:'#0A1A14', surface:'#132218', isDark:true }),
+  buildTheme({ id:'mentor-navy-command', name:'Navy Command',    emoji:'⚓',
+    category:'Mentor Dark',  tier:'mentor', plan:'free',
+    primary:'#1E3A5F', primaryDark:'#0F2140', accent:'#C9A84C', accentLight:'#E8C44A',
+    bg:'#0A1628', surface:'#0F2140', isDark:true }),
+  buildTheme({ id:'mentor-obsidian',     name:'Obsidian Gold',   emoji:'✨',
+    category:'Mentor Dark',  tier:'mentor', plan:'free',
+    primary:'#1C1917', primaryDark:'#0C0A09', accent:'#D97706', accentLight:'#FCD34D',
+    bg:'#0C0A09', surface:'#1C1917', isDark:true }),
+]
+
+export const THEME_LIST = [...BASE_THEMES, ...UNLOCK_THEMES, ...MENTOR_THEMES]
 
 export const THEMES = THEME_LIST.reduce((acc, t) => {
   acc[t.id] = t
@@ -740,36 +785,3 @@ export function getTheme(id) {
 }
 
 export const BASE_THEME_IDS = BASE_THEMES.map(t => t.id)
-// ── MENTOR PROFESSIONAL THEMES (10) ─────────────────────────
-// Light × 5
-buildTheme({ id:'mentor-kashi-dawn',    name:'Kashi Dawn',      emoji:'🏛️', category:'Mentor Light', tier:'mentor', plan:'free',
-  primary:'#92400E', primaryDark:'#78350F', accent:'#D97706', accentLight:'#FCD34D',
-  bg:'#FFFBEB', surface:'#FFFFFF', isDark:false })
-buildTheme({ id:'mentor-nilgiri-mist',  name:'Nilgiri Mist',    emoji:'🌿', category:'Mentor Light', tier:'mentor', plan:'free',
-  primary:'#065F46', primaryDark:'#064E3B', accent:'#059669', accentLight:'#6EE7B7',
-  bg:'#F0FDF4', surface:'#FFFFFF', isDark:false })
-buildTheme({ id:'mentor-himalayan',     name:'Himalayan Snow',  emoji:'🏔️', category:'Mentor Light', tier:'mentor', plan:'free',
-  primary:'#1E40AF', primaryDark:'#1E3A8A', accent:'#3B82F6', accentLight:'#BFDBFE',
-  bg:'#EFF6FF', surface:'#FFFFFF', isDark:false })
-buildTheme({ id:'mentor-pearl',         name:'Pearl Classic',   emoji:'🎓', category:'Mentor Light', tier:'mentor', plan:'free',
-  primary:'#1E3A5F', primaryDark:'#0F2140', accent:'#C9A84C', accentLight:'#E8C44A',
-  bg:'#F8FAFC', surface:'#FFFFFF', isDark:false })
-buildTheme({ id:'mentor-vedic',         name:'Vedic Scroll',    emoji:'📜', category:'Mentor Light', tier:'mentor', plan:'free',
-  primary:'#3B1F08', primaryDark:'#2D1606', accent:'#B45309', accentLight:'#FDE68A',
-  bg:'#FFFBF0', surface:'#FEF9EE', isDark:false })
-// Dark × 5
-buildTheme({ id:'mentor-midnight',      name:'Midnight Indigo', emoji:'🌌', category:'Mentor Dark',  tier:'mentor', plan:'free',
-  primary:'#4338CA', primaryDark:'#3730A3', accent:'#818CF8', accentLight:'#A5B4FC',
-  bg:'#0F0F1A', surface:'#1A1A2E', isDark:true })
-buildTheme({ id:'mentor-graphite',      name:'Graphite Pro',    emoji:'⚙️', category:'Mentor Dark',  tier:'mentor', plan:'free',
-  primary:'#4B5563', primaryDark:'#374151', accent:'#60A5FA', accentLight:'#93C5FD',
-  bg:'#111827', surface:'#1F2937', isDark:true })
-buildTheme({ id:'mentor-teak',          name:'Teak Forest',     emoji:'🌳', category:'Mentor Dark',  tier:'mentor', plan:'free',
-  primary:'#065F46', primaryDark:'#064E3B', accent:'#34D399', accentLight:'#6EE7B7',
-  bg:'#0A1A14', surface:'#132218', isDark:true })
-buildTheme({ id:'mentor-navy-command',  name:'Navy Command',    emoji:'⚓', category:'Mentor Dark',  tier:'mentor', plan:'free',
-  primary:'#1E3A5F', primaryDark:'#0F2140', accent:'#C9A84C', accentLight:'#E8C44A',
-  bg:'#0A1628', surface:'#0F2140', isDark:true })
-buildTheme({ id:'mentor-obsidian',      name:'Obsidian Gold',   emoji:'✨', category:'Mentor Dark',  tier:'mentor', plan:'free',
-  primary:'#1C1917', primaryDark:'#0C0A09', accent:'#D97706', accentLight:'#FCD34D',
-  bg:'#0C0A09', surface:'#1C1917', isDark:true })

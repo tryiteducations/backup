@@ -89,7 +89,7 @@ function getUsagePeriodKey(userId, feature, period) {
 //   'ultra' → everything unlocked
 const MOCK_USER = {
   id: '4e6fcfaf-4ec5-4fc6-8047-351d8f3c82b0',
-      is_admin: true,
+      is_admin: true, is_mentor: true, is_institution: true, role: 'admin',
   name: '',
   initials: '?',
   email: localStorage.getItem('tryit_email') || '',

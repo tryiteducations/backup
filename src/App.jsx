@@ -110,6 +110,7 @@ const InstitutionRegister  = lazy(() => import('./pages/institution/InstitutionR
 const InstitutionHalls     = lazy(() => import('./pages/institution/InstitutionHalls'))
 const InstitutionMentors   = lazy(() => import('./pages/institution/InstitutionMentors'))
 const InstitutionHomework  = lazy(() => import('./pages/institution/InstitutionHomework'))
+const RoleGuard = lazy(() => import('./components/guards/RoleGuard'))
 const ExamBoard    = lazy(() => import('./pages/exam-board/ExamBoard'))
 const ExamCourses  = lazy(() => import('./pages/exam-board/ExamCourses'))
 const MentorMaterials  = lazy(() => import('./pages/mentor/MentorMaterials'))
@@ -309,22 +310,22 @@ function ThemedApp() {
 
             {/* MENTOR */}
                                     <Route path='/exam-board/:examId/courses' element={<ExamCourses/>}/>
-                        <Route path='/institution'           element={<InstitutionDashboard/>}/>
+                        <Route path='/institution'           element={<RoleGuard allowedRoles={['institution']}><InstitutionDashboard/></RoleGuard>}/>
             <Route path='/institution/register'  element={<InstitutionRegister/>}/>
-            <Route path='/institution/halls'     element={<InstitutionHalls/>}/>
-            <Route path='/institution/mentors'   element={<InstitutionMentors/>}/>
-            <Route path='/institution/homework'  element={<InstitutionHomework/>}/>
+            <Route path='/institution/halls'     element={<RoleGuard allowedRoles={['institution']}><InstitutionHalls/></RoleGuard>}/>
+            <Route path='/institution/mentors'   element={<RoleGuard allowedRoles={['institution']}><InstitutionMentors/></RoleGuard>}/>
+            <Route path='/institution/homework'  element={<RoleGuard allowedRoles={['institution']}><InstitutionHomework/></RoleGuard>}/>
             <Route path='/exam-board' element={<ExamBoard/>}/>
-            <Route path='/mentor-hub/materials'  element={<MentorMaterials/>}/>
-            <Route path='/mentor-hub/community'  element={<MentorCommunity/>}/>
-            <Route path='/mentor-hub/settings'   element={<MentorSettings/>}/>
-            <Route path='/mentor-hub/students' element={<MentorStudents/>}/>
-            <Route path='/mentor-hub/doubts'      element={<MentorDoubts/>}/>
-            <Route path='/mentor-hub/leaderboard'  element={<MentorLeaderboard/>}/>
-            <Route path="/mentor-hub"           element={<MentorHub />} />
-            <Route path="/mentor-hub/cashback"  element={<CashbackCenter />} />
-            <Route path="/mentor-hub/analytics" element={<MentorAnalytics />} />
-            <Route path="/mentor-hub/coupons"   element={<CouponManager />} />
+            <Route path='/mentor-hub/materials'  element={<RoleGuard allowedRoles={['mentor','institution']}><MentorMaterials/></RoleGuard>}/>
+            <Route path='/mentor-hub/community'  element={<RoleGuard allowedRoles={['mentor','institution']}><MentorCommunity/></RoleGuard>}/>
+            <Route path='/mentor-hub/settings'   element={<RoleGuard allowedRoles={['mentor','institution']}><MentorSettings/></RoleGuard>}/>
+            <Route path='/mentor-hub/students'   element={<RoleGuard allowedRoles={['mentor','institution']}><MentorStudents/></RoleGuard>}/>
+            <Route path='/mentor-hub/doubts'     element={<RoleGuard allowedRoles={['mentor','institution']}><MentorDoubts/></RoleGuard>}/>
+            <Route path='/mentor-hub/leaderboard' element={<RoleGuard allowedRoles={['mentor','institution']}><MentorLeaderboard/></RoleGuard>}/>
+            <Route path="/mentor-hub"            element={<RoleGuard allowedRoles={['mentor','institution']}><MentorHub/></RoleGuard>}/>
+            <Route path="/mentor-hub/cashback"   element={<RoleGuard allowedRoles={['mentor','institution']}><CashbackCenter/></RoleGuard>}/>
+            <Route path="/mentor-hub/analytics"  element={<RoleGuard allowedRoles={['mentor','institution']}><MentorAnalytics/></RoleGuard>}/>
+            <Route path="/mentor-hub/coupons"    element={<RoleGuard allowedRoles={['mentor','institution']}><CouponManager/></RoleGuard>}/>
 
             {/* EQUITY */}
             <Route path="/equity"             element={<EquityTierSelector />} />

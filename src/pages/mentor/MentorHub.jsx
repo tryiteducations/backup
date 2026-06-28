@@ -94,7 +94,7 @@ export default function MentorHub() {
     setUploadExam('')
   }
 
-  const Sidebar = () => (
+  const sidebarJSX = (
     <div style={{
       width: 220,
       background: p,
@@ -181,7 +181,7 @@ export default function MentorHub() {
     <div style={{minHeight:'100vh',background:bg,fontFamily:'Poppins,sans-serif',
       display:'flex'}}>
 
-      <Sidebar/>
+      {sidebarJSX}
 
       {/* Mobile overlay */}
       {isMobile && sidebarOpen && (
