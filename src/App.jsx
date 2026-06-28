@@ -127,13 +127,6 @@ const AccessibilityMode  = lazy(() => import('./pages/accessibility/Accessibilit
 const SchoolCircle       = lazy(() => import('./pages/circles/SchoolCircle'))
 const SisterhoodCircle   = lazy(() => import('./pages/circles/SisterhoodCircle'))
 const LiveImpactTracker  = lazy(() => import('./pages/impact/LiveImpactTracker'))
-const CentreLogin        = lazy(() => import('./pages/centre/CentreLogin'))
-const CentreOnboarding   = lazy(() => import('./pages/centre/CentreOnboarding'))
-const CentreDashboard    = lazy(() => import('./pages/centre/CentreDashboard'))
-const CentreAnalytics    = lazy(() => import('./pages/centre/CentreAnalytics'))
-const ConductTest        = lazy(() => import('./pages/centre/ConductTest'))
-const StudentDetail      = lazy(() => import('./pages/centre/StudentDetail'))
-const StudentHistory     = lazy(() => import('./pages/centre/StudentHistory'))
 const ParentLogin        = lazy(() => import('./pages/parent/ParentLogin'))
 const ParentOnboarding   = lazy(() => import('./pages/parent/ParentOnboarding'))
 const ParentDashboard    = lazy(() => import('./pages/parent/ParentDashboard'))
@@ -310,7 +303,16 @@ function ThemedApp() {
 
             {/* MENTOR */}
                                     <Route path='/exam-board/:examId/courses' element={<ExamCourses/>}/>
-                        <Route path='/institution'           element={<RoleGuard allowedRoles={['institution']}><InstitutionDashboard/></RoleGuard>}/>
+                        {/* CENTRE → INSTITUTION REDIRECTS */}
+            <Route path="/centre/dashboard"  element={<Navigate to="/institution" replace/>}/>
+            <Route path="/centre/login"      element={<Navigate to="/institution/register" replace/>}/>
+            <Route path="/centre/onboarding" element={<Navigate to="/onboarding" replace/>}/>
+            <Route path="/centre/analytics"  element={<Navigate to="/institution" replace/>}/>
+            <Route path="/centre/conduct-test" element={<Navigate to="/institution/exams" replace/>}/>
+            <Route path="/centre/students"   element={<Navigate to="/institution/students" replace/>}/>
+            <Route path="/centre"            element={<Navigate to="/institution" replace/>}/>
+
+            <Route path='/institution'           element={<RoleGuard allowedRoles={['institution']}><InstitutionDashboard/></RoleGuard>}/>
             <Route path='/institution/register'  element={<InstitutionRegister/>}/>
             <Route path='/institution/halls'     element={<RoleGuard allowedRoles={['institution']}><InstitutionHalls/></RoleGuard>}/>
             <Route path='/institution/mentors'   element={<RoleGuard allowedRoles={['institution']}><InstitutionMentors/></RoleGuard>}/>
@@ -336,14 +338,6 @@ function ThemedApp() {
             <Route path="/impact"             element={<LiveImpactTracker />} />
             <Route path="/donate"             element={<Stub title="Donation Page ðŸ’›" />} />
 
-            {/* CENTRE */}
-            <Route path="/centre/login"        element={<CentreLogin />} />
-            <Route path="/centre/onboarding"   element={<CentreOnboarding />} />
-            <Route path="/centre/dashboard"    element={<CentreDashboard />} />
-            <Route path="/centre/analytics"    element={<CentreAnalytics />} />
-            <Route path="/centre/conduct-test" element={<ConductTest />} />
-            <Route path="/centre/students/:id" element={<StudentDetail />} />
-            <Route path="/centre/students"     element={<StudentHistory />} />
 
             {/* PARENT */}
             <Route path="/parent/login"         element={<ParentLogin />} />
