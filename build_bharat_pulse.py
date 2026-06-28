@@ -1,4 +1,16 @@
-// src/pages/bharat-pulse/BharatPulse.jsx
+import os, re
+
+def w(path, txt):
+    d = os.path.dirname(path)
+    if d: os.makedirs(d, exist_ok=True)
+    with open(path, 'w', encoding='utf-8') as f:
+        f.write(txt)
+    print('OK', path)
+
+# ============================================================
+# 1. BHARAT PULSE — Premium rebuild, all roles, landing + app
+# ============================================================
+w('src/pages/bharat-pulse/BharatPulse.jsx', r"""// src/pages/bharat-pulse/BharatPulse.jsx
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
@@ -595,3 +607,201 @@ export default function BharatPulse() {
     </div>
   )
 }
+""")
+
+# ============================================================
+# 2. Add audio/video upload to InstitutionDashboard
+# ============================================================
+try:
+    with open('src/pages/institution/InstitutionDashboard.jsx', 'r', encoding='utf-8') as f:
+        dash = f.read()
+
+    # Add audio/video state after existing state declarations
+    if 'uploadTab' not in dash:
+        dash = dash.replace(
+            "  const [sidebarOpen, setSidebarOpen] = useState(false)",
+            """  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [uploadTab, setUploadTab] = useState('audio')
+  const [uploadTitle, setUploadTitle] = useState('')
+  const [audioFile, setAudioFile] = useState(null)
+  const [videoFile, setVideoFile] = useState(null)
+  const [uploading, setUploading] = useState(false)
+  const [uploads, setUploads] = useState([])"""
+        )
+
+        # Add audio/video section before closing div of main content
+        audio_video_jsx = """
+          {/* ── AUDIO / VIDEO UPLOAD ── */}
+          <div style={{background:c,border:'1px solid '+b,borderRadius:18,
+            overflow:'hidden',marginTop:20}}>
+            <div style={{padding:'14px 16px',borderBottom:'1px solid '+b,
+              display:'flex',gap:8}}>
+              {['audio','video'].map(tab=>(
+                <button key={tab} onClick={()=>setUploadTab(tab)}
+                  style={{padding:'7px 18px',border:'none',cursor:'pointer',
+                    fontFamily:'Poppins,sans-serif',fontWeight:700,fontSize:13,
+                    borderRadius:10,
+                    background:uploadTab===tab?'linear-gradient(135deg,'+p+','+a+')':'transparent',
+                    color:uploadTab===tab?'#fff':m}}>
+                  {tab==='audio'?'🎙️ Audio':'🎬 Video'}
+                  {tab==='video'&&(
+                    <span style={{background:'#8B5CF6',color:'#fff',fontSize:8,
+                      fontWeight:700,padding:'1px 6px',borderRadius:10,marginLeft:6}}>
+                      Monthly only
+                    </span>
+                  )}
+                </button>
+              ))}
+              <span style={{marginLeft:'auto',color:m,fontSize:11,alignSelf:'center'}}>
+                {uploadTab==='audio'?'Expires in 7 days':'Expires in 48 hours'}
+              </span>
+            </div>
+            <div style={{padding:'16px'}}>
+              <input value={uploadTitle} onChange={e=>setUploadTitle(e.target.value)}
+                placeholder={uploadTab==='audio'?'Audio title e.g. UPSC Polity Lecture 5':'Video title e.g. SSC Maths shortcuts'}
+                style={{width:'100%',padding:'10px 12px',borderRadius:10,
+                  border:'1.5px solid '+b,background:bg,color:t,
+                  fontSize:13,outline:'none',fontFamily:'Poppins,sans-serif',
+                  boxSizing:'border-box',marginBottom:10}}/>
+              <div style={{border:'2px dashed '+(
+                (uploadTab==='audio'?audioFile:videoFile)?a:b),
+                borderRadius:12,padding:'20px',textAlign:'center',
+                cursor:'pointer',background:bg,marginBottom:10}}
+                onClick={()=>document.getElementById('inst-upload-'+uploadTab).click()}>
+                <input id={'inst-upload-'+uploadTab} type="file"
+                  accept={uploadTab==='audio'?'audio/*':'video/*'}
+                  style={{display:'none'}}
+                  onChange={e=>{
+                    const f=e.target.files[0]
+                    uploadTab==='audio'?setAudioFile(f):setVideoFile(f)
+                  }}/>
+                <div style={{fontSize:28,marginBottom:6}}>
+                  {uploadTab==='audio'?'🎙️':'🎬'}
+                </div>
+                {(uploadTab==='audio'?audioFile:videoFile)?(
+                  <p style={{color:a,fontWeight:700,fontSize:13,margin:0}}>
+                    {(uploadTab==='audio'?audioFile:videoFile).name}
+                  </p>
+                ):(
+                  <p style={{color:m,fontSize:12,margin:0}}>
+                    Tap to select {uploadTab} file
+                  </p>
+                )}
+              </div>
+              <button
+                onClick={async()=>{
+                  const f=uploadTab==='audio'?audioFile:videoFile
+                  if(!f||!uploadTitle.trim()) return
+                  setUploading(true)
+                  await new Promise(r=>setTimeout(r,1200))
+                  const exp=new Date(Date.now()+(uploadTab==='audio'?7:2)*24*60*60*1000)
+                  setUploads(prev=>[{
+                    id:Date.now(),title:uploadTitle,type:uploadTab,
+                    size:(f.size/1024/1024).toFixed(1)+'MB',
+                    expires:exp.toLocaleDateString('en-IN'),
+                    downloads:0,
+                  },...prev])
+                  setUploading(false);setUploadTitle('')
+                  setAudioFile(null);setVideoFile(null)
+                }}
+                disabled={!(uploadTab==='audio'?audioFile:videoFile)||!uploadTitle.trim()||uploading}
+                style={{width:'100%',
+                  background:((uploadTab==='audio'?audioFile:videoFile)&&uploadTitle.trim()&&!uploading)
+                    ?'linear-gradient(135deg,'+p+','+a+')':b,
+                  border:'none',borderRadius:12,padding:'12px',
+                  color:((uploadTab==='audio'?audioFile:videoFile)&&uploadTitle.trim())
+                    ?'#fff':m,
+                  fontWeight:700,fontSize:13,cursor:'pointer'}}>
+                {uploading?'Uploading...':uploadTab==='audio'?'🎙️ Upload Audio':'🎬 Upload Video'}
+              </button>
+            </div>
+            {uploads.length>0&&(
+              <div style={{borderTop:'1px solid '+b,padding:'12px 16px'}}>
+                {uploads.map((u,i)=>(
+                  <div key={i} style={{display:'flex',alignItems:'center',
+                    gap:8,padding:'8px 0',borderBottom:i<uploads.length-1?'1px solid '+b:'none'}}>
+                    <span style={{fontSize:18}}>{u.type==='audio'?'🎙️':'🎬'}</span>
+                    <div style={{flex:1}}>
+                      <p style={{color:t,fontWeight:600,fontSize:12,margin:'0 0 2px'}}>{u.title}</p>
+                      <p style={{color:m,fontSize:10,margin:0}}>{u.size} · Expires {u.expires}</p>
+                    </div>
+                    <span style={{color:'#22C55E',fontSize:11,fontWeight:700}}>
+                      {u.downloads} downloads
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>"""
+
+        # Insert before final height div
+        dash = dash.replace(
+            "<div style={{height:40}}/>",
+            audio_video_jsx + "\n          <div style={{height:40}}/>",
+            1
+        )
+
+        with open('src/pages/institution/InstitutionDashboard.jsx', 'w', encoding='utf-8') as f:
+            f.write(dash)
+        print('OK Institution audio/video upload added')
+    else:
+        print('SKIP audio/video already in InstitutionDashboard')
+
+except Exception as e:
+    print('ERROR InstitutionDashboard audio/video:', e)
+
+# ============================================================
+# 3. Fix duplicate bell in institution topbar
+# ============================================================
+try:
+    with open('src/pages/institution/InstitutionDashboard.jsx', 'r', encoding='utf-8') as f:
+        dash = f.read()
+
+    # Count bell occurrences
+    bell_count = dash.count('🔔')
+    print(f'Bell count in InstitutionDashboard: {bell_count}')
+
+    if bell_count > 1:
+        # Remove first occurrence of standalone bell button
+        import re
+        # Find and deduplicate - keep only one bell in header
+        dash = re.sub(
+            r'<button style=\{\{position:\'relative\'[^}]+\}\}[^>]*>\s*🔔[^<]*<span[^/]*/>[^<]*</button>\s*',
+            '',
+            dash,
+            count=1
+        )
+        with open('src/pages/institution/InstitutionDashboard.jsx', 'w', encoding='utf-8') as f:
+            f.write(dash)
+        print('OK duplicate bell removed')
+
+except Exception as e:
+    print('ERROR bell fix:', e)
+
+# ============================================================
+# 4. Update App.jsx - Add bharat-pulse route accessible to all
+# ============================================================
+try:
+    with open('src/App.jsx', 'r', encoding='utf-8') as f:
+        app = f.read()
+
+    if 'BharatPulse' not in app:
+        app = app.replace(
+            "const ExamBoard",
+            "const BharatPulse = lazy(() => import('./pages/bharat-pulse/BharatPulse'))\nconst ExamBoard"
+        )
+        app = app.replace(
+            "<Route path='/exam-board'",
+            "<Route path='/bharat-pulse' element={<BharatPulse/>}/>\n            <Route path='/exam-board'"
+        )
+        with open('src/App.jsx', 'w', encoding='utf-8') as f:
+            f.write(app)
+        print('OK BharatPulse route added to App.jsx')
+    else:
+        print('SKIP BharatPulse already in App.jsx')
+
+except Exception as e:
+    print('ERROR App.jsx:', e)
+
+print('\nALL DONE!')
+print('Run: npm run build 2>&1 | Select-Object -Last 3')

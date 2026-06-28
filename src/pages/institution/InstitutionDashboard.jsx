@@ -47,6 +47,12 @@ export default function InstitutionDashboard() {
   const b = theme?.border||'#E2E8F0'
 
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [uploadTab, setUploadTab] = useState('audio')
+  const [uploadTitle, setUploadTitle] = useState('')
+  const [audioFile, setAudioFile] = useState(null)
+  const [videoFile, setVideoFile] = useState(null)
+  const [uploading, setUploading] = useState(false)
+  const [uploads, setUploads] = useState([])
   const [isMobile, setIsMobile] = useState(window.innerWidth < 900)
 
   useEffect(() => {
@@ -150,13 +156,6 @@ export default function InstitutionDashboard() {
               875 students · 4 halls · 6 mentors
             </p>
           </div>
-          <button style={{position:'relative',background:'transparent',
-            border:'1px solid '+b,borderRadius:10,padding:'7px 12px',
-            color:t,fontSize:13,cursor:'pointer'}}>
-            🔔
-            <span style={{position:'absolute',top:4,right:4,width:7,height:7,
-              borderRadius:'50%',background:'#EF4444',border:'1.5px solid '+c}}/>
-          </button>
           <div style={{display:'flex',alignItems:'center',gap:8}}>
             <button onClick={()=>nav('/mentor-hub/settings')}
               style={{background:'transparent',border:'1px solid '+b,
@@ -289,6 +288,109 @@ export default function InstitutionDashboard() {
                 </p>
               </button>
             ))}
+          </div>
+          
+          {/* ── AUDIO / VIDEO UPLOAD ── */}
+          <div style={{background:c,border:'1px solid '+b,borderRadius:18,
+            overflow:'hidden',marginTop:20}}>
+            <div style={{padding:'14px 16px',borderBottom:'1px solid '+b,
+              display:'flex',gap:8}}>
+              {['audio','video'].map(tab=>(
+                <button key={tab} onClick={()=>setUploadTab(tab)}
+                  style={{padding:'7px 18px',border:'none',cursor:'pointer',
+                    fontFamily:'Poppins,sans-serif',fontWeight:700,fontSize:13,
+                    borderRadius:10,
+                    background:uploadTab===tab?'linear-gradient(135deg,'+p+','+a+')':'transparent',
+                    color:uploadTab===tab?'#fff':m}}>
+                  {tab==='audio'?'🎙️ Audio':'🎬 Video'}
+                  {tab==='video'&&(
+                    <span style={{background:'#8B5CF6',color:'#fff',fontSize:8,
+                      fontWeight:700,padding:'1px 6px',borderRadius:10,marginLeft:6}}>
+                      Monthly only
+                    </span>
+                  )}
+                </button>
+              ))}
+              <span style={{marginLeft:'auto',color:m,fontSize:11,alignSelf:'center'}}>
+                {uploadTab==='audio'?'Expires in 7 days':'Expires in 48 hours'}
+              </span>
+            </div>
+            <div style={{padding:'16px'}}>
+              <input value={uploadTitle} onChange={e=>setUploadTitle(e.target.value)}
+                placeholder={uploadTab==='audio'?'Audio title e.g. UPSC Polity Lecture 5':'Video title e.g. SSC Maths shortcuts'}
+                style={{width:'100%',padding:'10px 12px',borderRadius:10,
+                  border:'1.5px solid '+b,background:bg,color:t,
+                  fontSize:13,outline:'none',fontFamily:'Poppins,sans-serif',
+                  boxSizing:'border-box',marginBottom:10}}/>
+              <div style={{border:'2px dashed '+(
+                (uploadTab==='audio'?audioFile:videoFile)?a:b),
+                borderRadius:12,padding:'20px',textAlign:'center',
+                cursor:'pointer',background:bg,marginBottom:10}}
+                onClick={()=>document.getElementById('inst-upload-'+uploadTab).click()}>
+                <input id={'inst-upload-'+uploadTab} type="file"
+                  accept={uploadTab==='audio'?'audio/*':'video/*'}
+                  style={{display:'none'}}
+                  onChange={e=>{
+                    const f=e.target.files[0]
+                    uploadTab==='audio'?setAudioFile(f):setVideoFile(f)
+                  }}/>
+                <div style={{fontSize:28,marginBottom:6}}>
+                  {uploadTab==='audio'?'🎙️':'🎬'}
+                </div>
+                {(uploadTab==='audio'?audioFile:videoFile)?(
+                  <p style={{color:a,fontWeight:700,fontSize:13,margin:0}}>
+                    {(uploadTab==='audio'?audioFile:videoFile).name}
+                  </p>
+                ):(
+                  <p style={{color:m,fontSize:12,margin:0}}>
+                    Tap to select {uploadTab} file
+                  </p>
+                )}
+              </div>
+              <button
+                onClick={async()=>{
+                  const f=uploadTab==='audio'?audioFile:videoFile
+                  if(!f||!uploadTitle.trim()) return
+                  setUploading(true)
+                  await new Promise(r=>setTimeout(r,1200))
+                  const exp=new Date(Date.now()+(uploadTab==='audio'?7:2)*24*60*60*1000)
+                  setUploads(prev=>[{
+                    id:Date.now(),title:uploadTitle,type:uploadTab,
+                    size:(f.size/1024/1024).toFixed(1)+'MB',
+                    expires:exp.toLocaleDateString('en-IN'),
+                    downloads:0,
+                  },...prev])
+                  setUploading(false);setUploadTitle('')
+                  setAudioFile(null);setVideoFile(null)
+                }}
+                disabled={!(uploadTab==='audio'?audioFile:videoFile)||!uploadTitle.trim()||uploading}
+                style={{width:'100%',
+                  background:((uploadTab==='audio'?audioFile:videoFile)&&uploadTitle.trim()&&!uploading)
+                    ?'linear-gradient(135deg,'+p+','+a+')':b,
+                  border:'none',borderRadius:12,padding:'12px',
+                  color:((uploadTab==='audio'?audioFile:videoFile)&&uploadTitle.trim())
+                    ?'#fff':m,
+                  fontWeight:700,fontSize:13,cursor:'pointer'}}>
+                {uploading?'Uploading...':uploadTab==='audio'?'🎙️ Upload Audio':'🎬 Upload Video'}
+              </button>
+            </div>
+            {uploads.length>0&&(
+              <div style={{borderTop:'1px solid '+b,padding:'12px 16px'}}>
+                {uploads.map((u,i)=>(
+                  <div key={i} style={{display:'flex',alignItems:'center',
+                    gap:8,padding:'8px 0',borderBottom:i<uploads.length-1?'1px solid '+b:'none'}}>
+                    <span style={{fontSize:18}}>{u.type==='audio'?'🎙️':'🎬'}</span>
+                    <div style={{flex:1}}>
+                      <p style={{color:t,fontWeight:600,fontSize:12,margin:'0 0 2px'}}>{u.title}</p>
+                      <p style={{color:m,fontSize:10,margin:0}}>{u.size} · Expires {u.expires}</p>
+                    </div>
+                    <span style={{color:'#22C55E',fontSize:11,fontWeight:700}}>
+                      {u.downloads} downloads
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           <div style={{height:40}}/>
         </div>
