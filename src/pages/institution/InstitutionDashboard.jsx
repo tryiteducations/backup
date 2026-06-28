@@ -9,11 +9,7 @@ const NAV = [
   {icon:'🏛️', label:'Halls',      path:'/institution/halls'},
   {icon:'👨‍🏫', label:'Mentors',    path:'/institution/mentors'},
   {icon:'📚', label:'Homework',   path:'/institution/homework'},
-  {icon:'📋', label:'Exams',      path:'/institution/exams'},
-  {icon:'👥', label:'Students',   path:'/institution/students'},
-  {icon:'💰', label:'Revenue',    path:'/institution/revenue'},
-  {icon:'📋', label:'Exam Board',  path:'/exam-board'},
-  {icon:'⚙️', label:'Settings',   path:'/institution/settings'},
+  {icon:'📋', label:'Exam Board', path:'/exam-board'},
 ]
 
 const STATS = [
@@ -161,12 +157,26 @@ export default function InstitutionDashboard() {
             <span style={{position:'absolute',top:4,right:4,width:7,height:7,
               borderRadius:'50%',background:'#EF4444',border:'1.5px solid '+c}}/>
           </button>
-          <button onClick={()=>nav('/institution/halls')}
-            style={{background:'linear-gradient(135deg,'+p+','+a+')',
-              border:'none',borderRadius:12,padding:'9px 18px',
-              color:'#fff',fontWeight:700,fontSize:13,cursor:'pointer'}}>
-            + New Hall
-          </button>
+          <div style={{display:'flex',alignItems:'center',gap:8}}>
+            <button onClick={()=>nav('/mentor-hub/settings')}
+              style={{background:'transparent',border:'1px solid '+b,
+                borderRadius:10,padding:'7px 12px',color:t,fontSize:13,cursor:'pointer'}}>
+              🎨
+            </button>
+            <button style={{position:'relative',background:'transparent',
+              border:'1px solid '+b,borderRadius:10,padding:'7px 12px',
+              color:t,fontSize:13,cursor:'pointer'}}>
+              🔔
+              <span style={{position:'absolute',top:4,right:4,width:7,height:7,
+                borderRadius:'50%',background:'#EF4444',border:'1.5px solid '+c}}/>
+            </button>
+            <button onClick={()=>nav('/institution/halls')}
+              style={{background:'linear-gradient(135deg,'+p+','+a+')',
+                border:'none',borderRadius:12,padding:'9px 18px',
+                color:'#fff',fontWeight:700,fontSize:13,cursor:'pointer'}}>
+              + New Hall
+            </button>
+          </div>
         </div>
 
         <div style={{padding:'20px',maxWidth:1100,margin:'0 auto'}}>
