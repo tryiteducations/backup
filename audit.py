@@ -1,44 +1,55 @@
-﻿import os, re
+﻿import os
 
-pages_dir = 'src/pages'
-print("=== APPLAYOUT PAGES (show old sidebar) ===")
-for root, dirs, files in os.walk(pages_dir):
-    for f in files:
-        if not f.endswith('.jsx'): continue
-        path = os.path.join(root, f)
-        with open(path, 'r', encoding='utf-8', errors='ignore') as fp:
-            c = fp.read()
-        rel = path.replace('src\\pages\\','').replace('src/pages/','')
-        if 'AppLayout' in c:
-            print('  LAYOUT: ' + rel)
+print("=== INSTITUTION FILES ===")
+inst_dir = 'src/pages/institution'
+if os.path.exists(inst_dir):
+    for f in os.listdir(inst_dir):
+        size = os.path.getsize(os.path.join(inst_dir, f))
+        print(f"  {f} — {size} bytes")
+else:
+    print("  DIRECTORY MISSING!")
 
-print("")
-print("=== STUDENT PAGES WITHOUT THEME ===")
-for root, dirs, files in os.walk('src/pages/student'):
-    for f in files:
-        if not f.endswith('.jsx'): continue
-        path = os.path.join(root, f)
-        with open(path, 'r', encoding='utf-8', errors='ignore') as fp:
-            c = fp.read()
-        if 'useTheme' not in c:
-            print('  NO_THEME: ' + f)
+with open('src/App.jsx', 'r', encoding='utf-8') as f:
+    app = f.read()
 
-print("")
-print("=== KEY PAGES WITHOUT THEME ===")
-key = ['src/pages/pricing/PricingPage.jsx','src/pages/referral/ReferralPage.jsx',
-       'src/pages/wallet/WalletPage.jsx','src/pages/analytics/Analytics.jsx',
-       'src/pages/achievements/Achievements.jsx','src/pages/leaderboard/Leaderboard.jsx',
-       'src/pages/tournament/TournamentHub.jsx','src/pages/tournament/Tournaments.jsx',
-       'src/pages/hall/BattleArena.jsx','src/pages/hall/HallHome.jsx',
-       'src/pages/hall/HallLeaderboard.jsx','src/pages/mentor/MentorHub.jsx',
-       'src/pages/community/CommunityPage.jsx','src/pages/exams/AllExams.jsx',
-       'src/pages/current-affairs/CurrentAffairs.jsx']
-for p in key:
-    try:
-        with open(p,'r',encoding='utf-8',errors='ignore') as fp:
-            c = fp.read()
-        themed = 'YES' if 'useTheme' in c else 'NO '
-        layout = ' +APPLAYOUT' if 'AppLayout' in c else ''
-        print('  '+themed+layout+': '+p.split('/')[-1])
-    except:
-        print('  MISSING: '+p.split('/')[-1])
+print("\n=== APP.JSX INSTITUTION ROUTES ===")
+for l in app.split('\n'):
+    if 'institution' in l.lower():
+        print(' ', l.strip())
+
+print("\n=== APP.JSX MENTOR ROUTES ===")
+for l in app.split('\n'):
+    if 'mentor-hub' in l.lower():
+        print(' ', l.strip())
+
+print("\n=== KEY FILES CHECK ===")
+checks = [
+    'src/components/guards/RoleGuard.jsx',
+    'src/pages/mentor/MentorHub.jsx',
+    'src/pages/exam-board/ExamBoard.jsx',
+    'src/pages/institution/InstitutionDashboard.jsx',
+    'src/pages/institution/InstitutionHalls.jsx',
+    'src/pages/institution/InstitutionMentors.jsx',
+    'src/pages/institution/InstitutionHomework.jsx',
+    'src/pages/institution/InstitutionRegister.jsx',
+]
+for p in checks:
+    exists = os.path.exists(p)
+    size = os.path.getsize(p) if exists else 0
+    print(f"  {'OK' if exists else 'MISSING'} {p} ({size}b)")
+
+with open('src/lib/themes.js', 'r', encoding='utf-8') as f:
+    t = f.read()
+print("\n=== THEMES STATUS ===")
+print('  MENTOR_THEMES array:', 'const MENTOR_THEMES = [' in t)
+print('  In THEME_LIST:', '...MENTOR_THEMES' in t)
+idx_m = t.find('const MENTOR_THEMES')
+idx_e = t.find('export const THEMES')
+print('  Before THEMES export:', idx_m != -1 and idx_m < idx_e)
+
+with open('src/pages/mentor/MentorHub.jsx', 'r', encoding='utf-8') as f:
+    hub = f.read()
+print("\n=== MENTORHUB STATUS ===")
+print('  sidebarJSX inline:', 'sidebarJSX' in hub)
+print('  Sidebar component:', 'const Sidebar = () =>' in hub)
+print('  Logout:', 'logout' in hub.lower() or 'Logout' in hub)

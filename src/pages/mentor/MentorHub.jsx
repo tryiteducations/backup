@@ -15,6 +15,7 @@ const NAV = [
   {icon:'📊', label:'Analytics',    path:'/mentor-hub/analytics'},
   {icon:'🎟️', label:'Coupons',      path:'/mentor-hub/coupons'},
   {icon:'👥', label:'Community',    path:'/mentor-hub/community'},
+  {icon:'📋', label:'Exam Board',    path:'/exam-board'},
   {icon:'⚙️', label:'Settings',     path:'/mentor-hub/settings'},
 ]
 
@@ -174,6 +175,13 @@ export default function MentorHub() {
           ← Student View
         </button>
       </div>
+          <button onClick={()=>nav('/login')}
+            style={{width:'100%',marginTop:6,background:'rgba(239,68,68,0.15)',
+              border:'1px solid rgba(239,68,68,0.25)',borderRadius:10,
+              padding:'8px',color:'#FCA5A5',fontSize:11,
+              cursor:'pointer',fontWeight:600,fontFamily:'Poppins,sans-serif'}}>
+            Logout
+          </button>
     </div>
   )
 

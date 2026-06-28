@@ -96,7 +96,7 @@ const NAV = [
   {id:'bookmarks', icon:'🔖',label:'Bookmarks',   path:'/student/bookmarks'},
   {id:'pulse',     icon:'🇮🇳',label:'Bharat Pulse',path:'/student/pulse'},
   {id:'analytics', icon:'📊',label:'Analytics',   path:'/student/analytics'},
-  {id:'career',    icon:'🧭',label:'Career AI',   path:'/student/career'},
+  {id:'career',    icon:'🧭',label:'Career AI', examBoard: true,   path:'/student/career'},
   {id:'community', icon:'💬',label:'Community',   path:'/student/community'},
 ]
 
@@ -814,7 +814,7 @@ export default function StudentDashboard() {
                   {icon:'📚',label:'Classroom',sub:'PDFs & Notes',color:'#FB923C',path:'/student/classroom'},
                   {icon:'🏟️',label:'Tournament',sub:'Compete live',color:'#F87171',path:'/student/tournament'},
                   {icon:'🔖',label:'Bookmarks',sub:'Saved items',color:'#34D399',path:'/student/bookmarks'},
-                  {icon:'🧭',label:'Career AI',sub:'Best exam for you',color:'#60A5FA',path:'/student/career'},
+                  {icon:'🧭',label:'Career AI', examBoard: true,sub:'Best exam for you',color:'#60A5FA',path:'/student/career'},
                 ].map((a,i)=>{
                   const used=usage?.[`${a.limit}_today`]||0
                   const atLimit=plan==='free'&&a.limit&&used>=FREE_LIMITS[a.limit]

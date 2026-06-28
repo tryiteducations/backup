@@ -89,22 +89,7 @@ function getUsagePeriodKey(userId, feature, period) {
 //   'ultra' → everything unlocked
 const MOCK_USER = {
   id: '4e6fcfaf-4ec5-4fc6-8047-351d8f3c82b0',
-      is_admin: true, is_mentor: true, is_institution: true, role: 'admin',
-  name: '',
-  initials: '?',
-  email: localStorage.getItem('tryit_email') || '',
-  state: 'Tamil Nadu',
-  city: 'Coimbatore',
-  role: 'admin',
-  xp: 0, xpToNext: 500, coins: 0, streak: 0, streakFreezes: 2,
-  level: 1, levelTitle: 'The Fierce One', levelEmoji: '🔥',
-  isPro: false, plan: 'free',   // ← change 'free' to 'pro' or 'ultra' to test
-  userId: '4e6fcfaf-4ec5-4fc6-8047-351d8f3c82b0', joinDate: 'June 2026',
-  rank: null, testsCompleted: 0, avgScore: null,
-  studyHours: '0h', guruPoints: 0,
-  exams: [],
-  subjects: [],
-}
+      is_admin: true, is_mentor: true, is_institution: true, role: 'admin'}
 
 const IS_DEV = true
 

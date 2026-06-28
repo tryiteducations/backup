@@ -12,6 +12,7 @@ const NAV = [
   {icon:'📋', label:'Exams',      path:'/institution/exams'},
   {icon:'👥', label:'Students',   path:'/institution/students'},
   {icon:'💰', label:'Revenue',    path:'/institution/revenue'},
+  {icon:'📋', label:'Exam Board',  path:'/exam-board'},
   {icon:'⚙️', label:'Settings',   path:'/institution/settings'},
 ]
 
@@ -61,7 +62,7 @@ export default function InstitutionDashboard() {
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
-  const Sidebar = () => (
+  const sidebarJSX = (
     <div style={{
       width:220, background:p, minHeight:'100vh',
       position:'fixed', top:0,
@@ -116,12 +117,19 @@ export default function InstitutionDashboard() {
           Switch to student view →
         </p>
       </div>
+          <button onClick={()=>nav('/login')}
+            style={{width:'100%',marginTop:6,background:'rgba(239,68,68,0.15)',
+              border:'1px solid rgba(239,68,68,0.25)',borderRadius:10,
+              padding:'8px',color:'#FCA5A5',fontSize:11,
+              cursor:'pointer',fontWeight:600,fontFamily:'Poppins,sans-serif'}}>
+            Logout
+          </button>
     </div>
   )
 
   return (
     <div style={{minHeight:'100vh',background:bg,fontFamily:'Poppins,sans-serif',display:'flex'}}>
-      <Sidebar/>
+      {sidebarJSX}
       {isMobile && sidebarOpen && (
         <div onClick={()=>setSidebarOpen(false)}
           style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.5)',zIndex:199}}/>
