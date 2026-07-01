@@ -149,9 +149,10 @@ const BASE_THEMES = [
   // ══════════════════════════════════════════
 
   buildTheme({
-    id: 'default', name: 'TryIT Classic', emoji: '🎓', category: 'Base', tier: 'base', plan: 'free',
-    primary: '#1E3A5F', primaryDark: '#0F2140',
-    accent: '#C9A84C', accentLight: '#E8C44A',
+    id: 'default', name: 'Vidya Indigo', emoji: '🎓', category: 'Base', tier: 'base', plan: 'free',
+    primary: '#2D1B69', primaryDark: '#1A0D3D',
+    accent: '#F59E0B', accentLight: '#FCD34D',
+    bg: '#FFFFFF', surface: '#FAFAFA', isDark: false,
     bg: '#F8FAFC', surface: '#FFFFFF', isDark: false,
   }),
   buildTheme({

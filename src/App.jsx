@@ -211,8 +211,8 @@ function ThemedApp() {
             <AnimatePresence mode="wait">
               <Routes>
                 {/* AUTH */}
-                <Route path="/"            element={<Splash />} />
-                <Route path="/landing"     element={<Landing />} />
+                <Route path="/"            element={<Landing />} />
+                <Route path="/landing"     element={<Navigate to="/" replace/>} />
                 <Route path="/login"       element={<Login />} />
                 <Route path="/onboarding"  element={<Onboarding />} />
                 <Route path="/role-select" element={<RoleSelect />} />

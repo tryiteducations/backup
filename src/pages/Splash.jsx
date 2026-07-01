@@ -6,7 +6,7 @@ import { useAuth, onboardingKey } from '../context/AuthContext'
 const ROLE_HOME = {
   student: '/dashboard',
   mentor: '/mentor-hub',
-  institution: '/centre/dashboard',
+  institution: '/institution',
   family: '/family',
 }
 
