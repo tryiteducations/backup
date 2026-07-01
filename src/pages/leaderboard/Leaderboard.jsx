@@ -239,7 +239,7 @@ export default function Leaderboard(){
             )}
 
             {/* Ranking formula note */}
-            <div style={{background:'#F8FAFC',borderRadius:10,padding:'8px 12px',marginBottom:12,border:'1px solid #E2E8F0'}}>
+            <div style={{background:'var(--color-bg,#F8FAFC)',borderRadius:10,padding:'8px 12px',marginBottom:12,border:'1px solid #E2E8F0'}}>
               <p style={{fontSize:10,color:'#94A3B8',margin:0,lineHeight:1.6}}>
                 📊 Rank = Accuracy×40% + Speed×25% + Streak×20% + Volume×10% + Recency×5%<br/>
                 Tournament rank uses exact exam marking scheme (SSC: +2/-0.5, UPSC: +2/-0.67 etc.)
@@ -295,7 +295,7 @@ export default function Leaderboard(){
               <div key={item.feed_id} style={{background:'#fff',borderRadius:12,padding:'12px 14px',marginBottom:8,border:'1.5px solid #E2E8F0',display:'flex',alignItems:'flex-start',gap:10}}>
                 <span style={{fontSize:20,flexShrink:0}}>{emoji}</span>
                 <div style={{flex:1}}>
-                  <p style={{fontSize:12,color:'#1E293B',margin:'0 0 2px',lineHeight:1.5}}>
+                  <p style={{fontSize:12,color:'var(--color-text,#1E293B)',margin:'0 0 2px',lineHeight:1.5}}>
                     <strong>{item.user_name}</strong> from <strong>{item.user_state||'India'}</strong> {text}
                   </p>
                   <p style={{fontSize:10,color:'#94A3B8',margin:0}}>{ago<1?'Just now':ago<60?`${ago}m ago`:`${Math.round(ago/60)}h ago`}</p>

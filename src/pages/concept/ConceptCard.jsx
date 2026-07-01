@@ -331,7 +331,7 @@ export default function ConceptCard() {
             {concept.real_world_examples?.map((ex, i) => (
               <div key={i} style={{ background:'#F0F9FF', borderRadius:12, padding:'12px 14px', marginBottom:8, borderLeft:`3px solid #0891B2` }}>
                 <p style={{ fontSize:11, fontWeight:700, color:'#0891B2', marginBottom:3 }}>{ex.context}</p>
-                <p style={{ fontSize:13, color:'#1E293B' }}>{ex.example}</p>
+                <p style={{ fontSize:13, color:'var(--color-text,#1E293B)' }}>{ex.example}</p>
               </div>
             ))}
           </div>
@@ -342,10 +342,10 @@ export default function ConceptCard() {
           <div>
             <div style={{ background:'#EDE9FE', borderRadius:12, padding:14, marginBottom:14 }}>
               <p style={{ fontSize:11, fontWeight:700, color:'#7C3AED', marginBottom:4 }}>DEFINITION</p>
-              <p style={{ fontSize:14, color:'#1E293B', lineHeight:1.7 }}>{concept.definition}</p>
+              <p style={{ fontSize:14, color:'var(--color-text,#1E293B)', lineHeight:1.7 }}>{concept.definition}</p>
             </div>
             {concept.formula && (
-              <div style={{ background:'#1E3A5F', borderRadius:12, padding:14, marginBottom:14, textAlign:'center' }}>
+              <div style={{ background:'var(--color-primary,#1E3A5F)', borderRadius:12, padding:14, marginBottom:14, textAlign:'center' }}>
                 <p style={{ fontSize:11, color:'rgba(255,255,255,0.6)', marginBottom:4 }}>FORMULA</p>
                 <p style={{ fontSize:16, fontWeight:700, color:'#C9A84C', fontFamily:'monospace' }}>{concept.formula}</p>
               </div>
@@ -368,8 +368,8 @@ export default function ConceptCard() {
             {concept.worked_examples?.map((ex, i) => (
               <div key={i} style={{ marginBottom:16 }}>
                 <p style={{ fontSize:11, fontWeight:700, color:'#059669', marginBottom:6 }}>{ex.title}</p>
-                <div style={{ background:'#F8FAFC', border:'1.5px solid #E2E8F0', borderRadius:12, padding:14 }}>
-                  <p style={{ fontSize:13, fontWeight:600, color:'#1E293B', marginBottom:10 }}>Q: {ex.problem}</p>
+                <div style={{ background:'var(--color-bg,#F8FAFC)', border:'1.5px solid #E2E8F0', borderRadius:12, padding:14 }}>
+                  <p style={{ fontSize:13, fontWeight:600, color:'var(--color-text,#1E293B)', marginBottom:10 }}>Q: {ex.problem}</p>
                   <div style={{ display:'flex', flexDirection:'column', gap:4, marginBottom:10 }}>
                     {ex.steps.map((step, j) => (
                       <div key={j} style={{ display:'flex', gap:8, alignItems:'flex-start' }}>
@@ -380,7 +380,7 @@ export default function ConceptCard() {
                   </div>
                   <p style={{ fontSize:13, fontWeight:700, color:'#059669' }}>✅ Answer: {ex.answer}</p>
                   {ex.insight && (
-                    <p style={{ fontSize:11, color:'#6B7280', marginTop:6, fontStyle:'italic', borderTop:'1px solid #E5E7EB', paddingTop:6 }}>
+                    <p style={{ fontSize:11, color:'var(--color-text-light,#6B7280)', marginTop:6, fontStyle:'italic', borderTop:'1px solid #E5E7EB', paddingTop:6 }}>
                       💡 {ex.insight}
                     </p>
                   )}
@@ -409,14 +409,14 @@ export default function ConceptCard() {
               <p style={{ fontSize:14, color:'#78350F', lineHeight:1.7 }}>{concept.mnemonic}</p>
             </div>
             {concept.shortcuts?.map((s, i) => (
-              <div key={i} style={{ background:'#F8FAFC', borderRadius:12, padding:12, marginBottom:8, borderLeft:'3px solid #D97706' }}>
+              <div key={i} style={{ background:'var(--color-bg,#F8FAFC)', borderRadius:12, padding:12, marginBottom:8, borderLeft:'3px solid #D97706' }}>
                 <p style={{ fontSize:13, fontWeight:700, color:'#92400E', marginBottom:4 }}>⚡ {s.trick}</p>
                 <p style={{ fontSize:11, color:'#94A3B8', marginBottom:4 }}>When: {s.condition}</p>
                 <p style={{ fontSize:12, color:'#059669', fontFamily:'monospace' }}>e.g. {s.example}</p>
               </div>
             ))}
             {concept.visual_pattern && (
-              <div style={{ background:'#1E3A5F', borderRadius:12, padding:14, textAlign:'center' }}>
+              <div style={{ background:'var(--color-primary,#1E3A5F)', borderRadius:12, padding:14, textAlign:'center' }}>
                 <pre style={{ color:'#C9A84C', fontFamily:'monospace', fontSize:14, margin:0 }}>
                   {concept.visual_pattern}
                 </pre>
@@ -430,7 +430,7 @@ export default function ConceptCard() {
           <div>
             <div style={{ background:'linear-gradient(135deg,#FDF2F8,#FCE7F3)', border:'1.5px solid #F9A8D4', borderRadius:16, padding:16, marginBottom:12 }}>
               <p style={{ fontSize:11, fontWeight:700, color:'#BE185D', marginBottom:8 }}>📖 STORY TO REMEMBER</p>
-              <p style={{ fontSize:14, color:'#1E293B', lineHeight:1.9 }}>{concept.story}</p>
+              <p style={{ fontSize:14, color:'var(--color-text,#1E293B)', lineHeight:1.9 }}>{concept.story}</p>
             </div>
             {concept.story_moral && (
               <div style={{ background:'#F0FDF4', border:'1.5px solid #BBF7D0', borderRadius:12, padding:12 }}>
@@ -486,7 +486,7 @@ export default function ConceptCard() {
                       {p.frequency}
                     </span>
                     <div>
-                      <p style={{ fontSize:12, fontWeight:600, color:'#1E293B' }}>{p.pattern}</p>
+                      <p style={{ fontSize:12, fontWeight:600, color:'var(--color-text,#1E293B)' }}>{p.pattern}</p>
                       <p style={{ fontSize:11, color:'#94A3B8' }}>e.g. {p.example}</p>
                     </div>
                   </div>
@@ -628,7 +628,7 @@ export default function ConceptCard() {
           <button
             onClick={() => goToLayer(Math.max(0, activeLayer-1))}
             disabled={activeLayer === 0}
-            style={{ padding:'10px 18px', border:'1.5px solid #E2E8F0', borderRadius:10, fontSize:13, color:'#64748B', background:'#fff', cursor:activeLayer===0?'not-allowed':'pointer', opacity:activeLayer===0?0.4:1 }}>
+            style={{ padding:'10px 18px', border:'1.5px solid #E2E8F0', borderRadius:10, fontSize:13, color:'var(--color-text-light,#64748B)', background:'#fff', cursor:activeLayer===0?'not-allowed':'pointer', opacity:activeLayer===0?0.4:1 }}>
             ← Prev Layer
           </button>
           {activeLayer < LAYERS.length - 1 ? (

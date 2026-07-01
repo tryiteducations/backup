@@ -27,8 +27,8 @@ export function getMedal(score,maxScore){
 export const ANSWER_FEEDBACK={
   correct:    {emoji:'✅',label:'Correct!',         color:'#059669',subtext:'Great job!'},
   incorrect:  {emoji:'📚',label:'Learn from this',  color:'#D97706',subtext:'Check the explanation'},
-  skipped:    {emoji:'⏭️',label:'Skipped',          color:'#64748B',subtext:'You can come back'},
-  unattempted:{emoji:'⬜',label:'Not attempted',    color:'#64748B',subtext:'No marks deducted'},
+  skipped:    {emoji:'⏭️',label:'Skipped',          color:'var(--color-text-light,#64748B)',subtext:'You can come back'},
+  unattempted:{emoji:'⬜',label:'Not attempted',    color:'var(--color-text-light,#64748B)',subtext:'No marks deducted'},
 }
 
 export function getAnswerFeedback(isCorrect,isSkipped=false){
@@ -113,7 +113,7 @@ export function encouragement(pct){
 }
 
 export const PLAN_BADGES={
-  free: {emoji:'🆓',label:'Free', bg:'#F1F5F9',color:'#64748B'},
+  free: {emoji:'🆓',label:'Free', bg:'#F1F5F9',color:'var(--color-text-light,#64748B)'},
   pro:  {emoji:'⭐',label:'Pro',  bg:'#DBEAFE',color:'#1D4ED8'},
   ultra:{emoji:'🏆',label:'Ultra',bg:'#FFF7E6',color:'#92400E'},
 }

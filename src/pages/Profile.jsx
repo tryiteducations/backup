@@ -31,7 +31,7 @@ export default function Profile() {
   const xpPct      = user?.xpToNext > 0 ? Math.round(((user?.xp||0) / user?.xpToNext) * 100) : 0
 
   const PLAN_DISPLAY = {
-    free:  { label:'Free Plan',            color:'#64748B', bg:'#F1F5F9',  emoji:'🆓' },
+    free:  { label:'Free Plan',            color:'var(--color-text-light,#64748B)', bg:'#F1F5F9',  emoji:'🆓' },
     pro:   { label:'Pro Member',           color:'#1D4ED8', bg:'#EFF6FF',  emoji:'⭐' },
     ultra: { label:'Ultra Member ✨',      color:'#92400E', bg:'#FFF7E6',  emoji:'🏆' },
   }
@@ -213,7 +213,7 @@ export default function Profile() {
                 style={{ background:'#fff', borderRadius:14, padding:'12px 14px', marginBottom:8, border:'1.5px solid #E2E8F0', cursor:'pointer', display:'flex', alignItems:'center', gap:12 }}>
                 <span style={{ fontSize:24, flexShrink:0 }}>{exam.icon}</span>
                 <div style={{ flex:1 }}>
-                  <p style={{ fontSize:13, fontWeight:700, color:'#1E293B', margin:'0 0 4px' }}>{exam.name}</p>
+                  <p style={{ fontSize:13, fontWeight:700, color:'var(--color-text,#1E293B)', margin:'0 0 4px' }}>{exam.name}</p>
                   <div style={{ height:4, background:'#E2E8F0', borderRadius:99, overflow:'hidden' }}>
                     <div style={{ height:'100%', width:`${exam.readiness}%`, background:exam.readiness>=70?GREEN:GOLD, borderRadius:99 }} />
                   </div>
@@ -223,7 +223,7 @@ export default function Profile() {
               </div>
             ))}
             <button onClick={() => navigate('/exams')}
-              style={{ width:'100%', padding:'12px', background:BG, color:'#64748B', border:'1.5px solid #E2E8F0', borderRadius:12, fontSize:13, cursor:'pointer', fontWeight:600 }}>
+              style={{ width:'100%', padding:'12px', background:BG, color:'var(--color-text-light,#64748B)', border:'1.5px solid #E2E8F0', borderRadius:12, fontSize:13, cursor:'pointer', fontWeight:600 }}>
               + Enroll in More Exams
             </button>
           </div>
@@ -232,7 +232,7 @@ export default function Profile() {
         {/* ACHIEVEMENTS TAB */}
         {tab === 'achievements' && (
           <div>
-            <p style={{ fontSize:12, color:'#64748B', marginBottom:14 }}>
+            <p style={{ fontSize:12, color:'var(--color-text-light,#64748B)', marginBottom:14 }}>
               Earned: {ACHIEVEMENTS.filter(a=>a.earned).length}/{ACHIEVEMENTS.length} badges
             </p>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>

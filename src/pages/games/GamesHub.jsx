@@ -63,7 +63,7 @@ const MOCK_CATALOG = [
 ]
 
 const TIER_INFO = {
-  free:  { label:'Free',  badge:'🆓', color:'#64748B' },
+  free:  { label:'Free',  badge:'🆓', color:'var(--color-text-light,#64748B)' },
   pro:   { label:'Pro',   badge:'⭐', color:'#1D4ED8' },
   ultra: { label:'Ultra', badge:'🏆', color:'#92400E' },
 }
@@ -231,7 +231,7 @@ export default function GamesHub(){
         {/* FREE TIER */}
         {grouped.free.length > 0 && (
           <div style={{ marginBottom:20 }}>
-            <p style={{ fontSize:12, fontWeight:800, color:'#64748B', marginBottom:10 }}>🆓 FREE - Available to Everyone</p>
+            <p style={{ fontSize:12, fontWeight:800, color:'var(--color-text-light,#64748B)', marginBottom:10 }}>🆓 FREE - Available to Everyone</p>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
               {grouped.free.map(g => <GameCard key={g.game_id} game={g} canPlay onPlay={() => handlePlay(g)} />)}
             </div>

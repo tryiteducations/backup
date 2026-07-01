@@ -254,7 +254,7 @@ export default function SmartExamSearch({ onSelect, placeholder, showPopular = t
             style={{ width:'100%', padding:'12px 14px 12px 40px', borderRadius:14,
               border:`2px solid ${open ? GOLD : '#E2E8F0'}`,
               fontSize:14, outline:'none', background:'#fff', boxSizing:'border-box',
-              transition:'border-color 0.2s', color:'#1E293B' }}
+              transition:'border-color 0.2s', color:'var(--color-text,#1E293B)' }}
           />
           {/* Loading spinner */}
           {loading && (
@@ -278,7 +278,7 @@ export default function SmartExamSearch({ onSelect, placeholder, showPopular = t
         <button
           onClick={() => {/* TODO: open state picker */}}
           style={{ padding:'0 14px', borderRadius:12, border:'2px solid #E2E8F0', background:'#fff',
-            fontSize:12, fontWeight:600, color:'#64748B', cursor:'pointer', whiteSpace:'nowrap' }}>
+            fontSize:12, fontWeight:600, color:'var(--color-text-light,#64748B)', cursor:'pointer', whiteSpace:'nowrap' }}>
           {stateFilter || 'All States'} ▾
         </button>
       </div>
@@ -325,7 +325,7 @@ export default function SmartExamSearch({ onSelect, placeholder, showPopular = t
                     cursor:'pointer', borderBottom:'1px solid #F8FAFC' }}>
                   <span style={{ fontSize:16, flexShrink:0 }}>{CAT_ICONS[exam.category] || '📋'}</span>
                   <div>
-                    <p style={{ fontSize:13, fontWeight:600, color:'#1E293B', margin:0 }}>{exam.name}</p>
+                    <p style={{ fontSize:13, fontWeight:600, color:'var(--color-text,#1E293B)', margin:0 }}>{exam.name}</p>
                     <p style={{ fontSize:11, color:'#94A3B8', margin:0 }}>{exam.category?.replace(/_/g,' ')}</p>
                   </div>
                 </button>
@@ -352,11 +352,11 @@ export default function SmartExamSearch({ onSelect, placeholder, showPopular = t
                     {CAT_ICONS[exam.category] || '📋'}
                   </span>
                   <div style={{ flex:1 }}>
-                    <p style={{ fontSize:13, fontWeight:600, color:'#1E293B', margin:0 }}>
+                    <p style={{ fontSize:13, fontWeight:600, color:'var(--color-text,#1E293B)', margin:0 }}>
                       {highlightMatch(exam.exam_name || exam.name, query)}
                     </p>
                     <p style={{ fontSize:11, color:'#94A3B8', margin:'2px 0 0' }}>
-                      {exam.short_name && <span style={{ color:'#64748B', fontWeight:600 }}>{exam.short_name} · </span>}
+                      {exam.short_name && <span style={{ color:'var(--color-text-light,#64748B)', fontWeight:600 }}>{exam.short_name} · </span>}
                       {exam.category?.replace(/_/g,' ')}
                       {exam.state_code && ` · ${exam.state_code}`}
                     </p>
@@ -391,11 +391,11 @@ export default function SmartExamSearch({ onSelect, placeholder, showPopular = t
 
           {/* "Exam not listed?" - always show at bottom when typing */}
           {query.length >= 2 && results.length > 0 && (
-            <div style={{ padding:'10px 14px', borderTop:'1px solid #F1F5F9', background:'#FAFAFA' }}>
+            <div style={{ padding:'10px 14px', borderTop:'1px solid #F1F5F9', background:'var(--color-surface,#FAFAFA)' }}>
               <button
                 onClick={() => { setOpen(false); setShowNotListed(true) }}
                 style={{ display:'flex', alignItems:'center', gap:8, background:'none',
-                  border:'none', cursor:'pointer', color:'#64748B', fontSize:12, fontWeight:600 }}>
+                  border:'none', cursor:'pointer', color:'var(--color-text-light,#64748B)', fontSize:12, fontWeight:600 }}>
                 <span style={{ fontSize:16 }}>➕</span>
                 Don't see your exam? Tell us - we'll add it within 48 hours
               </button>
@@ -476,7 +476,7 @@ function ExamNotListedModal({ initialName, onClose, userId }) {
   const S = {
     inp: { width:'100%', padding:'10px 13px', borderRadius:10, border:'1.5px solid #E2E8F0',
            fontSize:13, outline:'none', boxSizing:'border-box', background:'#fff', marginBottom:10 },
-    lbl: { display:'block', fontSize:11, fontWeight:700, color:'#64748B', marginBottom:4 },
+    lbl: { display:'block', fontSize:11, fontWeight:700, color:'var(--color-text-light,#64748B)', marginBottom:4 },
   }
 
   return (

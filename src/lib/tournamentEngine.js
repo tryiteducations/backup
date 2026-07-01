@@ -22,7 +22,7 @@ const JITTER_MAX   = 45 * 60 * 1000     // 45 minutes maximum
 // -- MEDAL SYSTEM (no negative language) ----------------------------------
 export const MEDALS = {
   gold:    { emoji:'🥇', label:'Gold',    minPct:90, color:'#D97706' },
-  silver:  { emoji:'🥈', label:'Silver',  minPct:75, color:'#64748B' },
+  silver:  { emoji:'🥈', label:'Silver',  minPct:75, color:'var(--color-text-light,#64748B)' },
   bronze:  { emoji:'🥉', label:'Bronze',  minPct:60, color:'#92400E' },
   growing: { emoji:'📈', label:'Growing', minPct:45, color:'#0891B2' },
   seedling:{ emoji:'🌱', label:'Seedling',minPct:0,  color:'#059669' },

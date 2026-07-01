@@ -33,9 +33,9 @@ const EXAM_TAGS = [
 ]
 
 const S = {
-  card:   { background:'#F8FAFC', borderRadius:16, padding:16, border:'1.5px solid #E2E8F0', marginBottom:12 },
+  card:   { background:'var(--color-bg,#F8FAFC)', borderRadius:16, padding:16, border:'1.5px solid #E2E8F0', marginBottom:12 },
   inp:    { width:'100%', padding:'10px 12px', borderRadius:10, border:'1.5px solid #E2E8F0', fontSize:13, outline:'none', boxSizing:'border-box', marginBottom:10, background:'#fff' },
-  lbl:    { display:'block', fontSize:11, fontWeight:700, color:'#64748B', marginBottom:4 },
+  lbl:    { display:'block', fontSize:11, fontWeight:700, color:'var(--color-text-light,#64748B)', marginBottom:4 },
   btn:    { background:NAVY, color:'#fff', border:'none', borderRadius:10, padding:'10px 20px', fontWeight:700, fontSize:13, cursor:'pointer' },
   btnSm:  { background:'#EFF6FF', color:NAVY, border:'1.5px solid #BFDBFE', borderRadius:8, padding:'6px 12px', fontWeight:600, fontSize:11, cursor:'pointer' },
   btnRed: { background:'#FEE2E2', color:'#991B1B', border:'none', borderRadius:8, padding:'6px 12px', fontWeight:600, fontSize:11, cursor:'pointer' },
@@ -107,7 +107,7 @@ export default function CurrentAffairsManager() {
   }
 
   return (
-    <div style={{ minHeight:'100vh', background:'#F8FAFC', fontFamily:'Poppins,sans-serif' }}>
+    <div style={{ minHeight:'100vh', background:'var(--color-bg,#F8FAFC)', fontFamily:'Poppins,sans-serif' }}>
       {/* Header */}
       <div style={{ background:`linear-gradient(135deg,${NAVY},#0F2140)`, padding:'16px 20px',
         display:'flex', justifyContent:'space-between', alignItems:'center' }}>
@@ -206,7 +206,7 @@ function PostTab({ setSaveMsg, saveMsg, setMaterials }) {
   return (
     <div>
       <h2 style={{ color:NAVY, fontSize:18, fontWeight:800, marginBottom:4 }}>Post New Material</h2>
-      <p style={{ color:'#64748B', fontSize:13, marginBottom:20 }}>
+      <p style={{ color:'var(--color-text-light,#64748B)', fontSize:13, marginBottom:20 }}>
         This will be visible to students immediately (or on the publish date you set).
       </p>
 
@@ -297,7 +297,7 @@ function PostTab({ setSaveMsg, saveMsg, setMaterials }) {
               <p style={{ fontWeight:700, color:NAVY, fontSize:14, margin:0 }}>
                 {form.is_pinned && '📌 '}{form.title}
               </p>
-              <p style={{ fontSize:11, color:'#64748B', margin:'2px 0 0' }}>
+              <p style={{ fontSize:11, color:'var(--color-text-light,#64748B)', margin:'2px 0 0' }}>
                 {form.subtitle && `${form.subtitle} · `}
                 {form.source} · {form.publish_date}
                 {form.relevant_for !== 'all' && ` · ${form.relevant_for.toUpperCase()} only`}
@@ -336,7 +336,7 @@ function ScheduleTab() {
   return (
     <div>
       <h2 style={{ color:NAVY, fontSize:18, fontWeight:800, marginBottom:4 }}>Upcoming Schedule</h2>
-      <p style={{ color:'#64748B', fontSize:13, marginBottom:20 }}>
+      <p style={{ color:'var(--color-text-light,#64748B)', fontSize:13, marginBottom:20 }}>
         Materials scheduled for future dates. They auto-publish at midnight on the publish date.
       </p>
 
@@ -363,7 +363,7 @@ function ScheduleTab() {
                 </div>
                 <div style={{ flex:1 }}>
                   <p style={{ fontWeight:700, color:NAVY, fontSize:13, margin:0 }}>{m.title}</p>
-                  <p style={{ fontSize:11, color:'#64748B', margin:'2px 0 0' }}>
+                  <p style={{ fontSize:11, color:'var(--color-text-light,#64748B)', margin:'2px 0 0' }}>
                     {m.publish_date} · {m.source || 'No source'}
                   </p>
                 </div>
@@ -407,12 +407,12 @@ function ListTab({ materials, loading, filter, setFilter, dateRange, setDateRang
         <input type="date" style={{ padding:'8px 10px', borderRadius:8, border:'1.5px solid #E2E8F0', fontSize:11 }}
           value={dateRange.from} onChange={e => setDateRange(p=>({...p,from:e.target.value}))}
           placeholder="From date" />
-        <span style={{ alignSelf:'center', color:'#64748B', fontSize:12 }}>to</span>
+        <span style={{ alignSelf:'center', color:'var(--color-text-light,#64748B)', fontSize:12 }}>to</span>
         <input type="date" style={{ padding:'8px 10px', borderRadius:8, border:'1.5px solid #E2E8F0', fontSize:11 }}
           value={dateRange.to} onChange={e => setDateRange(p=>({...p,to:e.target.value}))} />
       </div>
 
-      <p style={{ fontSize:12, color:'#64748B', marginBottom:12 }}>
+      <p style={{ fontSize:12, color:'var(--color-text-light,#64748B)', marginBottom:12 }}>
         Showing {filtered.length} materials
       </p>
 
@@ -435,7 +435,7 @@ function ListTab({ materials, loading, filter, setFilter, dateRange, setDateRang
               <p style={{ fontWeight:700, color:NAVY, fontSize:13, margin:0 }}>
                 {m.is_pinned && '📌 '}{m.title}
               </p>
-              <p style={{ fontSize:11, color:'#64748B', margin:'2px 0 0' }}>
+              <p style={{ fontSize:11, color:'var(--color-text-light,#64748B)', margin:'2px 0 0' }}>
                 {m.publish_date} · {m.source || '-'} · {m.relevant_for}
               </p>
               <p style={{ fontSize:10, color:'#94A3B8', margin:'1px 0 0' }}>
@@ -503,7 +503,7 @@ function AnalyticsTab() {
             <p style={{ fontWeight:900, color:NAVY, fontSize:22, margin:'0 0 4px' }}>
               {s.value.toLocaleString('en-IN')}
             </p>
-            <p style={{ fontSize:11, color:'#64748B', margin:0 }}>{s.label}</p>
+            <p style={{ fontSize:11, color:'var(--color-text-light,#64748B)', margin:0 }}>{s.label}</p>
           </div>
         ))}
       </div>

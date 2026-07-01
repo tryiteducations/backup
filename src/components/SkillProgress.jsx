@@ -33,9 +33,9 @@ export default function SkillProgress({ compact = false }) {
   )
 
   if (skills.length === 0) return (
-    <div style={{ background:'#F8FAFC', borderRadius:14, padding:16, border:'1.5px dashed #E2E8F0', textAlign:'center' }}>
+    <div style={{ background:'var(--color-bg,#F8FAFC)', borderRadius:14, padding:16, border:'1.5px dashed #E2E8F0', textAlign:'center' }}>
       <p style={{ fontSize:24, marginBottom:6 }}>📊</p>
-      <p style={{ fontSize:12, color:'#64748B', margin:0, lineHeight:1.6 }}>
+      <p style={{ fontSize:12, color:'var(--color-text-light,#64748B)', margin:0, lineHeight:1.6 }}>
         Play more tournaments and tests to unlock your real skill improvement chart.<br/>
         We only show genuine before/after comparisons - never fake numbers.
       </p>
@@ -63,7 +63,7 @@ export default function SkillProgress({ compact = false }) {
             marginBottom:8, border:'1.5px solid #E2E8F0' }}>
             <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:8 }}>
               <div>
-                <p style={{ fontSize:13, fontWeight:700, color:'#1E293B', margin:'0 0 2px' }}>{skill.topic_code}</p>
+                <p style={{ fontSize:13, fontWeight:700, color:'var(--color-text,#1E293B)', margin:'0 0 2px' }}>{skill.topic_code}</p>
                 <span style={{ fontSize:9, fontWeight:600, padding:'1px 7px', borderRadius:99, background:`${color}15`, color }}>
                   {skill.subject}
                 </span>

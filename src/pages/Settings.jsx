@@ -24,13 +24,13 @@ export default function Settings() {
         <div style={{ display:'flex', alignItems:'center', gap:14, padding:'12px 0', borderBottom:'1px solid #F8FAFC' }}>
           <span style={{ color:'var(--color-muted, #64748B)', fontSize:14, flex:1 }}>Email</span>
           <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-            <span style={{ color:'#1E293B', fontSize:14, fontWeight:600 }}>{user?.email}</span>
+            <span style={{ color:'var(--color-text,#1E293B)', fontSize:14, fontWeight:600 }}>{user?.email}</span>
             <span style={{ background:'var(--color-bg-muted-2, #F1F5F9)', color:'var(--color-muted, #64748B)', fontSize:10, padding:'2px 8px', borderRadius:20 }}>🔒 Locked</span>
           </div>
         </div>
         <div style={{ display:'flex', alignItems:'center', gap:14, padding:'12px 0', borderBottom:'1px solid #F8FAFC' }}>
           <span style={{ color:'var(--color-muted, #64748B)', fontSize:14, flex:1 }}>TryIT ID</span>
-          <span style={{ color:'#1E293B', fontSize:13, fontFamily:'monospace', fontWeight:600 }}>{user?.userId}</span>
+          <span style={{ color:'var(--color-text,#1E293B)', fontSize:13, fontFamily:'monospace', fontWeight:600 }}>{user?.userId}</span>
         </div>
         <div style={{ display:'flex', alignItems:'center', gap:14, padding:'12px 0' }}>
           <span style={{ color:'var(--color-muted, #64748B)', fontSize:14, flex:1 }}>Role</span>
@@ -82,7 +82,7 @@ export default function Settings() {
         ].map(n => (
           <div key={n.key} style={{ display:'flex', alignItems:'center', justifyContent:'space-between', padding:'11px 0', borderBottom:'1px solid #F8FAFC' }}>
             <div>
-              <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:600, color:'#1E293B', fontSize:14 }}>{n.label}</p>
+              <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:600, color:'var(--color-text,#1E293B)', fontSize:14 }}>{n.label}</p>
               <p style={{ color:'#94A3B8', fontSize:12, marginTop:2 }}>{n.desc}</p>
             </div>
             <button role="switch" aria-checked={notif[n.key]}

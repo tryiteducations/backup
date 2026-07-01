@@ -158,10 +158,10 @@ export default function TestLauncher() {
               )}
               <span style={{ fontSize:22, flexShrink:0 }}>{m.emoji}</span>
               <div style={{ flex:1 }}>
-                <p style={{ fontSize:14, fontWeight:700, color:mode===m.id?m.color:'#1E293B', margin:0 }}>
+                <p style={{ fontSize:14, fontWeight:700, color:mode===m.id?m.color:'var(--color-text,#1E293B)', margin:0 }}>
                   {m.label}
                 </p>
-                <p style={{ fontSize:11, color:'#64748B', margin:'2px 0 0', lineHeight:1.4 }}>
+                <p style={{ fontSize:11, color:'var(--color-text-light,#64748B)', margin:'2px 0 0', lineHeight:1.4 }}>
                   {m.desc}
                 </p>
               </div>
@@ -239,7 +239,7 @@ export default function TestLauncher() {
         {/* TOPIC TAB */}
         {tab === 'topic' && (
           <div>
-            <p style={{ fontSize:11, color:'#64748B', marginTop:12, marginBottom:10 }}>
+            <p style={{ fontSize:11, color:'var(--color-text-light,#64748B)', marginTop:12, marginBottom:10 }}>
               Quick topic-wise practice - 20 questions, instant feedback:
             </p>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8 }}>
@@ -250,7 +250,7 @@ export default function TestLauncher() {
                     cursor:'pointer', textAlign:'left' }}>
                   <span style={{ fontSize:20 }}>{t.emoji}</span>
                   <div>
-                    <p style={{ fontSize:12, fontWeight:700, color:'#1E293B', margin:0 }}>{t.name}</p>
+                    <p style={{ fontSize:12, fontWeight:700, color:'var(--color-text,#1E293B)', margin:0 }}>{t.name}</p>
                     <p style={{ fontSize:10, color:'#94A3B8', margin:0 }}>{t.subject}</p>
                   </div>
                 </button>
@@ -262,7 +262,7 @@ export default function TestLauncher() {
         {/* EXAM TAB */}
         {tab === 'exam' && (
           <div>
-            <p style={{ fontSize:11, color:'#64748B', marginTop:12, marginBottom:10 }}>
+            <p style={{ fontSize:11, color:'var(--color-text-light,#64748B)', marginTop:12, marginBottom:10 }}>
               Your enrolled exams - full mock with PYQ-aligned weightage:
             </p>
             {enrolled.map(exam => (
@@ -272,7 +272,7 @@ export default function TestLauncher() {
                   <div style={{ display:'flex', alignItems:'center', gap:10 }}>
                     <span style={{ fontSize:20 }}>{exam.icon}</span>
                     <div>
-                      <p style={{ fontSize:13, fontWeight:700, color:'#1E293B', margin:0 }}>{exam.name}</p>
+                      <p style={{ fontSize:13, fontWeight:700, color:'var(--color-text,#1E293B)', margin:0 }}>{exam.name}</p>
                       <p style={{ fontSize:10, color:'#94A3B8', margin:0 }}>PYQ-aligned · 10% stricter time</p>
                     </div>
                   </div>
@@ -285,7 +285,7 @@ export default function TestLauncher() {
               </div>
             ))}
             <button onClick={() => navigate('/exams')}
-              style={{ width:'100%', padding:'12px', background:'#F1F5F9', color:'#64748B',
+              style={{ width:'100%', padding:'12px', background:'#F1F5F9', color:'var(--color-text-light,#64748B)',
                 border:'1.5px solid #E2E8F0', borderRadius:12, fontSize:13, cursor:'pointer', fontWeight:600 }}>
               + Enroll in More Exams
             </button>
@@ -311,8 +311,8 @@ export default function TestLauncher() {
                   <div style={{ display:'flex', alignItems:'center', gap:10 }}>
                     <span style={{ fontSize:20 }}>{exam.icon}</span>
                     <div>
-                      <p style={{ fontSize:13, fontWeight:700, color:'#1E293B', margin:0 }}>{exam.name}</p>
-                      <p style={{ fontSize:10, color:'#64748B', margin:0 }}>PYQ 2019-2024 · 500+ questions</p>
+                      <p style={{ fontSize:13, fontWeight:700, color:'var(--color-text,#1E293B)', margin:0 }}>{exam.name}</p>
+                      <p style={{ fontSize:10, color:'var(--color-text-light,#64748B)', margin:0 }}>PYQ 2019-2024 · 500+ questions</p>
                     </div>
                   </div>
                   <button onClick={() => startPYQ(exam.id)}

@@ -58,7 +58,7 @@ export default function ProfilePage() {
 
           <div style={{ marginBottom:16 }}>
             <label style={{ display:'block', fontSize:13, fontWeight:600, color:'#475569', marginBottom:6 }}>Email</label>
-            <input value={user.email} readOnly style={{ width:'100%', padding:'10px 14px', borderRadius:12, border:'1.5px solid var(--color-border, #E2E8F0)', fontSize:14, background:'#F8FAFC', color:'#94A3B8', boxSizing:'border-box' }}/>
+            <input value={user.email} readOnly style={{ width:'100%', padding:'10px 14px', borderRadius:12, border:'1.5px solid var(--color-border, #E2E8F0)', fontSize:14, background:'var(--color-bg,#F8FAFC)', color:'#94A3B8', boxSizing:'border-box' }}/>
           </div>
 
           <div style={{ marginBottom:20 }}>

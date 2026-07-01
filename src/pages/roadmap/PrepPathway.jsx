@@ -476,7 +476,7 @@ export default function PrepPathway() {
               <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:NAVY, fontSize:15, marginBottom:6 }}>
                 Enroll in This Pathway
               </p>
-              <p style={{ fontSize:13, color:'#64748B', marginBottom:14 }}>
+              <p style={{ fontSize:13, color:'var(--color-text-light,#64748B)', marginBottom:14 }}>
                 Start your {pathway.total_months}-month journey to {pathway.target_exam_ids?.[0]}. Track every stage, earn coins, reach your goal.
               </p>
               <button onClick={handleEnroll}
@@ -578,7 +578,7 @@ export default function PrepPathway() {
 
                     {/* Focus summary */}
                     {(isActive || isCompleted) && (
-                      <p style={{ fontSize:12, color:'#64748B', marginTop:6, lineHeight:1.6 }}>
+                      <p style={{ fontSize:12, color:'var(--color-text-light,#64748B)', marginTop:6, lineHeight:1.6 }}>
                         {stage.focus_summary}
                       </p>
                     )}

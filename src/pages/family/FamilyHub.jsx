@@ -229,7 +229,7 @@ export default function FamilyHub() {
                   </div>
                 ))}
               </div>
-              <p style={{ fontSize:11, fontWeight:600, color:'#64748B', marginBottom:4 }}>Topics Covered Today:</p>
+              <p style={{ fontSize:11, fontWeight:600, color:'var(--color-text-light,#64748B)', marginBottom:4 }}>Topics Covered Today:</p>
               <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
                 {child.today.topics_covered.map(t => (
                   <span key={t} style={{ background:`${NAVY}10`, color:NAVY, padding:'3px 10px', borderRadius:99, fontSize:11, fontWeight:600 }}>{t}</span>
@@ -276,7 +276,7 @@ export default function FamilyHub() {
                   background: child.exam_readiness>=70?GREEN:child.exam_readiness>=50?GOLD:'#DC2626',
                   transition:'width 0.6s ease' }} />
               </div>
-              <p style={{ fontSize:11, color:'#64748B', margin:0 }}>
+              <p style={{ fontSize:11, color:'var(--color-text-light,#64748B)', margin:0 }}>
                 {child.exam_readiness>=70 ? '✅ On track for exam!' : child.exam_readiness>=50 ? '📈 Making good progress' : '⚠️ Needs more practice in some areas'}
               </p>
             </div>
@@ -287,7 +287,7 @@ export default function FamilyHub() {
               {child.subjects.map(s => (
                 <div key={s.name} style={{ marginBottom:12 }}>
                   <div style={{ display:'flex', justifyContent:'space-between', marginBottom:4 }}>
-                    <span style={{ fontSize:13, color:'#1E293B' }}>{s.emoji} {s.name}</span>
+                    <span style={{ fontSize:13, color:'var(--color-text,#1E293B)' }}>{s.emoji} {s.name}</span>
                     <div style={{ display:'flex', gap:6, alignItems:'center' }}>
                       <span style={{ fontSize:10, color: s.trend==='up'?GREEN:s.trend==='down'?'#DC2626':'#64748B' }}>
                         {s.trend==='up'?'↑':s.trend==='down'?'↓':'→'}
@@ -307,7 +307,7 @@ export default function FamilyHub() {
               <p style={{ fontSize:12, fontWeight:700, color:NAVY, marginBottom:12 }}>🧠 Concept Learning Progress</p>
               {child.concept_progress.map(c => (
                 <div key={c.topic} style={{ display:'flex', justifyContent:'space-between', alignItems:'center', padding:'8px 0', borderBottom:'1px solid #F1F5F9' }}>
-                  <p style={{ fontSize:12, color:'#1E293B', margin:0 }}>{c.topic}</p>
+                  <p style={{ fontSize:12, color:'var(--color-text,#1E293B)', margin:0 }}>{c.topic}</p>
                   <div style={{ display:'flex', gap:8, alignItems:'center' }}>
                     <span style={{ fontSize:10, fontWeight:700, padding:'2px 8px', borderRadius:99,
                       background: MASTERY_COLORS[c.mastery] || '#F1F5F9',
@@ -336,16 +336,16 @@ export default function FamilyHub() {
               return (
                 <div key={w.topic} style={{ background:'#fff', borderRadius:14, padding:14, marginBottom:10, border:'1.5px solid #E2E8F0' }}>
                   <div style={{ display:'flex', justifyContent:'space-between', marginBottom:8 }}>
-                    <p style={{ fontSize:13, fontWeight:700, color:'#1E293B', margin:0 }}>{w.topic}</p>
+                    <p style={{ fontSize:13, fontWeight:700, color:'var(--color-text,#1E293B)', margin:0 }}>{w.topic}</p>
                     <span style={{ fontSize:12, fontWeight:800, color:'#DC2626' }}>{errorRate}% error rate</span>
                   </div>
-                  <p style={{ fontSize:11, color:'#64748B', marginBottom:8 }}>
+                  <p style={{ fontSize:11, color:'var(--color-text-light,#64748B)', marginBottom:8 }}>
                     Got {w.wrong} wrong out of {w.total} attempts
                   </p>
                   <div style={{ height:6, background:'#E2E8F0', borderRadius:99, overflow:'hidden', marginBottom:8 }}>
                     <div style={{ height:'100%', width:`${errorRate}%`, background:'#DC2626', borderRadius:99 }} />
                   </div>
-                  <p style={{ fontSize:11, color:'#64748B', margin:0 }}>
+                  <p style={{ fontSize:11, color:'var(--color-text-light,#64748B)', margin:0 }}>
                     💡 Tip: {errorRate>70 ? 'Start with concept card before attempting more questions.' : 'A few more practice sessions should fix this.'}
                   </p>
                 </div>

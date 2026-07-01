@@ -45,7 +45,7 @@ export default function RoleSelect(){
         <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900, fontSize:24, color:NAVY, margin:'0 0 4px' }}>
           {user?.name ? `Hi ${user.name.split(' ')[0]}!` : 'Welcome!'}
         </p>
-        <p style={{ fontSize:14, color:'#64748B' }}>How will you use TryIT Educations?</p>
+        <p style={{ fontSize:14, color:'var(--color-text-light,#64748B)' }}>How will you use TryIT Educations?</p>
       </div>
 
       <div style={{ width:'100%', maxWidth:380, display:'flex', flexDirection:'column', gap:10, marginBottom:24 }}>
@@ -60,8 +60,8 @@ export default function RoleSelect(){
               {r.emoji}
             </div>
             <div style={{ flex:1 }}>
-              <p style={{ fontSize:15, fontWeight:700, color:'#1E293B', margin:'0 0 2px' }}>{r.title}</p>
-              <p style={{ fontSize:12, color:'#64748B', margin:0 }}>{r.desc}</p>
+              <p style={{ fontSize:15, fontWeight:700, color:'var(--color-text,#1E293B)', margin:'0 0 2px' }}>{r.title}</p>
+              <p style={{ fontSize:12, color:'var(--color-text-light,#64748B)', margin:0 }}>{r.desc}</p>
             </div>
             {selected === r.id && <span style={{ color:r.color, fontSize:20 }}>✓</span>}
           </button>

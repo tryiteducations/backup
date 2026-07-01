@@ -98,7 +98,7 @@ export default function WalletPage() {
     if (type === 'purchased')        return { icon:'🛒', color:NAVY }
     if (type?.startsWith('earned'))  return { icon:'⬆️', color:GREEN }
     if (type?.startsWith('spent'))   return { icon:'⬇️', color:'#DC2626' }
-    return { icon:'💰', color:'#64748B' }
+    return { icon:'💰', color:'var(--color-text-light,#64748B)' }
   }
 
   const txLabel = {
@@ -126,7 +126,7 @@ export default function WalletPage() {
             <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:NAVY, fontSize:20, margin:'0 0 8px' }}>
               +{showSuccess.coins} Coins Added!
             </h3>
-            <p style={{ fontSize:13, color:'#64748B', margin:'0 0 16px' }}>
+            <p style={{ fontSize:13, color:'var(--color-text-light,#64748B)', margin:'0 0 16px' }}>
               Your new balance: <strong>{((coins||0)).toLocaleString('en-IN')} coins</strong>
             </p>
             <button onClick={() => setShowSuccess(null)}
@@ -203,7 +203,7 @@ export default function WalletPage() {
                     {icon}
                   </div>
                   <div style={{ flex:1 }}>
-                    <p style={{ fontSize:12, fontWeight:600, color:'#1E293B', margin:0 }}>
+                    <p style={{ fontSize:12, fontWeight:600, color:'var(--color-text,#1E293B)', margin:0 }}>
                       {txLabel[tx.transaction_type] || tx.transaction_type?.replace(/_/g,' ')}
                     </p>
                     <p style={{ fontSize:10, color:'#94A3B8', margin:'2px 0 0' }}>
@@ -227,7 +227,7 @@ export default function WalletPage() {
         {/* BUY COINS TAB */}
         {tab === 'buy' && (
           <div>
-            <p style={{ fontSize:13, color:'#64748B', marginBottom:16, lineHeight:1.6 }}>
+            <p style={{ fontSize:13, color:'var(--color-text-light,#64748B)', marginBottom:16, lineHeight:1.6 }}>
               Buy coins to unlock explanations, games, and extra features instantly - no subscription needed.
             </p>
             {COIN_PACKS.map(pack => (
@@ -251,8 +251,8 @@ export default function WalletPage() {
                     <p style={{ fontSize:10, color:'#94A3B8', margin:0 }}>coins</p>
                   </div>
                   <div style={{ flex:1 }}>
-                    <p style={{ fontWeight:700, color:'#1E293B', fontSize:14, margin:'0 0 2px' }}>{pack.label} Pack</p>
-                    <p style={{ fontSize:11, color:'#64748B', margin:'0 0 10px' }}>{pack.desc}</p>
+                    <p style={{ fontWeight:700, color:'var(--color-text,#1E293B)', fontSize:14, margin:'0 0 2px' }}>{pack.label} Pack</p>
+                    <p style={{ fontSize:11, color:'var(--color-text-light,#64748B)', margin:'0 0 10px' }}>{pack.desc}</p>
                     <button
                       onClick={() => handleBuyCoins(pack)}
                       disabled={purchasing === pack.id}
@@ -281,14 +281,14 @@ export default function WalletPage() {
         {/* EARN FREE TAB */}
         {tab === 'earn' && (
           <div>
-            <p style={{ fontSize:13, color:'#64748B', marginBottom:14 }}>
+            <p style={{ fontSize:13, color:'var(--color-text-light,#64748B)', marginBottom:14 }}>
               Earn coins every day through your normal study routine - no extra effort needed.
             </p>
             {EARN_WAYS.map(e => (
               <div key={e.way} style={{ background:'#fff', borderRadius:12, padding:'11px 14px', marginBottom:8, border:'1.5px solid #E2E8F0', display:'flex', alignItems:'center', gap:10 }}>
                 <span style={{ fontSize:20, flexShrink:0 }}>{e.emoji}</span>
                 <div style={{ flex:1 }}>
-                  <p style={{ fontSize:12, fontWeight:600, color:'#1E293B', margin:0 }}>{e.way}</p>
+                  <p style={{ fontSize:12, fontWeight:600, color:'var(--color-text,#1E293B)', margin:0 }}>{e.way}</p>
                   <p style={{ fontSize:10, color:'#94A3B8', margin:'2px 0 0' }}>{e.freq}</p>
                 </div>
                 <span style={{ fontSize:13, fontWeight:800, color:'#92400E', background:`${GOLD}20`, padding:'4px 10px', borderRadius:99, flexShrink:0 }}>
@@ -312,13 +312,13 @@ export default function WalletPage() {
         {/* USE COINS TAB */}
         {tab === 'use' && (
           <div>
-            <p style={{ fontSize:13, color:'#64748B', marginBottom:14 }}>
+            <p style={{ fontSize:13, color:'var(--color-text-light,#64748B)', marginBottom:14 }}>
               Coins let you unlock features without upgrading your plan:
             </p>
             {COIN_USES.map(u => (
               <div key={u.use} style={{ background:'#fff', borderRadius:12, padding:'11px 14px', marginBottom:8, border:'1.5px solid #E2E8F0', display:'flex', alignItems:'center', gap:10 }}>
                 <span style={{ fontSize:20, flexShrink:0 }}>{u.emoji}</span>
-                <p style={{ flex:1, fontSize:12, fontWeight:600, color:'#1E293B', margin:0 }}>{u.use}</p>
+                <p style={{ flex:1, fontSize:12, fontWeight:600, color:'var(--color-text,#1E293B)', margin:0 }}>{u.use}</p>
                 <span style={{ fontSize:13, fontWeight:800, color:'#DC2626', background:'#FEE2E2', padding:'4px 10px', borderRadius:99, flexShrink:0 }}>
                   {u.cost}🪙
                 </span>

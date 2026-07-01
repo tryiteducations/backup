@@ -24,13 +24,13 @@ const TABS = [
 
 // -- Shared styles ---------------------------------------------------------
 const S = {
-  card:    { background:'#F8FAFC', borderRadius:18, padding:18, border:'1.5px solid #E2E8F0' },
+  card:    { background:'var(--color-bg,#F8FAFC)', borderRadius:18, padding:18, border:'1.5px solid #E2E8F0' },
   input:   { width:'100%', padding:'10px 13px', borderRadius:11, border:'1.5px solid #E2E8F0', fontSize:13, outline:'none', boxSizing:'border-box', background:'#fff' },
   btn:     { background:'linear-gradient(135deg,#1E3A5F,#0F2140)', border:'none', borderRadius:11, padding:'10px 20px', color:'#C9A84C', fontWeight:700, fontSize:13, cursor:'pointer' },
   btnRed:  { background:'#FEE2E2', color:'#991B1B', border:'none', borderRadius:9, padding:'6px 14px', fontSize:12, fontWeight:700, cursor:'pointer' },
   btnGold: { background:'linear-gradient(135deg,#C9A84C,#E8C96A)', color:'#1E3A5F', border:'none', borderRadius:11, padding:'10px 20px', fontWeight:800, fontSize:13, cursor:'pointer' },
   h2:      { fontFamily:'Poppins,sans-serif', fontWeight:800, color:'#1E3A5F', fontSize:22, marginBottom:6 },
-  label:   { display:'block', fontSize:12, fontWeight:600, color:'#64748B', marginBottom:5 },
+  label:   { display:'block', fontSize:12, fontWeight:600, color:'var(--color-text-light,#64748B)', marginBottom:5 },
   tag:     (active) => ({
     display:'inline-block', padding:'3px 10px', borderRadius:99, fontSize:11, fontWeight:700,
     background: active ? '#D1FAE5' : '#FEE2E2',
@@ -57,7 +57,7 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div style={{ minHeight:'100vh', background:'#F8FAFC' }}>
+    <div style={{ minHeight:'100vh', background:'var(--color-bg,#F8FAFC)' }}>
       {/* Header */}
       <div style={{ background:'linear-gradient(135deg,#1E3A5F,#0F2140)', padding:'20px clamp(16px,4vw,40px)', display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:12 }}>
         <div>
@@ -70,7 +70,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Tabs */}
-      <div style={{ display:'flex', gap:4, overflowX:'auto', padding:'16px clamp(16px,4vw,40px) 0', background:'#F8FAFC' }}>
+      <div style={{ display:'flex', gap:4, overflowX:'auto', padding:'16px clamp(16px,4vw,40px) 0', background:'var(--color-bg,#F8FAFC)' }}>
         {TABS.map(t => (
           <button key={t.id} onClick={() => setTab(t.id)}
             style={{ padding:'10px 16px', borderRadius:'12px 12px 0 0', border:'none', cursor:'pointer', whiteSpace:'nowrap',
@@ -156,7 +156,7 @@ function OverviewTab({ navigate }) {
         <a href="/admin/questions"       style={S.btn}>❓ Question Manager</a>
         <a href="/admin/users"           style={S.btn}>👥 User Manager</a>
       </div>
-      <div style={{ background:'rgba(201,168,76,0.08)', borderRadius:14, padding:14, border:'1px solid rgba(201,168,76,0.2)', fontSize:13, color:'#64748B', lineHeight:1.7 }}>
+      <div style={{ background:'rgba(201,168,76,0.08)', borderRadius:14, padding:14, border:'1px solid rgba(201,168,76,0.2)', fontSize:13, color:'var(--color-text-light,#64748B)', lineHeight:1.7 }}>
         ℹ️ Counts show 0 before Supabase is connected and users sign up. This is expected in dev mode.
       </div>
     </div>
@@ -232,14 +232,14 @@ function UsersTab() {
         <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
           {filtered.map(u => (
             <div key={u.id} style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 16px', ...S.card, flexWrap:'wrap' }}>
-              <div style={{ width:36, height:36, borderRadius:'50%', background:'#1E3A5F', color:'#C9A84C', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:800, fontSize:12, flexShrink:0 }}>
+              <div style={{ width:36, height:36, borderRadius:'50%', background:'var(--color-primary,#1E3A5F)', color:'#C9A84C', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:800, fontSize:12, flexShrink:0 }}>
                 {(u.name||'?').slice(0,2).toUpperCase()}
               </div>
               <div style={{ flex:1, minWidth:120 }}>
                 <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'#1E3A5F', fontSize:13 }}>{u.name||'Unnamed'}</p>
                 <p style={{ color:'#94A3B8', fontSize:11 }}>{u.email}</p>
               </div>
-              <span style={{ fontSize:12, color:'#64748B' }}>🪙 {u.coins??0}</span>
+              <span style={{ fontSize:12, color:'var(--color-text-light,#64748B)' }}>🪙 {u.coins??0}</span>
 
               {/* Plan switcher */}
               <select value={u.plan||'free'} onChange={e => changePlan(u.id, e.target.value)}
@@ -326,7 +326,7 @@ function GrantsTab() {
         <div style={{ display:'flex', alignItems:'center', gap:6 }}>
           <input type="number" value={days} onChange={e => setDays(parseInt(e.target.value)||30)}
             style={{ width:72, padding:'10px 10px', borderRadius:10, border:'1.5px solid #E2E8F0', fontSize:13 }} />
-          <span style={{ fontSize:12, color:'#64748B' }}>days</span>
+          <span style={{ fontSize:12, color:'var(--color-text-light,#64748B)' }}>days</span>
         </div>
         <button onClick={addGrant} style={S.btn}>+ Grant</button>
       </div>
@@ -336,7 +336,7 @@ function GrantsTab() {
           {grants.map((g,i) => (
             <div key={i} style={{ display:'flex', justifyContent:'space-between', alignItems:'center', padding:'10px 14px', ...S.card, flexWrap:'wrap', gap:8 }}>
               <span style={{ fontSize:13, fontWeight:600, color:'#1E3A5F' }}>{g.email}</span>
-              <span style={{ fontSize:12, color:'#64748B' }}>{g.plan} · expires {new Date(g.expiresAt).toLocaleDateString('en-IN')}</span>
+              <span style={{ fontSize:12, color:'var(--color-text-light,#64748B)' }}>{g.plan} · expires {new Date(g.expiresAt).toLocaleDateString('en-IN')}</span>
               <button onClick={() => removeGrant(i)} style={S.btnRed}>Remove</button>
             </div>
           ))}
@@ -362,7 +362,7 @@ function ExamsTab({ navigate }) {
       <button onClick={() => navigate('/admin/exams')} style={{ ...S.btn, marginBottom:14 }}>
         Open Full Exam Manager →
       </button>
-      <p style={{ color:'#64748B', fontSize:14, marginBottom:14 }}>Total exams: <b>{exams.length}</b></p>
+      <p style={{ color:'var(--color-text-light,#64748B)', fontSize:14, marginBottom:14 }}>Total exams: <b>{exams.length}</b></p>
       <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(160px,1fr))', gap:10 }}>
         {Object.entries(byCategory).map(([cat,count]) => (
           <div key={cat} style={S.card}>
@@ -545,7 +545,7 @@ function MaterialsTab() {
                 <p style={{ fontSize:11, color:'#94A3B8' }}>
                   {m.material_type?.replace(/_/g,' ')} · {m.publish_date} · {m.source || 'No source'}
                 </p>
-                <p style={{ fontSize:11, color:'#64748B', marginTop:2 }}>
+                <p style={{ fontSize:11, color:'var(--color-text-light,#64748B)', marginTop:2 }}>
                   👁️ {m.view_count||0} views · ⬇️ {m.download_count||0} downloads
                 </p>
               </div>
@@ -656,7 +656,7 @@ function FlagsTab() {
             <div key={b.queue_id} style={{ padding:'10px 14px', background:'#FEF2F2', borderRadius:12, marginBottom:8, display:'flex', justifyContent:'space-between', flexWrap:'wrap', gap:8 }}>
               <div>
                 <p style={{ fontWeight:700, fontSize:13, color:'#991B1B' }}>{b.fix_type?.replace(/_/g,' ')}</p>
-                <p style={{ fontSize:12, color:'#64748B' }}>{b.fix_description}</p>
+                <p style={{ fontSize:12, color:'var(--color-text-light,#64748B)' }}>{b.fix_description}</p>
                 <p style={{ fontSize:11, color:'#94A3B8' }}>{b.total_count} questions affected</p>
               </div>
               <div style={{ display:'flex', gap:8, alignItems:'center' }}>
@@ -701,7 +701,7 @@ function FlagsTab() {
                   <span style={{ background:'#FEE2E2', color:'#991B1B', padding:'3px 10px', borderRadius:99, fontSize:11, fontWeight:700 }}>
                     {FLAG_TYPE_LABELS[flag.flag_type] || flag.flag_type}
                   </span>
-                  <p style={{ fontSize:12, color:'#64748B', marginTop:4 }}>
+                  <p style={{ fontSize:12, color:'var(--color-text-light,#64748B)', marginTop:4 }}>
                     Q: <code style={{ fontSize:11 }}>{(flag.question_id||'').slice(0,30)}...</code>
                   </p>
                   <p style={{ fontSize:11, color:'#94A3B8' }}>
@@ -1183,7 +1183,7 @@ function TournamentAdminTab(){
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:14}}>
         <div>
           <h2 style={{...S.h2,marginBottom:2}}>🏆 Tournament Control</h2>
-          <p style={{fontSize:12,color:'#64748B',margin:0}}>Create · Schedule · Announce · Dispatch prizes</p>
+          <p style={{fontSize:12,color:'var(--color-text-light,#64748B)',margin:0}}>Create · Schedule · Announce · Dispatch prizes</p>
         </div>
         <button onClick={()=>setShowCreate(true)} style={S.btnGold}>+ Create Tournament</button>
       </div>
@@ -1210,8 +1210,8 @@ function TournamentAdminTab(){
             <div key={t.tournament_id} style={{...S.card,marginBottom:12}}>
               <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:10}}>
                 <div>
-                  <p style={{fontWeight:700,color:'#1E293B',fontSize:14,margin:'0 0 2px'}}>{t.tournament_name}</p>
-                  <p style={{fontSize:11,color:'#64748B',margin:0}}>{t.exam_display_name} · {t.total_questions}Q · {t.question_sets_count} sets</p>
+                  <p style={{fontWeight:700,color:'var(--color-text,#1E293B)',fontSize:14,margin:'0 0 2px'}}>{t.tournament_name}</p>
+                  <p style={{fontSize:11,color:'var(--color-text-light,#64748B)',margin:0}}>{t.exam_display_name} · {t.total_questions}Q · {t.question_sets_count} sets</p>
                 </div>
                 <span style={{fontSize:10,fontWeight:700,padding:'3px 8px',borderRadius:99,background:`${STATUS_COLORS[t.status]}20`,color:STATUS_COLORS[t.status]}}>
                   {t.status?.replace('_',' ').toUpperCase()}
@@ -1219,15 +1219,15 @@ function TournamentAdminTab(){
               </div>
 
               <div style={{display:'grid',gridTemplateColumns:'1fr 1fr 1fr',gap:8,marginBottom:10}}>
-                <div style={{background:'#F8FAFC',borderRadius:8,padding:'8px',textAlign:'center'}}>
+                <div style={{background:'var(--color-bg,#F8FAFC)',borderRadius:8,padding:'8px',textAlign:'center'}}>
                   <p style={{fontSize:11,fontWeight:700,color:NAVY,margin:'0 0 1px'}}>{new Date(t.exam_starts_at).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}</p>
                   <p style={{fontSize:9,color:'#94A3B8',margin:0}}>Exam Date</p>
                 </div>
-                <div style={{background:'#F8FAFC',borderRadius:8,padding:'8px',textAlign:'center'}}>
+                <div style={{background:'var(--color-bg,#F8FAFC)',borderRadius:8,padding:'8px',textAlign:'center'}}>
                   <p style={{fontSize:11,fontWeight:700,color:'#059669',margin:'0 0 1px'}}>{(t.total_registrations||0).toLocaleString('en-IN')}</p>
                   <p style={{fontSize:9,color:'#94A3B8',margin:0}}>Registered</p>
                 </div>
-                <div style={{background:'#F8FAFC',borderRadius:8,padding:'8px',textAlign:'center'}}>
+                <div style={{background:'var(--color-bg,#F8FAFC)',borderRadius:8,padding:'8px',textAlign:'center'}}>
                   <p style={{fontSize:11,fontWeight:700,color:GOLD,margin:'0 0 1px'}}>₹{((t.total_registrations||0)*t.entry_fee_free_user).toLocaleString('en-IN')}</p>
                   <p style={{fontSize:9,color:'#94A3B8',margin:0}}>Est. Revenue</p>
                 </div>
@@ -1260,7 +1260,7 @@ function TournamentAdminTab(){
               {/* CDN URL field */}
               {t.status==='draft'&&(
                 <div style={{marginTop:10}}>
-                  <p style={{fontSize:11,color:'#64748B',marginBottom:4}}>CDN Question URL (paste after uploading encrypted JSON to Cloudflare)</p>
+                  <p style={{fontSize:11,color:'var(--color-text-light,#64748B)',marginBottom:4}}>CDN Question URL (paste after uploading encrypted JSON to Cloudflare)</p>
                   <input defaultValue={t.cdn_question_url||''} placeholder="https://cdn.tryiteducations.net/q/tournament_id"
                     onBlur={e=>supabase.from('tournaments').update({cdn_question_url:e.target.value}).eq('tournament_id',t.tournament_id).then(()=>{})}
                     style={{width:'100%',padding:'8px 10px',borderRadius:8,border:'1.5px solid #E2E8F0',fontSize:11,boxSizing:'border-box'}}/>
@@ -1278,15 +1278,15 @@ function TournamentAdminTab(){
 
       {subtab==='polls'&&(
         <div>
-          <p style={{fontSize:12,color:'#64748B',marginBottom:12}}>
+          <p style={{fontSize:12,color:'var(--color-text-light,#64748B)',marginBottom:12}}>
             When votes cross the minimum threshold, confirm here to schedule the tournament.
           </p>
           {polls.map(poll=>(
             <div key={poll.poll_id} style={{...S.card,marginBottom:10}}>
               <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:8}}>
                 <div>
-                  <p style={{fontWeight:700,color:'#1E293B',fontSize:14,margin:'0 0 2px'}}>{poll.exam_name}</p>
-                  <p style={{fontSize:11,color:'#64748B',margin:0}}>{poll.description}</p>
+                  <p style={{fontWeight:700,color:'var(--color-text,#1E293B)',fontSize:14,margin:'0 0 2px'}}>{poll.exam_name}</p>
+                  <p style={{fontSize:11,color:'var(--color-text-light,#64748B)',margin:0}}>{poll.description}</p>
                 </div>
                 <span style={{fontSize:10,fontWeight:700,padding:'3px 8px',borderRadius:99,
                   background:poll.status==='threshold_reached'?'#D1FAE5':'#EFF6FF',
@@ -1299,7 +1299,7 @@ function TournamentAdminTab(){
                 <div style={{height:'100%',width:`${Math.min(((poll.vote_count||0)/(poll.min_votes_national||2000))*100,100)}%`,background:poll.status==='threshold_reached'?'#059669':NAVY,borderRadius:99}}/>
               </div>
               <p style={{fontSize:10,color:'#94A3B8',margin:'0 0 8px'}}>{poll.vote_count}/{poll.min_votes_national||2000} national / {poll.min_votes_state||500} state threshold</p>
-              {poll.admin_note&&<p style={{fontSize:11,color:'#475569',background:'#F8FAFC',padding:'6px 10px',borderRadius:8,margin:'0 0 8px'}}>🛡️ Admin note: {poll.admin_note}</p>}
+              {poll.admin_note&&<p style={{fontSize:11,color:'#475569',background:'var(--color-bg,#F8FAFC)',padding:'6px 10px',borderRadius:8,margin:'0 0 8px'}}>🛡️ Admin note: {poll.admin_note}</p>}
               {['threshold_reached','open'].includes(poll.status)&&poll.status!=='admin_confirmed'&&(
                 <button onClick={()=>{
                   const note=prompt('Enter admin note for students (e.g. "Scheduling for July 2026"):')
@@ -1385,7 +1385,7 @@ function TournamentAdminTab(){
 
             <div style={{display:'flex',gap:8}}>
               <button onClick={createTournament} style={{...S.btnGold,flex:1,padding:'12px'}}>Create Tournament</button>
-              <button onClick={()=>setShowCreate(false)} style={{flex:1,padding:'12px',border:'1.5px solid #E2E8F0',borderRadius:11,cursor:'pointer',background:'#fff',color:'#64748B',fontSize:13}}>Cancel</button>
+              <button onClick={()=>setShowCreate(false)} style={{flex:1,padding:'12px',border:'1.5px solid #E2E8F0',borderRadius:11,cursor:'pointer',background:'#fff',color:'var(--color-text-light,#64748B)',fontSize:13}}>Cancel</button>
             </div>
           </div>
         </div>
@@ -1441,7 +1441,7 @@ function GameEconomyTab(){
   return(
     <div style={{padding:16}}>
       <h2 style={{...S.h2,marginBottom:4}}>🎮 Game Economy Control</h2>
-      <p style={{fontSize:12,color:'#64748B',marginBottom:16}}>
+      <p style={{fontSize:12,color:'var(--color-text-light,#64748B)',marginBottom:16}}>
         Change coin amounts anytime - 5 → 50 → 500, instant effect, zero app deployment needed.
       </p>
 
@@ -1511,7 +1511,7 @@ function GameEconomyTab(){
       {/* PER-GAME OVERRIDES */}
       <div style={S.card}>
         <p style={{fontSize:13,fontWeight:700,color:NAVY,marginBottom:4}}>🎯 Per-Game Overrides</p>
-        <p style={{fontSize:11,color:'#64748B',marginBottom:12}}>Set custom economy for specific games (e.g. Battle costs more)</p>
+        <p style={{fontSize:11,color:'var(--color-text-light,#64748B)',marginBottom:12}}>Set custom economy for specific games (e.g. Battle costs more)</p>
         {games.map(g=>(
           <div key={g.game_id} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'8px 0',borderBottom:'1px solid #F1F5F9'}}>
             <span style={{fontSize:12,color:'#475569'}}>{g.emoji} {g.name}</span>
@@ -1550,7 +1550,7 @@ function OverrideModal({gameId,defaultConfig,onSave,onClose}){
       <input type="number" style={{...S.input,marginBottom:16}} value={loss} onChange={e=>setLoss(parseInt(e.target.value)||0)}/>
       <div style={{display:'flex',gap:8}}>
         <button onClick={()=>onSave(gameId,{entry_cost:entry,win_reward:win,loss_penalty:loss})} style={{...S.btnGold,flex:1}}>Save Override</button>
-        <button onClick={onClose} style={{flex:1,padding:'10px',border:'1.5px solid #E2E8F0',borderRadius:11,background:'#fff',color:'#64748B',cursor:'pointer'}}>Cancel</button>
+        <button onClick={onClose} style={{flex:1,padding:'10px',border:'1.5px solid #E2E8F0',borderRadius:11,background:'#fff',color:'var(--color-text-light,#64748B)',cursor:'pointer'}}>Cancel</button>
       </div>
     </div>
   )
@@ -1579,7 +1579,7 @@ function GameTestingTab(){
   return(
     <div style={{padding:16}}>
       <h2 style={{...S.h2,marginBottom:4}}>🛡️ Game & Level Testing</h2>
-      <p style={{fontSize:12,color:'#64748B',marginBottom:16}}>
+      <p style={{fontSize:12,color:'var(--color-text-light,#64748B)',marginBottom:16}}>
         Jump straight into any game at any level - bypasses all tier gates and coin costs.
         Test plays never touch real student leaderboards or skill data.
       </p>
@@ -1601,7 +1601,7 @@ function GameTestingTab(){
             style={{...S.card,cursor:'pointer',padding:'12px',display:'flex',alignItems:'center',gap:10}}>
             <span style={{fontSize:22}}>{g.emoji}</span>
             <div style={{flex:1,minWidth:0}}>
-              <p style={{fontSize:12,fontWeight:700,color:'#1E293B',margin:'0 0 2px',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{g.name}</p>
+              <p style={{fontSize:12,fontWeight:700,color:'var(--color-text,#1E293B)',margin:'0 0 2px',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{g.name}</p>
               <span style={{fontSize:9,fontWeight:700,padding:'1px 6px',borderRadius:99,background:`${TIER_COLOR[g.tier_required]}15`,color:TIER_COLOR[g.tier_required]}}>
                 {g.tier_required.toUpperCase()}
               </span>

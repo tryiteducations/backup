@@ -55,7 +55,7 @@ function SettingRow({ label, sublabel, children, onClick, arrow = false }) {
         padding:'14px 16px', background:'#fff', borderBottom:'1px solid #F1F5F9',
         cursor: onClick ? 'pointer' : 'default' }}>
       <div style={{ flex:1, marginRight:12 }}>
-        <p style={{ fontSize:13, fontWeight:600, color:'#1E293B', margin:0 }}>{label}</p>
+        <p style={{ fontSize:13, fontWeight:600, color:'var(--color-text,#1E293B)', margin:0 }}>{label}</p>
         {sublabel && <p style={{ fontSize:11, color:'#94A3B8', margin:'2px 0 0' }}>{sublabel}</p>}
       </div>
       {children}
@@ -321,7 +321,7 @@ export default function Settings() {
                   padding:'13px 14px', marginBottom:6, borderRadius:12, cursor:'pointer',
                   border:`1.5px solid ${lang===l.code?NAVY:'#E2E8F0'}`,
                   background: lang===l.code?`${NAVY}08`:'#fff' }}>
-                <span style={{ fontSize:14, fontWeight:600, color:'#1E293B' }}>{l.native}</span>
+                <span style={{ fontSize:14, fontWeight:600, color:'var(--color-text,#1E293B)' }}>{l.native}</span>
                 <div style={{ display:'flex', gap:8, alignItems:'center' }}>
                   <span style={{ fontSize:12, color:'#94A3B8' }}>{l.name}</span>
                   {lang===l.code && <span style={{ color:NAVY, fontSize:14 }}>✓</span>}
@@ -353,7 +353,7 @@ export default function Settings() {
                       position:'relative', textAlign:'center' }}>
                     <div style={{ width:40, height:40, borderRadius:'50%', background:t.primary,
                       margin:'0 auto 6px', border:`3px solid ${t.accent}` }} />
-                    <p style={{ fontSize:11, fontWeight:700, color:'#1E293B', margin:0 }}>{t.name}</p>
+                    <p style={{ fontSize:11, fontWeight:700, color:'var(--color-text,#1E293B)', margin:0 }}>{t.name}</p>
                     {locked && <p style={{ fontSize:9, color:'#94A3B8', margin:'2px 0 0' }}>⭐ Pro</p>}
                     {theme===t.id && (
                       <span style={{ position:'absolute', top:6, right:6, fontSize:14 }}>✓</span>

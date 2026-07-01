@@ -31,7 +31,7 @@ const MOCK_REFERRALS = [
 ]
 
 const STATUS_LABELS = {
-  signed_up:      { label:'Signed Up',       color:'#64748B', bg:'#F1F5F9' },
+  signed_up:      { label:'Signed Up',       color:'var(--color-text-light,#64748B)', bg:'#F1F5F9' },
   took_test:      { label:'Took First Test', color:'#0891B2', bg:'#EFF6FF' },
   upgraded_pro:   { label:'Upgraded to Pro', color:'#1D4ED8', bg:'#DBEAFE' },
   upgraded_ultra: { label:'Ultra Member',    color:'#92400E', bg:'#FFF7E6' },
@@ -177,7 +177,7 @@ export default function ReferralPage() {
         {/* OVERVIEW - reward table */}
         {tab === 'overview' && (
           <div>
-            <p style={{ fontSize:12, color:'#64748B', marginBottom:14, lineHeight:1.6 }}>
+            <p style={{ fontSize:12, color:'var(--color-text-light,#64748B)', marginBottom:14, lineHeight:1.6 }}>
               Every time a friend joins using your code, you earn coins + cashback when they upgrade.
             </p>
 
@@ -187,7 +187,7 @@ export default function ReferralPage() {
                 <div style={{ display:'flex', alignItems:'center', gap:10 }}>
                   <span style={{ fontSize:22, flexShrink:0 }}>{r.emoji}</span>
                   <div style={{ flex:1 }}>
-                    <p style={{ fontSize:13, fontWeight:700, color:'#1E293B', margin:'0 0 2px' }}>{r.event}</p>
+                    <p style={{ fontSize:13, fontWeight:700, color:'var(--color-text,#1E293B)', margin:'0 0 2px' }}>{r.event}</p>
                     {r.special && (
                       <p style={{ fontSize:11, color:GREEN, fontWeight:600, margin:0 }}>🎁 {r.special}</p>
                     )}
@@ -246,7 +246,7 @@ export default function ReferralPage() {
                     {(r.name||'?')[0]}
                   </div>
                   <div style={{ flex:1 }}>
-                    <p style={{ fontSize:13, fontWeight:700, color:'#1E293B', margin:'0 0 2px' }}>{r.name}</p>
+                    <p style={{ fontSize:13, fontWeight:700, color:'var(--color-text,#1E293B)', margin:'0 0 2px' }}>{r.name}</p>
                     <div style={{ display:'flex', alignItems:'center', gap:6 }}>
                       <span style={{ fontSize:10, fontWeight:700, padding:'2px 8px', borderRadius:99,
                         background:st.bg, color:st.color }}>

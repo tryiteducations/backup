@@ -122,11 +122,11 @@ export default function ConceptCheckpoint() {
     }
     if (!showResult) {
       return { ...base, borderColor: selected===idx ? NAVY : '#E2E8F0',
-        background: selected===idx ? `${NAVY}10` : '#fff', color:'#1E293B' }
+        background: selected===idx ? `${NAVY}10` : '#fff', color:'var(--color-text,#1E293B)' }
     }
     if (idx === q?.correct) return { ...base, borderColor:'#059669', background:'#D1FAE5', color:'#065F46' }
     if (idx === selected && idx !== q?.correct) return { ...base, borderColor:'#DC2626', background:'#FEE2E2', color:'#991B1B' }
-    return { ...base, borderColor:'#E2E8F0', color:'#94A3B8' }
+    return { ...base, borderColor:'var(--color-border,#E2E8F0)', color:'#94A3B8' }
   }
 
   // -- IF NO CONCEPT DATA (direct URL navigation) ----------------------------
@@ -182,8 +182,8 @@ export default function ConceptCheckpoint() {
           </p>
 
           {/* Answer review */}
-          <div style={{ background:'#F8FAFC', borderRadius:14, padding:12, marginBottom:20, textAlign:'left' }}>
-            <p style={{ fontSize:11, fontWeight:700, color:'#64748B', marginBottom:8 }}>YOUR ANSWERS</p>
+          <div style={{ background:'var(--color-bg,#F8FAFC)', borderRadius:14, padding:12, marginBottom:20, textAlign:'left' }}>
+            <p style={{ fontSize:11, fontWeight:700, color:'var(--color-text-light,#64748B)', marginBottom:8 }}>YOUR ANSWERS</p>
             {answers.map((a, i) => (
               <div key={i} style={{ display:'flex', alignItems:'center', gap:8, padding:'6px 0',
                 borderBottom: i < answers.length-1 ? '1px solid #E2E8F0' : 'none' }}>
@@ -303,7 +303,7 @@ export default function ConceptCheckpoint() {
           <p style={{ fontSize:11, fontWeight:700, color:'#1D4ED8', marginBottom:8, letterSpacing:0.5 }}>
             QUICK CHECK - {currentIdx + 1}/{totalQ}
           </p>
-          <p style={{ fontSize:16, fontWeight:600, color:'#1E293B', lineHeight:1.7 }}>{q?.question}</p>
+          <p style={{ fontSize:16, fontWeight:600, color:'var(--color-text,#1E293B)', lineHeight:1.7 }}>{q?.question}</p>
         </div>
 
         {/* Options */}

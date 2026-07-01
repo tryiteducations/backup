@@ -33,7 +33,7 @@ export default function ImpactDashboard() {
   const counts = [s0,s1,s2,s3]
 
   return (
-    <div style={{ minHeight:'100vh', background:'#F8FAFC' }}>
+    <div style={{ minHeight:'100vh', background:'var(--color-bg,#F8FAFC)' }}>
       <div style={{ background:'linear-gradient(135deg,var(--color-primary, #1E3A5F),#3B2A6B)', padding:'60px 32px', textAlign:'center' }}>
         <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900, color:'var(--color-accent, #D4AF37)', fontSize:32, margin:'0 0 8px' }}>🌍 Live Impact</p>
         <p style={{ color:'rgba(255,255,255,0.7)', fontSize:16, margin:0 }}>TryIT Educations - Real numbers, real students</p>

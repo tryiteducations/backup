@@ -68,7 +68,7 @@ export default function ExamManager() {
   }
 
   return (
-    <div style={{ minHeight:'100vh', background:'#F8FAFC', padding:'24px clamp(16px,4vw,40px)' }}>
+    <div style={{ minHeight:'100vh', background:'var(--color-bg,#F8FAFC)', padding:'24px clamp(16px,4vw,40px)' }}>
       <button onClick={()=>navigate('/admin/dashboard')} style={{ background:'none', border:'none', color:'var(--color-muted, #64748B)', cursor:'pointer', fontSize:13, marginBottom:12 }}>← Back to Admin</button>
       <h1 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'var(--color-primary, #1E3A5F)', fontSize:24, marginBottom:6 }}>📋 Exam Manager</h1>
       <p style={{ color:'#94A3B8', fontSize:13, marginBottom:16 }}>

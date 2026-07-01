@@ -28,7 +28,7 @@ const SHARE_PLATFORMS = [
   {name:'WhatsApp', icon:'💬', color:'#25D366'},
   {name:'Twitter',  icon:'🐦', color:'#1DA1F2'},
   {name:'Telegram', icon:'✈️', color:'#0088CC'},
-  {name:'Copy Link',icon:'🔗', color:'#64748B'},
+  {name:'Copy Link',icon:'🔗', color:'var(--color-text-light,#64748B)'},
 ]
 
 export default function MentorMaterials() {

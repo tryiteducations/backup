@@ -28,7 +28,7 @@ const GREEN = '#059669'
 const RESULT_CONFIG = {
   correct:     { emoji:'✅', label:'Correct',      color:GREEN,    bg:'#F0FDF4', border:'#BBF7D0' },
   incorrect:   { emoji:'📚', label:'Learn from this', color:'#D97706', bg:'#FFF7E6', border:'#FED7AA' },
-  unattempted: { emoji:'⬜', label:'Not attempted',color:'#64748B', bg:'#F8FAFC', border:'#E2E8F0' },
+  unattempted: { emoji:'⬜', label:'Not attempted',color:'var(--color-text-light,#64748B)', bg:'#F8FAFC', border:'#E2E8F0' },
 }
 
 const SUBJECT_COLORS = {
@@ -90,7 +90,7 @@ function QuestionCard({ pq, index, userLanguage, onAddToPractice, onShare }) {
               </span>
             )}
           </div>
-          <p style={{ fontSize:13, fontWeight:600, color:'#1E293B', margin:0,
+          <p style={{ fontSize:13, fontWeight:600, color:'var(--color-text,#1E293B)', margin:0,
             lineHeight:1.5, display:'-webkit-box', WebkitLineClamp:expanded?'unset':2,
             WebkitBoxOrient:'vertical', overflow:'hidden' }}>
             {pq.question_text}
@@ -190,7 +190,7 @@ function QuestionCard({ pq, index, userLanguage, onAddToPractice, onShare }) {
               <p style={{ fontSize:11, fontWeight:700, color:GREEN, margin:'0 0 6px' }}>
                 🌐 உங்கள் மொழியில் / आपकी भाषा में
               </p>
-              <p style={{ fontSize:13, color:'#1E293B', margin:0, lineHeight:1.8 }}>
+              <p style={{ fontSize:13, color:'var(--color-text,#1E293B)', margin:0, lineHeight:1.8 }}>
                 {pq.explanation}
               </p>
             </div>
@@ -236,7 +236,7 @@ function QuestionCard({ pq, index, userLanguage, onAddToPractice, onShare }) {
               onClick={() => onShare(pq)}
               style={{ padding:'9px 14px', border:'none', borderRadius:10,
                 fontWeight:700, fontSize:12, cursor:'pointer',
-                background:'#F1F5F9', color:'#64748B' }}>
+                background:'#F1F5F9', color:'var(--color-text-light,#64748B)' }}>
               📤 Share
             </button>
           </div>
@@ -438,7 +438,7 @@ export default function TournamentReview() {
       <h2 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:NAVY, fontSize:20, margin:'0 0 8px' }}>
         Review unlocks at 8:00 PM
       </h2>
-      <p style={{ fontSize:13, color:'#64748B', lineHeight:1.7, marginBottom:20 }}>
+      <p style={{ fontSize:13, color:'var(--color-text-light,#64748B)', lineHeight:1.7, marginBottom:20 }}>
         Full review with explanations is available after results are announced.<br />
         Come back at 8 PM to see every question, correct answer, and why each option is right or wrong.
       </p>
@@ -451,7 +451,7 @@ export default function TournamentReview() {
 
   if (loading) return (
     <div style={{ minHeight:'100vh', background:BG, display:'flex', alignItems:'center',
-      justifyContent:'center', fontFamily:'Inter,sans-serif', color:'#64748B' }}>
+      justifyContent:'center', fontFamily:'Inter,sans-serif', color:'var(--color-text-light,#64748B)' }}>
       <p>Loading your review...</p>
     </div>
   )

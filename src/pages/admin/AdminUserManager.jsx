@@ -32,7 +32,7 @@ export default function AdminUserManager() {
   }
 
   return (
-    <div style={{ minHeight:'100vh', background:'#F8FAFC' }}>
+    <div style={{ minHeight:'100vh', background:'var(--color-bg,#F8FAFC)' }}>
       <div style={{ background:'linear-gradient(135deg,var(--color-primary, #1E3A5F),var(--color-primary-dark, #0F2140))', padding:'20px 32px' }}>
         <button onClick={()=>navigate('/admin/dashboard')} style={{ background:'none', border:'none', color:'rgba(var(--color-surface-rgb, 255,255,255), 0.6)', cursor:'pointer', fontSize:13, marginBottom:4, display:'block' }}>← Back to Admin</button>
         <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900, color:'var(--color-accent, #D4AF37)', fontSize:22, margin:0 }}>👥 User Manager</p>

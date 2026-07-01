@@ -181,7 +181,7 @@ export default function PathwayEnrollModal({ pathway, onClose, onEnrolled }) {
               </p>
             </div>
 
-            <p style={{ fontSize:13, fontWeight:700, color:'#1E293B', marginBottom:10 }}>
+            <p style={{ fontSize:13, fontWeight:700, color:'var(--color-text,#1E293B)', marginBottom:10 }}>
               What is your current class / year?
             </p>
             <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
@@ -219,7 +219,7 @@ export default function PathwayEnrollModal({ pathway, onClose, onEnrolled }) {
         {step === 2 && targetStage && (
           <>
             <button onClick={() => setStep(1)}
-              style={{ background:'none', border:'none', color:'#64748B', cursor:'pointer', fontSize:13, marginBottom:16 }}>
+              style={{ background:'none', border:'none', color:'var(--color-text-light,#64748B)', cursor:'pointer', fontSize:13, marginBottom:16 }}>
               ← Change Class
             </button>
 
@@ -254,16 +254,16 @@ export default function PathwayEnrollModal({ pathway, onClose, onEnrolled }) {
             {/* Skipped stages */}
             {skippedStages.length > 0 && (
               <div style={{ marginBottom:16 }}>
-                <p style={{ fontSize:13, fontWeight:700, color:'#1E293B', marginBottom:8 }}>
+                <p style={{ fontSize:13, fontWeight:700, color:'var(--color-text,#1E293B)', marginBottom:8 }}>
                   Stages you're skipping ({skippedStages.length}):
                 </p>
                 <div style={{ display:'flex', flexDirection:'column', gap:6, marginBottom:12 }}>
                   {skippedStages.map(s => (
                     <div key={s.stage_number} style={{ display:'flex', alignItems:'center', gap:8,
-                      padding:'8px 12px', background:'#F8FAFC', borderRadius:10, border:'1px solid #E2E8F0' }}>
+                      padding:'8px 12px', background:'var(--color-bg,#F8FAFC)', borderRadius:10, border:'1px solid #E2E8F0' }}>
                       <span style={{ fontSize:16 }}>{s.stage_icon}</span>
                       <div style={{ flex:1 }}>
-                        <p style={{ fontSize:12, fontWeight:600, color:'#64748B', margin:0 }}>Stage {s.stage_number}: {s.stage_name}</p>
+                        <p style={{ fontSize:12, fontWeight:600, color:'var(--color-text-light,#64748B)', margin:0 }}>Stage {s.stage_number}: {s.stage_name}</p>
                         <p style={{ fontSize:10, color:'#94A3B8', margin:0 }}>{s.class_or_phase?.replace(/_/g,' ')}</p>
                       </div>
                     </div>

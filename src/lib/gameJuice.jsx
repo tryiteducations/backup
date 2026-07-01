@@ -286,7 +286,7 @@ export const STICKER_CATALOG = [
 ]
 
 export const RARITY_STYLES = {
-  common:    { color:'#64748B', bg:'#F1F5F9', glow:'none' },
+  common:    { color:'var(--color-text-light,#64748B)', bg:'#F1F5F9', glow:'none' },
   rare:      { color:'#1D4ED8', bg:'#DBEAFE', glow:'0 0 16px rgba(29,78,216,0.3)' },
   epic:      { color:'#7C3AED', bg:'#EDE9FE', glow:'0 0 20px rgba(124,58,237,0.4)' },
   legendary: { color:'#D97706', bg:'#FEF3C7', glow:'0 0 28px rgba(217,119,6,0.5)' },

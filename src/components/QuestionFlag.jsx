@@ -67,7 +67,7 @@ export default function QuestionFlag({ questionId, examId, tournamentId, onClose
               <button onClick={onClose} style={{ background:'none', border:'none', fontSize:20, cursor:'pointer', color:'#94A3B8' }}>✕</button>
             </div>
 
-            <p style={{ fontSize:12, color:'#64748B', marginBottom:14, lineHeight:1.6 }}>
+            <p style={{ fontSize:12, color:'var(--color-text-light,#64748B)', marginBottom:14, lineHeight:1.6 }}>
               What seems wrong? Our mentor team reviews every flag within 24 hours.
             </p>
 
@@ -81,7 +81,7 @@ export default function QuestionFlag({ questionId, examId, tournamentId, onClose
                   cursor:'pointer', textAlign:'left' }}>
                 <span style={{ fontSize:20, flexShrink:0 }}>{f.emoji}</span>
                 <div>
-                  <p style={{ fontSize:13, fontWeight:700, color:'#1E293B', margin:0 }}>{f.label}</p>
+                  <p style={{ fontSize:13, fontWeight:700, color:'var(--color-text,#1E293B)', margin:0 }}>{f.label}</p>
                   <p style={{ fontSize:11, color:'#94A3B8', margin:0 }}>{f.desc}</p>
                 </div>
               </button>
@@ -103,7 +103,7 @@ export default function QuestionFlag({ questionId, examId, tournamentId, onClose
               </h3>
             </div>
 
-            <p style={{ fontSize:12, color:'#64748B', marginBottom:10 }}>
+            <p style={{ fontSize:12, color:'var(--color-text-light,#64748B)', marginBottom:10 }}>
               Add more details (optional - helps our mentors fix it faster):
             </p>
 
@@ -136,7 +136,7 @@ export default function QuestionFlag({ questionId, examId, tournamentId, onClose
             <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:NAVY, fontSize:18, margin:'0 0 8px' }}>
               Flag Submitted!
             </h3>
-            <p style={{ fontSize:13, color:'#64748B', lineHeight:1.7, margin:'0 0 20px' }}>
+            <p style={{ fontSize:13, color:'var(--color-text-light,#64748B)', lineHeight:1.7, margin:'0 0 20px' }}>
               Thank you for helping improve TryIT.<br />
               Our mentor team will review this within 24 hours.<br />
               If your flag is correct, <strong>+10 coins</strong> will be added to your wallet.

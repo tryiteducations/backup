@@ -129,7 +129,7 @@ export default function TournamentHub(){
                   </div>
                   <div style={{padding:'12px 16px'}}>
                     <div style={{display:'flex',justifyContent:'space-between',marginBottom:10}}>
-                      <p style={{fontSize:12,color:'#64748B',margin:0}}>👥 {(t.total_registrations||0).toLocaleString('en-IN')} registered</p>
+                      <p style={{fontSize:12,color:'var(--color-text-light,#64748B)',margin:0}}>👥 {(t.total_registrations||0).toLocaleString('en-IN')} registered</p>
                       <p style={{fontSize:12,margin:0}}>{fee>0?<span>₹{fee} <span style={{color:'#94A3B8'}}>(Free users)</span></span>:<span style={{color:'#059669',fontWeight:700}}>Free for you ✅</span>}</p>
                     </div>
                     <div style={{display:'flex',gap:5,marginBottom:12,flexWrap:'wrap'}}>
@@ -168,7 +168,7 @@ export default function TournamentHub(){
             <div style={{background:'#EFF6FF',border:'1px solid #BFDBFE',borderRadius:12,padding:12,marginBottom:14}}>
               <p style={{fontSize:12,color:'#1D4ED8',margin:0,lineHeight:1.6}}>🗳️ <strong>You decide the next tournament!</strong> Vote for the exam you want. When votes hit the threshold, admin schedules it within 7 days.</p>
             </div>
-            <button onClick={()=>navigate('/community')} style={{width:'100%',padding:'12px',background:'#fff',border:'1.5px dashed #94A3B8',borderRadius:12,fontSize:13,color:'#64748B',cursor:'pointer',marginBottom:14,fontWeight:600}}>
+            <button onClick={()=>navigate('/community')} style={{width:'100%',padding:'12px',background:'#fff',border:'1.5px dashed #94A3B8',borderRadius:12,fontSize:13,color:'var(--color-text-light,#64748B)',cursor:'pointer',marginBottom:14,fontWeight:600}}>
               + Request new exam in Community →
             </button>
             {polls.map(p=>{
@@ -179,8 +179,8 @@ export default function TournamentHub(){
                 <div key={p.poll_id} style={{background:'#fff',borderRadius:14,padding:14,marginBottom:10,border:'1.5px solid #E2E8F0'}}>
                   <div style={{display:'flex',justifyContent:'space-between',marginBottom:8}}>
                     <div>
-                      <p style={{fontSize:14,fontWeight:700,color:'#1E293B',margin:'0 0 2px'}}>{p.exam_name}</p>
-                      <p style={{fontSize:11,color:'#64748B',margin:0}}>{p.description}</p>
+                      <p style={{fontSize:14,fontWeight:700,color:'var(--color-text,#1E293B)',margin:'0 0 2px'}}>{p.exam_name}</p>
+                      <p style={{fontSize:11,color:'var(--color-text-light,#64748B)',margin:0}}>{p.description}</p>
                     </div>
                     {p.status==='threshold_reached'&&<span style={{fontSize:10,fontWeight:700,padding:'2px 8px',borderRadius:99,background:'#D1FAE5',color:'#065F46',flexShrink:0}}>✅ Reached!</span>}
                   </div>
@@ -188,12 +188,12 @@ export default function TournamentHub(){
                     <div style={{height:'100%',width:`${pct}%`,background:pct>=100?'#059669':NAVY,borderRadius:99}}/>
                   </div>
                   <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-                    <p style={{fontSize:12,color:'#64748B',margin:0}}>{p.vote_count.toLocaleString('en-IN')}/{threshold.toLocaleString('en-IN')} ({Math.round(pct)}%)</p>
+                    <p style={{fontSize:12,color:'var(--color-text-light,#64748B)',margin:0}}>{p.vote_count.toLocaleString('en-IN')}/{threshold.toLocaleString('en-IN')} ({Math.round(pct)}%)</p>
                     <button onClick={()=>handleVote(p.poll_id)} disabled={voted||p.status==='threshold_reached'} style={{padding:'7px 16px',border:'none',borderRadius:10,fontWeight:700,fontSize:12,cursor:voted?'default':'pointer',background:voted?'#F0FDF4':NAVY,color:voted?'#065F46':'#fff',opacity:p.status==='threshold_reached'?0.5:1}}>
                       {voted?'✓ Voted':'▲ Vote'}
                     </button>
                   </div>
-                  {p.admin_note&&<div style={{marginTop:8,background:'#F8FAFC',borderRadius:8,padding:'7px 10px'}}><p style={{fontSize:11,color:'#475569',margin:0}}>🛡️ Admin: {p.admin_note}</p></div>}
+                  {p.admin_note&&<div style={{marginTop:8,background:'var(--color-bg,#F8FAFC)',borderRadius:8,padding:'7px 10px'}}><p style={{fontSize:11,color:'#475569',margin:0}}>🛡️ Admin: {p.admin_note}</p></div>}
                 </div>
               )
             })}
@@ -209,7 +209,7 @@ export default function TournamentHub(){
             ):results.map(t=>(
               <button key={t.tournament_id} onClick={()=>navigate(`/tournament/${t.tournament_id}/results`)} style={{width:'100%',background:'#fff',borderRadius:14,padding:14,marginBottom:10,border:'1.5px solid #E2E8F0',textAlign:'left',cursor:'pointer'}}>
                 <p style={{fontSize:14,fontWeight:700,color:NAVY,margin:'0 0 4px'}}>{t.tournament_name}</p>
-                <p style={{fontSize:12,color:'#64748B',margin:0}}>🏆 Results live → Tap to see your rank</p>
+                <p style={{fontSize:12,color:'var(--color-text-light,#64748B)',margin:0}}>🏆 Results live → Tap to see your rank</p>
               </button>
             ))}
           </div>
@@ -240,8 +240,8 @@ function RegModal({tournament,planTier,user,onClose,onDone}){
     <div style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.65)',display:'flex',alignItems:'flex-end',justifyContent:'center',zIndex:1000}} onClick={e=>e.target===e.currentTarget&&onClose()}>
       <div style={{background:'#fff',borderRadius:'20px 20px 0 0',padding:24,width:'100%',maxWidth:460}}>
         <h3 style={{fontFamily:'Poppins,sans-serif',fontWeight:800,color:NAVY,fontSize:16,marginBottom:4}}>Register for Tournament</h3>
-        <p style={{fontSize:12,color:'#64748B',marginBottom:14}}>{tournament.tournament_name}</p>
-        <p style={{fontSize:11,fontWeight:700,color:'#64748B',marginBottom:6}}>Your Category (Private - only you see this)</p>
+        <p style={{fontSize:12,color:'var(--color-text-light,#64748B)',marginBottom:14}}>{tournament.tournament_name}</p>
+        <p style={{fontSize:11,fontWeight:700,color:'var(--color-text-light,#64748B)',marginBottom:6}}>Your Category (Private - only you see this)</p>
         <div style={{display:'flex',flexWrap:'wrap',gap:5,marginBottom:12}}>
           {['general','obc','sc','st','ews','pwd_oh','pwd_vh','ex_servicemen'].map(c=>(
             <button key={c} onClick={()=>setCategory(c)} style={{padding:'6px 10px',borderRadius:8,border:'1.5px solid',fontSize:10,fontWeight:700,cursor:'pointer',borderColor:category===c?NAVY:'#E2E8F0',background:category===c?NAVY:'#fff',color:category===c?'#fff':'#64748B'}}>

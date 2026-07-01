@@ -207,7 +207,7 @@ export default function ProfilePhoto({
             style={{
               position:'absolute', bottom:0, right:0,
               width:size*0.38, height:size*0.38, borderRadius:'50%',
-              background:'#1E3A5F', color:'#fff', border:'2px solid #fff',
+              background:'var(--color-primary,#1E3A5F)', color:'#fff', border:'2px solid #fff',
               display:'flex', alignItems:'center', justifyContent:'center',
               fontSize:size*0.16, cursor:'pointer', zIndex:5,
             }}>
@@ -242,7 +242,7 @@ export default function ProfilePhoto({
             </p>
             <button
               onClick={() => { setZoomed(false); fileRef.current?.click() }}
-              style={{ padding:'8px 20px', background:'#C9A84C', color:'#1E3A5F',
+              style={{ padding:'8px 20px', background:'var(--color-accent,#C9A84C)', color:'#1E3A5F',
                 border:'none', borderRadius:10, fontWeight:700, fontSize:12, cursor:'pointer' }}>
               📷 Change Photo
             </button>

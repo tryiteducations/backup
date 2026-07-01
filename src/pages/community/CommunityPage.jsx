@@ -32,7 +32,7 @@ const STATUS = {
   considering:  { label:'Considering',     bg:'#FEF3C7', color:'#D97706', emoji:'🤔'  },
   in_progress:  { label:'In Progress',     bg:'#D1FAE5', color:'#059669', emoji:'⚙️'  },
   done:         { label:'Done! ✨',         bg:'#BBF7D0', color:'#065F46', emoji:'🎉'  },
-  declined:     { label:'Future Update',   bg:'#F1F5F9', color:'#64748B', emoji:'📅'  },
+  declined:     { label:'Future Update',   bg:'#F1F5F9', color:'var(--color-text-light,#64748B)', emoji:'📅'  },
   cost_concern: { label:'Cost Concern',    bg:'#FEE2E2', color:'#DC2626', emoji:'💰'  },
 }
 
@@ -223,7 +223,7 @@ export default function CommunityPage() {
             ))}
           </div>
           <select value={sortBy} onChange={e => setSortBy(e.target.value)}
-            style={{ fontSize:11, border:'1.5px solid #E2E8F0', borderRadius:8, padding:'4px 8px', color:'#64748B' }}>
+            style={{ fontSize:11, border:'1.5px solid #E2E8F0', borderRadius:8, padding:'4px 8px', color:'var(--color-text-light,#64748B)' }}>
             <option value="votes">Most Voted</option>
             <option value="recent">Most Recent</option>
           </select>
@@ -346,7 +346,7 @@ function PostCard({ post, onVote, isLoggedIn }) {
             </span>
           </div>
 
-          <p style={{ fontSize:14, fontWeight:700, color:'#1E293B', marginBottom:4, lineHeight:1.5 }}>
+          <p style={{ fontSize:14, fontWeight:700, color:'var(--color-text,#1E293B)', marginBottom:4, lineHeight:1.5 }}>
             {post.title}
           </p>
 
@@ -362,7 +362,7 @@ function PostCard({ post, onVote, isLoggedIn }) {
               {new Date(post.created_at).toLocaleDateString('en-IN',{day:'numeric',month:'short'})}
             </p>
             <button onClick={() => setExpanded(e=>!e)}
-              style={{ fontSize:11, color:'#64748B', background:'none', cursor:'pointer', padding:0 }}>
+              style={{ fontSize:11, color:'var(--color-text-light,#64748B)', background:'none', cursor:'pointer', padding:0 }}>
               {expanded ? 'Show less ↑' : 'Read more ↓'}
             </button>
           </div>
@@ -435,7 +435,7 @@ function NewPostModal({ onClose, onPosted, user }) {
   const S = {
     inp: { width:'100%', padding:'11px 13px', borderRadius:11, border:'1.5px solid #E2E8F0',
            fontSize:13, outline:'none', boxSizing:'border-box', marginBottom:10, background:'#fff' },
-    lbl: { display:'block', fontSize:11, fontWeight:700, color:'#64748B', marginBottom:4 },
+    lbl: { display:'block', fontSize:11, fontWeight:700, color:'var(--color-text-light,#64748B)', marginBottom:4 },
   }
 
   return (

@@ -5,7 +5,7 @@ import Logo from '../../components/Logo'
 export default function AboutPage() {
   const navigate = useNavigate()
   return (
-    <div style={{ minHeight:'100vh', background:'#F8FAFC' }}>
+    <div style={{ minHeight:'100vh', background:'var(--color-bg,#F8FAFC)' }}>
       <div style={{ background:'linear-gradient(135deg,var(--color-primary, #1E3A5F),var(--color-primary-dark, #0F2140))', padding:'20px 32px', display:'flex', alignItems:'center', gap:20 }}>
         <Logo dark height={36}/>
         <button onClick={()=>navigate('/landing')} style={{ marginLeft:'auto', background:'none', border:'1px solid rgba(255,255,255,0.2)', color:'#fff', borderRadius:10, padding:'8px 16px', fontSize:13, cursor:'pointer' }}>← Back to Home</button>

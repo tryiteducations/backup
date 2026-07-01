@@ -509,7 +509,7 @@ export default function TournamentLive() {
     <div style={{ minHeight:'100vh', background:'#0D0D0D', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', color:'#fff', fontFamily:'Inter,sans-serif', padding:24 }}>
       <p style={{ fontSize:40, marginBottom:12 }}>🌐</p>
       <p style={{ fontWeight:700, fontSize:16, marginBottom:6 }}>Verifying internet connection...</p>
-      <p style={{ fontSize:12, color:'#64748B', textAlign:'center' }}>
+      <p style={{ fontSize:12, color:'var(--color-text-light,#64748B)', textAlign:'center' }}>
         This exam requires a stable internet connection throughout.
       </p>
       <div style={{ marginTop:20, display:'flex', gap:6 }}>
@@ -564,7 +564,7 @@ export default function TournamentLive() {
     <div style={{ minHeight:'100vh', background:'#0D0D0D', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', color:'#fff', fontFamily:'Inter,sans-serif' }}>
       <p style={{ fontSize:40, marginBottom:12 }}>🔐</p>
       <p style={{ fontWeight:700, fontSize:16, marginBottom:8 }}>Preparing your exam...</p>
-      <p style={{ fontSize:12, color:'#64748B' }}>Verifying registration · Decrypting questions · Activating anti-cheat</p>
+      <p style={{ fontSize:12, color:'var(--color-text-light,#64748B)' }}>Verifying registration · Decrypting questions · Activating anti-cheat</p>
     </div>
   )
 
@@ -575,7 +575,7 @@ export default function TournamentLive() {
     <div style={{ minHeight:'100vh', background:'#0D0D0D', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', color:'#fff', fontFamily:'Inter,sans-serif', padding:24 }}>
       <p style={{ fontSize:40, marginBottom:12 }}>⏰</p>
       <p style={{ fontWeight:700, fontSize:18, marginBottom:8 }}>Exam hasn't started yet</p>
-      <p style={{ fontSize:13, color:'#64748B', textAlign:'center', lineHeight:1.7 }}>
+      <p style={{ fontSize:13, color:'var(--color-text-light,#64748B)', textAlign:'center', lineHeight:1.7 }}>
         The exam starts at 9:00 AM.<br />
         Come back when it's time - keep your internet on.
       </p>
@@ -819,7 +819,7 @@ export default function TournamentLive() {
         {/* Submit early */}
         <button onClick={() => handleSubmit(false)}
           style={{ width:'100%', marginTop:20, padding:'12px', background:'rgba(255,255,255,0.04)',
-            border:'1px solid rgba(255,255,255,0.08)', borderRadius:12, color:'#64748B',
+            border:'1px solid rgba(255,255,255,0.08)', borderRadius:12, color:'var(--color-text-light,#64748B)',
             fontSize:13, cursor:'pointer' }}>
           Finish Early ({questions.length - answered} unanswered)
         </button>

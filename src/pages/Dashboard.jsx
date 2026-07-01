@@ -149,9 +149,9 @@ export default function Dashboard() {
           <div key={exam.id} onClick={()=>navigate(`/exams/${exam.id}`)} style={{ background:'#fff', borderRadius:14, padding:'12px 14px', marginBottom:8, cursor:'pointer', border:'1.5px solid #E2E8F0', display:'flex', alignItems:'center', gap:12 }}>
             <div style={{ width:40, height:40, borderRadius:10, flexShrink:0, fontSize:20, background:`${exam.color}15`, display:'flex', alignItems:'center', justifyContent:'center' }}>{exam.icon}</div>
             <div style={{ flex:1, minWidth:0 }}>
-              <p style={{ fontWeight:700, color:'#1E293B', fontSize:13, margin:0 }}>{exam.name}</p>
+              <p style={{ fontWeight:700, color:'var(--color-text,#1E293B)', fontSize:13, margin:0 }}>{exam.name}</p>
               <div style={{ display:'flex', justifyContent:'space-between', marginTop:4 }}>
-                <span style={{ fontSize:11, color:'#64748B' }}>Readiness: {exam.readiness}%</span>
+                <span style={{ fontSize:11, color:'var(--color-text-light,#64748B)' }}>Readiness: {exam.readiness}%</span>
                 <span style={{ fontSize:11, color:'#94A3B8' }}>📅 {exam.examDate}</span>
               </div>
               <div style={{ height:4, background:'#E2E8F0', borderRadius:99, marginTop:5, overflow:'hidden' }}>
@@ -186,7 +186,7 @@ export default function Dashboard() {
             <div style={{ background:'#fff', borderRadius:12, padding:'10px 13px', border:m.is_pinned?`1.5px solid ${GOLD}`:'1.5px solid #E2E8F0', display:'flex', alignItems:'center', gap:10 }}>
               <span style={{ fontSize:20, flexShrink:0 }}>{MAT_ICONS[m.material_type]||'📄'}</span>
               <div style={{ flex:1, minWidth:0 }}>
-                <p style={{ fontSize:13, fontWeight:600, color:'#1E293B', margin:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{m.is_pinned&&'📌 '}{m.title}</p>
+                <p style={{ fontSize:13, fontWeight:600, color:'var(--color-text,#1E293B)', margin:0, overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{m.is_pinned&&'📌 '}{m.title}</p>
                 <p style={{ fontSize:10, color:'#94A3B8', margin:'2px 0 0' }}>{m.source} · 👁️ {(m.view_count||0).toLocaleString('en-IN')} · ⬇️ {(m.download_count||0).toLocaleString('en-IN')}</p>
               </div>
               <span style={{ fontSize:14, color:'#94A3B8', flexShrink:0 }}>›</span>
@@ -206,7 +206,7 @@ export default function Dashboard() {
                   {u.name.split(' ').map(w=>w[0]).join('').slice(0,2)}
                 </div>
                 <div style={{ flex:1, minWidth:0 }}>
-                  <p style={{ fontSize:12, fontWeight:700, color:'#1E293B', margin:0 }}>{u.name}{isYou&&<span style={{ color:NAVY, fontSize:10 }}> (You)</span>}</p>
+                  <p style={{ fontSize:12, fontWeight:700, color:'var(--color-text,#1E293B)', margin:0 }}>{u.name}{isYou&&<span style={{ color:NAVY, fontSize:10 }}> (You)</span>}</p>
                   <p style={{ fontSize:10, color:'#94A3B8', margin:0 }}>{u.state}</p>
                 </div>
                 <div style={{ textAlign:'right' }}>
@@ -216,14 +216,14 @@ export default function Dashboard() {
               </div>
             )
           })}
-          <button onClick={()=>navigate('/leaderboard')} style={{ width:'100%', padding:'10px', border:'none', background:BG, color:'#64748B', fontSize:12, fontWeight:600, cursor:'pointer' }}>See full leaderboard + your rank →</button>
+          <button onClick={()=>navigate('/leaderboard')} style={{ width:'100%', padding:'10px', border:'none', background:BG, color:'var(--color-text-light,#64748B)', fontSize:12, fontWeight:600, cursor:'pointer' }}>See full leaderboard + your rank →</button>
         </div>
 
         {/* Community */}
         <SectionHeader title="🗳️ Community" action="Vote →" onAction={()=>navigate('/community')} />
         <div style={{ background:'#fff', borderRadius:14, padding:'12px 14px', border:'1.5px solid #E2E8F0', marginBottom:4 }}>
           <p style={{ fontSize:11, color:'#94A3B8', marginBottom:4 }}>🔥 Most Voted Request</p>
-          <p style={{ fontSize:13, fontWeight:600, color:'#1E293B', marginBottom:8 }}>{community?.title}</p>
+          <p style={{ fontSize:13, fontWeight:600, color:'var(--color-text,#1E293B)', marginBottom:8 }}>{community?.title}</p>
           <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
             <span style={{ fontSize:12, fontWeight:700, color:NAVY }}>▲ {(community?.vote_count||0).toLocaleString('en-IN')} votes</span>
             <button onClick={()=>navigate('/community')} style={{ padding:'5px 12px', background:NAVY, color:'#fff', border:'none', borderRadius:8, fontSize:11, fontWeight:700, cursor:'pointer' }}>Vote →</button>

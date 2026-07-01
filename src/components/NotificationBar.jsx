@@ -123,10 +123,10 @@ export default function NotificationBar(){
       {showPushAsk&&(
         <div style={{position:'fixed',bottom:80,left:'50%',transform:'translateX(-50%)',width:'calc(100% - 32px)',maxWidth:448,zIndex:9998,background:'#fff',borderRadius:16,padding:16,boxShadow:'0 8px 32px rgba(0,0,0,0.2)',border:`1.5px solid ${NAVY}22`}}>
           <p style={{fontSize:14,fontWeight:700,color:NAVY,margin:'0 0 4px'}}>🔔 Get exam alerts & result notifications</p>
-          <p style={{fontSize:12,color:'#64748B',margin:'0 0 12px',lineHeight:1.6}}>Tournament results at 8 PM, Daily Bharat Pulse, streak reminders, prize awards.</p>
+          <p style={{fontSize:12,color:'var(--color-text-light,#64748B)',margin:'0 0 12px',lineHeight:1.6}}>Tournament results at 8 PM, Daily Bharat Pulse, streak reminders, prize awards.</p>
           <div style={{display:'flex',gap:8}}>
             <button onClick={requestPush} style={{flex:1,padding:'10px',background:NAVY,color:'#fff',border:'none',borderRadius:10,fontWeight:700,fontSize:13,cursor:'pointer'}}>Allow Notifications</button>
-            <button onClick={()=>{setShowPushAsk(false);localStorage.setItem('tryit_push_asked','1')}} style={{padding:'10px 16px',background:'#F1F5F9',color:'#64748B',border:'none',borderRadius:10,fontSize:12,cursor:'pointer'}}>Not Now</button>
+            <button onClick={()=>{setShowPushAsk(false);localStorage.setItem('tryit_push_asked','1')}} style={{padding:'10px 16px',background:'#F1F5F9',color:'var(--color-text-light,#64748B)',border:'none',borderRadius:10,fontSize:12,cursor:'pointer'}}>Not Now</button>
           </div>
         </div>
       )}

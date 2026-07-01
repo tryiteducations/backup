@@ -20,7 +20,7 @@ const SECTIONS=[
 export default function Terms(){
   const navigate=useNavigate()
   return(
-    <div style={{minHeight:'100vh',background:'#F8FAFC',fontFamily:'Inter,sans-serif',paddingBottom:60}}>
+    <div style={{minHeight:'100vh',background:'var(--color-bg,#F8FAFC)',fontFamily:'Inter,sans-serif',paddingBottom:60}}>
       <div style={{background:NAVY,padding:'20px 16px'}}>
         <button onClick={()=>navigate(-1)} style={{background:'rgba(255,255,255,0.1)',border:'none',color:'#fff',width:34,height:34,borderRadius:'50%',fontSize:16,cursor:'pointer',marginBottom:12}}>←</button>
         <h1 style={{fontFamily:'Poppins,sans-serif',fontWeight:800,fontSize:20,color:'#fff',margin:0}}>Terms of Service</h1>
