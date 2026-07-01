@@ -5,11 +5,15 @@ import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
 
 const NAV = [
-  {icon:'🏠', label:'Dashboard',  path:'/institution'},
-  {icon:'🏛️', label:'Halls',      path:'/institution/halls'},
-  {icon:'👨‍🏫', label:'Mentors',    path:'/institution/mentors'},
-  {icon:'📚', label:'Homework',   path:'/institution/homework'},
-  {icon:'📋', label:'Exam Board', path:'/exam-board'},
+  {icon:'🏠', label:'Dashboard',   path:'/institution'},
+  {icon:'🏛️', label:'Halls',       path:'/institution/halls'},
+  {icon:'👨‍🏫', label:'Mentors',     path:'/institution/mentors'},
+  {icon:'📚', label:'Homework',    path:'/institution/homework'},
+  {icon:'📋', label:'Exam Board',  path:'/exam-board'},
+  {icon:'👥', label:'Students',    path:'/institution/students'},
+  {icon:'💰', label:'Revenue',     path:'/institution/revenue'},
+  {icon:'🇮🇳', label:'Bharat Pulse',path:'/bharat-pulse'},
+  {icon:'⚙️', label:'Settings',    path:'/institution/settings'},
 ]
 
 const STATS = [

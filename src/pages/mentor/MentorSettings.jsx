@@ -24,7 +24,9 @@ const LANGS = ['Tamil','Hindi','English','Telugu','Malayalam','Kannada',
 
 export default function MentorSettings() {
   const nav = useNavigate()
-  const { user } = useAuth()
+  const { user, logout } = useAuth()
+  const handleLogout = () => { if(logout) logout(); nav('/login') }
+  const [confirmLogout, setConfirmLogout] = useState(false)
   const { theme, setActiveTheme } = useTheme()
   const p = theme?.primary||'#1E3A5F', a = theme?.accent||'#C9A84C'
   const t = theme?.text||'#1E293B', m = theme?.textLight||'#64748B'
@@ -280,6 +282,40 @@ export default function MentorSettings() {
           </button>
         </div>
 
+        
+        {/* Logout */}
+        <div style={{background:c,border:'1px solid '+b,borderRadius:16,
+          padding:'16px 20px',marginBottom:16}}>
+          <p style={{color:t,fontWeight:700,fontSize:13,margin:'0 0 4px'}}>Account</p>
+          <p style={{color:m,fontSize:11,margin:'0 0 12px'}}>
+            Signed in as {user?.name||user?.phone||'Mentor'}
+          </p>
+          {!confirmLogout ? (
+            <button onClick={()=>setConfirmLogout(true)}
+              style={{width:'100%',background:'#FEF2F2',border:'1px solid #FECACA',
+                borderRadius:12,padding:'11px',color:'#EF4444',fontWeight:700,
+                fontSize:13,cursor:'pointer',fontFamily:'Poppins,sans-serif'}}>
+              🚪 Logout
+            </button>
+          ) : (
+            <div>
+              <p style={{color:'#EF4444',fontWeight:600,fontSize:13,
+                margin:'0 0 10px',textAlign:'center'}}>
+                Are you sure?
+              </p>
+              <div style={{display:'flex',gap:8}}>
+                <button onClick={()=>setConfirmLogout(false)}
+                  style={{flex:1,background:'transparent',border:'1px solid '+b,
+                    borderRadius:12,padding:'10px',color:m,fontWeight:600,
+                    fontSize:13,cursor:'pointer'}}>Cancel</button>
+                <button onClick={handleLogout}
+                  style={{flex:1,background:'#EF4444',border:'none',
+                    borderRadius:12,padding:'10px',color:'#fff',fontWeight:700,
+                    fontSize:13,cursor:'pointer'}}>Yes, Logout</button>
+              </div>
+            </div>
+          )}
+        </div>
         <div style={{height:40}}/>
       </div>
     </div>
