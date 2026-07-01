@@ -237,6 +237,49 @@ export function AuthProvider({ children }) {
     if (!IS_DEV) supabase.auth.signOut()
   }
 
+  // -- PIN AUTH (mocked for dev; names mirror real schema: pin_attempts, pin_locked_until) --
+  const PIN_MAX_ATTEMPTS = 5
+  const PIN_LOCKOUT_MINUTES = 15
+  const getPinLockKey = (role) => `tryit_pin_locked_until_${role}`
+  const getPinAttemptsKey = (role) => `tryit_pin_attempts_${role}`
+
+  const isPinLocked = (role) => {
+    const until = localStorage.getItem(getPinLockKey(role))
+    if (!until) return false
+    if (new Date(until) > new Date()) return true
+    localStorage.removeItem(getPinLockKey(role))
+    localStorage.removeItem(getPinAttemptsKey(role))
+    return false
+  }
+
+  const hasPinForRole = (role) => localStorage.getItem(`tryit_pin_${role}`) !== null
+
+  const setPinForRole = (role, pin) => {
+    localStorage.setItem(`tryit_pin_${role}`, btoa(pin))
+    localStorage.setItem(`tryit_pin_enabled_${role}`, 'true')
+  }
+
+  const verifyPin = (role, pin) => {
+    if (isPinLocked(role)) {
+      return { success: false, reason: 'locked', lockedUntil: localStorage.getItem(getPinLockKey(role)) }
+    }
+    const stored = localStorage.getItem(`tryit_pin_${role}`)
+    if (!stored) return { success: false, reason: 'no_pin_set' }
+    if (btoa(pin) === stored) {
+      localStorage.removeItem(getPinAttemptsKey(role))
+      localStorage.removeItem(getPinLockKey(role))
+      return { success: true }
+    }
+    const attempts = parseInt(localStorage.getItem(getPinAttemptsKey(role)) || '0') + 1
+    localStorage.setItem(getPinAttemptsKey(role), attempts)
+    if (attempts >= PIN_MAX_ATTEMPTS) {
+      const lockUntil = new Date(Date.now() + PIN_LOCKOUT_MINUTES * 60 * 1000).toISOString()
+      localStorage.setItem(getPinLockKey(role), lockUntil)
+      return { success: false, reason: 'locked', lockedUntil: lockUntil }
+    }
+    return { success: false, reason: 'wrong_pin', attemptsLeft: PIN_MAX_ATTEMPTS - attempts }
+  }
+
   const updateUser = (patch) => {
     setUser(prev => {
       const next = { ...prev, ...patch }
@@ -409,6 +452,9 @@ export function AuthProvider({ children }) {
       // Auth actions
       login,
       logout,
+      hasPinForRole,
+      setPinForRole,
+      verifyPin,
       updateUser,
       addCoins,
       spendCoins,

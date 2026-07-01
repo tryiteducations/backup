@@ -1,4 +1,4 @@
-﻿// src/pages/student/StudentGames.jsx
+// src/pages/student/StudentGames.jsx
 // Cinematic Games Hub - dopamine-engineered, exam-skill focused
 // Individual per-student randomization, unlimited levels, Supabase tracking
 import { useState, useEffect, useRef } from 'react'
@@ -9,80 +9,80 @@ import { supabase } from '../../lib/supabase'
 
 const GAMES = [
   // FREE TIER
-  { id:'gk_blitz',        name:'GK Blitz',         emoji:'🇮🇳', color:'#3B82F6', glow:'#3B82F6',
+  { id:'gk_blitz',        name:'GK Blitz',         emoji:'????', color:'#3B82F6', glow:'#3B82F6',
     desc:'10 GK questions in 60 seconds',  tier:'free', skill:'Knowledge Speed',
     path:'/games/gk-blitz',   tags:['GK','Current Affairs'], xp:20, coins:10 },
-  { id:'math_blitz',      name:'Math Blitz',        emoji:'➗', color:'#8B5CF6', glow:'#8B5CF6',
+  { id:'math_blitz',      name:'Math Blitz',        emoji:'?', color:'#8B5CF6', glow:'#8B5CF6',
     desc:'Speed arithmetic, 90 seconds',   tier:'free', skill:'Calculation Speed',
     path:'/games/math-blitz',  tags:['Maths','Aptitude'],     xp:25, coins:12 },
-  { id:'word_rush',       name:'Word Rush',          emoji:'📝', color:'#10B981', glow:'#10B981',
+  { id:'word_rush',       name:'Word Rush',          emoji:'??', color:'#10B981', glow:'#10B981',
     desc:'Vocabulary & idioms race',       tier:'free', skill:'Language Mastery',
     path:'/games/word-rush',   tags:['English','Vocab'],      xp:20, coins:10 },
-  { id:'daily_challenge', name:'Daily Challenge',    emoji:'📅', color:'#F59E0B', glow:'#F59E0B',
+  { id:'daily_challenge', name:'Daily Challenge',    emoji:'??', color:'var(--color-accent, #F59E0B)', glow:'#F59E0B',
     desc:'Fresh questions every day',      tier:'free', skill:'Daily Revision',
     path:'/games/daily-challenge', tags:['Mixed'],            xp:30, coins:20 },
 
   // PRO TIER
-  { id:'logic_grid',      name:'Logic Grid',         emoji:'🧩', color:'#EF4444', glow:'#EF4444',
+  { id:'logic_grid',      name:'Logic Grid',         emoji:'??', color:'#EF4444', glow:'#EF4444',
     desc:'Seating, coding, puzzles',       tier:'pro',  skill:'Logical Reasoning',
     path:'/games/logic-grid',  tags:['Reasoning'],           xp:35, coins:18 },
-  { id:'number_series',   name:'Number Series',      emoji:'🔢', color:'#0EA5E9', glow:'#0EA5E9',
+  { id:'number_series',   name:'Number Series',      emoji:'??', color:'#0EA5E9', glow:'#0EA5E9',
     desc:'Pattern completion',             tier:'pro',  skill:'Pattern Recognition',
     path:'/games/number-series', tags:['Maths','Reasoning'], xp:30, coins:15 },
-  { id:'memory_match',    name:'Memory Match',       emoji:'🧠', color:'#06B6D4', glow:'#06B6D4',
+  { id:'memory_match',    name:'Memory Match',       emoji:'??', color:'#06B6D4', glow:'#06B6D4',
     desc:'GK facts & formula pairing',    tier:'pro',  skill:'Memory Retention',
     path:'/games/memory-match', tags:['GK','Memory'],        xp:28, coins:14 },
-  { id:'speed_reading',   name:'Speed Reading',      emoji:'📖', color:'#22C55E', glow:'#22C55E',
+  { id:'speed_reading',   name:'Speed Reading',      emoji:'??', color:'#22C55E', glow:'#22C55E',
     desc:'RC passages under timer',       tier:'pro',  skill:'Reading Speed',
     path:'/games/speed-reading', tags:['English','RC'],      xp:32, coins:16 },
-  { id:'sports_mastery',  name:'Sports Mastery',     emoji:'🏆', color:'#F97316', glow:'#F97316',
+  { id:'sports_mastery',  name:'Sports Mastery',     emoji:'??', color:'#F97316', glow:'#F97316',
     desc:'Players, trophies, Olympics',   tier:'pro',  skill:'Sports GK',
     path:'/games/sports-mastery', tags:['GK','Sports'],      xp:22, coins:11 },
-  { id:'current_affairs', name:'Current Affairs',    emoji:'📰', color:'#EAB308', glow:'#EAB308',
+  { id:'current_affairs', name:'Current Affairs',    emoji:'??', color:'#EAB308', glow:'#EAB308',
     desc:'Last 14 days India news',       tier:'pro',  skill:'Current Affairs',
     path:'/games/current-affairs', tags:['CA'],              xp:35, coins:18 },
-  { id:'battle',          name:'1v1 Battle',          emoji:'⚔️', color:'#C9A84C', glow:'#C9A84C',
+  { id:'battle',          name:'1v1 Battle',          emoji:'??', color:'var(--color-accent, #C9A84C)', glow:'#C9A84C',
     desc:'Live duel vs random student',   tier:'pro',  skill:'Competitive Speed',
     path:'/games/battle',      tags:['Mixed','Live'],         xp:50, coins:30 },
-  { id:'map_master',      name:'Map Master',          emoji:'🗺️', color:'#16A34A', glow:'#16A34A',
+  { id:'map_master',      name:'Map Master',          emoji:'???', color:'#16A34A', glow:'#16A34A',
     desc:'Rivers, peaks, states, parks',  tier:'pro',  skill:'Geography',
     path:'/games/map-master',  tags:['Geography'],            xp:28, coins:14 },
-  { id:'flag_frenzy',     name:'Flag Frenzy',         emoji:'🚩', color:'#2563EB', glow:'#2563EB',
+  { id:'flag_frenzy',     name:'Flag Frenzy',         emoji:'??', color:'#2563EB', glow:'#2563EB',
     desc:'Identify world flags fast',     tier:'pro',  skill:'World GK',
     path:'/games/flag-frenzy', tags:['GK','World'],           xp:22, coins:11 },
-  { id:'brain_teaser',    name:'Brain Teaser',        emoji:'🔮', color:'#7C3AED', glow:'#7C3AED',
+  { id:'brain_teaser',    name:'Brain Teaser',        emoji:'??', color:'#7C3AED', glow:'#7C3AED',
     desc:'Lateral thinking puzzles',      tier:'pro',  skill:'Critical Thinking',
     path:'/games/brain-teaser', tags:['Reasoning'],           xp:40, coins:20 },
 
   // ULTRA TIER
-  { id:'visual_identify', name:'Visual Identify',    emoji:'👁️', color:'#EC4899', glow:'#EC4899',
+  { id:'visual_identify', name:'Visual Identify',    emoji:'???', color:'#EC4899', glow:'#EC4899',
     desc:'Identify monuments, symbols',   tier:'ultra', skill:'Visual Memory',
     path:'/games/visual-identify', tags:['GK','Visual'],     xp:35, coins:18 },
-  { id:'grammar_gauntlet',name:'Grammar Gauntlet',   emoji:'✏️', color:'#14B8A6', glow:'#14B8A6',
+  { id:'grammar_gauntlet',name:'Grammar Gauntlet',   emoji:'??', color:'#14B8A6', glow:'#14B8A6',
     desc:'Error spotting & correction',   tier:'ultra', skill:'Grammar Mastery',
     path:'/games/grammar-gauntlet', tags:['English'],        xp:30, coins:15 },
-  { id:'reaction_rush',   name:'Reaction Rush',      emoji:'⚡', color:'#FBBF24', glow:'#FBBF24',
+  { id:'reaction_rush',   name:'Reaction Rush',      emoji:'?', color:'#FBBF24', glow:'#FBBF24',
     desc:'Tap the correct answer first',  tier:'ultra', skill:'Reaction Speed',
     path:'/games/reaction-rush', tags:['Mixed','Speed'],     xp:45, coins:25 },
-  { id:'circuit_logic',   name:'Circuit Logic',      emoji:'🔌', color:'#6366F1', glow:'#6366F1',
+  { id:'circuit_logic',   name:'Circuit Logic',      emoji:'??', color:'#6366F1', glow:'#6366F1',
     desc:'Complete logical circuits',     tier:'ultra', skill:'Analytical Thinking',
     path:'/games/circuit-logic', tags:['Reasoning','Tech'],  xp:42, coins:22 },
-  { id:'case_cracker',    name:'Case Cracker',       emoji:'🔍', color:'#DC2626', glow:'#DC2626',
+  { id:'case_cracker',    name:'Case Cracker',       emoji:'??', color:'#DC2626', glow:'#DC2626',
     desc:'Solve mini case studies',       tier:'ultra', skill:'Analytical Reasoning',
     path:'/games/case-cracker', tags:['Reasoning','CA'],     xp:50, coins:28 },
-  { id:'word_power',      name:'Word Power',         emoji:'💬', color:'#0D9488', glow:'#0D9488',
+  { id:'word_power',      name:'Word Power',         emoji:'??', color:'#0D9488', glow:'#0D9488',
     desc:'Advanced vocabulary challenge', tier:'ultra', skill:'Vocabulary',
     path:'/games/word-power',  tags:['English','Vocab'],     xp:35, coins:18 },
-  { id:'tournament_blitz',name:'Tournament Blitz',   emoji:'🏟️', color:'#B45309', glow:'#B45309',
+  { id:'tournament_blitz',name:'Tournament Blitz',   emoji:'???', color:'#B45309', glow:'#B45309',
     desc:'Live 100-player elimination',   tier:'ultra', skill:'Competitive Exam',
     path:'/student/tournament', tags:['Mixed','Live'],       xp:100, coins:60 },
-  { id:'speed_maths',     name:'Speed Maths Pro',    emoji:'🧮', color:'#7C3AED', glow:'#7C3AED',
+  { id:'speed_maths',     name:'Speed Maths Pro',    emoji:'??', color:'#7C3AED', glow:'#7C3AED',
     desc:'Advanced DI & calculations',   tier:'ultra', skill:'Data Interpretation',
     path:'/games/math-blitz',  tags:['Maths','DI'],          xp:40, coins:20 },
-  { id:'history_hunt',    name:'History Hunt',       emoji:'🏛️', color:'#92400E', glow:'#92400E',
+  { id:'history_hunt',    name:'History Hunt',       emoji:'???', color:'#92400E', glow:'#92400E',
     desc:'Dates, dynasties, movements',  tier:'ultra', skill:'History',
     path:'/games/gk-blitz',   tags:['History','GK'],          xp:35, coins:18 },
-  { id:'science_sprint',  name:'Science Sprint',     emoji:'🔬', color:'#065F46', glow:'#065F46',
+  { id:'science_sprint',  name:'Science Sprint',     emoji:'??', color:'#065F46', glow:'#065F46',
     desc:'Physics, Chemistry, Biology',  tier:'ultra', skill:'Science GK',
     path:'/games/gk-blitz',   tags:['Science','GK'],          xp:35, coins:18 },
 ]
@@ -199,7 +199,7 @@ export default function StudentGames() {
 
   const shareLevel = (game) => {
     const level = gameLevels[game.id] || 1
-    const text = `I just reached Level ${level} in ${game.name} ${game.emoji} on TryIT Educations! 🎮🎓\n\nImproving my ${game.skill} every day.\n\nJoin me: tryiteducations.net`
+    const text = `I just reached Level ${level} in ${game.name} ${game.emoji} on TryIT Educations! ????\n\nImproving my ${game.skill} every day.\n\nJoin me: tryiteducations.net`
     if (navigator.share) {
       navigator.share({ title: `Level ${level} in ${game.name}!`, text })
     } else {
@@ -276,14 +276,14 @@ export default function StudentGames() {
             background:card, border:`1px solid ${bdr}`, borderRadius:10,
             width:38, height:38, cursor:'pointer', color:txt, fontSize:18,
             display:'flex', alignItems:'center', justifyContent:'center',
-            transition:'all 0.15s' }}>←</button>
+            transition:'all 0.15s' }}>?</button>
           <div>
             <p style={{ color:txt, fontFamily:'Poppins,sans-serif',
               fontWeight:800, fontSize:18, margin:0 }}>
-              🎮 Games Hub
+              ?? Games Hub
             </p>
             <p style={{ color:muted, fontSize:11, margin:0 }}>
-              {playedCount} games active · {totalCoins}🪙 · {totalXP}⭐ XP
+              {playedCount} games active · {totalCoins}?? · {totalXP}? XP
             </p>
           </div>
         </div>
@@ -307,10 +307,10 @@ export default function StudentGames() {
         <div style={{ maxWidth:900, margin:'0 auto' }}>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:12 }}>
             {[
-              { label:'Games Played', val:playedCount, icon:'🎮', color:'#60A5FA' },
-              { label:'Total Coins', val:totalCoins,   icon:'🪙', color:'#FFD700' },
-              { label:'Total XP',    val:totalXP,      icon:'⭐', color:'#4ADE80' },
-              { label:'Your Plan',   val:plan.toUpperCase(), icon:'👑', color:accent },
+              { label:'Games Played', val:playedCount, icon:'??', color:'#60A5FA' },
+              { label:'Total Coins', val:totalCoins,   icon:'??', color:'#FFD700' },
+              { label:'Total XP',    val:totalXP,      icon:'?', color:'#4ADE80' },
+              { label:'Your Plan',   val:plan.toUpperCase(), icon:'??', color:accent },
             ].map((s,i) => (
               <div key={i} style={{
                 background:'rgba(255,255,255,0.08)',
@@ -431,7 +431,7 @@ export default function StudentGames() {
                       display:'flex', flexDirection:'column',
                       alignItems:'center', justifyContent:'center', gap:4,
                     }}>
-                      <span style={{ fontSize:24 }}>🔒</span>
+                      <span style={{ fontSize:24 }}>??</span>
                       <p style={{ color:'#fff', fontSize:9,
                         fontWeight:700, margin:0, textTransform:'uppercase' }}>
                         {game.tier} only
@@ -473,12 +473,12 @@ export default function StudentGames() {
                       color:game.color, fontSize:8, fontWeight:700,
                       padding:'2px 7px', borderRadius:20,
                       border:`1px solid ${game.color}30`,
-                    }}>⚡ {game.skill}</span>
+                    }}>? {game.skill}</span>
                     <span style={{
                       background:'rgba(255,255,255,0.06)',
                       color:muted, fontSize:8, fontWeight:600,
                       padding:'2px 7px', borderRadius:20,
-                    }}>+{game.xp}XP · +{game.coins}🪙</span>
+                    }}>+{game.xp}XP · +{game.coins}??</span>
                   </div>
 
                   {/* Progress bar */}
@@ -519,7 +519,7 @@ export default function StudentGames() {
                         boxShadow: unlocked ? `0 4px 14px ${game.color}44` : 'none',
                         transition:'all 0.15s',
                       }}>
-                      {unlocked ? (played>0 ? `▶ Play (Lv.${level})` : '▶ Start') : `🔒 ${game.tier}`}
+                      {unlocked ? (played>0 ? `? Play (Lv.${level})` : '? Start') : `?? ${game.tier}`}
                     </button>
                     {played > 0 && (
                       <button onClick={() => shareLevel(game)}
@@ -533,7 +533,7 @@ export default function StudentGames() {
                           color: copied ? '#4ADE80' : muted,
                         }}
                         title="Share your level">
-                        {copied ? '✓' : '📤'}
+                        {copied ? '?' : '??'}
                       </button>
                     )}
                   </div>
@@ -551,7 +551,7 @@ export default function StudentGames() {
         }}>
           <p style={{ color:accent, fontFamily:'Poppins,sans-serif',
             fontWeight:800, fontSize:16, margin:'0 0 6px' }}>
-            🧠 Why TryIT Games Work
+            ?? Why TryIT Games Work
           </p>
           <p style={{ color:'rgba(255,255,255,0.6)', fontSize:12,
             margin:'0 0 14px', lineHeight:1.7 }}>
@@ -561,9 +561,9 @@ export default function StudentGames() {
           </p>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:10 }}>
             {[
-              { icon:'⚡', label:'Speed',     val:'+34%', sub:'avg after 30 days' },
-              { icon:'🎯', label:'Accuracy',  val:'+28%', sub:'avg after 30 days' },
-              { icon:'🧠', label:'Retention', val:'+41%', sub:'avg after 30 days' },
+              { icon:'?', label:'Speed',     val:'+34%', sub:'avg after 30 days' },
+              { icon:'??', label:'Accuracy',  val:'+28%', sub:'avg after 30 days' },
+              { icon:'??', label:'Retention', val:'+41%', sub:'avg after 30 days' },
             ].map((s,i) => (
               <div key={i} style={{ textAlign:'center',
                 background:'rgba(255,255,255,0.06)', borderRadius:12, padding:'10px' }}>

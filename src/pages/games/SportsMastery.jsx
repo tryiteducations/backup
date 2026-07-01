@@ -187,7 +187,7 @@ export default function SportsMastery() {
             <span style={{ background:`${C1}22`,color:C1,fontSize:10,fontWeight:700,padding:'3px 10px',borderRadius:20,border:`1px solid ${C1}33` }}>Sports GK</span>
             {combo>0 && <span style={{ color:C1,fontSize:10,fontWeight:700 }}>🔥 x{combo}</span>}
           </div>
-          <p style={{ color:'#F8FAFC',fontSize:15,fontWeight:600,lineHeight:1.7,margin:0 }}>{q?.q}</p>
+          <p style={{ color:'var(--color-background, #F8FAFC)',fontSize:15,fontWeight:600,lineHeight:1.7,margin:0 }}>{q?.q}</p>
         </div>
         <div style={{ display:'flex',flexDirection:'column',gap:10 }}>
           {q?.opts?.map((opt,i) => (<AnswerOption key={i} option={opt} index={i} selected={selected===i} correct={revealed && i===q.ans} wrong={revealed && i!==q.ans} revealed={revealed} disabled={revealed} onClick={() => handleAnswer(i)}/>))}

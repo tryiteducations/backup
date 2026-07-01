@@ -20,7 +20,7 @@ const STATS = [
   {icon:'🏛️', label:'Active Halls',    val:'4',     color:'#3B82F6'},
   {icon:'👨‍🎓', label:'Total Students',  val:'875',   color:'#22C55E'},
   {icon:'👨‍🏫', label:'Mentors',         val:'6',     color:'#8B5CF6'},
-  {icon:'📝', label:'Exams This Month', val:'12',    color:'#F59E0B'},
+  {icon:'📝', label:'Exams This Month', val:'12',    color:'var(--color-accent, #F59E0B)'},
   {icon:'📚', label:'Homework Pending', val:'3',     color:'#EF4444'},
   {icon:'💰', label:'Revenue (Month)',  val:'₹42,500', color:'#22C55E'},
 ]
@@ -270,7 +270,7 @@ export default function InstitutionDashboard() {
             {[
               {icon:'🏛️',label:'Create Hall',   path:'/institution/halls',   color:'#3B82F6'},
               {icon:'👨‍🏫',label:'Add Mentor',   path:'/institution/mentors', color:'#8B5CF6'},
-              {icon:'📚',label:'Post Homework', path:'/institution/homework', color:'#F59E0B'},
+              {icon:'📚',label:'Post Homework', path:'/institution/homework', color:'var(--color-accent, #F59E0B)'},
               {icon:'📋',label:'Schedule Exam', path:'/institution/exams',    color:'#EF4444'},
             ].map((action,i)=>(
               <button key={i} onClick={()=>nav(action.path)}

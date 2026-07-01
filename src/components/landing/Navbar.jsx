@@ -11,7 +11,7 @@ const BASE_DOTS = [
   { id:'blue-white',     darkId:'midnight',       color:'#2563EB', label:'Jasmine at Dawn'   },
   { id:'rose-white',     darkId:'pink-dark',      color:'#EC4899', label:'Lotus in Bloom'    },
   { id:'sky-fresh',      darkId:'midnight',       color:'#0EA5E9', label:'Andaman Sky'       },
-  { id:'default',        darkId:'midnight',       color:'#C9A84C', label:'TryIT Classic'     },
+  { id:'default',        darkId:'midnight',       color:'var(--color-accent, #C9A84C)', label:'TryIT Classic'     },
   { id:'high-contrast',  darkId:'high-contrast',  color:'#6366F1', label:'Spashta Drishti'  },
 ]
 

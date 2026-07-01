@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState, useCallback, useMemo } 
 import { THEMES, THEME_LIST, BASE_THEME_IDS } from '../lib/themes'
 import { getThemesWithStatus, findNewlyUnlocked, mergeUnlockedThemeIds } from '../lib/themeUnlocks'
 
-const DEFAULT = 'default'
+const DEFAULT = 'vidya-classic'
 const STORAGE_KEY = 'tryit_theme'
 const UNLOCKED_KEY = 'tryit_unlocked_themes'
 
@@ -38,138 +38,45 @@ function isDarkColor(hex) {
   return getLuminance(hex) < 0.45
 }
 
-function applyThemeToDOM(themeId) {
-  const t = THEMES[themeId] || THEMES[DEFAULT]
-  const root = document.documentElement
-  const bgDark = isDarkColor(t.bg)
-  const surfaceDark = isDarkColor(t.surface)
-  const glassSurface = surfaceDark
-    ? 'rgba(15, 23, 42, 0.78)'
-    : 'rgba(255, 255, 255, 0.72)'
-  const glassSurfaceDark = 'rgba(15, 23, 42, 0.82)'
-  const glassBorder = surfaceDark
-    ? 'rgba(255, 255, 255, 0.16)'
-    : 'rgba(255, 255, 255, 0.55)'
-  const buttonSurface = surfaceDark
-    ? 'rgba(255, 255, 255, 0.94)'
-    : 'rgba(255, 255, 255, 0.9)'
-  const buttonText = surfaceDark ? '#0F172A' : t.text
-  const surfaceText = surfaceDark ? (t.textLight || '#F8FAFC') : t.text
-  // FIX: previously fell back to flat black for all 22 light themes.
-  // Now derives the dark-card tint from this theme's own primaryDark/
-  // primary color, so the floating dark card on Landing's Hero actually
-  // changes per theme instead of always looking identical.
-  const surfaceDarkRgb = hexToRgb(t.primaryDark || t.primary)
-  const surfaceDarkValue = surfaceDark
-    ? t.surface
-    : (surfaceDarkRgb ? `rgba(${surfaceDarkRgb.r}, ${surfaceDarkRgb.g}, ${surfaceDarkRgb.b}, 0.88)` : 'rgba(0, 0, 0, 0.88)')
-  const headingColor = surfaceText
-  const subtextColor = t.textLight || '#94A3B8'
-  const onDarkText = '#FFFFFF'
-  const onDarkTextMuted = 'rgba(255,255,255,0.72)'
-  const onLightText = t.text
-  const onLightTextMuted = t.textLight || '#64748B'
-  const successBg = 'rgba(34,197,94,0.12)'
-  const successBorder = 'rgba(34,197,94,0.22)'
-  const accentRgb = hexToRgb(t.accent)
-  const primaryRgb = hexToRgb(t.primary)
-  const surfaceRgb = hexToRgb(t.surface)
-  const textRgb = hexToRgb(t.text)
-  const bgRgb = hexToRgb(t.bg)
-  const successRgb = hexToRgb(t.success || '#16A34A')
-  const errorRgb = hexToRgb(t.error || '#EF4444')
-  const warningRgb = hexToRgb(t.warning || '#F59E0B')
-  const accentGlow = accentRgb
-    ? `0 0 28px rgba(${accentRgb.r}, ${accentRgb.g}, ${accentRgb.b}, 0.2)`
-    : t.glow || '0 0 20px rgba(0, 0, 0, 0.12)'
-
-  const navbarBg = surfaceDark ? 'rgba(15, 23, 42, 0.88)' : 'rgba(255,255,255,0.72)'
-  const navbarBgScrolled = surfaceDark ? 'rgba(15, 23, 42, 0.96)' : 'rgba(255,255,255,0.92)'
-  const navbarBorder = surfaceDark ? 'rgba(255,255,255,0.12)' : 'rgba(212,175,55,0.18)'
-
-  const vars = {
-    '--color-primary':       t.primary,
-    '--color-primary-dark':  t.primaryDark,
-    '--color-accent':        t.accent,
-    '--color-accent-light':  t.accentLight,
-    '--color-navy':          t.primary,
-    '--color-navy-dark':     t.primaryDark,
-    '--color-gold':          t.accent,
-    '--color-gold-light':    t.accentLight,
-    '--color-bg':            t.bg,
-    '--color-surface':       t.surface,
-    '--color-text':          t.text,
-    '--color-text-light':    bgDark ? 'rgba(255,255,255,0.82)' : (t.textLight || '#64748B'),
-    '--color-surface-text':  surfaceText,
-    '--color-on-surface':    surfaceText,
-    '--color-on-dark':       onDarkText,
-    '--color-on-dark-muted': onDarkTextMuted,
-    '--color-on-light':      onLightText,
-    '--color-on-light-muted':onLightTextMuted,
-    '--color-muted':         t.textLight || t.border || '#64748B',
-    '--color-border':        t.border,
-    '--color-success':       t.success,
-    '--color-error':         t.error,
-    '--color-warning':       t.warning,
-    '--color-primary-rgb':   primaryRgb ? `${primaryRgb.r}, ${primaryRgb.g}, ${primaryRgb.b}` : '30, 58, 95',
-    '--color-accent-rgb':    accentRgb ? `${accentRgb.r}, ${accentRgb.g}, ${accentRgb.b}` : '212, 175, 55',
-    '--color-text-rgb':      textRgb ? `${textRgb.r}, ${textRgb.g}, ${textRgb.b}` : '30, 58, 95',
-    '--color-surface-rgb':   surfaceRgb ? `${surfaceRgb.r}, ${surfaceRgb.g}, ${surfaceRgb.b}` : '255, 255, 255',
-    '--color-bg-rgb':        bgRgb ? `${bgRgb.r}, ${bgRgb.g}, ${bgRgb.b}` : '248, 250, 252',
-    '--color-success-rgb':   successRgb ? `${successRgb.r}, ${successRgb.g}, ${successRgb.b}` : '34, 197, 94',
-    '--color-error-rgb':     errorRgb ? `${errorRgb.r}, ${errorRgb.g}, ${errorRgb.b}` : '239, 68, 68',
-    '--color-warning-rgb':   warningRgb ? `${warningRgb.r}, ${warningRgb.g}, ${warningRgb.b}` : '245, 158, 11',
-    '--card-bg':             t.cardBg,
-    '--card-text':           t.cardText,
-    '--card-accent':         t.cardAccent,
-    '--color-bg-muted-2':    surfaceDark ? 'rgba(255,255,255,0.12)' : 'rgba(15,23,42,0.06)',
-    '--id-card-bg':          t.idCardBg,
-    '--id-card-text':        t.idCardText,
-    '--id-card-id':          t.idCardId,
-    '--id-card-border':      t.idCardBorder,
-    '--glow':                t.glow || 'none',
-    '--glass-surface':       glassSurface,
-    '--glass-surface-dark':  glassSurfaceDark,
-    '--glass-border':        glassBorder,
-    '--glass-shadow':        accentGlow,
-    '--glass-accent':        t.accent,
-    '--glass-dark-text':     onDarkText,
-    '--color-logo-it':       bgDark ? 'rgba(255,255,255,0.95)' : t.text,
-    '--color-text-muted':    bgDark ? 'rgba(255,255,255,0.65)' : 'rgba(30,58,95,0.55)',
-    '--color-surface-dark':  surfaceDarkValue,
-    '--button-surface':      buttonSurface,
-    '--button-text':         buttonText,
-    '--color-surface-muted': surfaceDark ? 'rgba(255,255,255,0.1)' : 'rgba(243,244,246,1)',
-    '--heading-color':       headingColor,
-    '--subtext-color':       subtextColor,
-    '--color-success-bg':    successBg,
-    '--color-success-border': successBorder,
-    '--navbar-bg':           navbarBg,
-    '--navbar-bg-scrolled':  navbarBgScrolled,
-    '--navbar-border':       navbarBorder,
-    '--theme-transition-duration': '0.48s',
+// Apply all CSS variables from theme
+  // Apply all CSS variables from theme
+  function applyThemeToDOM(themeId) {
+    const t = THEMES[themeId] || THEMES[DEFAULT] || Object.values(THEMES)[0] || { bg: '#F8FAFC', surface: '#FFFFFF', text: '#1E293B', textLight: '#64748B', primary: '#2D1B69', primaryDark: '#1E1147', accent: '#F59E0B', accentLight: '#FCD34D', border: '#E2E8F0', success: '#22C55E', error: '#EF4444', warning: '#F59E0B' }
+    if (!t) return
+    const root = document.documentElement
+    const vars = {
+      '--color-primary':       t.primary,
+      '--color-primary-dark':  t.primaryDark,
+      '--color-accent':        t.accent,
+      '--color-accent-light':  t.accentLight,
+      '--color-background':    t.background,
+      '--color-bg':            t.background,
+      '--color-surface':       t.surface,
+      '--color-text':          t.text,
+      '--color-text-light':    t.textLight,
+      '--color-muted':         t.textLight,
+      '--color-border':        t.border,
+      '--color-success':       t.success,
+      '--color-error':         t.error,
+      '--color-warning':       t.warning,
+      '--card-bg':             t.surface,
+      '--card-text':           t.text,
+      '--card-accent':         t.accent,
+      '--heading-color':       t.text,
+      '--subtext-color':       t.textLight,
+    }
+    Object.entries(vars).forEach(([key, value]) => {
+      if (value) root.style.setProperty(key, value)
+    })
+    document.body.style.background = t.background
+    document.body.style.color = t.text
+    const meta = document.querySelector("meta[name='theme-color']")
+    if (meta) meta.setAttribute('content', t.primary)
   }
 
-  Object.entries(vars).forEach(([key, value]) => {
-    if (value !== undefined) root.style.setProperty(key, value)
-  })
+  const ThemeContext = createContext({})
 
-  document.body.style.background = t.bg
-  document.body.style.color = t.text
-
-  const themeMeta = document.querySelector("meta[name='theme-color']")
-  if (themeMeta) themeMeta.setAttribute('content', t.primaryDark || t.primary)
-
-  document.body.classList.add('theme-transitioning')
-  window.clearTimeout(window.__themeTransitionTimeout)
-  window.__themeTransitionTimeout = window.setTimeout(() => {
-    document.body.classList.remove('theme-transitioning')
-  }, 550)
-}
-
-const ThemeContext = createContext({})
-
-export function ThemeProvider({ children, userLevel = 1, userStats = {}, userPlan = 'free', onThemeUnlocked = null }) {
+  export function ThemeProvider({ children, userLevel = 1, userStats = {}, userPlan = 'free', onThemeUnlocked = null }) {
   const [activeTheme, setActiveThemeState] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('tryit_active_theme')

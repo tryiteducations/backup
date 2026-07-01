@@ -10,6 +10,7 @@ const springTap = { type: 'spring', stiffness: 400, damping: 28 }
 
 function ThemeCard({ t, isActive, onSelect, onUpgradeClick }) {
   const [pressed, setPressed] = useState(false)
+  const isAdmin = localStorage.getItem('tryit_is_admin') === 'true'
   const locked = !t.unlocked && !isAdmin
   const planLocked = t.planLocked && !isAdmin
 
@@ -48,7 +49,7 @@ function ThemeCard({ t, isActive, onSelect, onUpgradeClick }) {
           backdropFilter: 'blur(2px)',
           display: 'flex', flexDirection: 'column',
           alignItems: 'center', justifyContent: 'center', gap: 8,
-          color: '#FFFFFF', padding: 14, textAlign: 'center',
+          color: 'var(--color-surface, #FFFFFF)', padding: 14, textAlign: 'center',
         }}>
           {planLocked ? <Crown size={20} strokeWidth={2.2} /> : <Lock size={20} strokeWidth={2.2} />}
           <span style={{ fontSize: 11, fontWeight: 700, lineHeight: 1.3 }}>
@@ -59,7 +60,7 @@ function ThemeCard({ t, isActive, onSelect, onUpgradeClick }) {
               <div style={{
                 height: '100%', borderRadius: 4,
                 width: `${Math.round((t.progress || 0) * 100)}%`,
-                background: '#FFFFFF',
+                background: 'var(--color-surface, #FFFFFF)',
                 transition: 'width 0.4s ease',
               }} />
             </div>
@@ -161,7 +162,7 @@ export default function ThemeSelector() {
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             style={{
               position: 'fixed', bottom: 24, left: '50%', transform: 'translateX(-50%)',
-              background: 'var(--color-primary-dark, #0F2140)', color: '#FFFFFF',
+              background: 'var(--color-primary-dark, #0F2140)', color: 'var(--color-surface, #FFFFFF)',
               padding: '14px 22px', borderRadius: 16, fontWeight: 700, fontSize: 14,
               boxShadow: '0 20px 48px rgba(0,0,0,0.25)', zIndex: 9999,
             }}

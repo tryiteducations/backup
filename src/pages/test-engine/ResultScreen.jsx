@@ -209,7 +209,7 @@ export default function ResultScreen() {
               transition={{ ...springPop, delay: 0.16 }}
               style={{ background: 'rgba(245,158,11,0.18)', borderRadius: 14, padding: '10px 18px', textAlign: 'center' }}
             >
-              <div style={{ color: '#FCD34D', fontWeight: 800, fontSize: 20 }}>+20</div>
+              <div style={{ color: 'var(--color-accent-light, #FCD34D)', fontWeight: 800, fontSize: 20 }}>+20</div>
               <div style={{ color: 'var(--color-on-dark-muted, rgba(255,255,255,0.7))', fontSize: 11 }}>Bonus Coins</div>
             </motion.div>
           )}

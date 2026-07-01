@@ -21,7 +21,7 @@ const NAV = [
 
 const STATS = [
   {icon:'👨‍🎓', label:'Active Students', val:'12', color:'#3B82F6'},
-  {icon:'💬',  label:'Doubts Pending',  val:'4',  color:'#F59E0B'},
+  {icon:'💬',  label:'Doubts Pending',  val:'4',  color:'var(--color-accent, #F59E0B)'},
   {icon:'⭐',  label:'Avg Rating',      val:'4.8', color:'#FBBF24'},
   {icon:'💰',  label:'This Month',      val:'₹3,840', color:'#22C55E'},
 ]

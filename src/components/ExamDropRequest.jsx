@@ -94,7 +94,7 @@ export default function ExamDropRequest({ compact = false, onClose }) {
                   width: '100%', padding: '10px 12px', borderRadius: 10,
                   border: `1.5px solid ${f.key === 'examName' && error ? 'var(--color-error, #EF4444)' : 'var(--color-border, #E2E8F0)'}`,
                   fontSize: 13, fontFamily: 'Inter,sans-serif',
-                  outline: 'none', background: '#F8FAFC', boxSizing: 'border-box',
+                  outline: 'none', background: 'var(--color-background, #F8FAFC)', boxSizing: 'border-box',
                 }}
                 onFocus={e => e.target.style.borderColor = 'var(--color-accent, #D4AF37)'}
                 onBlur={e => e.target.style.borderColor = 'var(--color-border, #E2E8F0)'}

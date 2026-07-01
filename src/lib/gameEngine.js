@@ -74,7 +74,7 @@ export function getComboMultiplier(streak) {
   if (streak >= 10) return { mult: 3,   label: '🔥🔥🔥 ON FIRE',  color: '#DC2626' }
   if (streak >= 6)  return { mult: 2,   label: '🔥🔥 BLAZING',   color: '#EA580C' }
   if (streak >= 3)  return { mult: 1.5, label: '🔥 HOT STREAK',  color: '#D97706' }
-  return                  { mult: 1,   label: '',                color: '#64748B' }
+  return                  { mult: 1,   label: '',                color: 'var(--color-text-light, #64748B)' }
 }
 
 // -- HAPTIC-LIKE FEEDBACK (vibration on mobile) ----------------------------

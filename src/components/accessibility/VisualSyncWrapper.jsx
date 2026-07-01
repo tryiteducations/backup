@@ -76,7 +76,7 @@ export default function VisualSyncWrapper({ children, captionText = '' }) {
           style={{
             position:'fixed', bottom:0, left:0, right:0,
             background:'rgba(0,0,0,0.92)',
-            color:'#FFFFFF', fontSize:16, fontWeight:600,
+            color:'var(--color-surface, #FFFFFF)', fontSize:16, fontWeight:600,
             padding:'14px 24px', lineHeight:1.5,
             borderTop:'2px solid var(--color-accent, #D4AF37)',
             minHeight:60, zIndex:4999,

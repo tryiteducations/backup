@@ -90,9 +90,9 @@ export default function PricingPage() {
       emoji:    '🆓',
       price:    0,
       yearly:   0,
-      color:    '#64748B',
+      color:    'var(--color-text-light, #64748B)',
       bg:       '#F8FAFC',
-      border:   '#E2E8F0',
+      border:   'var(--color-border, #E2E8F0)',
       cta:      isCurrentPlan('free') ? 'Your Current Plan' : 'Get Started Free',
       ctaFn:    () => !user ? navigate('/login') : null,
       highlights: [

@@ -1,4 +1,4 @@
-﻿import { lazy, Suspense, useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { ThemeProvider } from './context/ThemeContext'
 import { ToastProvider } from './context/ToastContext'
@@ -11,6 +11,7 @@ import NotificationBar from './components/NotificationBar'
 const Splash          = lazy(() => import('./pages/Splash'))
 const Landing         = lazy(() => import('./pages/Landing'))
 const Login           = lazy(() => import('./pages/Login'))
+const Register        = lazy(() => import('./pages/Register'))
 const Onboarding      = lazy(() => import('./pages/Onboarding'))
 const RoleSelect      = lazy(() => import('./pages/role-select/RoleSelect'))
 const Dashboard          = lazy(() => import('./pages/Dashboard'))
@@ -102,10 +103,12 @@ const FocusMode      = lazy(() => import('./pages/focus-mode/FocusMode'))
 const PricingPage    = lazy(() => import('./pages/pricing/PricingPage'))
 const WalletPage     = lazy(() => import('./pages/wallet/WalletPage'))
 const FamilyHub      = lazy(() => import('./pages/family/FamilyHub'))
+const FamilyDashboardRefactored = lazy(() => import('./pages/family/FamilyDashboardRefactored'))
 const ReferralPage   = lazy(() => import('./pages/referral/ReferralPage'))
 const MentorLeaderboard   = lazy(() => import('./pages/mentor/MentorLeaderboard'))
 const MentorDoubts        = lazy(() => import('./pages/mentor/MentorDoubts'))
 const InstitutionDashboard = lazy(() => import('./pages/institution/InstitutionDashboard'))
+const InstitutionDashboardRefactored = lazy(() => import('./pages/institution/InstitutionDashboardRefactored'))
 const InstitutionRegister  = lazy(() => import('./pages/institution/InstitutionRegister'))
 const InstitutionHalls     = lazy(() => import('./pages/institution/InstitutionHalls'))
 const InstitutionMentors   = lazy(() => import('./pages/institution/InstitutionMentors'))
@@ -121,6 +124,7 @@ const MentorCommunity  = lazy(() => import('./pages/mentor/MentorCommunity'))
 const MentorSettings   = lazy(() => import('./pages/mentor/MentorSettings'))
 const MentorStudents = lazy(() => import('./pages/mentor/MentorStudents'))
 const MentorHub      = lazy(() => import('./pages/mentor/MentorHub'))
+const MentorDashboardRefactored = lazy(() => import('./pages/mentor/MentorDashboardRefactored'))
 const CashbackCenter = lazy(() => import('./pages/mentor/CashbackCenter'))
 const MentorAnalytics= lazy(() => import('./pages/mentor/MentorAnalytics'))
 const CouponManager  = lazy(() => import('./pages/mentor/CouponManager'))
@@ -151,12 +155,12 @@ const Stub = ({ title = 'Coming Soon' }) => (
     alignItems:'center', justifyContent:'center', gap:16, padding:24,
     fontFamily:'Poppins,sans-serif',
     background:'linear-gradient(135deg,#1E3A5F,#0F2140)' }}>
-    <div style={{ fontSize:56 }}>🔧</div>
-    <h2 style={{ color:'#C9A84C', fontSize:24, fontWeight:800, textAlign:'center' }}>{title}</h2>
+    <div style={{ fontSize:56 }}>??</div>
+    <h2 style={{ color:'var(--color-accent,#C9A84C)', fontSize:24, fontWeight:800, textAlign:'center' }}>{title}</h2>
     <p style={{ color:'rgba(255,255,255,0.6)', fontSize:14 }}>Being built. Check back soon!</p>
     <a href="/dashboard" style={{ background:'linear-gradient(135deg,#C9A84C,#E8C84A)',
       borderRadius:14, padding:'12px 28px', fontWeight:700, fontSize:15,
-      color:'#1E3A5F', textDecoration:'none', marginTop:8 }}>← Back to Dashboard</a>
+      color:'var(--color-primary,#1E3A5F)', textDecoration:'none', marginTop:8 }}>? Back to Dashboard</a>
   </div>
 )
 
@@ -214,6 +218,7 @@ function ThemedApp() {
                 <Route path="/"            element={<Landing />} />
                 <Route path="/landing"     element={<Navigate to="/" replace/>} />
                 <Route path="/login"       element={<Login />} />
+                <Route path="/register"    element={<Register />} />
                 <Route path="/onboarding"  element={<Onboarding />} />
                 <Route path="/role-select" element={<RoleSelect />} />
 
@@ -302,14 +307,15 @@ function ThemedApp() {
                 <Route path="/pro"      element={<PricingPage />} />
                 <Route path="/pricing"  element={<Navigate to="/pro" replace />} />
                 <Route path="/wallet"   element={<WalletPage />} />
-                <Route path="/family"   element={<FamilyHub />} />
+                <Route path="/family"   element={<FamilyDashboardRefactored />} />
+                <Route path="/family/v1" element={<FamilyHub />} />
                 <Route path="/referral" element={<ReferralPage />} />
 
                 {/* EXAM BOARD */}
                 <Route path="/exam-board"                element={<ExamBoard />} />
                 <Route path="/exam-board/:examId/courses" element={<ExamCourses />} />
 
-                {/* CENTRE → INSTITUTION REDIRECTS */}
+                {/* CENTRE ? INSTITUTION REDIRECTS */}
                 <Route path="/centre/dashboard"    element={<Navigate to="/institution" replace/>} />
                 <Route path="/centre/login"        element={<Navigate to="/institution/register" replace/>} />
                 <Route path="/centre/onboarding"   element={<Navigate to="/onboarding" replace/>} />
@@ -319,7 +325,8 @@ function ThemedApp() {
                 <Route path="/centre"              element={<Navigate to="/institution" replace/>} />
 
                 {/* INSTITUTION */}
-                <Route path="/institution"          element={<RoleGuard allowedRoles={['institution']}><InstitutionDashboard/></RoleGuard>} />
+                <Route path="/institution"          element={<RoleGuard allowedRoles={['institution']}><InstitutionDashboardRefactored/></RoleGuard>} />
+                <Route path="/institution/v1"       element={<RoleGuard allowedRoles={['institution']}><InstitutionDashboard/></RoleGuard>} />
                 <Route path="/institution/register" element={<InstitutionRegister/>} />
                 <Route path="/institution/halls"    element={<RoleGuard allowedRoles={['institution']}><InstitutionHalls/></RoleGuard>} />
                 <Route path="/institution/mentors"  element={<RoleGuard allowedRoles={['institution']}><InstitutionMentors/></RoleGuard>} />
@@ -332,7 +339,8 @@ function ThemedApp() {
                 <Route path="/mentor-hub/students"    element={<RoleGuard allowedRoles={['mentor','institution']}><MentorStudents/></RoleGuard>} />
                 <Route path="/mentor-hub/doubts"      element={<RoleGuard allowedRoles={['mentor','institution']}><MentorDoubts/></RoleGuard>} />
                 <Route path="/mentor-hub/leaderboard" element={<RoleGuard allowedRoles={['mentor','institution']}><MentorLeaderboard/></RoleGuard>} />
-                <Route path="/mentor-hub"             element={<RoleGuard allowedRoles={['mentor','institution']}><MentorHub/></RoleGuard>} />
+                <Route path="/mentor-hub"             element={<RoleGuard allowedRoles={['mentor','institution']}><MentorDashboardRefactored/></RoleGuard>} />
+                <Route path="/mentor-hub/v1"          element={<RoleGuard allowedRoles={['mentor','institution']}><MentorHub/></RoleGuard>} />
                 <Route path="/mentor-hub/cashback"    element={<RoleGuard allowedRoles={['mentor','institution']}><CashbackCenter/></RoleGuard>} />
                 <Route path="/mentor-hub/analytics"   element={<RoleGuard allowedRoles={['mentor','institution']}><MentorAnalytics/></RoleGuard>} />
                 <Route path="/mentor-hub/coupons"     element={<RoleGuard allowedRoles={['mentor','institution']}><CouponManager/></RoleGuard>} />
@@ -344,7 +352,7 @@ function ThemedApp() {
                 <Route path="/circles/school"     element={<SchoolCircle />} />
                 <Route path="/circles/sisterhood" element={<SisterhoodCircle />} />
                 <Route path="/impact"             element={<LiveImpactTracker />} />
-                {/* <Route path="/donate" element={<Stub title="Donation Page 💛" />} /> */}
+                {/* <Route path="/donate" element={<Stub title="Donation Page ??" />} /> */}
 
                 {/* PARENT */}
                 <Route path="/parent/login"         element={<ParentLogin />} />

@@ -19,7 +19,7 @@ const STRENGTH_BARS = [
   { name:'Reasoning', value:90, color:'var(--color-success, #22C55E)' },
   { name:'Quant',     value:82, color:'var(--color-success, #22C55E)' },
   { name:'GK',        value:75, color:'var(--color-accent, #D4AF37)' },
-  { name:'English',   value:68, color:'#F59E0B' },
+  { name:'English',   value:68, color:'var(--color-accent, #F59E0B)' },
   { name:'Science',   value:55, color:'var(--color-error, #EF4444)' },
 ]
 

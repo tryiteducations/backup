@@ -214,7 +214,7 @@ export default function Profile() {
                 <span style={{ fontSize:24, flexShrink:0 }}>{exam.icon}</span>
                 <div style={{ flex:1 }}>
                   <p style={{ fontSize:13, fontWeight:700, color:'var(--color-text,#1E293B)', margin:'0 0 4px' }}>{exam.name}</p>
-                  <div style={{ height:4, background:'#E2E8F0', borderRadius:99, overflow:'hidden' }}>
+                  <div style={{ height:4, background:'var(--color-border, #E2E8F0)', borderRadius:99, overflow:'hidden' }}>
                     <div style={{ height:'100%', width:`${exam.readiness}%`, background:exam.readiness>=70?GREEN:GOLD, borderRadius:99 }} />
                   </div>
                   <p style={{ fontSize:10, color:'#94A3B8', margin:'4px 0 0' }}>Readiness: {exam.readiness}%</p>

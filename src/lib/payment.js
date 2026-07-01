@@ -48,7 +48,7 @@ export async function openPayment({
       email:   prefill.email   || `${prefill.contact}@phone.tryiteducations.net`,
     },
     notes,
-    theme: { color: '#C9A84C' },
+    theme: { color: 'var(--color-accent, #C9A84C)' },
     modal: {
       ondismiss: () => onDismiss?.(),
       animation: true,

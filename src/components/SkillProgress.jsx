@@ -79,7 +79,7 @@ export default function SkillProgress({ compact = false }) {
 
             {/* Visual bar: before vs after */}
             <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-              <div style={{ flex:1, height:6, background:'#E2E8F0', borderRadius:99, overflow:'hidden', position:'relative' }}>
+              <div style={{ flex:1, height:6, background:'var(--color-border, #E2E8F0)', borderRadius:99, overflow:'hidden', position:'relative' }}>
                 <div style={{ position:'absolute', height:'100%', width:`${skill.first_accuracy}%`,
                   background:'#CBD5E1', borderRadius:99 }} />
                 <div style={{ position:'absolute', height:'100%', width:`${skill.latest_accuracy}%`,

@@ -28,7 +28,7 @@ export default function ExamCategories() {
           <h2 className="font-poppins font-bold" style={{ fontSize:'clamp(26px,4vw,40px)', color:'var(--color-on-dark, #FFFFFF)' }}>
             Find Your Exam
           </h2>
-          <p className="mt-2" style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))' }}>75,000+ exam pathways across every category</p>
+          <p className="mt-2" style={{ color:'var(--color-on-dark-muted, rgba(255,255,255,0.72))' }}>1,10,000+ exam pathways across every category</p>
         </div>
         <div className="flex flex-wrap justify-center gap-4">
           {CATS.map(cat => (
@@ -52,7 +52,7 @@ export default function ExamCategories() {
         </div>
         <div className="text-center mt-8">
           <button onClick={() => navigate('/login')} className="btn-gold px-8 py-3 rounded-2xl font-bold">
-            Browse All 75,000+ Exams →
+            Browse All 1,10,000+ Exams →
           </button>
         </div>
       </div>

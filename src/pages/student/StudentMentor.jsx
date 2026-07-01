@@ -72,7 +72,7 @@ export default function StudentMentor() {
               <span style={{background:'#3B82F615',color:'#3B82F6',fontSize:9,
                 fontWeight:700,padding:'2px 8px',borderRadius:20}}>✓ Verified</span>
             )}
-            <span style={{color:'#F59E0B',fontWeight:700,fontSize:12,marginLeft:'auto'}}>
+            <span style={{color:'var(--color-accent, #F59E0B)',fontWeight:700,fontSize:12,marginLeft:'auto'}}>
               ★ {mentor.rating}
             </span>
           </div>

@@ -27,7 +27,7 @@ export default function AudioCompanionWrapper({ children }) {
         display: 'flex', flexDirection: 'column',
         minHeight: '100vh',
         background: '#000',          // maximum contrast
-        color: '#FFFFFF',
+        color: 'var(--color-surface, #FFFFFF)',
         fontFamily: 'Poppins, sans-serif',
         fontSize: '18px',
         lineHeight: 1.8,

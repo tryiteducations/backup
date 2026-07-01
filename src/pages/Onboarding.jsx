@@ -659,7 +659,7 @@ export default function Onboarding() {
       </div>
 
       <div className="relative w-full max-w-lg">
-        <div className="rounded-2xl p-8 shadow-2xl transition-all duration-300" style={{ background: '#F8FAFC' }}>
+        <div className="rounded-2xl p-8 shadow-2xl transition-all duration-300" style={{ background: 'var(--color-background, #F8FAFC)' }}>
           
           {/* Top Brand Block Header */}
           <div className="flex flex-col items-center mb-6">

@@ -71,7 +71,7 @@ export const ID_TEMPLATES = [
     id:'scholar',
     name:'Scholar',
     bg:'linear-gradient(135deg,#0369A1 0%,#075985 50%,#0369A1 100%)',
-    border:'#FFFFFF',
+    border:'var(--color-surface, #FFFFFF)',
     accent:'#7DD3FC',
     textPrimary:'#FFFFFF',
     textSecondary:'#BAE6FD',

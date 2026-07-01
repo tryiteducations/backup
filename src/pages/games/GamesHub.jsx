@@ -45,7 +45,7 @@ const MOCK_CATALOG = [
   { game_id:'speed_reading', name:'Speed Reading', emoji:'📖', description:'RC passages under timer', color:'#059669', tier_required:'pro', exam_tags:['all'], template_id:'blitz_quiz' },
   { game_id:'sports_mastery', name:'Sports Mastery', emoji:'🏆', description:'Players, trophies, Olympics, records', color:'#EA580C', tier_required:'pro', exam_tags:['all'], template_id:'blitz_quiz' },
   { game_id:'current_affairs', name:'Current Affairs', emoji:'📰', description:'Last 14 days news', color:'#D97706', tier_required:'pro', exam_tags:['all'], template_id:'blitz_quiz' },
-  { game_id:'battle', name:'1v1 Battle', emoji:'⚔️', description:'Live duel vs random student', color:'#C9A84C', tier_required:'pro', exam_tags:['all'], template_id:'blitz_quiz' },
+  { game_id:'battle', name:'1v1 Battle', emoji:'⚔️', description:'Live duel vs random student', color:'var(--color-accent, #C9A84C)', tier_required:'pro', exam_tags:['all'], template_id:'blitz_quiz' },
   { game_id:'map_master', name:'Map Master', emoji:'🗺️', description:'Rivers, peaks, parks, states', color:'#16A34A', tier_required:'pro', exam_tags:['upsc','ssc','state_psc'], template_id:'visual_identify' },
   { game_id:'flag_frenzy', name:'Flag Frenzy', emoji:'🚩', description:'Identify world flags fast', color:'#1D4ED8', tier_required:'pro', exam_tags:['upsc','ielts'], template_id:'visual_identify' },
   { game_id:'world_capitals', name:'World Capitals', emoji:'🌍', description:'Match country to capital', color:'#0891B2', tier_required:'pro', exam_tags:['upsc','ielts'], template_id:'memory_match' },

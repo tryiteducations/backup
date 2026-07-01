@@ -347,7 +347,7 @@ export default function ConceptCard() {
             {concept.formula && (
               <div style={{ background:'var(--color-primary,#1E3A5F)', borderRadius:12, padding:14, marginBottom:14, textAlign:'center' }}>
                 <p style={{ fontSize:11, color:'rgba(255,255,255,0.6)', marginBottom:4 }}>FORMULA</p>
-                <p style={{ fontSize:16, fontWeight:700, color:'#C9A84C', fontFamily:'monospace' }}>{concept.formula}</p>
+                <p style={{ fontSize:16, fontWeight:700, color:'var(--color-accent, #C9A84C)', fontFamily:'monospace' }}>{concept.formula}</p>
               </div>
             )}
             {concept.formula_breakdown?.map((fb, i) => (
@@ -417,7 +417,7 @@ export default function ConceptCard() {
             ))}
             {concept.visual_pattern && (
               <div style={{ background:'var(--color-primary,#1E3A5F)', borderRadius:12, padding:14, textAlign:'center' }}>
-                <pre style={{ color:'#C9A84C', fontFamily:'monospace', fontSize:14, margin:0 }}>
+                <pre style={{ color:'var(--color-accent, #C9A84C)', fontFamily:'monospace', fontSize:14, margin:0 }}>
                   {concept.visual_pattern}
                 </pre>
               </div>

@@ -271,7 +271,7 @@ export default function FamilyHub() {
                   {child.exam_readiness}%
                 </span>
               </div>
-              <div style={{ height:10, background:'#E2E8F0', borderRadius:99, overflow:'hidden', marginBottom:8 }}>
+              <div style={{ height:10, background:'var(--color-border, #E2E8F0)', borderRadius:99, overflow:'hidden', marginBottom:8 }}>
                 <div style={{ height:'100%', width:`${child.exam_readiness}%`, borderRadius:99,
                   background: child.exam_readiness>=70?GREEN:child.exam_readiness>=50?GOLD:'#DC2626',
                   transition:'width 0.6s ease' }} />
@@ -295,7 +295,7 @@ export default function FamilyHub() {
                       <span style={{ fontSize:13, fontWeight:800, color:s.color }}>{s.accuracy}%</span>
                     </div>
                   </div>
-                  <div style={{ height:6, background:'#E2E8F0', borderRadius:99, overflow:'hidden' }}>
+                  <div style={{ height:6, background:'var(--color-border, #E2E8F0)', borderRadius:99, overflow:'hidden' }}>
                     <div style={{ height:'100%', width:`${s.accuracy}%`, background:s.color, borderRadius:99 }} />
                   </div>
                 </div>
@@ -342,7 +342,7 @@ export default function FamilyHub() {
                   <p style={{ fontSize:11, color:'var(--color-text-light,#64748B)', marginBottom:8 }}>
                     Got {w.wrong} wrong out of {w.total} attempts
                   </p>
-                  <div style={{ height:6, background:'#E2E8F0', borderRadius:99, overflow:'hidden', marginBottom:8 }}>
+                  <div style={{ height:6, background:'var(--color-border, #E2E8F0)', borderRadius:99, overflow:'hidden', marginBottom:8 }}>
                     <div style={{ height:'100%', width:`${errorRate}%`, background:'#DC2626', borderRadius:99 }} />
                   </div>
                   <p style={{ fontSize:11, color:'var(--color-text-light,#64748B)', margin:0 }}>

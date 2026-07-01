@@ -184,7 +184,7 @@ export default function TournamentHub(){
                     </div>
                     {p.status==='threshold_reached'&&<span style={{fontSize:10,fontWeight:700,padding:'2px 8px',borderRadius:99,background:'#D1FAE5',color:'#065F46',flexShrink:0}}>✅ Reached!</span>}
                   </div>
-                  <div style={{height:6,background:'#E2E8F0',borderRadius:99,overflow:'hidden',marginBottom:6}}>
+                  <div style={{height:6,background:'var(--color-border, #E2E8F0)',borderRadius:99,overflow:'hidden',marginBottom:6}}>
                     <div style={{height:'100%',width:`${pct}%`,background:pct>=100?'#059669':NAVY,borderRadius:99}}/>
                   </div>
                   <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>

@@ -104,10 +104,10 @@ const NAV = [
 const FREE_LIMITS = {tests:3,games:3,doubts:3}
 
 const BASE_THEMES = [
-  {id:'default',    color:'#D4AF37',dark:'midnight',   label:'Classic'},
-  {id:'sunrise',    color:'#F59E0B',dark:'sunrise-dark',label:'Sunrise'},
+  {id:'default',    color:'var(--color-accent, #D4AF37)',dark:'midnight',   label:'Classic'},
+  {id:'sunrise',    color:'var(--color-accent, #F59E0B)',dark:'sunrise-dark',label:'Sunrise'},
   {id:'ocean',      color:'#0EA5E9',dark:'ocean-dark',  label:'Ocean'},
-  {id:'high-contrast',color:'#FFFFFF',dark:'high-contrast',label:'Focus'},
+  {id:'high-contrast',color:'var(--color-surface, #FFFFFF)',dark:'high-contrast',label:'Focus'},
 ]
 
 // Default visible widgets (user can toggle)
@@ -401,7 +401,7 @@ export default function StudentDashboard() {
             <p style={{color:txt,fontFamily:'Poppins,sans-serif',fontWeight:800,
               fontSize:14,margin:'0 0 12px'}}>🔔 Notifications</p>
             {[
-              {icon:'🔥',msg:'Your streak is at risk! Study today.',time:'2h ago',color:'#F59E0B'},
+              {icon:'🔥',msg:'Your streak is at risk! Study today.',time:'2h ago',color:'var(--color-accent, #F59E0B)'},
               {icon:'🏆',msg:'New All-India rank update available.',time:'5h ago',color:accent},
               {icon:'📝',msg:'Weekly test is now live - attempt it!',time:'1d ago',color:'#60A5FA'},
             ].map((n,i)=>(
@@ -745,7 +745,7 @@ export default function StudentDashboard() {
                 {label:'All-India Rank',val:rank,display:rank?`#${rank.toLocaleString('en-IN')}`:'-',
                   icon:'🏆',color:'#FFD700',ring:rank?Math.min(100,100-(rank/100000)*100):0,sub:'After last test'},
                 {label:'Day Streak',val:curStr,display:curStr,
-                  icon:'🔥',color:'#F59E0B',ring:Math.min(100,curStr*3),sub:`Best: ${streak?.longest_streak||0}d`},
+                  icon:'🔥',color:'var(--color-accent, #F59E0B)',ring:Math.min(100,curStr*3),sub:`Best: ${streak?.longest_streak||0}d`},
                 {label:'Coins',val:coins,display:coins,
                   icon:'🪙',color:accent,ring:Math.min(100,(coins/1000)*100),sub:'Spend in store',anim:true},
                 {label:'Tests Done',val:attempts.length,display:attempts.length,

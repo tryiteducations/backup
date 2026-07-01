@@ -93,7 +93,7 @@ export default function Dashboard() {
           <div style={{ display:'flex', gap:8, alignItems:'center' }}>
             <div style={{ display:'flex', alignItems:'center', gap:4, background:'rgba(255,255,255,0.1)', borderRadius:99, padding:'5px 10px' }}>
               <span style={{ fontSize:14 }}>🔥</span>
-              <span style={{ fontSize:12, fontWeight:700, color:'#FCD34D' }}>{user?.streak||0}d</span>
+              <span style={{ fontSize:12, fontWeight:700, color:'var(--color-accent-light, #FCD34D)' }}>{user?.streak||0}d</span>
             </div>
             <button onClick={()=>navigate('/wallet')} style={{ display:'flex', alignItems:'center', gap:4, background:'rgba(201,168,76,0.2)', borderRadius:99, padding:'5px 10px', border:'none', cursor:'pointer' }}>
               <span style={{ fontSize:14 }}>🪙</span>
@@ -154,7 +154,7 @@ export default function Dashboard() {
                 <span style={{ fontSize:11, color:'var(--color-text-light,#64748B)' }}>Readiness: {exam.readiness}%</span>
                 <span style={{ fontSize:11, color:'#94A3B8' }}>📅 {exam.examDate}</span>
               </div>
-              <div style={{ height:4, background:'#E2E8F0', borderRadius:99, marginTop:5, overflow:'hidden' }}>
+              <div style={{ height:4, background:'var(--color-border, #E2E8F0)', borderRadius:99, marginTop:5, overflow:'hidden' }}>
                 <div style={{ height:'100%', width:`${exam.readiness}%`, borderRadius:99, background:exam.readiness>=70?'#059669':exam.readiness>=40?GOLD:'#DC2626' }} />
               </div>
             </div>

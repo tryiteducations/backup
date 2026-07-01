@@ -6,7 +6,7 @@ import { useAuth } from '../../context/AuthContext'
 
 const ROLE_BADGE = {
   student:     { label:'Student',     color:'#3B82F6', bg:'#EFF6FF' },
-  mentor:      { label:'Mentor',      color:'#C9A84C', bg:'#FFFBEB' },
+  mentor:      { label:'Mentor',      color:'var(--color-accent, #C9A84C)', bg:'#FFFBEB' },
   institution: { label:'Institution', color:'#8B5CF6', bg:'#F5F3FF' },
   family:      { label:'Family',      color:'#22C55E', bg:'#F0FDF4' },
   admin:       { label:'TryIT',       color:'#EF4444', bg:'#FEF2F2' },
@@ -313,7 +313,7 @@ export default function BharatPulse() {
           <button onClick={()=>setShowSubmit(true)}
             style={{background:'linear-gradient(135deg,'+a+',#E8C44A)',
               border:'none',borderRadius:12,padding:'9px 18px',
-              color:'#0F2140',fontWeight:800,fontSize:13,cursor:'pointer'}}>
+              color:'var(--color-primary-dark, #0F2140)',fontWeight:800,fontSize:13,cursor:'pointer'}}>
             + Share Story
           </button>
         </div>

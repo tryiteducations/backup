@@ -242,7 +242,7 @@ export default function ProfilePhoto({
             </p>
             <button
               onClick={() => { setZoomed(false); fileRef.current?.click() }}
-              style={{ padding:'8px 20px', background:'var(--color-accent,#C9A84C)', color:'#1E3A5F',
+              style={{ padding:'8px 20px', background:'var(--color-accent,#C9A84C)', color:'var(--color-primary, #1E3A5F)',
                 border:'none', borderRadius:10, fontWeight:700, fontSize:12, cursor:'pointer' }}>
               📷 Change Photo
             </button>

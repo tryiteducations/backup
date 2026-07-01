@@ -136,7 +136,7 @@ export default function MentorLeaderboard() {
             </div>
 
             <div style={{textAlign:'right',flexShrink:0}}>
-              <p style={{color:'#F59E0B',fontSize:12,fontWeight:700,margin:'0 0 2px'}}>
+              <p style={{color:'var(--color-accent, #F59E0B)',fontSize:12,fontWeight:700,margin:'0 0 2px'}}>
                 ★ {mentor.rating}
               </p>
               <p style={{color:t,fontWeight:700,fontSize:13,margin:'0 0 2px'}}>

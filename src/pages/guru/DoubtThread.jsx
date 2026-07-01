@@ -266,7 +266,7 @@ export default function DoubtThread() {
           <div style={{
             fontFamily: 'Inter, sans-serif', fontSize: 14, color: '#374151',
             lineHeight: 1.75, whiteSpace: 'pre-line',
-            background: '#F8FAFC', borderRadius: 10, padding: '16px 18px',
+            background: 'var(--color-background, #F8FAFC)', borderRadius: 10, padding: '16px 18px',
           }}>
             {doubt.description}
           </div>
@@ -286,7 +286,7 @@ export default function DoubtThread() {
 
           {answers.length === 0 ? (
             <div style={{
-              background: '#F8FAFC', border: '1.5px dashed #cbd5e1',
+              background: 'var(--color-background, #F8FAFC)', border: '1.5px dashed #cbd5e1',
               borderRadius: 12, padding: '32px 20px', textAlign: 'center',
             }}>
               <div style={{ fontSize: 36, marginBottom: 8 }}>🧑‍🏫</div>
@@ -340,7 +340,7 @@ export default function DoubtThread() {
               border: `1.5px solid ${submitError ? '#ef4444' : '#e2e8f0'}`,
               borderRadius: 10, padding: '12px 14px',
               fontFamily: 'Inter, sans-serif', fontSize: 14, color: '#1e293b',
-              background: '#F8FAFC', outline: 'none', resize: 'vertical',
+              background: 'var(--color-background, #F8FAFC)', outline: 'none', resize: 'vertical',
               marginBottom: submitError ? 6 : 14,
             }}
           />

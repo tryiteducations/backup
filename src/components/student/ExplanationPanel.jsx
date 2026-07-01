@@ -1,4 +1,4 @@
-﻿// src/components/student/ExplanationPanel.jsx
+// src/components/student/ExplanationPanel.jsx
 // 7-layer explanation - Pro/Ultra gets native language
 // Free users get 5 free explanations/day then paywall
 
@@ -8,13 +8,13 @@ import { useAuth } from '../../context/AuthContext'
 import { supabase } from '../../lib/supabase'
 
 const LAYERS_EN = [
-  { icon: '✅', label: 'Correct Answer',      color: '#4ADE80' },
-  { icon: '❌', label: 'Why Others Wrong',     color: '#F87171' },
-  { icon: '🧠', label: 'Memory Formula',       color: '#C9A84C' },
-  { icon: '📖', label: 'Story to Remember',    color: '#A78BFA' },
-  { icon: '🔗', label: 'Cross-Exam Connect',   color: '#60A5FA' },
-  { icon: '📊', label: 'Exam Frequency',       color: '#34D399' },
-  { icon: '🎯', label: 'Exam Tip',             color: '#FB923C' },
+  { icon: '?', label: 'Correct Answer',      color: '#4ADE80' },
+  { icon: '?', label: 'Why Others Wrong',     color: '#F87171' },
+  { icon: '??', label: 'Memory Formula',       color: 'var(--color-accent, #C9A84C)' },
+  { icon: '??', label: 'Story to Remember',    color: '#A78BFA' },
+  { icon: '??', label: 'Cross-Exam Connect',   color: '#60A5FA' },
+  { icon: '??', label: 'Exam Frequency',       color: '#34D399' },
+  { icon: '??', label: 'Exam Tip',             color: '#FB923C' },
 ]
 
 const FREE_EXPLANATION_LIMIT = 5
@@ -81,19 +81,19 @@ export default function ExplanationPanel({ question, userAnswer, isCorrect, lang
 
     const layers = [
       // Layer 1 - Correct answer
-      `✅ The correct answer is "${correct}".\n\n${q?.explanation || 'This is the right answer based on the topic.'}`,
+      `? The correct answer is "${correct}".\n\n${q?.explanation || 'This is the right answer based on the topic.'}`,
       // Layer 2 - Why others wrong
-      `❌ Why other options are wrong:\n\n${q?.options?.map((o, i) => i !== q.correct ? `• "${o}" - This is incorrect because it ${i === userAnswer ? '(your choice) ' : ''}does not satisfy the conditions of the question.` : null).filter(Boolean).join('\n\n')}`,
+      `? Why other options are wrong:\n\n${q?.options?.map((o, i) => i !== q.correct ? ` "${o}" - This is incorrect because it ${i === userAnswer ? '(your choice) ' : ''}does not satisfy the conditions of the question.` : null).filter(Boolean).join('\n\n')}`,
       // Layer 3 - Memory formula
-      `🧠 Memory Formula:\n\nRemember: "${q?.subject}" → connect "${correct}" with a keyword or acronym.\n\nTip: Associate the answer with a real-world event or number you already know.`,
+      `?? Memory Formula:\n\nRemember: "${q?.subject}" ? connect "${correct}" with a keyword or acronym.\n\nTip: Associate the answer with a real-world event or number you already know.`,
       // Layer 4 - Story
-      `📖 Story to Remember:\n\nImagine a student preparing for ${q?.subject} exam. They encounter exactly this scenario: "${q?.question?.substring(0,60)}..."\n\nThe answer "${correct}" becomes unforgettable when you think of it as the only logical outcome.`,
+      `?? Story to Remember:\n\nImagine a student preparing for ${q?.subject} exam. They encounter exactly this scenario: "${q?.question?.substring(0,60)}..."\n\nThe answer "${correct}" becomes unforgettable when you think of it as the only logical outcome.`,
       // Layer 5 - Cross exam
-      `🔗 Cross-Exam Intelligence:\n\nThis topic appears in: UPSC Prelims, SSC CGL, IBPS, RRB, State PSC exams.\n\nSubject: ${q?.subject}\nFrequency: High - appears almost every year\nRelated topics to study next.`,
+      `?? Cross-Exam Intelligence:\n\nThis topic appears in: UPSC Prelims, SSC CGL, IBPS, RRB, State PSC exams.\n\nSubject: ${q?.subject}\nFrequency: High - appears almost every year\nRelated topics to study next.`,
       // Layer 6 - Frequency
-      `📊 Exam Frequency Analysis:\n\n⭐⭐⭐⭐⭐ Very High Frequency\n\nThis question type has appeared in:\n• UPSC: 4 times in last 5 years\n• SSC CGL: Every year since 2018\n• State PSC: Regular appearance\n\nPriority: Must Know`,
+      `?? Exam Frequency Analysis:\n\n????? Very High Frequency\n\nThis question type has appeared in:\n UPSC: 4 times in last 5 years\n SSC CGL: Every year since 2018\n State PSC: Regular appearance\n\nPriority: Must Know`,
       // Layer 7 - Exam tip
-      `🎯 Exam Tip:\n\nFor ${q?.subject} questions like this:\n\n1. Always eliminate obviously wrong options first\n2. Look for keywords in the question\n3. The correct answer "${correct}" can be remembered by its unique characteristic\n4. In exam, spend max 90 seconds on this type`,
+      `?? Exam Tip:\n\nFor ${q?.subject} questions like this:\n\n1. Always eliminate obviously wrong options first\n2. Look for keywords in the question\n3. The correct answer "${correct}" can be remembered by its unique characteristic\n4. In exam, spend max 90 seconds on this type`,
     ]
     return layers[layerIndex] || ''
   }
@@ -106,7 +106,7 @@ export default function ExplanationPanel({ question, userAnswer, isCorrect, lang
         background:isDark?'rgba(255,255,255,0.03)':'#fff' }}>
         <div>
           <p style={{ color:txt, fontWeight:700, fontSize:13, margin:0 }}>
-            💡 7-Layer Explanation
+            ?? 7-Layer Explanation
           </p>
           <p style={{ color:muted, fontSize:10, margin:'2px 0 0' }}>
             {isPro ? `All layers + ${lang} translation unlocked` : `${FREE_EXPLANATION_LIMIT - freeUsed} free explanations left today`}
@@ -137,7 +137,7 @@ export default function ExplanationPanel({ question, userAnswer, isCorrect, lang
                 opacity: locked ? 0.5 : 1 }}>
               <span>{l.icon}</span>
               <span>{l.label}</span>
-              {locked && <span>🔒</span>}
+              {locked && <span>??</span>}
             </button>
           )
         })}
@@ -146,7 +146,7 @@ export default function ExplanationPanel({ question, userAnswer, isCorrect, lang
       {/* Content */}
       {showPaywall ? (
         <div style={{ padding:'24px', textAlign:'center' }}>
-          <p style={{ fontSize:36, margin:'0 0 10px' }}>🔒</p>
+          <p style={{ fontSize:36, margin:'0 0 10px' }}>??</p>
           <p style={{ color:txt, fontWeight:700, fontSize:15, margin:'0 0 6px' }}>
             Free limit reached
           </p>
@@ -159,7 +159,7 @@ export default function ExplanationPanel({ question, userAnswer, isCorrect, lang
               background:`linear-gradient(135deg,${accent},${accentL})`,
               border:'none', borderRadius:10, padding:'10px 20px',
               color:primD, fontWeight:700, fontSize:13, cursor:'pointer' }}>
-              ₹5/day Pass →
+              ?5/day Pass ?
             </button>
             <button onClick={() => setShowPaywall(false)} style={{
               background:'transparent', border:`1px solid ${bdr}`,
@@ -186,13 +186,13 @@ export default function ExplanationPanel({ question, userAnswer, isCorrect, lang
             <div style={{ background:`${accent}10`, border:`1px solid ${accent}25`,
               borderRadius:12, padding:'12px', marginBottom:12 }}>
               <p style={{ color:accent, fontWeight:700, fontSize:11, margin:'0 0 6px' }}>
-                🌐 {lang} Translation (Pro)
+                ?? {lang} Translation (Pro)
               </p>
               <p style={{ color:txt, fontSize:12, lineHeight:1.7, margin:0 }}>
                 {lang === 'Tamil'
-                  ? `அண்ணா/அக்கா - சரியான விடை "${question?.options?.[question?.correct] || ''}" ஆகும். ${question?.explanation || ''}`
+                  ? `?????/????? - ?????? ???? "${question?.options?.[question?.correct] || ''}" ?????. ${question?.explanation || ''}`
                   : lang === 'Hindi'
-                  ? `भाई/बहन - सही उत्तर "${question?.options?.[question?.correct] || ''}" है। ${question?.explanation || ''}`
+                  ? `???/??? - ??? ????? "${question?.options?.[question?.correct] || ''}" ??? ${question?.explanation || ''}`
                   : `${lang}: The correct answer is "${question?.options?.[question?.correct] || ''}". ${question?.explanation || ''}`
                 }
               </p>
@@ -203,7 +203,7 @@ export default function ExplanationPanel({ question, userAnswer, isCorrect, lang
             <div style={{ background:`${accent}08`, border:`1px solid ${accent}20`,
               borderRadius:10, padding:'10px 14px' }}>
               <p style={{ color:accent, fontSize:11, fontWeight:700, margin:0 }}>
-                💡 Pro users get all 7 layers + {lang} translation · From ₹5/day
+                ?? Pro users get all 7 layers + {lang} translation · From ?5/day
               </p>
             </div>
           )}

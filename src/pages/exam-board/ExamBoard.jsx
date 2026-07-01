@@ -422,7 +422,7 @@ export default function ExamBoard() {
                         👍 Verified
                       </span>
                     ) : (
-                      <span style={{background:'#F59E0B15',color:'#F59E0B',
+                      <span style={{background:'#F59E0B15',color:'var(--color-accent, #F59E0B)',
                         fontSize:9,fontWeight:700,padding:'2px 8px',borderRadius:20}}>
                         ⚠️ Unverified
                       </span>

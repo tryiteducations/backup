@@ -62,7 +62,7 @@ export default function ProtectedAvatar({ user, size = 48, showBadge = true }) {
       >
         {!photoUrl && (
           <span style={{
-            color: '#FFFFFF', fontWeight: 800, fontSize: size * 0.36,
+            color: 'var(--color-surface, #FFFFFF)', fontWeight: 800, fontSize: size * 0.36,
             fontFamily: 'Poppins, sans-serif', pointerEvents: 'none',
           }}>
             {user?.initials || '?'}

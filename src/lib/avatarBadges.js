@@ -17,7 +17,7 @@
 const RING_TIERS = [
   { min: 0,  id: 'bronze',   color: '#B08D57', label: 'Bronze' },
   { min: 3,  id: 'silver',   color: '#C0C0C0', label: 'Silver' },
-  { min: 6,  id: 'gold',     color: '#D4AF37', label: 'Gold' },
+  { min: 6,  id: 'gold',     color: 'var(--color-accent, #D4AF37)', label: 'Gold' },
   { min: 10, id: 'platinum', color: '#A855F7', label: 'Platinum' },
 ]
 

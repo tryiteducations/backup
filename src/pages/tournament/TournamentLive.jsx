@@ -629,7 +629,7 @@ export default function TournamentLive() {
 
           {disconnectCount > 0 && (
             <div style={{ background:'rgba(245,158,11,0.1)', border:'1px solid rgba(245,158,11,0.3)', borderRadius:12, padding:12, marginBottom:16 }}>
-              <p style={{ fontSize:12, color:'#FCD34D', margin:0 }}>
+              <p style={{ fontSize:12, color:'var(--color-accent-light, #FCD34D)', margin:0 }}>
                 ⚠️ Note: {disconnectCount} internet disconnection{disconnectCount > 1 ? 's' : ''} detected during your exam.
                 This has been recorded. If your submission is genuine, there is no concern.
               </p>
@@ -750,7 +750,7 @@ export default function TournamentLive() {
                     fontWeight:700, fontSize:12, color:'#94A3B8', flexShrink:0 }}>
                     {letter}
                   </span>
-                  <p style={{ fontSize:14, color:'#E2E8F0', margin:0, flex:1 }}>{opt}</p>
+                  <p style={{ fontSize:14, color:'var(--color-border, #E2E8F0)', margin:0, flex:1 }}>{opt}</p>
                   {selected && <span style={{ fontSize:16 }}>✓</span>}
                 </button>
               )

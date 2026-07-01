@@ -26,10 +26,10 @@ const TABS = [
 const S = {
   card:    { background:'var(--color-bg,#F8FAFC)', borderRadius:18, padding:18, border:'1.5px solid #E2E8F0' },
   input:   { width:'100%', padding:'10px 13px', borderRadius:11, border:'1.5px solid #E2E8F0', fontSize:13, outline:'none', boxSizing:'border-box', background:'#fff' },
-  btn:     { background:'linear-gradient(135deg,#1E3A5F,#0F2140)', border:'none', borderRadius:11, padding:'10px 20px', color:'#C9A84C', fontWeight:700, fontSize:13, cursor:'pointer' },
+  btn:     { background:'linear-gradient(135deg,#1E3A5F,#0F2140)', border:'none', borderRadius:11, padding:'10px 20px', color:'var(--color-accent, #C9A84C)', fontWeight:700, fontSize:13, cursor:'pointer' },
   btnRed:  { background:'#FEE2E2', color:'#991B1B', border:'none', borderRadius:9, padding:'6px 14px', fontSize:12, fontWeight:700, cursor:'pointer' },
-  btnGold: { background:'linear-gradient(135deg,#C9A84C,#E8C96A)', color:'#1E3A5F', border:'none', borderRadius:11, padding:'10px 20px', fontWeight:800, fontSize:13, cursor:'pointer' },
-  h2:      { fontFamily:'Poppins,sans-serif', fontWeight:800, color:'#1E3A5F', fontSize:22, marginBottom:6 },
+  btnGold: { background:'linear-gradient(135deg,#C9A84C,#E8C96A)', color:'var(--color-primary, #1E3A5F)', border:'none', borderRadius:11, padding:'10px 20px', fontWeight:800, fontSize:13, cursor:'pointer' },
+  h2:      { fontFamily:'Poppins,sans-serif', fontWeight:800, color:'var(--color-primary, #1E3A5F)', fontSize:22, marginBottom:6 },
   label:   { display:'block', fontSize:12, fontWeight:600, color:'var(--color-text-light,#64748B)', marginBottom:5 },
   tag:     (active) => ({
     display:'inline-block', padding:'3px 10px', borderRadius:99, fontSize:11, fontWeight:700,
@@ -61,7 +61,7 @@ export default function AdminDashboard() {
       {/* Header */}
       <div style={{ background:'linear-gradient(135deg,#1E3A5F,#0F2140)', padding:'20px clamp(16px,4vw,40px)', display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:12 }}>
         <div>
-          <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900, color:'#C9A84C', fontSize:22 }}>🛡️ TryIT Admin</p>
+          <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900, color:'var(--color-accent, #C9A84C)', fontSize:22 }}>🛡️ TryIT Admin</p>
           <p style={{ color:'rgba(255,255,255,0.5)', fontSize:12 }}>Full Control Panel - 360° Access</p>
         </div>
         <button onClick={logout} style={{ background:'rgba(255,255,255,0.08)', border:'1px solid rgba(255,255,255,0.15)', borderRadius:12, padding:'10px 20px', color:'#fff', fontWeight:600, fontSize:13, cursor:'pointer' }}>
@@ -130,8 +130,8 @@ function OverviewTab({ navigate }) {
   }, [])
 
   const CARDS = [
-    { label:'Total Users',     value:stats.users,     emoji:'👥', color:'#1E3A5F' },
-    { label:'Pro Members',     value:stats.pro,       emoji:'⭐', color:'#C9A84C' },
+    { label:'Total Users',     value:stats.users,     emoji:'👥', color:'var(--color-primary, #1E3A5F)' },
+    { label:'Pro Members',     value:stats.pro,       emoji:'⭐', color:'var(--color-accent, #C9A84C)' },
     { label:'Tests Taken',     value:stats.tests,     emoji:'📝', color:'#059669' },
     { label:'Pending Flags',   value:stats.flags,     emoji:'🚩', color:'#DC2626' },
     { label:'Materials Today', value:stats.materials, emoji:'📄', color:'#7C3AED' },
@@ -232,11 +232,11 @@ function UsersTab() {
         <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
           {filtered.map(u => (
             <div key={u.id} style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 16px', ...S.card, flexWrap:'wrap' }}>
-              <div style={{ width:36, height:36, borderRadius:'50%', background:'var(--color-primary,#1E3A5F)', color:'#C9A84C', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:800, fontSize:12, flexShrink:0 }}>
+              <div style={{ width:36, height:36, borderRadius:'50%', background:'var(--color-primary,#1E3A5F)', color:'var(--color-accent, #C9A84C)', display:'flex', alignItems:'center', justifyContent:'center', fontWeight:800, fontSize:12, flexShrink:0 }}>
                 {(u.name||'?').slice(0,2).toUpperCase()}
               </div>
               <div style={{ flex:1, minWidth:120 }}>
-                <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'#1E3A5F', fontSize:13 }}>{u.name||'Unnamed'}</p>
+                <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'var(--color-primary, #1E3A5F)', fontSize:13 }}>{u.name||'Unnamed'}</p>
                 <p style={{ color:'#94A3B8', fontSize:11 }}>{u.email}</p>
               </div>
               <span style={{ fontSize:12, color:'var(--color-text-light,#64748B)' }}>🪙 {u.coins??0}</span>
@@ -335,7 +335,7 @@ function GrantsTab() {
         <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
           {grants.map((g,i) => (
             <div key={i} style={{ display:'flex', justifyContent:'space-between', alignItems:'center', padding:'10px 14px', ...S.card, flexWrap:'wrap', gap:8 }}>
-              <span style={{ fontSize:13, fontWeight:600, color:'#1E3A5F' }}>{g.email}</span>
+              <span style={{ fontSize:13, fontWeight:600, color:'var(--color-primary, #1E3A5F)' }}>{g.email}</span>
               <span style={{ fontSize:12, color:'var(--color-text-light,#64748B)' }}>{g.plan} · expires {new Date(g.expiresAt).toLocaleDateString('en-IN')}</span>
               <button onClick={() => removeGrant(i)} style={S.btnRed}>Remove</button>
             </div>
@@ -366,7 +366,7 @@ function ExamsTab({ navigate }) {
       <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill,minmax(160px,1fr))', gap:10 }}>
         {Object.entries(byCategory).map(([cat,count]) => (
           <div key={cat} style={S.card}>
-            <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'#1E3A5F', fontSize:22 }}>{count}</p>
+            <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'var(--color-primary, #1E3A5F)', fontSize:22 }}>{count}</p>
             <p style={{ color:'#94A3B8', fontSize:12 }}>{cat?.replace(/_/g,' ')}</p>
           </div>
         ))}
@@ -462,7 +462,7 @@ function MaterialsTab() {
 
       {/* POST FORM */}
       <div style={{ ...S.card, marginBottom:24, borderLeft:'4px solid #C9A84C' }}>
-        <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'#1E3A5F', fontSize:15, marginBottom:16 }}>+ Post New Material</h3>
+        <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'var(--color-primary, #1E3A5F)', fontSize:15, marginBottom:16 }}>+ Post New Material</h3>
 
         <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12 }}>
           <div style={{ gridColumn:'1/-1' }}>
@@ -541,7 +541,7 @@ function MaterialsTab() {
           {materials.map(m => (
             <div key={m.id} style={{ display:'flex', justifyContent:'space-between', alignItems:'center', padding:'12px 16px', ...S.card, flexWrap:'wrap', gap:8 }}>
               <div style={{ flex:1, minWidth:200 }}>
-                <p style={{ fontWeight:700, color:'#1E3A5F', fontSize:13 }}>{m.title}</p>
+                <p style={{ fontWeight:700, color:'var(--color-primary, #1E3A5F)', fontSize:13 }}>{m.title}</p>
                 <p style={{ fontSize:11, color:'#94A3B8' }}>
                   {m.material_type?.replace(/_/g,' ')} · {m.publish_date} · {m.source || 'No source'}
                 </p>
@@ -931,7 +931,7 @@ function AnnouncementsTab() {
 
       {/* Form */}
       <div style={{ ...S.card, marginBottom:20, borderLeft:'4px solid #7C3AED' }}>
-        <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'#1E3A5F', fontSize:15, marginBottom:14 }}>+ New Announcement</h3>
+        <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'var(--color-primary, #1E3A5F)', fontSize:15, marginBottom:14 }}>+ New Announcement</h3>
         <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10 }}>
           <div style={{ gridColumn:'1/-1' }}>
             <label style={S.label}>Title *</label>
@@ -987,7 +987,7 @@ function AnnouncementsTab() {
               <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', flexWrap:'wrap', gap:8 }}>
                 <div style={{ flex:1 }}>
                   <div style={{ display:'flex', gap:8, alignItems:'center', flexWrap:'wrap', marginBottom:4 }}>
-                    <span style={{ fontWeight:700, color:'#1E3A5F', fontSize:13 }}>{a.title}</span>
+                    <span style={{ fontWeight:700, color:'var(--color-primary, #1E3A5F)', fontSize:13 }}>{a.title}</span>
                     <span style={{ fontSize:11, padding:'2px 8px', borderRadius:99, background:'#EDE9FE', color:'#6D28D9', fontWeight:700 }}>
                       {a.ann_type}
                     </span>
@@ -1070,7 +1070,7 @@ function ViewAsTab() {
         {ROLES.map(r => (
           <div key={r.id} style={S.card}>
             <p style={{ fontSize:32, marginBottom:8 }}>{r.emoji}</p>
-            <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'#1E3A5F', fontSize:15, marginBottom:6 }}>{r.label}</p>
+            <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'var(--color-primary, #1E3A5F)', fontSize:15, marginBottom:6 }}>{r.label}</p>
             <p style={{ color:'#94A3B8', fontSize:12, marginBottom:12, lineHeight:1.5 }}>{r.desc}</p>
             <button onClick={() => { viewAs(r.id); navigate(r.route) }}
               style={{ ...S.btn, width:'100%', textAlign:'center' }}>
@@ -1295,7 +1295,7 @@ function TournamentAdminTab(){
                 </span>
               </div>
               {/* Vote progress */}
-              <div style={{height:6,background:'#E2E8F0',borderRadius:99,overflow:'hidden',marginBottom:8}}>
+              <div style={{height:6,background:'var(--color-border, #E2E8F0)',borderRadius:99,overflow:'hidden',marginBottom:8}}>
                 <div style={{height:'100%',width:`${Math.min(((poll.vote_count||0)/(poll.min_votes_national||2000))*100,100)}%`,background:poll.status==='threshold_reached'?'#059669':NAVY,borderRadius:99}}/>
               </div>
               <p style={{fontSize:10,color:'#94A3B8',margin:'0 0 8px'}}>{poll.vote_count}/{poll.min_votes_national||2000} national / {poll.min_votes_state||500} state threshold</p>

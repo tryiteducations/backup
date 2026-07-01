@@ -129,7 +129,7 @@ export default function InstitutionMentors() {
                   <p style={{color:t,fontWeight:700,fontSize:14,margin:0}}>
                     {mentor.name}
                   </p>
-                  <span style={{color:'#F59E0B',fontWeight:700,fontSize:12}}>
+                  <span style={{color:'var(--color-accent, #F59E0B)',fontWeight:700,fontSize:12}}>
                     ★ {mentor.rating}
                   </span>
                 </div>

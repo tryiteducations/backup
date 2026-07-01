@@ -34,7 +34,7 @@ export default function OwnProfileAvatar({ user, size = 96 }) {
           }}
         >
           {!photoUrl && (
-            <span style={{ color: '#FFFFFF', fontWeight: 800, fontSize: size * 0.36, fontFamily: 'Poppins, sans-serif' }}>
+            <span style={{ color: 'var(--color-surface, #FFFFFF)', fontWeight: 800, fontSize: size * 0.36, fontFamily: 'Poppins, sans-serif' }}>
               {user?.initials || '?'}
             </span>
           )}

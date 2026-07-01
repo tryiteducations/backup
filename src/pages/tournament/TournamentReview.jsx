@@ -28,7 +28,7 @@ const GREEN = '#059669'
 const RESULT_CONFIG = {
   correct:     { emoji:'✅', label:'Correct',      color:GREEN,    bg:'#F0FDF4', border:'#BBF7D0' },
   incorrect:   { emoji:'📚', label:'Learn from this', color:'#D97706', bg:'#FFF7E6', border:'#FED7AA' },
-  unattempted: { emoji:'⬜', label:'Not attempted',color:'var(--color-text-light,#64748B)', bg:'#F8FAFC', border:'#E2E8F0' },
+  unattempted: { emoji:'⬜', label:'Not attempted',color:'var(--color-text-light,#64748B)', bg:'#F8FAFC', border:'var(--color-border, #E2E8F0)' },
 }
 
 const SUBJECT_COLORS = {
@@ -51,7 +51,7 @@ function SubjectCard({ subject, data }) {
       <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900, fontSize:22, color, margin:'0 0 2px' }}>
         {data.correct}/{data.total}
       </p>
-      <div style={{ height:4, background:'#E2E8F0', borderRadius:99, overflow:'hidden', marginBottom:4 }}>
+      <div style={{ height:4, background:'var(--color-border, #E2E8F0)', borderRadius:99, overflow:'hidden', marginBottom:4 }}>
         <div style={{ height:'100%', width:`${pct}%`, background:color, borderRadius:99 }} />
       </div>
       <p style={{ fontSize:10, color:'#94A3B8', margin:0 }}>{pct}% accuracy</p>
@@ -177,7 +177,7 @@ function QuestionCard({ pq, index, userLanguage, onAddToPractice, onShare }) {
               <p style={{ fontSize:11, fontWeight:700, color:'#1D4ED8', margin:'0 0 6px' }}>
                 📖 Explanation (English)
               </p>
-              <p style={{ fontSize:13, color:'#1E3A5F', margin:0, lineHeight:1.8 }}>
+              <p style={{ fontSize:13, color:'var(--color-primary, #1E3A5F)', margin:0, lineHeight:1.8 }}>
                 {pq.explanation_en}
               </p>
             </div>
