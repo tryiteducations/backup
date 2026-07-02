@@ -277,7 +277,7 @@ export default function BharatPulse() {
 
           {/* Reactions */}
           <div style={{display:'flex',gap:6,flexWrap:'wrap',alignItems:'center'}}>
-            {EMOJIS.map(({k,e})=>(
+                        {EMOJIS.map(({k,e})=>(
               <button key={k} onClick={()=>react(post.id,k)}
                 style={{background:bg,border:'1px solid '+b,
                   borderRadius:20,padding:'4px 10px',cursor:'pointer',
@@ -291,7 +291,13 @@ export default function BharatPulse() {
                 </span>
               </button>
             ))}
-            <span style={{marginLeft:'auto',color:m,fontSize:10,fontWeight:600}}>
+            <button onClick={()=>downloadStoryPDF(post)}
+              style={{marginLeft:'auto',background:'transparent',border:'1px solid '+b,
+                borderRadius:20,padding:'4px 10px',cursor:'pointer',color:m,
+                fontSize:10,fontWeight:700,fontFamily:'Poppins,sans-serif'}}>
+              PDF
+            </button>
+            <span style={{color:m,fontSize:10,fontWeight:600}}>
               {total.toLocaleString('en-IN')} reactions
             </span>
           </div>

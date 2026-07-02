@@ -1,4 +1,4 @@
-// FILE: src/pages/role-select/RoleSelect.jsx
+﻿// FILE: src/pages/role-select/RoleSelect.jsx
 // TryIT - Role Selection (post-login, before onboarding)
 // Route: /role-select
 import { useState } from 'react'
@@ -8,10 +8,10 @@ import { useAuth } from '../../context/AuthContext'
 const NAVY='#1E3A5F', GOLD='#C9A84C', BG='#F8FAFC'
 
 const ROLES=[
-  { id:'student',  emoji:'🎓', title:'Student',          desc:'Preparing for a competitive exam',                color:'#1D4ED8' },
-  { id:'mentor',    emoji:'🧑‍🏫', title:'Mentor',           desc:'Help fix questions, earn cashback',               color:'#7C3AED' },
-  { id:'centre',    emoji:'🏫', title:'Institution',      desc:'Coaching centre or school conducting tests',       color:'#059669' },
-  { id:'parent',    emoji:'👨‍👩‍👦', title:'Parent',           desc:'Track your child\'s exam preparation',           color:'#D97706' },
+  { id:'student',    emoji:'🎓', title:'Student',          desc:'Preparing for a competitive exam',                color:'#1D4ED8' },
+  { id:'mentor',     emoji:'🧑‍🏫', title:'Mentor',           desc:'Help fix questions, earn cashback',               color:'#7C3AED' },
+  { id:'institution',emoji:'🏫', title:'Institution',      desc:'Coaching centre or school conducting tests',       color:'#059669' },
+  { id:'family',     emoji:'👨‍👩‍👦', title:'Family',           desc:"Track your child's exam preparation",           color:'#D97706' },
 ]
 
 export default function RoleSelect(){
@@ -28,13 +28,8 @@ export default function RoleSelect(){
 
     // User is ALREADY authenticated (came from phone OTP Login.jsx).
     // We only set their role and route them onward - never re-login.
-    const routes = {
-      student: '/onboarding',
-      mentor:  '/mentor',
-      centre:  '/centre/onboarding',  // institution details form, NOT a login screen
-      parent:  '/parent/onboarding',  // child-linking form, NOT a login screen
-    }
-    navigate(routes[selected] || '/onboarding')
+        // All roles route through the single, tested onboarding flow
+    navigate('/onboarding')
   }
 
   return (
