@@ -157,6 +157,44 @@ export default function PricingPage() {
 
   return (
     <div style={{ minHeight:'100vh', background:BG, paddingBottom:80 }}>
+      {/* Header */}
+      <div style={{ background:'#fff', borderBottom:'1px solid #E5E7EB', marginBottom:24 }}>
+        <div style={{ maxWidth:1000, margin:'0 auto', padding:'14px 24px',
+          display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+          <div style={{ display:'flex', alignItems:'center', gap:10, cursor:'pointer' }}
+            onClick={() => navigate('/')}>
+            <div style={{ width:34, height:34, borderRadius:9, background:NAVY,
+              display:'flex', alignItems:'center', justifyContent:'center', color:'#fff',
+              fontWeight:800, fontSize:15, fontFamily:'Poppins,sans-serif' }}>T</div>
+            <div style={{ lineHeight:1.1 }}>
+              <div style={{ fontWeight:800, fontSize:16, color:NAVY, fontFamily:'Poppins,sans-serif' }}>TryIT</div>
+              <div style={{ fontSize:10, color:'#64748B' }}>Educations</div>
+            </div>
+          </div>
+          {user ? (
+            <button onClick={() => navigate(-1)}
+              style={{ padding:'8px 16px', borderRadius:10, border:'1px solid #E2E8F0',
+                background:'transparent', color:'#64748B', fontSize:13, fontWeight:600, cursor:'pointer' }}>
+              ← Back
+            </button>
+          ) : (
+            <div style={{ display:'flex', gap:8 }}>
+              <button onClick={() => navigate('/login')}
+                style={{ padding:'8px 16px', borderRadius:10, border:'1px solid #E2E8F0',
+                  background:'transparent', color:'#64748B', fontSize:13, fontWeight:600, cursor:'pointer' }}>
+                Login
+              </button>
+              <button onClick={() => navigate('/register')}
+                style={{ padding:'8px 16px', borderRadius:10, border:'none',
+                  background:NAVY, color:'#fff', fontSize:13, fontWeight:600, cursor:'pointer' }}>
+                Get Started →
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div style={{ maxWidth:1000, margin:'0 auto', padding:'0 24px' }}>
       {/* Toast */}
       {toast && (
         <div style={{ position:'fixed', top:20, left:'50%', transform:'translateX(-50%)', zIndex:9999,
@@ -165,6 +203,7 @@ export default function PricingPage() {
           {toast}
         </div>
       )}
+
 
       <div style={{ maxWidth:900, margin:'0 auto', padding:'32px 16px' }}>
 
@@ -483,6 +522,7 @@ export default function PricingPage() {
           </div>
         </div>
 
+      </div>
       </div>
     </div>
   )
