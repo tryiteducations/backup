@@ -26,10 +26,10 @@ const EXAMS = ['UPSC CSE','SSC CGL','IBPS PO','TNPSC','NEET UG',
   'JEE Main','RRB NTPC','GATE','NDA/CDS','State PSC']
 
 const NAV_LINKS = [
+  {label:'🇮🇳 Bharat Pulse', href:'/bharat-pulse', glow:true},
   {label:'Exams',     href:'/exams'},
   {label:'Mentors',   href:'/student/mentor'},
   {label:'Pricing',   href:'/pro'},
-  {label:'Pulse',     href:'/bharat-pulse'},
 ]
 
 const FEATURES = [
@@ -128,7 +128,7 @@ const STATS = [
   {value:'1,10,000+', label:'Exam Pathways'},
   {value:'42',        label:'Indian Languages'},
   {value:'28/28',     label:'States Covered'},
-  {value:'Class 1+',  label:'Primary to SWAYAM'},
+  {value:'All Exams', label:'One Platform'},
 ]
 
 function useInView(threshold=0.2) {
@@ -190,12 +190,18 @@ function Navbar({nav}) {
           '@media(max-width:768px)':{display:'none'}}}>
           {NAV_LINKS.map((link,i)=>(
             <button key={i} onClick={()=>nav(link.href)}
-              style={{background:'transparent',border:'none',cursor:'pointer',
+              style={link.glow ? {
+                background:'linear-gradient(135deg,#F59E0B,#FCD34D,#F59E0B)',
+                backgroundSize:'200% 100%',animation:'navGlow 3s ease-in-out infinite',
+                border:'none',cursor:'pointer',padding:'8px 16px',borderRadius:20,
+                color:B.primary,fontFamily:'Inter,sans-serif',fontSize:13,fontWeight:800,
+                boxShadow:'0 2px 12px rgba(245,158,11,0.5)',transition:'all 0.15s'}
+              : {background:'transparent',border:'none',cursor:'pointer',
                 padding:'8px 14px',borderRadius:8,color:B.muted,
                 fontFamily:'Inter,sans-serif',fontSize:14,fontWeight:500,
                 transition:'all 0.15s'}}
-              onMouseEnter={e=>{e.target.style.color=B.primary;e.target.style.background=B.light}}
-              onMouseLeave={e=>{e.target.style.color=B.muted;e.target.style.background='transparent'}}>
+              onMouseEnter={e=>{if(!link.glow){e.target.style.color=B.primary;e.target.style.background=B.light}}}
+              onMouseLeave={e=>{if(!link.glow){e.target.style.color=B.muted;e.target.style.background='transparent'}}}>
               {link.label}
             </button>
           ))}
@@ -875,6 +881,7 @@ export default function Landing() {
 
   return (
     <div style={{fontFamily:'Inter,sans-serif',overflowX:'hidden'}}>
+      <style>{`@keyframes navGlow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}`}</style>
       <Navbar nav={nav}/>
       <Hero nav={nav}/>
       <Stats/>

@@ -1,4 +1,4 @@
-// src/pages/pricing/PricingPage.jsx
+﻿// src/pages/pricing/PricingPage.jsx
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
@@ -39,8 +39,8 @@ const COMPETITORS = [
   { name:'Adda247',   yearly:2400  },
 ]
 
-const NAVY = '#1E3A5F'
-const GOLD = '#C9A84C'
+const NAVY = '#2D1B69'
+const GOLD = '#F59E0B'
 const BG   = '#F8FAFC'
 
 export default function PricingPage() {
@@ -171,7 +171,7 @@ export default function PricingPage() {
         {/* -- CURRENT PLAN BANNER ---------------------------------------- */}
         {user && (
           <div style={{ background: planTier==='ultra' ? 'linear-gradient(135deg,#92400E,#B45309)'
-                                  : planTier==='pro'   ? `linear-gradient(135deg,${NAVY},#0F2140)`
+                                  : planTier==='pro'   ? `linear-gradient(135deg,${NAVY},#1A0D3D)`
                                   : '#F1F5F9',
             borderRadius:16, padding:'14px 20px', marginBottom:20,
             display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:8 }}>
@@ -196,7 +196,7 @@ export default function PricingPage() {
         )}
 
         {/* -- COMPETITOR SAVINGS BANNER ---------------------------------- */}
-        <div style={{ background:`linear-gradient(135deg,${NAVY},#0F2140)`, borderRadius:20,
+        <div style={{ background:`linear-gradient(135deg,${NAVY},#1A0D3D)`, borderRadius:20,
           padding:'20px 24px', marginBottom:28, color:'#fff' }}>
           <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:900, fontSize:18, marginBottom:8, color:GOLD }}>
             87% cheaper than BYJU's. Same quality. Zero compromise.
@@ -435,7 +435,7 @@ export default function PricingPage() {
         </div>
 
         {/* -- REFERRAL SECTION ------------------------------------------- */}
-        <div style={{ background:`linear-gradient(135deg,${NAVY},#0F2140)`, borderRadius:20, padding:20, marginBottom:28, color:'#fff' }}>
+        <div style={{ background:`linear-gradient(135deg,${NAVY},#1A0D3D)`, borderRadius:20, padding:20, marginBottom:28, color:'#fff' }}>
           <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, fontSize:16, color:GOLD, marginBottom:4 }}>
             🎁 Refer & Earn - Free Upgrades
           </p>

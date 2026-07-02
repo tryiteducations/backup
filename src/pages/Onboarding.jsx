@@ -1,4 +1,4 @@
-// FILE: src/pages/Onboarding.jsx
+﻿// FILE: src/pages/Onboarding.jsx
 // TryIT - Unified Multi-Role Onboarding Pipeline
 // Route: /onboarding (Triggers dynamically post role-select to configure profile details)
 
@@ -493,8 +493,9 @@ export default function Onboarding() {
   const navigate = useNavigate()
   const { user, updateUser } = useAuth()
   // Admin role must not override the selected role from RoleSelect
+  const storedRole = localStorage.getItem('tryit_role')
   const rawRole = user?.role === 'admin' ? null : user?.role
-  const role = rawRole || localStorage.getItem('tryit_role') || 'student'
+  const role = storedRole || rawRole || 'student'
 
   const [step, setStep] = useState(0)
   const [data, setData] = useState({ preferred_language: 'en', exams: [], strongSubjects: [], weakSubjects: [] })
@@ -541,7 +542,7 @@ export default function Onboarding() {
     if (total === 0 && role) {
       const home = role === 'institution' ? '/institution'
         : role === 'mentor' ? '/mentor-hub'
-        : role === 'family' ? '/student'
+        : role === 'family' ? '/family'
         : '/student'
       navigate(home, { replace: true })
     }
