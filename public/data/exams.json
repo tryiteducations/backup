@@ -1,1302 +1,2711 @@
 {
+  "total": 116,
+  "updated": "June 2026",
   "exams": [
     {
-      "id": "ssc-cgl",
-      "name": "SSC CGL",
-      "body": "Staff Selection Commission",
-      "category": "govt_central",
-      "level": "Graduate",
-      "vacancies": 22000,
-      "emoji": "\ud83d\udccb",
-      "price_inr": 0
-    },
-    {
-      "id": "ssc-chsl",
-      "name": "SSC CHSL",
-      "body": "Staff Selection Commission",
-      "category": "govt_central",
-      "level": "12th Pass",
-      "vacancies": 18000,
-      "emoji": "\ud83d\udccb",
-      "price_inr": 0
-    },
-    {
-      "id": "upsc-cse",
-      "name": "UPSC CSE",
-      "body": "Union Public Service Commission",
-      "category": "govt_central",
-      "level": "Graduate",
-      "vacancies": 11000,
-      "emoji": "\ud83d\udccb",
-      "price_inr": 0
-    },
-    {
-      "id": "ibps-po",
-      "name": "IBPS PO",
-      "body": "Institute of Banking Personnel Selection",
-      "category": "banking",
-      "level": "Graduate",
-      "vacancies": 25000,
-      "emoji": "\ud83d\udccb",
-      "price_inr": 0
-    },
-    {
-      "id": "ibps-clerk",
-      "name": "IBPS Clerk",
-      "body": "Institute of Banking Personnel Selection",
-      "category": "banking",
-      "level": "Graduate",
-      "vacancies": 30000,
-      "emoji": "\ud83d\udccb",
-      "price_inr": 0
-    },
-    {
-      "id": "sbi-po",
-      "name": "SBI PO",
-      "body": "State Bank of India",
-      "category": "banking",
-      "level": "Graduate",
-      "vacancies": 20000,
-      "emoji": "\ud83d\udccb",
-      "price_inr": 0
-    },
-    {
-      "id": "rrb-ntpc",
-      "name": "RRB NTPC",
-      "body": "Railway Recruitment Board",
-      "category": "railways",
-      "level": "12th/Graduate",
-      "vacancies": 35000,
-      "emoji": "\ud83d\udccb",
-      "price_inr": 0
-    },
-    {
-      "id": "rrb-group-d",
-      "name": "RRB Group D",
-      "body": "Railway Recruitment Board",
-      "category": "railways",
-      "level": "10th Pass",
-      "vacancies": 50000,
-      "emoji": "\ud83d\udccb",
-      "price_inr": 0
-    },
-    {
-      "id": "neet-ug",
-      "name": "NEET UG",
-      "body": "National Testing Agency",
-      "category": "medical",
-      "level": "12th PCB",
-      "vacancies": 24,
-      "emoji": "\ud83d\udccb",
-      "price_inr": 0
-    },
-    {
-      "id": "jee-main",
-      "name": "JEE Main",
-      "body": "National Testing Agency",
-      "category": "engineering",
-      "level": "12th PCM",
-      "vacancies": 12,
-      "emoji": "\ud83d\udccb",
-      "price_inr": 0
-    },
-    {
-      "id": "gate-cs",
-      "name": "GATE CS",
-      "body": "IIT (rotating)",
-      "category": "engineering_pg",
-      "level": "B.Tech",
-      "vacancies": 9,
-      "emoji": "\ud83d\udccb",
-      "price_inr": 0
-    },
-    {
-      "id": "ctet",
-      "name": "CTET",
-      "body": "CBSE",
-      "category": "teaching",
-      "level": "Graduate + B.Ed",
-      "vacancies": 30000,
-      "emoji": "\ud83d\udccb",
-      "price_inr": 0
-    },
-    {
-      "id": "cds",
-      "name": "CDS",
-      "body": "UPSC",
-      "category": "defence",
-      "level": "Graduate",
-      "vacancies": 12000,
-      "emoji": "\ud83d\udccb",
-      "price_inr": 0
-    },
-    {
-      "id": "nda",
-      "name": "NDA",
-      "body": "UPSC",
-      "category": "defence",
-      "level": "12th Pass",
-      "vacancies": 17000,
-      "emoji": "\ud83d\udccb",
-      "price_inr": 0
-    },
-    {
-      "id": "state-psc-tnpsc-group-1",
-      "name": "State PSC (TNPSC) Group 1",
-      "body": "Tamil Nadu PSC",
-      "category": "govt_state",
-      "level": "Graduate",
-      "vacancies": 3500,
-      "emoji": "\ud83d\udccb",
-      "price_inr": 0
-    },
-    {
-      "id": "state-psc-tnpsc-group-2",
-      "name": "State PSC (TNPSC) Group 2",
-      "body": "Tamil Nadu PSC",
-      "category": "govt_state",
-      "level": "Graduate",
-      "vacancies": 5500,
-      "emoji": "\ud83d\udccb",
-      "price_inr": 0
-    },
-    {
-      "id": "crest-ciko-lkg",
-      "name": "CREST Kids Olympiad (CIKO) \u2013 LKG",
-      "body": "CREST",
-      "category": "school_competitive",
-      "level": "LKG",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "crest-ciko-ukg",
-      "name": "CREST Kids Olympiad (CIKO) \u2013 UKG",
-      "body": "CREST",
-      "category": "school_competitive",
-      "level": "UKG",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "logiqids-lmaa-lkg",
-      "name": "LogIQids Mental Aptitude Assessment (LMAA) \u2013 LKG",
-      "body": "LogIQids",
-      "category": "school_competitive",
-      "level": "LKG",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "logiqids-lmaa-ukg",
-      "name": "LogIQids Mental Aptitude Assessment (LMAA) \u2013 UKG",
-      "body": "LogIQids",
-      "category": "school_competitive",
-      "level": "UKG",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "marrs-mpsb-lkg",
-      "name": "MaRRS Pre-School Bee (MPSB) \u2013 LKG",
-      "body": "MaRRS",
-      "category": "school_competitive",
-      "level": "LKG",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "marrs-mpsb-ukg",
-      "name": "MaRRS Pre-School Bee (MPSB) \u2013 UKG",
-      "body": "MaRRS",
-      "category": "school_competitive",
-      "level": "UKG",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-igko-1",
-      "name": "SOF International General Knowledge Olympiad (IGKO) \u2013 Class 1",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 1",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-igko-2",
-      "name": "SOF International General Knowledge Olympiad (IGKO) \u2013 Class 2",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 2",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-igko-3",
-      "name": "SOF International General Knowledge Olympiad (IGKO) \u2013 Class 3",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 3",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-igko-4",
-      "name": "SOF International General Knowledge Olympiad (IGKO) \u2013 Class 4",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 4",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-igko-5",
-      "name": "SOF International General Knowledge Olympiad (IGKO) \u2013 Class 5",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 5",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-igko-6",
-      "name": "SOF International General Knowledge Olympiad (IGKO) \u2013 Class 6",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 6",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-igko-7",
-      "name": "SOF International General Knowledge Olympiad (IGKO) \u2013 Class 7",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 7",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-igko-8",
-      "name": "SOF International General Knowledge Olympiad (IGKO) \u2013 Class 8",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 8",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-igko-9",
-      "name": "SOF International General Knowledge Olympiad (IGKO) \u2013 Class 9",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 9",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-igko-10",
-      "name": "SOF International General Knowledge Olympiad (IGKO) \u2013 Class 10",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 10",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-igko-11",
-      "name": "SOF International General Knowledge Olympiad (IGKO) \u2013 Class 11",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 11",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-igko-12",
-      "name": "SOF International General Knowledge Olympiad (IGKO) \u2013 Class 12",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 12",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-ieo-1",
-      "name": "SOF International English Olympiad (IEO) \u2013 Class 1",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 1",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-ieo-2",
-      "name": "SOF International English Olympiad (IEO) \u2013 Class 2",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 2",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-ieo-3",
-      "name": "SOF International English Olympiad (IEO) \u2013 Class 3",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 3",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-ieo-4",
-      "name": "SOF International English Olympiad (IEO) \u2013 Class 4",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 4",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-ieo-5",
-      "name": "SOF International English Olympiad (IEO) \u2013 Class 5",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 5",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-ieo-6",
-      "name": "SOF International English Olympiad (IEO) \u2013 Class 6",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 6",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-ieo-7",
-      "name": "SOF International English Olympiad (IEO) \u2013 Class 7",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 7",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-ieo-8",
-      "name": "SOF International English Olympiad (IEO) \u2013 Class 8",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 8",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-ieo-9",
-      "name": "SOF International English Olympiad (IEO) \u2013 Class 9",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 9",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-ieo-10",
-      "name": "SOF International English Olympiad (IEO) \u2013 Class 10",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 10",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-ieo-11",
-      "name": "SOF International English Olympiad (IEO) \u2013 Class 11",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 11",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-ieo-12",
-      "name": "SOF International English Olympiad (IEO) \u2013 Class 12",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 12",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nco-1",
-      "name": "SOF National Cyber Olympiad (NCO) \u2013 Class 1",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 1",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nco-2",
-      "name": "SOF National Cyber Olympiad (NCO) \u2013 Class 2",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 2",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nco-3",
-      "name": "SOF National Cyber Olympiad (NCO) \u2013 Class 3",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 3",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nco-4",
-      "name": "SOF National Cyber Olympiad (NCO) \u2013 Class 4",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 4",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nco-5",
-      "name": "SOF National Cyber Olympiad (NCO) \u2013 Class 5",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 5",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nco-6",
-      "name": "SOF National Cyber Olympiad (NCO) \u2013 Class 6",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 6",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nco-7",
-      "name": "SOF National Cyber Olympiad (NCO) \u2013 Class 7",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 7",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nco-8",
-      "name": "SOF National Cyber Olympiad (NCO) \u2013 Class 8",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 8",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nco-9",
-      "name": "SOF National Cyber Olympiad (NCO) \u2013 Class 9",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 9",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nco-10",
-      "name": "SOF National Cyber Olympiad (NCO) \u2013 Class 10",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 10",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nco-11",
-      "name": "SOF National Cyber Olympiad (NCO) \u2013 Class 11",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 11",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nco-12",
-      "name": "SOF National Cyber Olympiad (NCO) \u2013 Class 12",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 12",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nso-1",
-      "name": "SOF National Science Olympiad (NSO) \u2013 Class 1",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 1",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nso-2",
-      "name": "SOF National Science Olympiad (NSO) \u2013 Class 2",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 2",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nso-3",
-      "name": "SOF National Science Olympiad (NSO) \u2013 Class 3",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 3",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nso-4",
-      "name": "SOF National Science Olympiad (NSO) \u2013 Class 4",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 4",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nso-5",
-      "name": "SOF National Science Olympiad (NSO) \u2013 Class 5",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 5",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nso-6",
-      "name": "SOF National Science Olympiad (NSO) \u2013 Class 6",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 6",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nso-7",
-      "name": "SOF National Science Olympiad (NSO) \u2013 Class 7",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 7",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nso-8",
-      "name": "SOF National Science Olympiad (NSO) \u2013 Class 8",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 8",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nso-9",
-      "name": "SOF National Science Olympiad (NSO) \u2013 Class 9",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 9",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nso-10",
-      "name": "SOF National Science Olympiad (NSO) \u2013 Class 10",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 10",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nso-11",
-      "name": "SOF National Science Olympiad (NSO) \u2013 Class 11",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 11",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-nso-12",
-      "name": "SOF National Science Olympiad (NSO) \u2013 Class 12",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 12",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-imo-1",
-      "name": "SOF International Mathematics Olympiad (IMO) \u2013 Class 1",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 1",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-imo-2",
-      "name": "SOF International Mathematics Olympiad (IMO) \u2013 Class 2",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 2",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-imo-3",
-      "name": "SOF International Mathematics Olympiad (IMO) \u2013 Class 3",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 3",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-imo-4",
-      "name": "SOF International Mathematics Olympiad (IMO) \u2013 Class 4",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 4",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-imo-5",
-      "name": "SOF International Mathematics Olympiad (IMO) \u2013 Class 5",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 5",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-imo-6",
-      "name": "SOF International Mathematics Olympiad (IMO) \u2013 Class 6",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 6",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-imo-7",
-      "name": "SOF International Mathematics Olympiad (IMO) \u2013 Class 7",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 7",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-imo-8",
-      "name": "SOF International Mathematics Olympiad (IMO) \u2013 Class 8",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 8",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-imo-9",
-      "name": "SOF International Mathematics Olympiad (IMO) \u2013 Class 9",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 9",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-imo-10",
-      "name": "SOF International Mathematics Olympiad (IMO) \u2013 Class 10",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 10",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-imo-11",
-      "name": "SOF International Mathematics Olympiad (IMO) \u2013 Class 11",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 11",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-imo-12",
-      "name": "SOF International Mathematics Olympiad (IMO) \u2013 Class 12",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 12",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-isso-3",
-      "name": "SOF International Social Studies Olympiad (ISSO) \u2013 Class 3",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 3",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-isso-4",
-      "name": "SOF International Social Studies Olympiad (ISSO) \u2013 Class 4",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 4",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-isso-5",
-      "name": "SOF International Social Studies Olympiad (ISSO) \u2013 Class 5",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 5",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-isso-6",
-      "name": "SOF International Social Studies Olympiad (ISSO) \u2013 Class 6",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 6",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-isso-7",
-      "name": "SOF International Social Studies Olympiad (ISSO) \u2013 Class 7",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 7",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-isso-8",
-      "name": "SOF International Social Studies Olympiad (ISSO) \u2013 Class 8",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 8",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-isso-9",
-      "name": "SOF International Social Studies Olympiad (ISSO) \u2013 Class 9",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 9",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
-    },
-    {
-      "id": "sof-isso-10",
-      "name": "SOF International Social Studies Olympiad (ISSO) \u2013 Class 10",
-      "body": "SOF",
-      "category": "school_competitive",
-      "level": "Class 10",
-      "vacancies": null,
-      "emoji": "\ud83c\udfc5",
-      "price_inr": 0
+      "id": "ailet",
+      "name": "AILET (All India Law Entrance Test, NLU Delhi)",
+      "body": "National Law University (NLU) Delhi - opted out of CLAT Consortium",
+      "category": "college_entrance",
+      "emoji": "🎓",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "English Language",
+        "Current Affairs & GK",
+        "Logical Reasoning"
+      ],
+      "level": "advanced",
+      "difficulty_score": 7,
+      "fee_display": "Not fully re-confirmed",
+      "duration": "2 hours",
+      "mode": "Not separately re-confirmed as CBT or OMR",
+      "pyq_status": "OFFICIAL - NLU Delhi releases the question paper AND answer key after each exam, in PDF"
+    },
+    {
+      "id": "aissee",
+      "name": "AISSEE (All India Sainik Schools Entrance Examination)",
+      "body": "National Testing Agency (NTA)",
+      "category": "govt_entrance",
+      "emoji": "🏛️",
+      "classes": [
+        6,
+        9
+      ],
+      "class_range": "Class 6-9",
+      "subjects": [
+        "Maths",
+        "Intelligence/Mental Ability",
+        "Language",
+        "General Knowledge"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 5,
+      "fee_display": "Rs 800 (Gen/OBC/Defence) / Rs 650 (SC/ST)",
+      "duration": "2.5 hours",
+      "mode": "Offline OMR",
+      "pyq_status": "No official archive; coaching-site reconstructions"
+    },
+    {
+      "id": "aiste",
+      "name": "AISTE (All India Scholarship Test Exam)",
+      "body": "Ctoan Consultancy Pvt. Ltd. (private)",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "class_range": "Class 4-12",
+      "subjects": [
+        "General (not separately itemized)"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 5,
+      "fee_display": "Rs 249",
+      "duration": "Not confirmed",
+      "mode": "Online with home-district physical exam centres (hybrid)",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "amu_jmi_school_entrance",
+      "name": "AMU & JMI School Entrances (Class 6 & beyond)",
+      "body": "Aligarh Muslim University / Jamia Millia Islamia",
+      "category": "govt_entrance",
+      "emoji": "🏛️",
+      "classes": [
+        1,
+        6
+      ],
+      "class_range": "Class 1-6",
+      "subjects": [
+        "Not separately itemized"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Offline, written",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "ap_prematric_postmatric",
+      "name": "AP Pre-Matric / Post-Matric Scholarship",
+      "body": "Andhra Pradesh State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "class_range": "Class 1-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "kerala_apj_abdul_kalam",
+      "name": "APJ Abdul Kalam Scholarship (Kerala)",
+      "body": "Kerala State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        11,
+        12
+      ],
+      "class_range": "Class 11-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "asset",
+      "name": "ASSET (Educational Initiatives)",
+      "body": "Educational Initiatives Pvt. Ltd. (private)",
+      "category": "diagnostic_not_competitive",
+      "emoji": "📊",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "class_range": "Class 1-10",
+      "subjects": [
+        "English",
+        "Mathematics",
+        "Science"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not verified - school-bundled, not standalone per-student",
+      "duration": "Not verified",
+      "mode": "Not verified - typically school-bundled subscription",
+      "pyq_status": "Not applicable - diagnostic tool, not competitive exam"
+    },
+    {
+      "id": "punjab_attendance_scholarship",
+      "name": "Attendance Scholarship (Punjab)",
+      "body": "Punjab State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "class_range": "Class 1-5",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "bihar_vidyadhan",
+      "name": "Bihar Vidyadhan Scholarship",
+      "body": "Private organization (region: Bihar) - see flags, NOT confirmed as a government scheme",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        10
+      ],
+      "class_range": "Class 10",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "ca_foundation",
+      "name": "CA Foundation (Chartered Accountancy, Entry Level)",
+      "body": "ICAI (Institute of Chartered Accountants of India)",
+      "category": "professional",
+      "emoji": "📜",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Accounting",
+        "Business Laws",
+        "Quantitative Aptitude",
+        "Business Economics"
+      ],
+      "level": "advanced",
+      "difficulty_score": 7,
+      "fee_display": "Not re-verified exact figure",
+      "duration": "3 hrs (descriptive papers) / 2 hrs (MCQ papers)",
+      "mode": "Offline, English or Hindi",
+      "pyq_status": "OFFICIAL - ICAI publishes past papers with suggested answers on icai.org"
+    },
+    {
+      "id": "kerala_chms",
+      "name": "CH Muhammedkoya Scholarship (CHMS)",
+      "body": "Kerala State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        11,
+        12
+      ],
+      "class_range": "Class 11-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "clat",
+      "name": "CLAT (Common Law Admission Test)",
+      "body": "Consortium of National Law Universities (NLUs)",
+      "category": "college_entrance",
+      "emoji": "🎓",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "English",
+        "Current Affairs/GK",
+        "Legal Reasoning",
+        "Logical Reasoning",
+        "Quantitative Techniques"
+      ],
+      "level": "advanced",
+      "difficulty_score": 7,
+      "fee_display": "Rs 4,000 (Gen/OBC/PwD/NRI/PIO/OCI) / Rs 3,500 (SC/ST/BPL)",
+      "duration": "Not specified in this pass",
+      "mode": "Offline, pen-and-paper - notably NOT CBT, unlike most NTA exams",
+      "pyq_status": "No bundled PYQ sale, but widely available free through coaching/law-prep platforms"
+    },
+    {
+      "id": "jharkhand_cmmss",
+      "name": "CMMSS (Chief Minister Merit Scholarship Scheme, Jharkhand)",
+      "body": "Jharkhand State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "class_range": "Class 7-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "cseet",
+      "name": "CSEET (Company Secretary Executive Entrance Test)",
+      "body": "ICSI (Institute of Company Secretaries of India)",
+      "category": "professional",
+      "emoji": "📜",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Business Communication",
+        "Legal Aptitude & Logical Reasoning",
+        "Economic & Business Environment",
+        "Current Affairs & Quantitative Aptitude"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 6,
+      "fee_display": "Not independently confirmed",
+      "duration": "Multi-day as of June 2026 (was single 120-min sitting before the overhaul)",
+      "mode": "OFFLINE, centre-based, 4 separate days (as of June 2026; was online/remote-proctored CBT before)",
+      "pyq_status": "OFFICIAL - ICSI provides official mock tests ~1 week before each exam"
+    },
+    {
+      "id": "cuet_ug",
+      "name": "CUET-UG (Common University Entrance Test)",
+      "body": "National Testing Agency (NTA)",
+      "category": "college_entrance",
+      "emoji": "🎓",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Up to 5 chosen freely from 37 domain subjects (down from 63)"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 6,
+      "fee_display": "Not re-verified exact 2026 figure",
+      "duration": "60 min/subject (+20 min/hr for PwBD)",
+      "mode": "CBT only",
+      "pyq_status": "NTA releases provisional answer keys; ~80-90% content overlap with NCERT Class 12 per one source"
+    },
+    {
+      "id": "punjab_cm_scholarship",
+      "name": "Chief Minister Scholarship Scheme (Punjab)",
+      "body": "Punjab State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        10,
+        11,
+        12
+      ],
+      "class_range": "Class 10-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "assam_combined_merit",
+      "name": "Combined Merit Scholarship (Assam)",
+      "body": "Assam State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "delhi_mvpp",
+      "name": "Delhi MVPP (Mukhyamantri Vigyan Pratibha Pariksha, formerly JSTSE)",
+      "body": "Directorate of Education (DoE), Delhi - Science Branch",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        9
+      ],
+      "class_range": "Class 9",
+      "subjects": [
+        "Mental Ability",
+        "Science",
+        "Mathematics"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 5,
+      "fee_display": "Not independently confirmed",
+      "duration": "4 hours total (longest Class-9-tier exam in this database)",
+      "mode": "Offline",
+      "pyq_status": "No official DoE-published archive; well-documented via Delhi coaching ecosystem"
+    },
+    {
+      "id": "maharashtra_vidyaniketan_dnt",
+      "name": "Denotified & Nomadic Tribes Vidyaniketan Entrance Exam (Maharashtra)",
+      "body": "Maharashtra State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        5
+      ],
+      "class_range": "Class 5",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "haryana_ambedkar_medhavi",
+      "name": "Dr. Ambedkar Medhavi Chattar (Scholarship) Yojana (Haryana)",
+      "body": "Haryana State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        10,
+        12
+      ],
+      "class_range": "Class 10-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "emrs_selection_test",
+      "name": "EMRS Selection Test (Eklavya Model Residential Schools)",
+      "body": "Ministry of Tribal Affairs",
+      "category": "govt_entrance",
+      "emoji": "🏛️",
+      "classes": [
+        6,
+        9
+      ],
+      "class_range": "Class 6-9",
+      "subjects": [
+        "Regional-language heavy, not separately itemized"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Offline",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "mp_gaon_ki_beti",
+      "name": "Gaon Ki Beti Yojana (MP)",
+      "body": "Madhya Pradesh State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "goa_stse",
+      "name": "Goa STSE (Science Talent Search Examination)",
+      "body": "Goa State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        8,
+        9,
+        10
+      ],
+      "class_range": "Class 8-10",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "maharashtra_vidyaniketan_govt",
+      "name": "Government Vidyaniketan Entrance Exam (Maharashtra)",
+      "body": "Maharashtra State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        5
+      ],
+      "class_range": "Class 5",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "gujarat_gyan_sadhana",
+      "name": "Gujarat CM Gyan Sadhana Merit Scholarship (CGMS)",
+      "body": "State Examination Board (SEB), Gandhinagar",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        8
+      ],
+      "class_range": "Class 8",
+      "subjects": [
+        "MAT",
+        "SAT (entirely Class 8 syllabus)"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 6,
+      "fee_display": "Free",
+      "duration": "2.5 hours",
+      "mode": "Offline MCQ, bilingual (English/Gujarati)",
+      "pyq_status": "OFFICIAL - provisional + final answer key released each cycle"
+    },
+    {
+      "id": "gujarat_pse",
+      "name": "Gujarat PSE (Primary Scholarship Exam)",
+      "body": "State Examination Board (SEB)/GSHEB, Gandhinagar",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        6
+      ],
+      "class_range": "Class 6",
+      "subjects": [
+        "Not separately itemized"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 5,
+      "fee_display": "Rs 40 (General) / Rs 50 (other categories)",
+      "duration": "Not confirmed",
+      "mode": "Written exam",
+      "pyq_status": "Not independently confirmed for PSE specifically"
+    },
+    {
+      "id": "humming_bird",
+      "name": "Humming Bird Olympiads (HMO, HSO, HCC, HCO, ARO)",
+      "body": "Humming Bird Education Limited",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "class_range": "Class 1-12",
+      "subjects": [
+        "Maths (HMO)",
+        "Science (HSO)",
+        "Commerce (HCC)",
+        "Computer Science (HCO)",
+        "Reasoning (ARO)"
+      ],
+      "level": "beginner",
+      "difficulty_score": 3,
+      "fee_display": "Rs 200/subject",
+      "duration": "60-80 minutes",
+      "mode": "Online, CBT",
+      "pyq_status": "No confirmed official bundled PYQ sale; third-party documentation available"
+    },
+    {
+      "id": "ico_commerce_olympiad",
+      "name": "ICO (International Commerce Olympiad)",
+      "body": "SOF (Science Olympiad Foundation)",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        11,
+        12
+      ],
+      "class_range": "Class 11-12",
+      "subjects": [
+        "Commerce, Business Aptitude, Accounting fundamentals"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Likely matches SOF family pattern (offline, in-school)",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "sof_ieo",
+      "name": "IEO (International English Olympiad) - SOF",
+      "body": "Science Olympiad Foundation (SOF)",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "class_range": "Class 1-10",
+      "subjects": [
+        "English"
+      ],
+      "level": "beginner",
+      "difficulty_score": 3,
+      "fee_display": "Rs 125 (incl",
+      "duration": "60 minutes",
+      "mode": "Offline OMR, in-school",
+      "pyq_status": "No single official archive; extensive third-party documentation"
+    },
+    {
+      "id": "sof_igko",
+      "name": "IGKO (International General Knowledge Olympiad) - SOF",
+      "body": "Science Olympiad Foundation (SOF)",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "class_range": "Class 1-10",
+      "subjects": [
+        "General Knowledge"
+      ],
+      "level": "beginner",
+      "difficulty_score": 3,
+      "fee_display": "Rs 125 (incl",
+      "duration": "60 minutes",
+      "mode": "Offline OMR, in-school",
+      "pyq_status": "No single official archive; extensive third-party documentation"
+    },
+    {
+      "id": "iiser_iat",
+      "name": "IISER Aptitude Test (IAT)",
+      "body": "7 IISERs jointly (rotating organizer)",
+      "category": "college_entrance",
+      "emoji": "🎓",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Physics",
+        "Chemistry",
+        "Mathematics",
+        "Biology - all 4, EQUAL 15Q weighting"
+      ],
+      "level": "advanced",
+      "difficulty_score": 9,
+      "fee_display": "Rs 2,000 (Gen/EWS/OBC) / Rs 1,000 (SC/ST/PwD) / Rs 12,000 (F",
+      "duration": "3 hours",
+      "mode": "CBT, English & Hindi medium",
+      "pyq_status": "No official bundle confirmed; widely described by prep industry as 'JEE-Advanced-comparable, plus Biology'"
+    },
+    {
+      "id": "sof_imo",
+      "name": "IMO (International Mathematics Olympiad) - SOF",
+      "body": "Science Olympiad Foundation (SOF)",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "class_range": "Class 1-10",
+      "subjects": [
+        "Mathematics"
+      ],
+      "level": "beginner",
+      "difficulty_score": 3,
+      "fee_display": "Rs 125 (incl",
+      "duration": "60 minutes",
+      "mode": "Offline OMR, in-school",
+      "pyq_status": "No single official archive; extensive third-party documentation"
+    },
+    {
+      "id": "inspire_internship",
+      "name": "INSPIRE Internship (Class XI)",
+      "body": "Department of Science & Technology (DST)",
+      "category": "national_scholarship",
+      "emoji": "🌟",
+      "classes": [
+        11
+      ],
+      "class_range": "Class 11",
+      "subjects": [
+        "Science (residential camp format, not a written test)"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "5-day residential camp",
+      "mode": "Selection-based (top 1% of Class X results), not a written exam",
+      "pyq_status": "N/A - not a sat-for test"
+    },
+    {
+      "id": "inspire_she",
+      "name": "INSPIRE-SHE (Scholarship for Higher Education)",
+      "body": "Department of Science & Technology (DST)",
+      "category": "national_scholarship_no_test",
+      "emoji": "🎖️",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Free",
+      "duration": "N/A",
+      "mode": "N/A - merit-based on prior performance, NO test administered",
+      "pyq_status": "N/A - no test exists"
+    },
+    {
+      "id": "ioqm",
+      "name": "IOQM (Indian Olympiad Qualifier in Mathematics)",
+      "body": "Mathematics Teachers' Association India (MTAI) + HBCSE",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "class_range": "Class 8-12",
+      "subjects": [
+        "Mathematics only - calculus EXPLICITLY EXCLUDED even at Class 12"
+      ],
+      "level": "advanced",
+      "difficulty_score": 8,
+      "fee_display": "Not independently confirmed",
+      "duration": "3 hours",
+      "mode": "Offline, OMR-based, English & Hindi",
+      "pyq_status": "OFFICIAL - HBCSE/MTAI officially publish papers + answer keys on iapt.org.in"
+    },
+    {
+      "id": "ipmat",
+      "name": "IPMAT (Integrated Programme in Management Aptitude Test)",
+      "body": "IIM Indore and IIM Rohtak (SEPARATE exams, separate fees)",
+      "category": "college_entrance",
+      "emoji": "🎓",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Quantitative Ability (MCQ + Short-Answer)",
+        "Verbal Ability"
+      ],
+      "level": "advanced",
+      "difficulty_score": 7,
+      "fee_display": "Rs 4,130 (Gen/OBC/EWS) / Rs 2,065 (SC/ST/PwD) - Indore",
+      "duration": "2 hours",
+      "mode": "CBT",
+      "pyq_status": "OFFICIAL - IIM Indore officially hosts sample papers on iimidr.ac.in"
+    },
+    {
+      "id": "isro_yuvika",
+      "name": "ISRO YUVIKA (Yuva Vigyanik Karyakram)",
+      "body": "ISRO",
+      "category": "national_scholarship",
+      "emoji": "🌟",
+      "classes": [
+        9
+      ],
+      "class_range": "Class 9",
+      "subjects": [
+        "Not test-based - selection by academic record"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "N/A",
+      "mode": "Selection based on Class 8 academic results + co-curricular record, not a written test",
+      "pyq_status": "N/A - not a sat-for test"
+    },
+    {
+      "id": "isso_social_studies",
+      "name": "ISSO (International Social Studies Olympiad)",
+      "body": "SOF (Science Olympiad Foundation)",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "class_range": "Class 7-12",
+      "subjects": [
+        "History",
+        "Geography",
+        "Civics"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Likely matches SOF family pattern (offline, in-school)",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "istse",
+      "name": "ISTSE (Indian School Talent Search Exam)",
+      "body": "Educational Excellentia (private)",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "class_range": "Class 1-10",
+      "subjects": [
+        "Mental & Logical Ability",
+        "Maths",
+        "Science",
+        "English",
+        "Scholars Section"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 5,
+      "fee_display": "Rs 399 (normal) / Rs 449 (late fee)",
+      "duration": "60 minutes",
+      "mode": "Online (home, AI-monitored) OR paper-based via schools",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "ito",
+      "name": "ITO (Indian Talent Olympiad)",
+      "body": "Indian Talent Olympiad (est. 2013)",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "class_range": "Class 1-10",
+      "subjects": [
+        "Science",
+        "Maths",
+        "English",
+        "GK",
+        "Computer",
+        "Social Studies",
+        "Drawing",
+        "Essay"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 4,
+      "fee_display": "Rs 150-175/student/subject (school registration)",
+      "duration": "Not confirmed",
+      "mode": "Online (individual) OR offline/paper-based (school)",
+      "pyq_status": "OFFICIAL - ITO advertises official previous-year papers with solutions directly"
+    },
+    {
+      "id": "igbav_entrance",
+      "name": "Indira Gandhi Balika Awasiya Vidyalaya (IGBAV) Entrance",
+      "body": "Eastern region state govts",
+      "category": "govt_entrance",
+      "emoji": "🏛️",
+      "classes": [
+        6
+      ],
+      "class_range": "Class 6",
+      "subjects": [
+        "Not separately itemized"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Offline",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "ishan_uday_scheme",
+      "name": "Ishan Uday Special Scholarship Scheme",
+      "body": "North-East region (Central MoE scheme) State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "jee_main",
+      "name": "JEE Main (Paper 1, B.E./B.Tech)",
+      "body": "National Testing Agency (NTA)",
+      "category": "college_entrance",
+      "emoji": "🎓",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Physics",
+        "Chemistry",
+        "Mathematics"
+      ],
+      "level": "advanced",
+      "difficulty_score": 8,
+      "fee_display": "Not re-verified exact 2026 figure",
+      "duration": "3 hours",
+      "mode": "CBT",
+      "pyq_status": "No official NTA-sold bundle, but extensively documented via coaching platforms and official answer keys"
+    },
+    {
+      "id": "jnvst",
+      "name": "JNVST (Jawahar Navodaya Vidyalaya Selection Test)",
+      "body": "Navodaya Vidyalaya Samiti (NVS)",
+      "category": "govt_entrance",
+      "emoji": "🏛️",
+      "classes": [
+        6,
+        9
+      ],
+      "class_range": "Class 6-9",
+      "subjects": [
+        "Mental Ability",
+        "Arithmetic",
+        "Language"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 4,
+      "fee_display": "Free",
+      "duration": "2 hours",
+      "mode": "Offline OMR",
+      "pyq_status": "No official archive; extensive third-party reconstructions"
+    },
+    {
+      "id": "ap_jagananna_videshi",
+      "name": "Jagananna Videshi Vidya Deevena (AP)",
+      "body": "Andhra Pradesh State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "ap_jnanabhumi",
+      "name": "Jnanabhumi Portal (AP)",
+      "body": "Andhra Pradesh State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "odisha_junior_merit",
+      "name": "Junior Merit Scholarship (Odisha)",
+      "body": "Odisha State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        11
+      ],
+      "class_range": "Class 11",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "kvs_class9_admission",
+      "name": "KVS Class 9 Admission Test",
+      "body": "Kendriya Vidyalaya Sangathan (KVS)",
+      "category": "govt_entrance",
+      "emoji": "🏛️",
+      "classes": [
+        9
+      ],
+      "class_range": "Class 9",
+      "subjects": [
+        "Hindi",
+        "English",
+        "Maths",
+        "Science",
+        "Social Science"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Offline, conducted only if vacancies exist",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "kerala_lss",
+      "name": "Kerala LSS (Lower Secondary Scholarship, 'CM Kids Scholarship')",
+      "body": "Kerala Pareeksha Bhavan",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        4
+      ],
+      "class_range": "Class 4",
+      "subjects": [
+        "Language",
+        "Maths",
+        "EVS",
+        "GK"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 5,
+      "fee_display": "Free",
+      "duration": "Not independently confirmed",
+      "mode": "Offline MCQ-based",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "kerala_uss",
+      "name": "Kerala USS (Upper Secondary Scholarship, 'CM Kids Scholarship')",
+      "body": "Kerala Pareeksha Bhavan",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        7
+      ],
+      "class_range": "Class 7",
+      "subjects": [
+        "First Language",
+        "English",
+        "Maths",
+        "Science",
+        "Social Science"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 5,
+      "fee_display": "Not independently confirmed",
+      "duration": "~2 hours (120 minutes)",
+      "mode": "Offline, objective + short-answer + descriptive mixed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "logiqids",
+      "name": "LogIQids (Logical Reasoning Olympiad)",
+      "body": "LogIQids (app-based platform, founded by IIT-IIM graduates)",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "class_range": "Class 1-9",
+      "subjects": [
+        "Logical Reasoning"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 4,
+      "fee_display": "Not confirmed (historical reference: Rs 450 for one cohort)",
+      "duration": "Not confirmed",
+      "mode": "Online, proctored",
+      "pyq_status": "Not applicable - core product is in-app adaptive practice 'thinksheets'"
+    },
+    {
+      "id": "maharashtra_talent_search",
+      "name": "MTS (Maharashtra Talent Search Exam)",
+      "body": "Private organization (region: Maharashtra) - see flags, NOT confirmed as a government scheme",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        8,
+        9,
+        10
+      ],
+      "class_range": "Class 8-10",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "maharashtra_scholarship",
+      "name": "Maharashtra Scholarship Exam (PUP/PSS - Pre-Upper-Primary / Pre-Secondary)",
+      "body": "MSCE (Maharashtra State Council of Examinations), Pune",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        5,
+        8
+      ],
+      "class_range": "Class 5-8",
+      "subjects": [
+        "Hindi (1st language)",
+        "Mathematics",
+        "English (3rd language)",
+        "Intelligence Test"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Online application, offline exam",
+      "pyq_status": "OFFICIAL - MSCE Pune provides Previous Year Question Papers and Sample Answer Sheets"
+    },
+    {
+      "id": "meghalaya_tribal_stse",
+      "name": "Meghalaya STSE (State Talent Search Examination in Maths/Science for Tribal Students)",
+      "body": "Meghalaya State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        8,
+        9,
+        10
+      ],
+      "class_range": "Class 8-10",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "punjab_merit_cum_means",
+      "name": "Merit-cum-Means Scholarship (Punjab)",
+      "body": "Punjab State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        11,
+        12
+      ],
+      "class_range": "Class 11-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "bihar_kanya_utthan_graduation",
+      "name": "Mukhyamantri Kanya Utthan Yojana - Graduation",
+      "body": "Bihar State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "mp_mukhyamantri_medhavi",
+      "name": "Mukhyamantri Medhavi Vidyarthi Yojana (MP)",
+      "body": "Madhya Pradesh State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "bihar_medhavriti_yojana",
+      "name": "Mukhyamantri Medhavriti Yojana (Bihar)",
+      "body": "Bihar State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "delhi_mukhyamantri_pratibha_yojana",
+      "name": "Mukhyamantri Vidyarthi Pratibha Yojana (Delhi)",
+      "body": "Delhi State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "class_range": "Class 9-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "nata",
+      "name": "NATA (National Aptitude Test in Architecture)",
+      "body": "Council of Architecture (CoA)",
+      "category": "design_entrance",
+      "emoji": "🎨",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Drawing & Composition (Part A)",
+        "Aptitude: Maths/General Aptitude/Logical Reasoning/GK-Architecture/Visual Reasoning (Part B)"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 5,
+      "fee_display": "Not independently confirmed",
+      "duration": "3 hours total (Part A 90min offline + Part B 90min CBT)",
+      "mode": "HYBRID: Part A offline hand-drawn, Part B online CBT",
+      "pyq_status": "CoA hosts official sample papers on nata.in"
+    },
+    {
+      "id": "nco_cyber_olympiad",
+      "name": "NCO (National Cyber Olympiad)",
+      "body": "SOF (Science Olympiad Foundation)",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "class_range": "Class 7-10",
+      "subjects": [
+        "Computer Science / Cyber fundamentals"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Likely matches SOF family pattern (offline, in-school)",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "nda_na",
+      "name": "NDA & NA (National Defence Academy and Naval Academy Examination)",
+      "body": "Union Public Service Commission (UPSC)",
+      "category": "college_entrance",
+      "emoji": "🎓",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Mathematics",
+        "General Ability Test (English + GK)"
+      ],
+      "level": "advanced",
+      "difficulty_score": 8,
+      "fee_display": "Not re-verified exact figure",
+      "duration": "2.5 hours/paper",
+      "mode": "Offline",
+      "pyq_status": "OFFICIAL - UPSC publishes its own past papers on upsc.gov.in"
+    },
+    {
+      "id": "neet_ug",
+      "name": "NEET-UG (National Eligibility cum Entrance Test)",
+      "body": "National Testing Agency (NTA)",
+      "category": "college_entrance",
+      "emoji": "🎓",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Physics",
+        "Chemistry",
+        "Biology"
+      ],
+      "level": "advanced",
+      "difficulty_score": 9,
+      "fee_display": "Rs 1,700 (Gen, India) / Rs 1,000 (SC/ST/PwBD) / Rs 9,500 (in",
+      "duration": "3 hours 15 minutes (195 min) in 2026 - extended from standard 180",
+      "mode": "Offline, pen-and-paper, OMR-based - one of few major exams NOT CBT",
+      "pyq_status": "No official bundle; extremely well-documented via coaching platforms"
+    },
+    {
+      "id": "nid_dat",
+      "name": "NID DAT (National Institute of Design, Design Aptitude Test)",
+      "body": "National Institute of Design (NID)",
+      "category": "design_entrance",
+      "emoji": "🎨",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "CAT (Creative Ability Test) - Prelims",
+        "Studio Test + Interview - Mains"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 6,
+      "fee_display": "Not independently confirmed",
+      "duration": "~2.5-4.5 hrs (Prelims, depending on disciplines) + 3 hrs (Studio Test)",
+      "mode": "Offline throughout",
+      "pyq_status": "NID does NOT officially release a syllabus or PYQ archive - least officially-documented major exam in this database"
+    },
+    {
+      "id": "nift_entrance",
+      "name": "NIFT Entrance Exam (National Institute of Fashion Technology)",
+      "body": "NTA (on behalf of NIFT)",
+      "category": "design_entrance",
+      "emoji": "🎨",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "GAT (English, Quant, Analytical/Logical, GK)",
+        "CAT (B.Des/M.Des only, subjective+drawing)"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 6,
+      "fee_display": "Not independently confirmed",
+      "duration": "GAT+CAT same day, ~3+ hrs combined",
+      "mode": "GAT: CBT. CAT: offline/paper-based.",
+      "pyq_status": "NTA releases official answer keys (provisional + objection window confirmed for 2026)"
+    },
+    {
+      "id": "an_islands_nmms",
+      "name": "NMMS (Andaman & Nicobar Islands)",
+      "body": "Andaman & Nicobar Islands State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        8
+      ],
+      "class_range": "Class 8",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "nmms",
+      "name": "NMMS (National Means-cum-Merit Scholarship)",
+      "body": "State SCERTs, central MoE guidelines",
+      "category": "national_scholarship",
+      "emoji": "🌟",
+      "classes": [
+        8
+      ],
+      "class_range": "Class 8",
+      "subjects": [
+        "MAT (Reasoning)",
+        "SAT (Science + Social Science combined, 7 subjects in one paper)"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 6,
+      "fee_display": "Free",
+      "duration": "180 minutes total",
+      "mode": "Offline",
+      "pyq_status": "Varies by state SCERT - inconsistently archived"
+    },
+    {
+      "id": "odisha_nrts",
+      "name": "NRTS (Odisha)",
+      "body": "Odisha State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        10
+      ],
+      "class_range": "Class 10",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "nse_series",
+      "name": "NSE-Series (National Standard Examinations: Physics/Chemistry/Biology/Astronomy)",
+      "body": "IAPT (NSEP) + respective Teachers' Associations, coordinating with HBCSE",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        11,
+        12
+      ],
+      "class_range": "Class 11-12",
+      "subjects": [
+        "Physics (NSEP)",
+        "Chemistry (NSEC)",
+        "Biology (NSEB)",
+        "Astronomy (NSEA)"
+      ],
+      "level": "advanced",
+      "difficulty_score": 7,
+      "fee_display": "Rs 200 (confirmed for NSEB)",
+      "duration": "Varies by subject",
+      "mode": "Offline, through registered school/college centers (1,000+ IAPT centers)",
+      "pyq_status": "OFFICIAL - IAPT officially publishes question papers AND final answer keys on iapt.org.in"
+    },
+    {
+      "id": "nsea_astronomy",
+      "name": "NSEA (National Standard Examination in Astronomy)",
+      "body": "IAPT/Astronomy bodies, coordinating with HBCSE",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        11,
+        12
+      ],
+      "class_range": "Class 11-12",
+      "subjects": [
+        "Astronomy"
+      ],
+      "level": "advanced",
+      "difficulty_score": 7,
+      "fee_display": "Rs 200 (by family pattern)",
+      "duration": "Varies",
+      "mode": "Offline, through registered centers",
+      "pyq_status": "OFFICIAL - IAPT publishes papers + answer keys"
+    },
+    {
+      "id": "nseb_biology",
+      "name": "NSEB (National Standard Examination in Biology)",
+      "body": "Biology Teachers Association, coordinating with HBCSE",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        11,
+        12
+      ],
+      "class_range": "Class 11-12",
+      "subjects": [
+        "Biology"
+      ],
+      "level": "advanced",
+      "difficulty_score": 7,
+      "fee_display": "Rs 200 (confirmed)",
+      "duration": "Varies",
+      "mode": "Offline, through registered centers",
+      "pyq_status": "OFFICIAL - IAPT/coordinating bodies publish papers + answer keys"
+    },
+    {
+      "id": "nsec_chemistry",
+      "name": "NSEC (National Standard Examination in Chemistry)",
+      "body": "Chemistry Teachers Association, coordinating with HBCSE",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        11,
+        12
+      ],
+      "class_range": "Class 11-12",
+      "subjects": [
+        "Chemistry"
+      ],
+      "level": "advanced",
+      "difficulty_score": 7,
+      "fee_display": "Rs 200 (by family pattern)",
+      "duration": "Varies",
+      "mode": "Offline, through registered centers",
+      "pyq_status": "OFFICIAL - IAPT/coordinating bodies publish papers + answer keys"
+    },
+    {
+      "id": "nsejs",
+      "name": "NSEJS (National Standard Examination in Junior Science)",
+      "body": "IAPT (Indian Association of Physics Teachers)",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        9
+      ],
+      "class_range": "Class 9",
+      "subjects": [
+        "Physics",
+        "Chemistry",
+        "Biology (junior/combined science)"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Offline, through IAPT centers",
+      "pyq_status": "Likely OFFICIAL via IAPT, same as the NSE-series, but not independently re-confirmed for NSEJS specifically"
+    },
+    {
+      "id": "nsep_physics",
+      "name": "NSEP (National Standard Examination in Physics)",
+      "body": "IAPT (Indian Association of Physics Teachers)",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        11,
+        12
+      ],
+      "class_range": "Class 11-12",
+      "subjects": [
+        "Physics"
+      ],
+      "level": "advanced",
+      "difficulty_score": 7,
+      "fee_display": "Rs 200 (by family pattern)",
+      "duration": "Varies",
+      "mode": "Offline, through registered IAPT centers",
+      "pyq_status": "OFFICIAL - IAPT publishes papers + answer keys on iapt.org.in"
+    },
+    {
+      "id": "sof_nso",
+      "name": "NSO (National Science Olympiad) - SOF",
+      "body": "Science Olympiad Foundation (SOF)",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "class_range": "Class 1-10",
+      "subjects": [
+        "Science"
+      ],
+      "level": "beginner",
+      "difficulty_score": 3,
+      "fee_display": "Rs 125 (incl",
+      "duration": "60 minutes",
+      "mode": "Offline OMR, in-school",
+      "pyq_status": "No single official archive; extensive third-party documentation"
+    },
+    {
+      "id": "nstse",
+      "name": "NSTSE (National Level Science Talent Search Examination)",
+      "body": "Unified Council (private organization, despite 'National' in the name)",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "class_range": "Class 1-12",
+      "subjects": [
+        "Maths",
+        "Science",
+        "Critical Thinking (Class 3+)"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 4,
+      "fee_display": "Rs 354 (incl",
+      "duration": "60 min (one source: 90 min - unconfirmed which is current)",
+      "mode": "Offline (school) OR online individual registration",
+      "pyq_status": "OFFICIAL - 2 past papers bundled directly into registration fee"
+    },
+    {
+      "id": "ntse",
+      "name": "NTSE (National Talent Search Examination)",
+      "body": "NCERT (national), State SCERTs (Stage 1)",
+      "category": "national_scholarship",
+      "emoji": "🌟",
+      "classes": [
+        10
+      ],
+      "class_range": "Class 10",
+      "subjects": [
+        "MAT",
+        "SAT (full Class 9-10 syllabus: Science+Social Science+Maths)"
+      ],
+      "level": "advanced",
+      "difficulty_score": 8,
+      "fee_display": "Free",
+      "duration": "120 min/paper (Stage 1 typical)",
+      "mode": "Offline",
+      "pyq_status": "No NCERT-official consolidated archive; some State SCERTs release Stage 1 papers; extensive coaching-platform archives"
+    },
+    {
+      "id": "wb_nabanna_scholarship",
+      "name": "Nabanna Scholarship (WB CM's Relief Fund)",
+      "body": "West Bengal State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        10,
+        12
+      ],
+      "class_range": "Class 10-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "netarhat_awasiya",
+      "name": "Netarhat Awasiya Vidyalaya Entrance Exam",
+      "body": "Jharkhand State Govt",
+      "category": "govt_entrance",
+      "emoji": "🏛️",
+      "classes": [
+        6
+      ],
+      "class_range": "Class 6",
+      "subjects": [
+        "Not separately itemized"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Offline, multi-stage",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "oak_grove_entrance",
+      "name": "Oak Grove School Entrance Exam",
+      "body": "Ministry of Railways",
+      "category": "govt_entrance",
+      "emoji": "🏛️",
+      "classes": [
+        6
+      ],
+      "class_range": "Class 6",
+      "subjects": [
+        "Not separately itemized"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Offline, residential boarding test",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "wb_oasis_scholarship",
+      "name": "Oasis Scholarship (West Bengal)",
+      "body": "West Bengal State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "class_range": "Class 1-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "pm_yasasvi",
+      "name": "PM YASASVI (Young Achievers Scholarship Award Scheme for Vibrant India)",
+      "body": "Ministry of Social Justice & Empowerment, via National Scholarship Portal",
+      "category": "national_scholarship_no_test",
+      "emoji": "🎖️",
+      "classes": [
+        9,
+        11
+      ],
+      "class_range": "Class 9-11",
+      "subjects": [],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Free",
+      "duration": "N/A",
+      "mode": "N/A - merit-based on prior class marks, NO test administered",
+      "pyq_status": "N/A - no test exists"
+    },
+    {
+      "id": "jk_pmsss",
+      "name": "PMSSS (Prime Minister's Special Scholarship Scheme for J&K and Ladakh)",
+      "body": "J&K/Ladakh State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "odisha_pmst",
+      "name": "PMST (Pathani Samanta Mathematics Talent Scholarship)",
+      "body": "Odisha State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        11,
+        12
+      ],
+      "class_range": "Class 11-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "bihar_post_matric_scholarship",
+      "name": "Post-Matric Scholarship (Bihar)",
+      "body": "Bihar State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        11,
+        12
+      ],
+      "class_range": "Class 11-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "karnataka_minority_postmatric",
+      "name": "Post-Matric Scholarship for Minorities (Karnataka)",
+      "body": "Karnataka State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        11,
+        12
+      ],
+      "class_range": "Class 11-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "mp_pratibha_kiran",
+      "name": "Pratibha Kiran Scholarship (MP)",
+      "body": "Madhya Pradesh State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "punjab_minority_scholarship",
+      "name": "Pre-Matric / Post-Matric Scholarship (Minorities, Punjab)",
+      "body": "Punjab State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "class_range": "Class 1-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "bihar_pre_matric_scholarship",
+      "name": "Pre-Matric Scholarship (Bihar)",
+      "body": "Bihar State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "class_range": "Class 1-10",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "karnataka_minority_prematric",
+      "name": "Pre-Matric Scholarship for Minorities (Karnataka)",
+      "body": "Karnataka State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "class_range": "Class 1-10",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "rimc",
+      "name": "RIMC (Rashtriya Indian Military College Entrance Exam)",
+      "body": "RIMC Dehradun (Ministry of Defence)",
+      "category": "govt_entrance",
+      "emoji": "🏛️",
+      "classes": [
+        8
+      ],
+      "class_range": "Class 8",
+      "subjects": [
+        "English",
+        "Mathematics",
+        "General Knowledge"
+      ],
+      "level": "advanced",
+      "difficulty_score": 9,
+      "fee_display": "Rs 600 (Gen) / Rs 555 (SC/ST), paid via Demand Draft",
+      "duration": "Not separately confirmed per subject",
+      "mode": "DESCRIPTIVE + OBJECTIVE COMBINED - unique format in this database",
+      "pyq_status": "OFFICIAL - RIMC SELLS a 'Booklet of Old Question Papers' directly"
+    },
+    {
+      "id": "rms_cet",
+      "name": "RMS CET (Rashtriya Military Schools Common Entrance Test)",
+      "body": "RMS Society",
+      "category": "govt_entrance",
+      "emoji": "🏛️",
+      "classes": [
+        6,
+        9
+      ],
+      "class_range": "Class 6-9",
+      "subjects": [
+        "Maths",
+        "Intelligence",
+        "Language",
+        "GK (similar pattern to AISSEE)"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Offline",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "rajasthan_stse",
+      "name": "Rajasthan STSE (State Talent Search Examination)",
+      "body": "RBSE (Rajasthan Board of Secondary Education), Ajmer",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        10,
+        12
+      ],
+      "class_range": "Class 10-12",
+      "subjects": [
+        "MAT",
+        "LCT (Language Comprehension Test)",
+        "SAT"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 6,
+      "fee_display": "Not confirmed",
+      "duration": "One sitting, sections separated by 15-min gaps",
+      "mode": "Offline",
+      "pyq_status": "No dedicated STSE archive; RBSE's own board PYQs double as useful prep since syllabus is curriculum-aligned"
+    },
+    {
+      "id": "rajasthan_rajiv_gandhi_scholarship",
+      "name": "Rajiv Gandhi Scholarship (Rajasthan)",
+      "body": "Rajasthan State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        11,
+        12
+      ],
+      "class_range": "Class 11-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "sof_suite",
+      "name": "SOF Suite (IMO, NSO, IEO, IGKO)",
+      "body": "Science Olympiad Foundation (SOF)",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "class_range": "Class 1-10",
+      "subjects": [
+        "Maths (IMO)",
+        "Science (NSO)",
+        "English (IEO)",
+        "GK (IGKO)"
+      ],
+      "level": "beginner",
+      "difficulty_score": 3,
+      "fee_display": "Rs 125 (incl",
+      "duration": "60 minutes",
+      "mode": "Offline OMR, in-school during school hours",
+      "pyq_status": "No single official archive; extensive third-party documentation"
+    },
+    {
+      "id": "sose_entrance",
+      "name": "SOSE Entrance Exam (Schools of Specialized Excellence, Delhi/NCR)",
+      "body": "Directorate of Education, Delhi Govt",
+      "category": "govt_entrance",
+      "emoji": "🏛️",
+      "classes": [
+        9,
+        11
+      ],
+      "class_range": "Class 9-11",
+      "subjects": [
+        "Varies by track"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "gujarat_sse",
+      "name": "SSE (Secondary Scholarship Exam, Gujarat)",
+      "body": "Gujarat State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        9
+      ],
+      "class_range": "Class 9",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "wb_svmcm",
+      "name": "SVMCM (Swami Vivekananda Merit-cum-Means Scholarship)",
+      "body": "West Bengal State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        11,
+        12
+      ],
+      "class_range": "Class 11-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "haryana_95_percent_scholarship",
+      "name": "Scholarship for 95%+ scorers (Haryana)",
+      "body": "Haryana State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        10,
+        12
+      ],
+      "class_range": "Class 10-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "silverzone_companions",
+      "name": "SilverZone Companion Exams (iOEL, iSSO, SKGKO, ABHO, ICSO, IAIO, iRAO, iTHO, STEM Innovation, iOTL, Little Star)",
+      "body": "SilverZone Foundation",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "class_range": "Class 0-12",
+      "subjects": [
+        "English (iOEL)",
+        "Social Studies (iSSO)",
+        "GK (SKGKO)",
+        "Hindi (ABHO)",
+        "Commerce (ICSO)",
+        "AI fundamentals (IAIO)",
+        "Reasoning/Aptitude (iRAO)",
+        "Maths+Science+English combined (iTHO)",
+        "STEM cross-disciplinary",
+        "Tamil Language (iOTL)",
+        "General - pre-primary (Little Star)"
+      ],
+      "level": "beginner",
+      "difficulty_score": 3,
+      "fee_display": "Not individually confirmed",
+      "duration": "Not individually confirmed",
+      "mode": "Offline, in-school (extrapolated from family pattern)",
+      "pyq_status": "Existence and annual result cadence confirmed officially; granular PYQ status not individually verified"
+    },
+    {
+      "id": "silverzone_iom_ios",
+      "name": "SilverZone Foundation - IOM (Maths) & IOS (Science)",
+      "body": "SilverZone Foundation (private)",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "class_range": "Class 1-12",
+      "subjects": [
+        "Mathematics (IOM)",
+        "Science (IOS)"
+      ],
+      "level": "beginner",
+      "difficulty_score": 3,
+      "fee_display": "Rs 120-150/student",
+      "duration": "40 minutes (varies slightly by class)",
+      "mode": "Offline, in-school, English-medium only",
+      "pyq_status": "No bundled official sale; well-documented via third-party olympiad-prep sites"
+    },
+    {
+      "id": "silverzone_iio",
+      "name": "SilverZone iiO (International Informatics Olympiad)",
+      "body": "SilverZone Foundation",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "class_range": "Class 1-12",
+      "subjects": [
+        "Computer Science",
+        "Reasoning & Aptitude",
+        "Scholar's Zone"
+      ],
+      "level": "beginner",
+      "difficulty_score": 3,
+      "fee_display": "Rs 150-200/student domestic",
+      "duration": "60 minutes",
+      "mode": "Offline OMR (Class 3+), in-school, English-medium",
+      "pyq_status": "OFFICIAL - SilverZone provides downloadable sample papers class-wise; answer key within 30 days"
+    },
+    {
+      "id": "odisha_sudakshya",
+      "name": "Sudakshya for Girls Child (Odisha)",
+      "body": "Odisha State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        11,
+        12
+      ],
+      "class_range": "Class 11-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "teri_green_olympiad",
+      "name": "TERI Green Olympiad",
+      "body": "The Energy and Resources Institute (TERI)",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "class_range": "Class 7-12",
+      "subjects": [
+        "Environment, Sustainability, Green Citizenship"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "tn_tamil_literary_proficiency",
+      "name": "Tamil Language Literary Proficiency Test",
+      "body": "Tamil Nadu State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "class_range": "Class 1-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "tamilnadu_tncmtse",
+      "name": "Tamil Nadu TNCMTSE (Chief Minister's Talent Search Examination)",
+      "body": "Directorate of Government Examinations (DGE), Tamil Nadu",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        10
+      ],
+      "class_range": "Class 10",
+      "subjects": [
+        "Mathematics (Paper 1)",
+        "Science + Social Science combined (Paper 2)"
+      ],
+      "level": "intermediate",
+      "difficulty_score": 5,
+      "fee_display": "Not independently confirmed",
+      "duration": "2 hours",
+      "mode": "Offline",
+      "pyq_status": "OFFICIAL - DGE Tamil Nadu publishes tentative + final answer keys, both papers, plus gender-split selection lists"
+    },
+    {
+      "id": "telangana_epass",
+      "name": "Telangana ePASS",
+      "body": "Telangana State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "class_range": "Class 9-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "maharashtra_vidyaniketan_tribal",
+      "name": "Tribal Vidyaniketan Entrance Exam (Maharashtra)",
+      "body": "Maharashtra State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        5
+      ],
+      "class_range": "Class 5",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "uceed",
+      "name": "UCEED (Undergraduate Common Entrance Examination for Design)",
+      "body": "IIT Bombay",
+      "category": "design_entrance",
+      "emoji": "🎨",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Part A: NAT/MSQ/MCQ (analytical)",
+        "Part B: hand-drawn sketching"
+      ],
+      "level": "advanced",
+      "difficulty_score": 7,
+      "fee_display": "Not independently confirmed",
+      "duration": "3 hours total (Part A 2hrs CBT + Part B 1hr offline)",
+      "mode": "Hybrid: Part A CBT, Part B answered on physical paper booklet",
+      "pyq_status": "OFFICIAL - IIT Bombay's portal hosts past papers/sample materials"
+    },
+    {
+      "id": "up_post_matric_scholarship",
+      "name": "UP Post-Matric Scholarship",
+      "body": "Uttar Pradesh State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        11,
+        12
+      ],
+      "class_range": "Class 11-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "up_pre_matric_scholarship",
+      "name": "UP Pre-Matric Scholarship",
+      "body": "Uttar Pradesh State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        9,
+        10
+      ],
+      "class_range": "Class 9-10",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "vvm",
+      "name": "VVM (Vidyarthi Vigyan Manthan)",
+      "body": "VIBHA + NCERT",
+      "category": "national_scholarship",
+      "emoji": "🌟",
+      "classes": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "class_range": "Class 6-12",
+      "subjects": [
+        "Science (digital, app-based)"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Digital app-based test",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "vidyadhan_scholarship_pan_india",
+      "name": "Vidyadhan Scholarship Program",
+      "body": "Private organization (region: Pan-India (~19 states incl. Karnataka)) - see flags, NOT confirmed as a government scheme",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        10,
+        11,
+        12
+      ],
+      "class_range": "Class 10-12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "mp_vikramaditya_scholarship",
+      "name": "Vikramaditya Scholarship (MP)",
+      "body": "Madhya Pradesh State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "odisha_vyasakabi",
+      "name": "Vyasakabi Fakirmohan Bhasabruti (Odisha)",
+      "body": "Odisha State Govt (exact department not independently itemized)",
+      "category": "state_scholarship",
+      "emoji": "🗺️",
+      "classes": [
+        12
+      ],
+      "class_range": "Class 12",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
+    },
+    {
+      "id": "wb_wbste_talent_search",
+      "name": "WBSTE Talent Search Exam",
+      "body": "Private organization (region: West Bengal) - see flags, NOT confirmed as a government scheme",
+      "category": "private_olympiad",
+      "emoji": "🏆",
+      "classes": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "class_range": "Class 3-10",
+      "subjects": [
+        "Not independently itemized - directory-level entry only"
+      ],
+      "level": null,
+      "difficulty_score": null,
+      "fee_display": "Not independently confirmed",
+      "duration": "Not independently confirmed",
+      "mode": "Not independently confirmed",
+      "pyq_status": "Not independently confirmed"
     }
-  ],
-  "total": 90,
-  "generated": "2026-06-12"
-}EXEOF
-echo "✅ public/data/exams.json — 90 exams (major govt/banking/medical/engineering + 76 school olympiad records)"
-
-echo ""
-echo "═══ 3/6: Admin Exam Manager (CRUD + pricing) ═══"
-cat > src/pages/admin/ExamManager.jsx << 'EMEOF'
-// FILE: src/pages/admin/ExamManager.jsx
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { supabase } from '../../lib/supabase'
-
-const CATEGORIES = ['govt_central','govt_state','banking','railways','defence','medical','engineering','engineering_pg','teaching','school_competitive','scholarship','professional_cert','foreign_language']
-
-const EMPTY = { name:'', body:'', category:'govt_central', level:'', vacancies:'', price_inr:0, emoji:'📋' }
-
-export default function ExamManager() {
-  const navigate = useNavigate()
-  const [exams, setExams] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [editing, setEditing] = useState(null) // null | EMPTY | exam object
-  const [search, setSearch] = useState('')
-  const [source, setSource] = useState('local') // 'local' | 'supabase'
-
-  useEffect(() => { load() }, [])
-
-  async function load() {
-    setLoading(true)
-    try {
-      const { data, error } = await supabase.from('exams').select('*').order('name')
-      if (error) throw error
-      if (data && data.length) {
-        setExams(data); setSource('supabase'); setLoading(false); return
-      }
-    } catch {}
-    // Fallback: static exams.json (read-only baseline)
-    try {
-      const res = await fetch('/data/exams.json')
-      const json = await res.json()
-      setExams(json.exams || [])
-      setSource('local')
-    } catch { setExams([]) }
-    setLoading(false)
-  }
-
-  const filtered = exams.filter(e =>
-    (e.name||'').toLowerCase().includes(search.toLowerCase()) ||
-    (e.body||'').toLowerCase().includes(search.toLowerCase())
-  )
-
-  async function save() {
-    if (!editing.name?.trim()) return
-    const payload = {
-      ...editing,
-      id: editing.id || editing.name.toLowerCase().replace(/[^a-z0-9]+/g,'-'),
-      vacancies: editing.vacancies ? parseInt(editing.vacancies) : null,
-      price_inr: editing.price_inr ? parseFloat(editing.price_inr) : 0,
-    }
-    try {
-      const { error } = await supabase.from('exams').upsert(payload)
-      if (error) throw error
-      await load()
-      setEditing(null)
-    } catch (e) {
-      alert('Could not save to Supabase. Make sure the "exams" table exists (see schema). Error: ' + e.message)
-    }
-  }
-
-  async function remove(id) {
-    if (!confirm('Delete this exam permanently?')) return
-    try {
-      await supabase.from('exams').delete().eq('id', id)
-      await load()
-    } catch (e) { alert('Delete failed: ' + e.message) }
-  }
-
-  return (
-    <div style={{ minHeight:'100vh', background:'#F8FAFC', padding:'24px clamp(16px,4vw,40px)' }}>
-      <button onClick={()=>navigate('/admin/dashboard')} style={{ background:'none', border:'none', color:'#64748B', cursor:'pointer', fontSize:13, marginBottom:12 }}>← Back to Admin</button>
-      <h1 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'#1E3A5F', fontSize:24, marginBottom:6 }}>📋 Exam Manager</h1>
-      <p style={{ color:'#94A3B8', fontSize:13, marginBottom:16 }}>
-        {source==='local'
-          ? '⚠️ Reading from static /data/exams.json (Supabase "exams" table empty/missing — saves will fail until table exists, see schema)'
-          : `✅ Connected to Supabase — ${exams.length} exams`}
-      </p>
-
-      <div style={{ display:'flex', gap:10, marginBottom:14, flexWrap:'wrap' }}>
-        <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search exams..."
-          style={{ flex:1, minWidth:200, padding:'10px 14px', borderRadius:12, border:'1.5px solid #E2E8F0', fontSize:13, outline:'none' }}/>
-        <button onClick={()=>setEditing({...EMPTY})} style={{ background:'linear-gradient(135deg,#1E3A5F,#0F2140)', border:'none', borderRadius:12, padding:'10px 20px', color:'#D4AF37', fontFamily:'Poppins,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer' }}>+ Add Exam</button>
-      </div>
-
-      {loading ? <p style={{ color:'#94A3B8' }}>Loading...</p> : (
-        <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
-          {filtered.slice(0,100).map(e=>(
-            <div key={e.id} style={{ display:'flex', alignItems:'center', gap:10, padding:'10px 14px', background:'#fff', borderRadius:12, border:'1.5px solid #E2E8F0', flexWrap:'wrap' }}>
-              <span style={{ fontSize:18 }}>{e.emoji||'📋'}</span>
-              <div style={{ flex:1, minWidth:160 }}>
-                <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'#1E3A5F', fontSize:13 }}>{e.name}</p>
-                <p style={{ color:'#94A3B8', fontSize:11 }}>{e.body} · {e.category} · {e.level}</p>
-              </div>
-              <span style={{ fontSize:12, fontWeight:700, color: e.price_inr>0 ? '#92400E':'#15803D', background: e.price_inr>0 ? 'rgba(212,175,55,0.12)':'rgba(34,197,94,0.1)', padding:'4px 10px', borderRadius:20 }}>
-                {e.price_inr>0 ? `₹${e.price_inr}` : 'Free'}
-              </span>
-              <button onClick={()=>setEditing({...e, vacancies: e.vacancies||'', price_inr: e.price_inr||0})} style={{ background:'#F1F5F9', border:'none', borderRadius:10, padding:'6px 12px', fontSize:12, fontWeight:700, color:'#1E3A5F', cursor:'pointer' }}>Edit</button>
-              <button onClick={()=>remove(e.id)} style={{ background:'#FEE2E2', border:'none', borderRadius:10, padding:'6px 12px', fontSize:12, fontWeight:700, color:'#991B1B', cursor:'pointer' }}>Delete</button>
-            </div>
-          ))}
-          {filtered.length > 100 && <p style={{ color:'#94A3B8', fontSize:12, textAlign:'center' }}>Showing 100 of {filtered.length} — refine search</p>}
-        </div>
-      )}
-
-      {/* Edit/Add modal */}
-      {editing && (
-        <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.5)', display:'flex', alignItems:'center', justifyContent:'center', padding:16, zIndex:999 }}>
-          <div style={{ background:'#fff', borderRadius:20, padding:24, maxWidth:480, width:'100%', maxHeight:'85vh', overflowY:'auto' }}>
-            <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'#1E3A5F', marginBottom:14 }}>{editing.id ? 'Edit Exam' : 'Add New Exam'}</h3>
-            {[
-              ['Exam Name','name','text'], ['Conducting Body','body','text'],
-              ['Level (e.g. Graduate, 12th Pass)','level','text'],
-              ['Vacancies (optional)','vacancies','number'],
-              ['Price ₹ (0 = free)','price_inr','number'],
-              ['Emoji','emoji','text'],
-            ].map(([label,key,type])=>(
-              <div key={key} style={{ marginBottom:10 }}>
-                <label style={{ display:'block', fontSize:12, fontWeight:600, color:'#1E3A5F', marginBottom:4 }}>{label}</label>
-                <input type={type} value={editing[key]??''} onChange={e=>setEditing(v=>({...v,[key]:e.target.value}))}
-                  style={{ width:'100%', padding:'10px 12px', borderRadius:10, border:'1.5px solid #E2E8F0', fontSize:13, outline:'none', boxSizing:'border-box' }}/>
-              </div>
-            ))}
-            <div style={{ marginBottom:10 }}>
-              <label style={{ display:'block', fontSize:12, fontWeight:600, color:'#1E3A5F', marginBottom:4 }}>Category</label>
-              <select value={editing.category} onChange={e=>setEditing(v=>({...v,category:e.target.value}))}
-                style={{ width:'100%', padding:'10px 12px', borderRadius:10, border:'1.5px solid #E2E8F0', fontSize:13 }}>
-                {CATEGORIES.map(c=><option key={c} value={c}>{c.replace(/_/g,' ')}</option>)}
-              </select>
-            </div>
-            <div style={{ display:'flex', gap:10, marginTop:14 }}>
-              <button onClick={save} style={{ flex:1, padding:12, borderRadius:12, border:'none', background:'linear-gradient(135deg,#1E3A5F,#0F2140)', color:'#D4AF37', fontFamily:'Poppins,sans-serif', fontWeight:700, cursor:'pointer' }}>Save</button>
-              <button onClick={()=>setEditing(null)} style={{ flex:1, padding:12, borderRadius:12, border:'1.5px solid #E2E8F0', background:'#fff', color:'#64748B', fontWeight:600, cursor:'pointer' }}>Cancel</button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  )
+  ]
 }
-EMEOF
-echo "✅ src/pages/admin/ExamManager.jsx"
-
-echo ""
-echo "═══ 4/6: Admin Current Affairs Manager ═══"
-cat > src/pages/admin/CurrentAffairsManager.jsx << 'CAEOF'
-// FILE: src/pages/admin/CurrentAffairsManager.jsx
-import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { supabase } from '../../lib/supabase'
-
-const CATEGORIES = ['National','International','Economy','Science & Tech','Sports','Awards','Environment','Defence']
-const EMPTY = { title:'', summary:'', category:'National', source:'', date:'', exam_relevance:[] }
-
-export default function CurrentAffairsManager() {
-  const navigate = useNavigate()
-  const [articles, setArticles] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [editing, setEditing] = useState(null)
-
-  useEffect(() => { load() }, [])
-
-  async function load() {
-    setLoading(true)
-    try {
-      const { data, error } = await supabase.from('current_affairs').select('*').order('date',{ascending:false}).limit(100)
-      if (error) throw error
-      setArticles(data || [])
-    } catch { setArticles([]) }
-    setLoading(false)
-  }
-
-  async function save() {
-    if (!editing.title?.trim()) return
-    const payload = { ...editing, date: editing.date || new Date().toISOString().split('T')[0] }
-    delete payload.created_at
-    try {
-      const { error } = await supabase.from('current_affairs').upsert(payload)
-      if (error) throw error
-      await load(); setEditing(null)
-    } catch (e) {
-      alert('Save failed — ensure "current_affairs" table exists (see schema). ' + e.message)
-    }
-  }
-
-  async function remove(id) {
-    if (!confirm('Delete this article?')) return
-    try { await supabase.from('current_affairs').delete().eq('id', id); await load() }
-    catch (e) { alert('Delete failed: ' + e.message) }
-  }
-
-  return (
-    <div style={{ minHeight:'100vh', background:'#F8FAFC', padding:'24px clamp(16px,4vw,40px)' }}>
-      <button onClick={()=>navigate('/admin/dashboard')} style={{ background:'none', border:'none', color:'#64748B', cursor:'pointer', fontSize:13, marginBottom:12 }}>← Back to Admin</button>
-      <h1 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'#1E3A5F', fontSize:24, marginBottom:6 }}>📰 Current Affairs Manager</h1>
-      <p style={{ color:'#94A3B8', fontSize:13, marginBottom:16 }}>Articles posted here appear live on every user's Current Affairs page + earn them +5🪙 per read.</p>
-
-      <button onClick={()=>setEditing({...EMPTY})} style={{ background:'linear-gradient(135deg,#1E3A5F,#0F2140)', border:'none', borderRadius:12, padding:'10px 20px', color:'#D4AF37', fontFamily:'Poppins,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer', marginBottom:14 }}>+ Add Article</button>
-
-      {loading ? <p style={{ color:'#94A3B8' }}>Loading...</p> : articles.length===0 ? (
-        <div style={{ textAlign:'center', padding:40, color:'#94A3B8', background:'#fff', borderRadius:16, border:'1.5px solid #E2E8F0' }}>
-          <p style={{ fontSize:32, marginBottom:8 }}>📰</p>
-          <p>No articles yet. Add your first one above — it'll appear on users' Current Affairs page immediately.</p>
-        </div>
-      ) : (
-        <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
-          {articles.map(a=>(
-            <div key={a.id} style={{ padding:'12px 16px', background:'#fff', borderRadius:14, border:'1.5px solid #E2E8F0' }}>
-              <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', gap:10, flexWrap:'wrap' }}>
-                <div style={{ flex:1, minWidth:200 }}>
-                  <span style={{ fontSize:11, fontWeight:700, color:'#7C3AED', background:'#EDE9FE', padding:'2px 8px', borderRadius:20 }}>{a.category}</span>
-                  <p style={{ fontFamily:'Poppins,sans-serif', fontWeight:700, color:'#1E3A5F', fontSize:14, marginTop:6 }}>{a.title}</p>
-                  <p style={{ color:'#64748B', fontSize:12, marginTop:4 }}>{a.summary}</p>
-                  <p style={{ color:'#94A3B8', fontSize:11, marginTop:4 }}>{a.source} · {a.date}</p>
-                </div>
-                <div style={{ display:'flex', gap:6, flexShrink:0 }}>
-                  <button onClick={()=>setEditing(a)} style={{ background:'#F1F5F9', border:'none', borderRadius:10, padding:'6px 12px', fontSize:12, fontWeight:700, color:'#1E3A5F', cursor:'pointer' }}>Edit</button>
-                  <button onClick={()=>remove(a.id)} style={{ background:'#FEE2E2', border:'none', borderRadius:10, padding:'6px 12px', fontSize:12, fontWeight:700, color:'#991B1B', cursor:'pointer' }}>Delete</button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {editing && (
-        <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.5)', display:'flex', alignItems:'center', justifyContent:'center', padding:16, zIndex:999 }}>
-          <div style={{ background:'#fff', borderRadius:20, padding:24, maxWidth:480, width:'100%', maxHeight:'85vh', overflowY:'auto' }}>
-            <h3 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'#1E3A5F', marginBottom:14 }}>{editing.id ? 'Edit' : 'New'} Article</h3>
-            <label style={{ display:'block', fontSize:12, fontWeight:600, color:'#1E3A5F', marginBottom:4 }}>Title</label>
-            <input value={editing.title} onChange={e=>setEditing(v=>({...v,title:e.target.value}))}
-              style={{ width:'100%', padding:'10px 12px', borderRadius:10, border:'1.5px solid #E2E8F0', fontSize:13, marginBottom:10, boxSizing:'border-box' }}/>
-            <label style={{ display:'block', fontSize:12, fontWeight:600, color:'#1E3A5F', marginBottom:4 }}>Summary</label>
-            <textarea value={editing.summary} onChange={e=>setEditing(v=>({...v,summary:e.target.value}))} rows={3}
-              style={{ width:'100%', padding:'10px 12px', borderRadius:10, border:'1.5px solid #E2E8F0', fontSize:13, marginBottom:10, boxSizing:'border-box', resize:'none' }}/>
-            <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10, marginBottom:10 }}>
-              <div>
-                <label style={{ display:'block', fontSize:12, fontWeight:600, color:'#1E3A5F', marginBottom:4 }}>Category</label>
-                <select value={editing.category} onChange={e=>setEditing(v=>({...v,category:e.target.value}))}
-                  style={{ width:'100%', padding:'10px 12px', borderRadius:10, border:'1.5px solid #E2E8F0', fontSize:13 }}>
-                  {CATEGORIES.map(c=><option key={c} value={c}>{c}</option>)}
-                </select>
-              </div>
-              <div>
-                <label style={{ display:'block', fontSize:12, fontWeight:600, color:'#1E3A5F', marginBottom:4 }}>Date</label>
-                <input type="date" value={editing.date} onChange={e=>setEditing(v=>({...v,date:e.target.value}))}
-                  style={{ width:'100%', padding:'10px 12px', borderRadius:10, border:'1.5px solid #E2E8F0', fontSize:13, boxSizing:'border-box' }}/>
-              </div>
-            </div>
-            <label style={{ display:'block', fontSize:12, fontWeight:600, color:'#1E3A5F', marginBottom:4 }}>Source (e.g. PIB, The Hindu)</label>
-            <input value={editing.source} onChange={e=>setEditing(v=>({...v,source:e.target.value}))}
-              style={{ width:'100%', padding:'10px 12px', borderRadius:10, border:'1.5px solid #E2E8F0', fontSize:13, marginBottom:14, boxSizing:'border-box' }}/>
-            <div style={{ display:'flex', gap:10 }}>
-              <button onClick={save} style={{ flex:1, padding:12, borderRadius:12, border:'none', background:'linear-gradient(135deg,#1E3A5F,#0F2140)', color:'#D4AF37', fontFamily:'Poppins,sans-serif', fontWeight:700, cursor:'pointer' }}>Save & Publish</button>
-              <button onClick={()=>setEditing(null)} style={{ flex:1, padding:12, borderRadius:12, border:'1.5px solid #E2E8F0', background:'#fff', color:'#64748B', fontWeight:600, cursor:'pointer' }}>Cancel</button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  )
-}
-CAEOF
-echo "✅ src/pages/admin/CurrentAffairsManager.jsx"
-
-echo ""
-echo "═══ 5/6: Wire CurrentAffairs.jsx to Supabase (with fallback) ═══"
-path = 'src/pages/current-affairs/CurrentAffairs.jsx'
-with open(path,'r') as f: c = f.read()
-
-# Add imports
-c = c.replace(
-    "import { useState } from 'react'",
-    "import { useState, useEffect } from 'react'\nimport { supabase } from '../../lib/supabase'\nimport { rewardCurrentAffairsRead } from '../../lib/coinVault'"
-)
-
-# Add fetch effect + dynamic news state inside component (right after useState hooks)
-old = "  const [expanded, setExpanded] = useState(null)"
-new = """  const [expanded, setExpanded] = useState(null)
-  const [news, setNews] = useState(NEWS) // fallback: static seed list
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const { data, error } = await supabase
-          .from('current_affairs')
-          .select('*')
-          .order('date', { ascending: false })
-          .limit(50)
-        if (error) throw error
-        if (data && data.length) {
-          setNews(data.map(a => ({
-            id: a.id, cat: a.category, emoji: '📰', title: a.title,
-            date: a.date, tags: a.exam_relevance || [],
-            preview: a.summary, important: false, source: a.source,
-          })))
-        }
-      } catch {
-        // Supabase table empty/missing — keep static NEWS fallback
-      }
-    })()
-  }, [])"""
-c = c.replace(old, new)
-
-# Replace all uses of NEWS (the filtered source) with `news`
-c = c.replace("cat==='All' ? NEWS : NEWS.filter(n=>n.cat===cat)", "cat==='All' ? news : news.filter(n=>n.cat===cat)")
-
-# Reward coins on expand (read an article)
-c = c.replace(
-    "setExpanded(",
-    "rewardCurrentAffairsRead({amount:5}); setExpanded(",
-    1
-)
-
-with open(path,'w') as f: f.write(c)
-print("✅ CurrentAffairs.jsx — now fetches from Supabase 'current_affairs' table")
-print("   (falls back to 8 seeded articles if table empty/missing)")
-print("   +5 coins awarded when a student opens any article")
-
-echo ""
-echo "═══ 6/6: Wire new routes (ThemeSelector, ExamManager, CurrentAffairsManager) ═══"
-python3 << 'PYEOF'
-with open('src/App.jsx','r') as f: c = f.read()
-changed = False
-
-if 'ThemeSelector' not in c:
-    c = c.replace(
-        "const Settings       = lazy(() => import('./pages/Settings'))",
-        "const Settings       = lazy(() => import('./pages/Settings'))\nconst ThemeSelector  = lazy(() => import('./pages/settings/ThemeSelector'))"
-    )
-    c = c.replace(
-        '<Route path="/settings"        element={<Settings />} />',
-        '<Route path="/settings"        element={<Settings />} />\n                <Route path="/settings/themes" element={<ThemeSelector />} />'
-    )
-    changed = True
-
-if 'CurrentAffairsManager' not in c:
-    c = c.replace(
-        "const QuestionManager = lazy(() => import('./pages/admin/QuestionManager'))",
-        "const QuestionManager = lazy(() => import('./pages/admin/QuestionManager'))\nconst CurrentAffairsManager = lazy(() => import('./pages/admin/CurrentAffairsManager'))"
-    )
-    c = c.replace(
-        '<Route path="/admin/questions" element={<QuestionManager />} />',
-        '<Route path="/admin/questions" element={<QuestionManager />} />\n                <Route path="/admin/current-affairs" element={<CurrentAffairsManager />} />'
-    )
-    changed = True
-
-if changed:
-    with open('src/App.jsx','w') as f: f.write(c)
-    print("✅ App.jsx — added /settings/themes and /admin/current-affairs routes")
-else:
-    print("ℹ️  Routes already present")
-PYEOF
-
-echo ""
-echo "═══ Also: link new admin pages from AdminDashboard Overview tab ═══"
-python3 << 'PYEOF'
-path = 'src/pages/admin/AdminDashboard.jsx'
-with open(path,'r') as f: c = f.read()
-if '/admin/exams' not in c.split('function ExamsTab')[0]:  # add quick-links in overview if not present
-    old = "      <div style={{ marginTop:20, background:'rgba(212,175,55,0.06)'"
-    addition = '''      <div style={{ display:'flex', gap:10, flexWrap:'wrap', marginTop:16, marginBottom:16 }}>
-        <a href="/admin/exams" style={{ background:'#1E3A5F', color:'#D4AF37', borderRadius:12, padding:'10px 20px', fontFamily:'Poppins,sans-serif', fontWeight:700, fontSize:13, textDecoration:'none' }}>📋 Manage Exams & Pricing</a>
-        <a href="/admin/current-affairs" style={{ background:'#1E3A5F', color:'#D4AF37', borderRadius:12, padding:'10px 20px', fontFamily:'Poppins,sans-serif', fontWeight:700, fontSize:13, textDecoration:'none' }}>📰 Manage Current Affairs</a>
-      </div>
-''' + old
-    c = c.replace(old, addition, 1)
-    with open(path,'w') as f: f.write(c)
-    print("✅ AdminDashboard — quick links to Exam Manager + Current Affairs Manager added")
-PYEOF
-
-rm -rf node_modules/.vite
-
-echo ""
-echo "╔══════════════════════════════════════════════════════════════╗"
-echo "║  ✅ PHASE 3 COMPLETE                                          ║"
-echo "║                                                                ║"
-echo "║  1. THEMES restored — 6 themes, /settings/themes              ║"
-echo "║  2. exams.json created — All Exams page now has 90 real      ║"
-echo "║     exams (was fetching a 404 before!)                        ║"
-echo "║  3. Admin → Exam Manager: add/edit/delete exams + set prices  ║"
-echo "║  4. Admin → Current Affairs Manager: post articles live       ║"
-echo "║  5. CurrentAffairs.jsx reads from Supabase 'current_affairs'  ║"
-echo "║     table (falls back to 8 seeded articles if empty)          ║"
-echo "║                                                                ║"
-echo "║  ⚠️  IMPORTANT: Run schema_phase3.sql in Supabase SQL Editor   ║"
-echo "║      BEFORE using Exam Manager / Current Affairs Manager —    ║"
-echo "║      otherwise saves will fail with a clear error message.    ║"
-echo "║                                                                ║"
-echo "║  Run: npm run dev                                              ║"
-echo "╚══════════════════════════════════════════════════════════════╝"
