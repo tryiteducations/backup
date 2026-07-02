@@ -1,12 +1,12 @@
-// src/lib/dataInterconnect.js
+﻿// src/lib/dataInterconnect.js
 // Service for interconnecting data between all 4 roles
-// - Students post doubts → Mentors/Institutions see
-// - Mentors/Institutions upload papers → Students see
+// - Students post doubts â†’ Mentors/Institutions see
+// - Mentors/Institutions upload papers â†’ Students see
 // - Family tracks real-time progress
 import { supabase } from './supabase'
 
 /**
- * DOUBT SYSTEM - Students ↔ Mentors ↔ Institutions
+ * DOUBT SYSTEM - Students â†” Mentors â†” Institutions
  */
 export const doubtSystem = {
   // Student posts a doubt
@@ -104,7 +104,7 @@ export const doubtSystem = {
 }
 
 /**
- * QUESTION PAPERS - Mentors/Institutions upload → Students see
+ * QUESTION PAPERS - Mentors/Institutions upload â†’ Students see
  */
 export const paperSystem = {
   // Upload question paper
@@ -317,40 +317,39 @@ export const familyTracking = {
 export const notificationSystem = {
   // Subscribe to doubt updates for mentor/institution
   subscribeToDoubts: (mentorId, callback) => {
-    const subscription = supabase
-      .from(`doubts:assigned_mentor_id=eq.${mentorId}`)
-      .on('*', (payload) => {
+    const channel = supabase
+      .channel(`doubts-mentor-${mentorId}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'doubts', filter: `assigned_mentor_id=eq.${mentorId}` }, (payload) => {
         callback(payload)
       })
       .subscribe()
-    return subscription
+    return channel
   },
 
   // Subscribe to paper uploads for student's enrolled exams
   subscribeToNewPapers: (studentExams, callback) => {
-    const subscription = supabase
-      .from('question_papers')
-      .on('INSERT', (payload) => {
+    const channel = supabase
+      .channel('question-papers-new')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'question_papers' }, (payload) => {
         if (studentExams.includes(payload.new.exam)) {
           callback(payload.new)
         }
       })
       .subscribe()
-    return subscription
+    return channel
   },
 
   // Subscribe to family member progress updates
   subscribeToChildProgress: (childId, callback) => {
-    const subscription = supabase
-      .from(`daily_stats:student_id=eq.${childId}`)
-      .on('*', (payload) => {
+    const channel = supabase
+      .channel(`daily-stats-child-${childId}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'daily_stats', filter: `student_id=eq.${childId}` }, (payload) => {
         callback(payload)
       })
       .subscribe()
-    return subscription
+    return channel
   },
 }
-
 // Helper to convert data to CSV
 function convertToCSV(data) {
   let csv = 'TryIT Export\n'
