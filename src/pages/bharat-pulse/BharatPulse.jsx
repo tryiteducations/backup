@@ -285,7 +285,7 @@ export default function BharatPulse() {
 
       {/* HERO HEADER */}
       <div style={{
-        background:'linear-gradient(135deg, #0F0A1E 0%, #2D1B69 40%, #1A0D3D 70%, #0F0A1E 100%)',
+        background:`linear-gradient(135deg, ${heroTheme.from} 0%, ${heroTheme.mid} 40%, ${heroTheme.to} 70%, ${heroTheme.from} 100%)`,
         backgroundSize:'400% 400%',animation:'gradient-shift 8s ease infinite',
         padding:'0 0 32px',position:'relative',overflow:'hidden',
       }}>
