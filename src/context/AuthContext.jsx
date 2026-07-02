@@ -1,6 +1,6 @@
 // FILE: src/context/AuthContext.jsx
+// TryIT - Fully local/dummy auth (no Supabase dependency)
 import { createContext, useContext, useState, useEffect } from 'react'
-import { supabase } from '../lib/supabase'
 import localDb from '../lib/localDb'
 
 // -- PLAN RULES (Free / Pro / Ultra feature gates) -------------------------
@@ -52,7 +52,6 @@ const PLAN_RULES = {
   },
 }
 
-// Maps all plan name variants to clean tier name
 function normalizePlan(plan) {
   if (!plan) return 'free'
   if (plan === 'ultra' || plan === 'ultra_monthly' ||
@@ -63,7 +62,6 @@ function normalizePlan(plan) {
   return 'free'
 }
 
-// Generates localStorage key for per-period usage tracking
 function getUsagePeriodKey(userId, feature, period) {
   const now = new Date()
   let block
@@ -82,16 +80,25 @@ function getUsagePeriodKey(userId, feature, period) {
   return `tryit_usage_${userId}_${feature}_${block}`
 }
 
-// -- MOCK USER --------------------------------------------------------------
-// Change plan here to test different tiers in dev mode:
-//   'free'  → 5 explanations per 6hr, no concept learning
-//   'pro'   → unlimited explanations, no concept learning
-//   'ultra' → everything unlocked
+// -- MOCK USER (fully local, no Supabase) -----------------------------------
 const MOCK_USER = {
   id: '4e6fcfaf-4ec5-4fc6-8047-351d8f3c82b0',
-      is_admin: true, is_mentor: true, is_institution: true, role: 'admin'}
-
-const IS_DEV = true
+  is_admin: true, is_mentor: true, is_institution: true, role: 'admin',
+  plan: 'ultra', coins: 9999, level: 10, levelTitle: 'The Legend',
+  levelEmoji: '\u2B50', rank: 1, testsCompleted: 50, avgScore: 92,
+  streak: 30, name: 'TryIT User',
+  exams: [
+    { id: 'ssc-cgl',  name: 'SSC CGL',  readiness: 80, examDate: 'Aug 2026' },
+    { id: 'neet-ug',  name: 'NEET UG',  readiness: 80, examDate: 'May 2026' },
+    { id: 'upsc-cse', name: 'UPSC CSE', readiness: 80, examDate: 'May 2026' },
+  ],
+  subjects: [
+    { name: 'Quant',     accuracy: 82, trend: 'up',   emoji: '\uD83D\uDCD0' },
+    { name: 'Reasoning', accuracy: 90, trend: 'up',   emoji: '\uD83E\uDDE0' },
+    { name: 'English',   accuracy: 68, trend: 'down', emoji: '\uD83D\uDCDD' },
+    { name: 'GK',        accuracy: 75, trend: 'up',   emoji: '\uD83C\uDF0D' },
+  ],
+}
 
 const SIGNUP_BONUS = 200
 
@@ -141,92 +148,55 @@ export function AuthProvider({ children }) {
 
   async function initSession() {
     setLoading(true)
+    // Fully local/dummy auth - no Supabase dependency
+    localStorage.setItem('tryit_is_admin', 'true')
+    const email = localStorage.getItem('tryit_email')
+    if (email) {
+      let saved = null
+      try { saved = localDb.getProfile?.(email) } catch {}
 
-    if (IS_DEV) {
-      // Set admin flag for theme unlock
-      localStorage.setItem('tryit_is_admin', 'true')
-      const email = localStorage.getItem('tryit_email')
-      if (email) {
-        let saved = null
-        try { saved = localDb.getProfile?.(email) } catch {}
+      let u = saved
+        ? { ...MOCK_USER, ...saved }
+        : { ...MOCK_USER, email, role: localStorage.getItem('tryit_role') || 'student' }
 
-        let u = saved
-          ? { ...MOCK_USER, ...saved }
-          : { ...MOCK_USER, email, role: localStorage.getItem('tryit_role') || 'student' }
+      if (!u.name) u.name = email.split('@')[0]
+      u.initials = makeInitials(u.name, email)
 
-        if (!u.name) u.name = email.split('@')[0]
-        u.initials = makeInitials(u.name, email)
+      u = applyAdminGrant(u, email)
+      u = grantSignupBonusIfNeeded(u, email)
 
-        u = applyAdminGrant(u, email)
-        u = grantSignupBonusIfNeeded(u, email)
+      const tier = normalizePlan(u.plan)
+      u = { ...u, isPro: tier !== 'free' }
 
-        // Derive isPro from plan - do NOT force override to pro_trial
-        const tier = normalizePlan(u.plan)
-        u = { ...u, isPro: tier !== 'free' }
-
-        setUser(u)
-        localDb.saveProfile?.(u)
-        localDb.saveSession?.({ userId: u.id, email })
-      } else {
-        setUser(null)
-      }
-      setLoading(false)
-      return
-    }
-
-    try {
-      const { data } = await supabase.auth.getSession()
-      if (data?.session?.user) {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('*')
-          .eq('id', data.session.user.id)
-          .single()
-        if (profile) setUser(buildUser(profile))
-      }
-    } catch (e) {
-      console.error('initSession error', e)
+      setUser(u)
+      localDb.saveProfile?.(u)
+      localDb.saveSession?.({ userId: u.id, email })
+    } else {
+      setUser(null)
     }
     setLoading(false)
   }
 
-  function buildUser(profile) {
-    const tier = normalizePlan(profile.plan)
-    const u = {
-      ...MOCK_USER,
-      ...profile,
-      initials: makeInitials(profile.name, profile.email),
-      isPro: tier !== 'free',
-      plan: profile.plan || 'free',
-    }
-    return applyAdminGrant(u, profile.email)
-  }
-
-  // -- AUTH ACTIONS -------------------------------------------------------
+  // -- AUTH ACTIONS (fully local) -------------------------------------------
   const login = async (email, role = 'student') => {
     const e = (email || '').trim().toLowerCase()
     if (!e) return { error: 'Email required' }
 
     localStorage.setItem('tryit_email', e)
     localStorage.setItem('tryit_role', role)
+    localStorage.setItem('tryit_is_admin', 'true')
 
-    if (IS_DEV) {
-      // Set admin flag for theme unlock
-      localStorage.setItem('tryit_is_admin', 'true')
-      let u = { ...MOCK_USER, email: e, role }
-      u.name = e.split('@')[0]
-      u.initials = makeInitials(u.name, e)
-      u = applyAdminGrant(u, e)
-      u = grantSignupBonusIfNeeded(u, e)
-      const tier = normalizePlan(u.plan)
-      u = { ...u, isPro: tier !== 'free' }
-      setUser(u)
-      localDb.saveProfile?.(u)
-      localDb.saveSession?.({ userId: u.id, email: e })
-      return { error: null }
-    }
-
-    return supabase.auth.signInWithOtp({ email: e })
+    let u = { ...MOCK_USER, email: e, role }
+    u.name = e.split('@')[0]
+    u.initials = makeInitials(u.name, e)
+    u = applyAdminGrant(u, e)
+    u = grantSignupBonusIfNeeded(u, e)
+    const tier = normalizePlan(u.plan)
+    u = { ...u, isPro: tier !== 'free' }
+    setUser(u)
+    localDb.saveProfile?.(u)
+    localDb.saveSession?.({ userId: u.id, email: e })
+    return { error: null }
   }
 
   const logout = () => {
@@ -234,10 +204,9 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('tryit_role')
     localStorage.removeItem('tryit_admin_impersonating')
     setUser(null)
-    if (!IS_DEV) supabase.auth.signOut()
   }
 
-  // -- PIN AUTH (mocked for dev; names mirror real schema: pin_attempts, pin_locked_until) --
+  // -- PIN AUTH (local) -----------------------------------------------------
   const PIN_MAX_ATTEMPTS = 5
   const PIN_LOCKOUT_MINUTES = 15
   const getPinLockKey = (role) => `tryit_pin_locked_until_${role}`
@@ -309,7 +278,7 @@ export function AuthProvider({ children }) {
       email: fakeEmail, role: targetRole,
       name: `[Admin View] ${targetRole.charAt(0).toUpperCase() + targetRole.slice(1)}`,
       initials: 'AV', isPro: true, plan: 'pro_trial',
-      coins: 9999, level: 10, levelTitle: 'The Legend', levelEmoji: '🌟',
+      coins: 9999, level: 10, levelTitle: 'The Legend', levelEmoji: '\u2B50',
       rank: 1, testsCompleted: 50, avgScore: 92,
       exams: targetRole === 'student' ? [
         { id: 'ssc-cgl',  name: 'SSC CGL',  readiness: 80, examDate: 'Aug 2026' },
@@ -317,10 +286,10 @@ export function AuthProvider({ children }) {
         { id: 'upsc-cse', name: 'UPSC CSE', readiness: 80, examDate: 'May 2026' },
       ] : [],
       subjects: targetRole === 'student' ? [
-        { name: 'Quant',     accuracy: 82, trend: 'up',   emoji: '📐' },
-        { name: 'Reasoning', accuracy: 90, trend: 'up',   emoji: '🧠' },
-        { name: 'English',   accuracy: 68, trend: 'down', emoji: '📝' },
-        { name: 'GK',        accuracy: 75, trend: 'up',   emoji: '🌍' },
+        { name: 'Quant',     accuracy: 82, trend: 'up',   emoji: '\uD83D\uDCD0' },
+        { name: 'Reasoning', accuracy: 90, trend: 'up',   emoji: '\uD83E\uDDE0' },
+        { name: 'English',   accuracy: 68, trend: 'down', emoji: '\uD83D\uDCDD' },
+        { name: 'GK',        accuracy: 75, trend: 'up',   emoji: '\uD83C\uDF0D' },
       ] : [],
     }
     setUser(viewUser)
@@ -340,8 +309,6 @@ export function AuthProvider({ children }) {
     localStorage.getItem('tryit_admin_impersonating') === '1'
 
   // -- PLAN ACCESS FUNCTIONS ----------------------------------------------
-
-  // canAccess('explanation') → { allowed, reason, coinCost, canByCoin, upgradeTo }
   const canAccess = (feature) => {
     const tier  = normalizePlan(user?.plan)
     const rules = PLAN_RULES[tier] || PLAN_RULES.free
@@ -383,7 +350,6 @@ export function AuthProvider({ children }) {
     return { allowed: true }
   }
 
-  // Call this AFTER successfully showing a gated feature
   const trackUsage = (feature) => {
     const tier = normalizePlan(user?.plan)
     const rule = (PLAN_RULES[tier] || PLAN_RULES.free)[feature]
@@ -393,26 +359,13 @@ export function AuthProvider({ children }) {
     localStorage.setItem(key, used + 1)
   }
 
-  // Deduct coins - returns true if successful, false if not enough
   const spendCoins = (amount, reason = '') => {
     if (!user || (user.coins || 0) < amount) return false
     const newBal = (user.coins || 0) - amount
     updateUser({ coins: newBal })
-    if (!IS_DEV && user.id) {
-      supabase.from('coins_ledger').insert({
-        user_id:          user.id,
-        transaction_type: 'spent_hint',
-        amount:           -amount,
-        balance_after:    newBal,
-        notes:            reason,
-      }).then(() => {
-        supabase.from('users').update({ coins: newBal }).eq('id', user.id)
-      })
-    }
     return true
   }
 
-  // Check if a specific topic concept is unlocked (₹25/topic purchase or Ultra)
   const isTopicUnlocked = (topicId) => {
     if (normalizePlan(user?.plan) === 'ultra') return true
     const key      = `tryit_topic_unlocks_${user?.id}`
@@ -420,7 +373,6 @@ export function AuthProvider({ children }) {
     return unlocked.includes(topicId)
   }
 
-  // Save a topic unlock after ₹25 purchase
   const unlockTopic = (topicId) => {
     const key      = `tryit_topic_unlocks_${user?.id}`
     const unlocked = JSON.parse(localStorage.getItem(key) || '[]')
@@ -430,7 +382,6 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // Convenience: how many explanation uses left this 6hr window
   const explanationsLeft = () => {
     const tier = normalizePlan(user?.plan)
     if (tier !== 'free') return Infinity
@@ -439,17 +390,13 @@ export function AuthProvider({ children }) {
     return Math.max(0, 5 - used)
   }
 
-  // -- DERIVED VALUES -----------------------------------------------------
   const planTier = normalizePlan(user?.plan)
 
   return (
     <AuthCtx.Provider value={{
-      // Core state
       user,
       loading,
       syncStatus,
-
-      // Auth actions
       login,
       logout,
       hasPinForRole,
@@ -461,19 +408,15 @@ export function AuthProvider({ children }) {
       viewAs,
       exitImpersonation,
       isImpersonating,
-
-      // Plan access
       canAccess,
       trackUsage,
       isTopicUnlocked,
       unlockTopic,
       explanationsLeft,
-
-      // Derived shortcuts (use these in components instead of user.plan checks)
-      planTier,                         // 'free' | 'pro' | 'ultra'
-      isPro:   planTier !== 'free',     // true for pro AND ultra
-      isUltra: planTier === 'ultra',    // true only for ultra
-      isAdmin: user?.role === 'admin',  // god-mode: full access, bypasses all gates
+      planTier,
+      isPro:   planTier !== 'free',
+      isUltra: planTier === 'ultra',
+      isAdmin: user?.role === 'admin',
     }}>
       {children}
     </AuthCtx.Provider>
