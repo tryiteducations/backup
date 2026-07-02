@@ -1,5 +1,6 @@
 // src/pages/scholarships/ScholarshipHub.jsx
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import AppLayout from '../../components/layout/AppLayout'
 import { useAuth } from '../../context/AuthContext'
 
@@ -96,8 +97,35 @@ const SCHOLARSHIPS = [
 
 const CATEGORIES = ['All', 'Merit', 'Need-based', 'Minority', 'State-specific']
 
-export default function ScholarshipHub() {
-  const { user } = useAuth()
+function PublicHeader({ navigate }) {
+  return (
+    <div style={{ background:'#fff', borderBottom:'1px solid #E5E7EB' }}>
+      <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
+          <div style={{ width:32, height:32, borderRadius:8, background:'#2D1B69',
+            display:'flex', alignItems:'center', justifyContent:'center', color:'#fff', fontWeight:800, fontSize:14 }}>T</div>
+          <div style={{ lineHeight:1.1 }}>
+            <div style={{ fontWeight:800, fontSize:15, color:'#2D1B69', fontFamily:'Plus Jakarta Sans,sans-serif' }}>TryIT</div>
+            <div style={{ fontSize:10, color:'#64748B' }}>Educations</div>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <button onClick={() => navigate('/login')}
+            className="px-4 py-2 rounded-lg text-sm font-semibold border border-gray-200 text-gray-600 hover:border-gray-300 transition">
+            Login
+          </button>
+          <button onClick={() => navigate('/register')}
+            className="px-4 py-2 rounded-lg text-sm font-semibold text-white transition"
+            style={{ background:'#2D1B69' }}>
+            Get Started →
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function ScholarshipContent() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [notified, setNotified] = useState({})
 
@@ -107,8 +135,6 @@ export default function ScholarshipHub() {
       setNotified(stored)
     } catch {}
   }, [])
-
-  if (!user) return null
 
   const filtered =
     activeCategory === 'All'
@@ -122,115 +148,133 @@ export default function ScholarshipHub() {
   }
 
   return (
-    <AppLayout title="Scholarship Hub">
-      <div className="max-w-5xl mx-auto px-4 py-8">
-        {/* Banner */}
-        <div
-          className="rounded-2xl px-6 py-5 mb-8 flex items-start gap-4"
-          style={{ background: 'linear-gradient(135deg, var(--color-primary, #1E3A5F) 0%, var(--color-primary-dark, #0F2140) 100%)' }}
-        >
-          <span className="text-3xl">🔔</span>
-          <div>
-            <p className="text-white font-semibold text-lg" style={{ fontFamily: 'Poppins, sans-serif' }}>
-              Never miss a scholarship you deserve.
-            </p>
-            <p className="text-blue-200 text-sm mt-1">
-              Toggle "Notify Me" on any scholarship below. We'll alert you when applications open or deadlines approach.
-            </p>
-          </div>
+    <div className="max-w-5xl mx-auto px-4 py-8">
+      {/* Banner */}
+      <div
+        className="rounded-2xl px-6 py-5 mb-8 flex items-start gap-4"
+        style={{ background: 'linear-gradient(135deg, var(--color-primary, #2D1B69) 0%, var(--color-primary-dark, #1A0D3D) 100%)' }}
+      >
+        <span className="text-3xl">🔔</span>
+        <div>
+          <p className="text-white font-semibold text-lg" style={{ fontFamily: 'Poppins, sans-serif' }}>
+            Never miss a scholarship you deserve.
+          </p>
+          <p className="text-blue-200 text-sm mt-1">
+            Toggle "Notify Me" on any scholarship below. We'll alert you when applications open or deadlines approach.
+          </p>
         </div>
+      </div>
 
-        {/* Filter chips */}
-        <div className="flex flex-wrap gap-2 mb-6">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${
-                activeCategory === cat
-                  ? 'bg-[var(--color-primary, #1E3A5F)] text-white'
-                  : 'bg-white border border-gray-200 text-gray-600 hover:border-[var(--color-primary, #1E3A5F)] hover:text-[var(--color-primary, #1E3A5F)]'
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+      {/* Filter chips */}
+      <div className="flex flex-wrap gap-2 mb-6">
+        {CATEGORIES.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => setActiveCategory(cat)}
+            className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${
+              activeCategory === cat
+                ? 'bg-[var(--color-primary, #2D1B69)] text-white'
+                : 'bg-white border border-gray-200 text-gray-600 hover:border-[var(--color-primary, #2D1B69)] hover:text-[var(--color-primary, #2D1B69)]'
+            }`}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
 
-        {/* Cards grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {filtered.map((s) => (
-            <div
-              key={s.id}
-              className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col gap-3"
-            >
-              <div className="flex items-start justify-between gap-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-2xl">{s.emoji}</span>
-                  <span
-                    className={`text-xs font-bold px-2 py-0.5 rounded-full ${
-                      s.category === 'Merit'
-                        ? 'bg-blue-50 text-blue-700'
-                        : s.category === 'Need-based'
-                        ? 'bg-green-50 text-green-700'
-                        : s.category === 'Minority'
-                        ? 'bg-purple-50 text-purple-700'
-                        : 'bg-amber-50 text-amber-700'
-                    }`}
-                  >
-                    {s.category}
-                  </span>
-                </div>
-                <button
-                  onClick={() => toggleNotify(s.id)}
-                  className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full transition-all whitespace-nowrap ${
-                    notified[s.id]
-                      ? 'bg-[var(--color-accent, #D4AF37)] text-[var(--color-primary, #1E3A5F)]'
-                      : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+      {/* Cards grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {filtered.map((s) => (
+          <div
+            key={s.id}
+            className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex flex-col gap-3"
+          >
+            <div className="flex items-start justify-between gap-2">
+              <div className="flex items-center gap-2">
+                <span className="text-2xl">{s.emoji}</span>
+                <span
+                  className={`text-xs font-bold px-2 py-0.5 rounded-full ${
+                    s.category === 'Merit'
+                      ? 'bg-blue-50 text-blue-700'
+                      : s.category === 'Need-based'
+                      ? 'bg-green-50 text-green-700'
+                      : s.category === 'Minority'
+                      ? 'bg-purple-50 text-purple-700'
+                      : 'bg-amber-50 text-amber-700'
                   }`}
                 >
-                  {notified[s.id] ? '🔔 Notifying' : '🔕 Notify Me'}
-                </button>
-              </div>
-
-              <div>
-                <h3
-                  className="font-bold text-[var(--color-primary, #1E3A5F)] text-base leading-snug"
-                  style={{ fontFamily: 'Poppins, sans-serif' }}
-                >
-                  {s.name}
-                </h3>
-                <p className="text-xs text-gray-400 mt-0.5">{s.provider}</p>
-              </div>
-
-              <div className="flex items-center gap-3 text-sm">
-                <span className="font-semibold text-[#064E3B] bg-green-50 px-2 py-0.5 rounded-lg">
-                  {s.amount}
+                  {s.category}
                 </span>
-                <span className="text-red-500 font-medium">⏳ {s.deadline}</span>
               </div>
-
-              <p className="text-gray-500 text-sm leading-relaxed">{s.eligibility}</p>
-
-              <div className="flex flex-wrap gap-1 mt-auto">
-                {s.tags.map((tag) => (
-                  <span key={tag} className="text-xs bg-[#F8FAFC] border border-gray-200 text-gray-500 px-2 py-0.5 rounded-full">
-                    {tag}
-                  </span>
-                ))}
-              </div>
+              <button
+                onClick={() => toggleNotify(s.id)}
+                className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full transition-all whitespace-nowrap ${
+                  notified[s.id]
+                    ? 'bg-[var(--color-accent, #F59E0B)] text-[var(--color-primary, #2D1B69)]'
+                    : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                }`}
+              >
+                {notified[s.id] ? '🔔 Notifying' : '🔕 Notify Me'}
+              </button>
             </div>
-          ))}
-        </div>
 
-        {filtered.length === 0 && (
-          <div className="text-center py-16">
-            <div className="text-5xl mb-3">🔍</div>
-            <p className="text-gray-500 text-lg font-semibold">No scholarships in this category yet.</p>
-            <p className="text-gray-400 text-sm mt-1">Check back soon - we add new ones regularly.</p>
+            <div>
+              <h3
+                className="font-bold text-[var(--color-primary, #2D1B69)] text-base leading-snug"
+                style={{ fontFamily: 'Poppins, sans-serif' }}
+              >
+                {s.name}
+              </h3>
+              <p className="text-xs text-gray-400 mt-0.5">{s.provider}</p>
+            </div>
+
+            <div className="flex items-center gap-3 text-sm">
+              <span className="font-semibold text-[#064E3B] bg-green-50 px-2 py-0.5 rounded-lg">
+                {s.amount}
+              </span>
+              <span className="text-red-500 font-medium">⏳ {s.deadline}</span>
+            </div>
+
+            <p className="text-gray-500 text-sm leading-relaxed">{s.eligibility}</p>
+
+            <div className="flex flex-wrap gap-1 mt-auto">
+              {s.tags.map((tag) => (
+                <span key={tag} className="text-xs bg-[#F8FAFC] border border-gray-200 text-gray-500 px-2 py-0.5 rounded-full">
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
-        )}
+        ))}
       </div>
-    </AppLayout>
+
+      {filtered.length === 0 && (
+        <div className="text-center py-16">
+          <div className="text-5xl mb-3">🔍</div>
+          <p className="text-gray-500 text-lg font-semibold">No scholarships in this category yet.</p>
+          <p className="text-gray-400 text-sm mt-1">Check back soon - we add new ones regularly.</p>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default function ScholarshipHub() {
+  const navigate = useNavigate()
+  const { user, loading } = useAuth()
+
+  if (loading) return null
+  if (user) {
+    return (
+      <AppLayout title="Scholarship Hub">
+        <ScholarshipContent />
+      </AppLayout>
+    )
+  }
+  return (
+    <div style={{ minHeight:'100vh', background:'#F8FAFC' }}>
+      <PublicHeader navigate={navigate} />
+      <ScholarshipContent />
+    </div>
   )
 }
