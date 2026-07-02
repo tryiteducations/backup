@@ -119,7 +119,42 @@ export default function BharatPulse() {
   const p = theme?.primary||'#2D1B69', a = theme?.accent||'#F59E0B'
   const t = theme?.text||'#1E293B', m = theme?.textLight||'#64748B'
   const bg = theme?.background||'#F8FAFC', surf = theme?.surface||'#FFFFFF'
-  const b = theme?.border||'#E2E8F0'
+    const b = theme?.border||'#E2E8F0'
+
+  const HERO_THEMES = [
+    { from:'#0F0A1E', mid:'#2D1B69', to:'#1A0D3D', label:'Indigo Night' },
+    { from:'#1A0D3D', mid:'#78350F', to:'#0F0A1E', label:'Amber Dusk' },
+    { from:'#0F0A1E', mid:'#4C1D95', to:'#1A0D3D', label:'Royal Purple' },
+    { from:'#1A0D3D', mid:'#831843', to:'#0F0A1E', label:'Midnight Rose' },
+  ]
+  const [heroThemeIdx, setHeroThemeIdx] = useState(0)
+  useEffect(() => {
+    const iv = setInterval(() => setHeroThemeIdx(i => (i + 1) % HERO_THEMES.length), 20000)
+    return () => clearInterval(iv)
+  }, [])
+  const heroTheme = HERO_THEMES[heroThemeIdx]
+
+  const downloadStoryPDF = (post) => {
+    const w = window.open('', '_blank')
+    if (!w) return
+    const html = '<html><head><title>' + post.title + ' - Bharat Pulse</title>'
+      + '<style>body{font-family:Georgia,serif;max-width:700px;margin:40px auto;padding:0 20px;color:#1A0D3D;}'
+      + 'h1{font-size:24px;border-bottom:3px solid #F59E0B;padding-bottom:12px;}'
+      + '.meta{color:#666;font-size:13px;margin-bottom:20px;}'
+      + 'img{width:100%;border-radius:8px;margin-bottom:20px;}'
+      + 'p{line-height:1.7;font-size:15px;}'
+      + '.footer{margin-top:40px;padding-top:20px;border-top:1px solid #ddd;font-size:11px;color:#999;}'
+      + '</style></head><body>'
+      + '<h1>' + post.title + '</h1>'
+      + '<div class="meta">By ' + post.author + ' - ' + post.authorCity + ' - ' + post.time + ' - Bharat Pulse</div>'
+      + (post.image ? ('<img src="' + post.image + '"/>') : '')
+      + '<p>' + post.body + '</p>'
+      + '<div class="footer">Downloaded from TryIT Educations - Bharat Pulse - tryiteducations.net/bharat-pulse</div>'
+      + '</body></html>'
+    w.document.write(html)
+    w.document.close()
+    setTimeout(() => w.print(), 300)
+  }
 
   const [posts, setPosts] = useState(PULSE_DATA)
   const [cat, setCat] = useState('All')
