@@ -519,7 +519,7 @@ function RoleSections({nav}) {
       tag:'For Students',
       title:'Study smarter. Rank higher.',
       desc:'Take unlimited tests, track your All-India rank in real time, earn coins for every correct answer, and unlock themes. Learn in your own language.',
-      points:['Adaptive difficulty - L1 to L10','7-layer explanations after every question','Daily study streak with coin rewards','Community doubts answered by mentors'],
+      points:['Adaptive difficulty - L1 to L10','7-layer explanations after every question','Daily study streak with coin rewards','Community doubts answered by mentors','Daily Bharat Pulse story mapped to your exam syllabus'],
       cta:'Start Studying Free',
       ctaPath:'/role-select',
       side:'left',
@@ -529,7 +529,7 @@ function RoleSections({nav}) {
       tag:'For Mentors',
       title:'Teach. Earn. Scale.',
       desc:'One mentor can handle hundreds of students without a single video call. Post daily assignments, conduct tests, earn income while you sleep.',
-      points:['Weekly and monthly student passes','Audio and PDF content delivery','Personal leaderboard and reputation','Cashback on every student subscription'],
+      points:['Weekly and monthly student passes','Audio and PDF content delivery','Personal leaderboard and reputation','Cashback on every student subscription','Share Bharat Pulse stories to spark doubt discussions'],
       cta:'Become a Mentor',
       ctaPath:'/mentor-hub',
       side:'right',
@@ -539,7 +539,7 @@ function RoleSections({nav}) {
       tag:'For Institutions',
       title:'Your classroom. Digitised.',
       desc:'Schools, coaching centres and tuition classes - manage multiple halls, conduct live exams for lakhs of students, and share automated parent reports.',
-      points:['Multiple halls and batches','Live exam with auto-submit','Per-student performance graphs','WhatsApp-ready parent reports'],
+      points:['Multiple halls and batches','Live exam with auto-submit','Per-student performance graphs','WhatsApp-ready parent reports','Bharat Pulse auto-delivered to every enrolled student'],
       cta:'Register Institution',
       ctaPath:'/institution/register',
       side:'left',
@@ -549,7 +549,7 @@ function RoleSections({nav}) {
       tag:'For Families',
       title:'See everything. Guide better.',
       desc:'Track every child in one dashboard - questions done today, subjects strong and weak, and what needs work next. Full history from day one, downloadable anytime.',
-      points:['All children in one dashboard','Daily activity and weak-topic tracking','Full history from join date','Download progress as PDF anytime'],
+      points:['All children in one dashboard','Daily activity and weak-topic tracking','Full history from join date','Download progress as PDF anytime','See which Bharat Pulse story your child read today'],
       cta:'Start Family Tracking',
       ctaPath:'/family',
       side:'right',
@@ -874,7 +874,64 @@ export default function Landing() {
       <Stats/>
       <ExamTrust/>
       <Features/>
-      <RoleSections nav={nav}/>
+            <section style={{background:B.primary,padding:'72px 24px'}}>
+        <div style={{maxWidth:1000,margin:'0 auto',display:'grid',
+          gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,380px),1fr))',
+          gap:48,alignItems:'center'}}>
+          <div>
+            <span style={{background:'rgba(245,158,11,0.15)',color:B.accent,
+              fontFamily:'Inter,sans-serif',fontSize:12,fontWeight:700,
+              padding:'4px 12px',borderRadius:20,letterSpacing:'1px',
+              display:'inline-block',marginBottom:16}}>
+              🇮🇳 BHARAT PULSE
+            </span>
+            <h2 style={{fontFamily:'Plus Jakarta Sans,sans-serif',fontWeight:800,
+              fontSize:'clamp(24px,3vw,34px)',color:'#fff',
+              margin:'0 0 16px',letterSpacing:'-0.02em'}}>
+              Turn everyday scrolling into exam prep.
+            </h2>
+            <p style={{fontFamily:'Inter,sans-serif',fontSize:16,
+              color:'rgba(255,255,255,0.7)',margin:'0 0 24px',lineHeight:1.75}}>
+              One real India story every day, with a linked exam question attached.
+              Students read it, answer it, and it counts. Mentors use it to spark
+              doubt discussions. Institutions get it delivered automatically to
+              every enrolled student. Families see exactly what their child engaged
+              with today.
+            </p>
+            <button onClick={()=>nav('/bharat-pulse')}
+              style={{background:B.accent,border:'none',borderRadius:12,
+                padding:'13px 26px',color:B.primary,
+                fontFamily:'Inter,sans-serif',fontSize:15,fontWeight:700,
+                cursor:'pointer'}}>
+              See Today's Story →
+            </button>
+          </div>
+          <div style={{background:'rgba(255,255,255,0.06)',borderRadius:20,
+            padding:24,border:'1px solid rgba(255,255,255,0.1)'}}>
+            <p style={{color:B.accent,fontFamily:'Inter,sans-serif',
+              fontSize:11,fontWeight:700,letterSpacing:'1px',margin:'0 0 10px'}}>
+              TODAY'S STORY
+            </p>
+            <p style={{color:'#fff',fontFamily:'Plus Jakarta Sans,sans-serif',
+              fontWeight:700,fontSize:16,margin:'0 0 10px',lineHeight:1.4}}>
+              Why Manipur gets two monsoons
+            </p>
+            <p style={{color:'rgba(255,255,255,0.6)',fontFamily:'Inter,sans-serif',
+              fontSize:13,margin:'0 0 16px',lineHeight:1.7}}>
+              A quick read on the Southwest and Northeast monsoon systems -
+              and why one state gets hit by both.
+            </p>
+            <div style={{background:'rgba(0,0,0,0.2)',borderRadius:10,padding:'12px 14px'}}>
+              <p style={{color:B.accent,fontFamily:'Inter,sans-serif',
+                fontSize:11,fontWeight:700,margin:'0 0 4px'}}>🎯 LINKED QUESTION</p>
+              <p style={{color:'#fff',fontFamily:'Inter,sans-serif',
+                fontSize:13,margin:0}}>
+                Which state experiences both Southwest and Northeast Monsoon?
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>      <RoleSections nav={nav}/>
       <Pricing nav={nav}/>
       <Footer nav={nav}/>
     </div>
