@@ -2,6 +2,97 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AppLayout from '../../components/layout/AppLayout'
 
+function MissingExamForm() {
+  const [open, setOpen] = useState(false)
+  const [sent, setSent] = useState(false)
+  const [form, setForm] = useState({
+    name: '', body: '', govtType: 'State Govt', state: '',
+    website: '', email: '', phone: '',
+  })
+
+  const update = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }))
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const subject = encodeURIComponent(`Missing Exam Submission: ${form.name}`)
+    const body = encodeURIComponent(
+      `Exam Name: ${form.name}\n` +
+      `Conducting Body: ${form.body}\n` +
+      `Type: ${form.govtType}\n` +
+      `State (if applicable): ${form.state}\n` +
+      `Official Website: ${form.website}\n` +
+      `Submitted by (email): ${form.email}\n` +
+      `Submitted by (phone): ${form.phone}\n`
+    )
+    window.location.href = `mailto:founder@tryiteducations.net?subject=${subject}&body=${body}`
+    setSent(true)
+  }
+
+  if (!open) {
+    return (
+      <div className="mt-10 text-center bg-[var(--color-surface,#fff)] border border-dashed border-gray-300 rounded-2xl p-8">
+        <p className="text-gray-500 text-sm mb-3">
+          Can't find your exam? Drop the details below and we'll add it within 48 hours.
+        </p>
+        <button
+          onClick={() => setOpen(true)}
+          className="px-5 py-2 bg-[var(--color-primary,#2D1B69)] text-white rounded-xl text-sm font-semibold hover:opacity-90 transition"
+        >
+          + Submit a Missing Exam
+        </button>
+      </div>
+    )
+  }
+
+  if (sent) {
+    return (
+      <div className="mt-10 text-center bg-emerald-50 border border-emerald-200 rounded-2xl p-8">
+        <div className="text-3xl mb-2">✅</div>
+        <p className="text-emerald-700 font-semibold text-sm">
+          Thanks! Your email app should have opened with the details pre-filled — just hit send.
+          We'll review and add it within 48 hours.
+        </p>
+      </div>
+    )
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="mt-10 bg-[var(--color-surface,#fff)] border border-gray-200 rounded-2xl p-6 max-w-2xl mx-auto">
+      <h3 className="font-bold text-[var(--color-primary,#2D1B69)] mb-4">Submit a Missing Exam</h3>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <input required value={form.name} onChange={update('name')} placeholder="Exam name *"
+          className="px-3 py-2 rounded-xl border border-gray-200 text-sm" />
+        <input required value={form.body} onChange={update('body')} placeholder="Conducting body *"
+          className="px-3 py-2 rounded-xl border border-gray-200 text-sm" />
+        <select value={form.govtType} onChange={update('govtType')}
+          className="px-3 py-2 rounded-xl border border-gray-200 text-sm">
+          <option>State Govt</option>
+          <option>Central Govt</option>
+          <option>Private</option>
+        </select>
+        <input value={form.state} onChange={update('state')} placeholder="State (if applicable)"
+          className="px-3 py-2 rounded-xl border border-gray-200 text-sm" />
+        <input value={form.website} onChange={update('website')} placeholder="Official website"
+          className="px-3 py-2 rounded-xl border border-gray-200 text-sm sm:col-span-2" />
+        <input type="email" value={form.email} onChange={update('email')} placeholder="Your email"
+          className="px-3 py-2 rounded-xl border border-gray-200 text-sm" />
+        <input value={form.phone} onChange={update('phone')} placeholder="Your phone"
+          className="px-3 py-2 rounded-xl border border-gray-200 text-sm" />
+      </div>
+      <div className="flex gap-2 mt-4">
+        <button type="submit"
+          className="px-5 py-2 bg-[var(--color-accent,#F59E0B)] text-white rounded-xl text-sm font-semibold hover:opacity-90 transition">
+          Send Details
+        </button>
+        <button type="button" onClick={() => setOpen(false)}
+          className="px-5 py-2 bg-gray-100 text-gray-600 rounded-xl text-sm font-semibold hover:bg-gray-200 transition">
+          Cancel
+        </button>
+      </div>
+    </form>
+  )
+}
+
 const CATEGORY_LABELS = {
   all: '🌐 All',
   govt_entrance: '🏛️ Govt Entrance',
@@ -162,6 +253,8 @@ export default function AllExams() {
             ))}
           </div>
         )}
+
+        <MissingExamForm />
       </div>
     </AppLayout>
   )
