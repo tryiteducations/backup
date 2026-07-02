@@ -34,9 +34,70 @@ export default function PostDoubt() {
   const [submitting, setSubmitting] = useState(false)
   const [done, setDone] = useState(false)
 
+  // Attachments
+  const [images, setImages] = useState([])       // [{file, url}]
+  const [pdf, setPdf] = useState(null)            // {file, name}
+  const [voiceBlob, setVoiceBlob] = useState(null) // {url, duration}
+  const [recording, setRecording] = useState(false)
+  const [recordSeconds, setRecordSeconds] = useState(0)
+  const mediaRecorderRef = useState({ current: null })[0]
+  const recordTimerRef = useState({ current: null })[0]
+  const chunksRef = useState({ current: [] })[0]
+
+  const MAX_IMAGES = 5
+
+  const handleImageSelect = (e) => {
+    const files = Array.from(e.target.files || []).slice(0, MAX_IMAGES - images.length)
+    const newImages = files.map(file => ({ file, url: URL.createObjectURL(file) }))
+    setImages(prev => [...prev, ...newImages].slice(0, MAX_IMAGES))
+    e.target.value = ''
+  }
+
+  const removeImage = (idx) => {
+    setImages(prev => prev.filter((_, i) => i !== idx))
+  }
+
+  const handlePdfSelect = (e) => {
+    const file = e.target.files?.[0]
+    if (file) setPdf({ file, name: file.name })
+    e.target.value = ''
+  }
+
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      const recorder = new MediaRecorder(stream)
+      chunksRef.current = []
+      recorder.ondataavailable = (e) => chunksRef.current.push(e.data)
+      recorder.onstop = () => {
+        const blob = new Blob(chunksRef.current, { type: 'audio/webm' })
+        setVoiceBlob({ url: URL.createObjectURL(blob), duration: recordSeconds })
+        stream.getTracks().forEach(t => t.stop())
+      }
+      mediaRecorderRef.current = recorder
+      recorder.start()
+      setRecording(true)
+      setRecordSeconds(0)
+      recordTimerRef.current = setInterval(() => setRecordSeconds(s => s + 1), 1000)
+    } catch (err) {
+      alert('Microphone access denied or unavailable.')
+    }
+  }
+
+  const stopRecording = () => {
+    mediaRecorderRef.current?.stop()
+    clearInterval(recordTimerRef.current)
+    setRecording(false)
+  }
+
+  const removeVoice = () => setVoiceBlob(null)
+
+  const fmtTime = (s) => `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`
+
   const submit = async () => {
     if (!exam || !subject || !title.trim()) return
     setSubmitting(true)
+    // TODO: once Supabase Storage is wired, upload images[].file, pdf.file, and voiceBlob here
     await new Promise(r => setTimeout(r, 1200))
     setSubmitting(false)
     setDone(true)
@@ -77,7 +138,7 @@ export default function PostDoubt() {
               Mentors will answer within 2 hours
             </p>
             <div style={{display:'flex',gap:12,justifyContent:'center'}}>
-              <button onClick={()=>{setDone(false);setTitle('');setDesc('');setExam('');setSubject('')}}
+              <button onClick={()=>{setDone(false);setTitle('');setDesc('');setExam('');setSubject('');setImages([]);setPdf(null);setVoiceBlob(null)}}
                 style={{background:'transparent',border:'1px solid '+b,borderRadius:14,
                   padding:'12px 24px',color:m,fontWeight:700,fontSize:13,cursor:'pointer'}}>
                 Post Another
@@ -147,6 +208,96 @@ export default function PostDoubt() {
                 style={{...inputStyle,resize:'vertical',lineHeight:1.6}}
                 onFocus={e=>e.target.style.borderColor=a}
                 onBlur={e=>e.target.style.borderColor=b}/>
+            </div>
+
+            {/* Attachments */}
+            <div style={{marginBottom:24}}>
+              <label style={{display:'block',color:t,fontWeight:700,fontSize:13,marginBottom:10}}>
+                Attach (optional)
+              </label>
+
+              <div style={{display:'flex',gap:8,flexWrap:'wrap',marginBottom:14}}>
+                <label style={{display:'flex',alignItems:'center',gap:6,padding:'9px 14px',
+                  borderRadius:12,border:'1.5px solid '+b,cursor:images.length>=MAX_IMAGES?'not-allowed':'pointer',
+                  fontSize:12,fontWeight:700,color:m,opacity:images.length>=MAX_IMAGES?0.5:1,
+                  background:isDark?'rgba(255,255,255,0.05)':c}}>
+                  📷 Add Photos ({images.length}/{MAX_IMAGES})
+                  <input type="file" accept="image/*" multiple hidden
+                    disabled={images.length>=MAX_IMAGES}
+                    onChange={handleImageSelect}/>
+                </label>
+
+                <label style={{display:'flex',alignItems:'center',gap:6,padding:'9px 14px',
+                  borderRadius:12,border:'1.5px solid '+b,cursor:pdf?'not-allowed':'pointer',
+                  fontSize:12,fontWeight:700,color:m,opacity:pdf?0.5:1,
+                  background:isDark?'rgba(255,255,255,0.05)':c}}>
+                  📄 Add PDF
+                  <input type="file" accept="application/pdf" hidden
+                    disabled={!!pdf}
+                    onChange={handlePdfSelect}/>
+                </label>
+
+                {!voiceBlob && !recording && (
+                  <button onClick={startRecording}
+                    style={{display:'flex',alignItems:'center',gap:6,padding:'9px 14px',
+                      borderRadius:12,border:'1.5px solid '+b,cursor:'pointer',
+                      fontSize:12,fontWeight:700,color:m,background:isDark?'rgba(255,255,255,0.05)':c}}>
+                    🎤 Record Voice Note
+                  </button>
+                )}
+                {recording && (
+                  <button onClick={stopRecording}
+                    style={{display:'flex',alignItems:'center',gap:6,padding:'9px 14px',
+                      borderRadius:12,border:'1.5px solid #EF4444',cursor:'pointer',
+                      fontSize:12,fontWeight:700,color:'#EF4444',background:'#EF444415'}}>
+                    ⏺ Stop Recording ({fmtTime(recordSeconds)})
+                  </button>
+                )}
+              </div>
+
+              {/* Image previews */}
+              {images.length > 0 && (
+                <div style={{display:'flex',gap:8,flexWrap:'wrap',marginBottom:12}}>
+                  {images.map((img, i) => (
+                    <div key={i} style={{position:'relative',width:64,height:64}}>
+                      <img src={img.url} alt=""
+                        style={{width:64,height:64,objectFit:'cover',borderRadius:10,border:'1px solid '+b}}/>
+                      <button onClick={()=>removeImage(i)}
+                        style={{position:'absolute',top:-6,right:-6,width:20,height:20,
+                          borderRadius:'50%',background:'#EF4444',color:'#fff',border:'2px solid '+c,
+                          fontSize:11,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',
+                          lineHeight:1,padding:0}}>×</button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* PDF preview */}
+              {pdf && (
+                <div style={{display:'flex',alignItems:'center',gap:10,padding:'8px 12px',
+                  borderRadius:10,border:'1px solid '+b,marginBottom:12,
+                  background:isDark?'rgba(255,255,255,0.05)':c}}>
+                  <span style={{fontSize:16}}>📄</span>
+                  <span style={{flex:1,color:t,fontSize:12,fontWeight:600,
+                    overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{pdf.name}</span>
+                  <button onClick={()=>setPdf(null)}
+                    style={{background:'transparent',border:'none',color:'#EF4444',
+                      cursor:'pointer',fontSize:16,padding:0}}>×</button>
+                </div>
+              )}
+
+              {/* Voice note preview */}
+              {voiceBlob && (
+                <div style={{display:'flex',alignItems:'center',gap:10,padding:'8px 12px',
+                  borderRadius:10,border:'1px solid '+b,marginBottom:12,
+                  background:isDark?'rgba(255,255,255,0.05)':c}}>
+                  <span style={{fontSize:16}}>🎤</span>
+                  <audio controls src={voiceBlob.url} style={{flex:1,height:32}}/>
+                  <button onClick={removeVoice}
+                    style={{background:'transparent',border:'none',color:'#EF4444',
+                      cursor:'pointer',fontSize:16,padding:0}}>×</button>
+                </div>
+              )}
             </div>
 
             {/* Tip */}

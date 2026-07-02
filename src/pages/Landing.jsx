@@ -68,8 +68,10 @@ const FEATURES = [
 const PLANS = [
   {
     name:'Free',
-    price:'₹0',
-    period:'forever',
+    priceMonthly:'₹0',
+    priceYearly:'₹0',
+    periodMonthly:'forever',
+    periodYearly:'forever',
     color:B.muted,
     features:[
       'PYQ questions - unlimited',
@@ -84,8 +86,10 @@ const PLANS = [
   },
   {
     name:'Pro',
-    price:'₹999',
-    period:'per year',
+    priceMonthly:'₹199',
+    priceYearly:'₹999',
+    periodMonthly:'per month',
+    periodYearly:'per year',
     sub:'≈₹83/month',
     color:B.primary,
     features:[
@@ -104,8 +108,10 @@ const PLANS = [
   },
   {
     name:'Ultra',
-    price:'₹1,499',
-    period:'per year',
+    priceMonthly:'₹299',
+    priceYearly:'₹1,499',
+    periodMonthly:'per month',
+    periodYearly:'per year',
     sub:'≈₹125/month',
     color:'#7C3AED',
     features:[
@@ -726,15 +732,15 @@ function Pricing({nav}) {
                 margin:'0 0 4px'}}>
                 {plan.name}
               </p>
-              <p style={{fontFamily:'Plus Jakarta Sans,sans-serif',fontWeight:900,
+                            <p style={{fontFamily:'Plus Jakarta Sans,sans-serif',fontWeight:900,
                 fontSize:36,color: plan.highlight ? '#fff' : B.text,
                 margin:'0 0 4px',lineHeight:1}}>
-                {annual && plan.price!=='₹0' ? plan.price : plan.price}
+                {annual ? plan.priceYearly : plan.priceMonthly}
               </p>
               <p style={{fontFamily:'Inter,sans-serif',fontSize:13,
                 color: plan.highlight ? 'rgba(255,255,255,0.7)' : B.muted,
                 margin:'0 0 20px'}}>
-                {plan.period} {plan.sub && `· ${plan.sub}`}
+                {annual ? plan.periodYearly : plan.periodMonthly} {annual && plan.sub && `· ${plan.sub}`}
               </p>
               <div style={{marginBottom:24}}>
                 {plan.features.map((f,j)=>(
