@@ -1,4 +1,4 @@
-// src/pages/Landing.jsx - TryIT Educations
+﻿// src/pages/Landing.jsx - TryIT Educations
 // Professional landing page - Vidya Indigo brand
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -232,7 +232,7 @@ function Hero({nav}) {
       paddingTop:80,paddingBottom:80,
     }}>
       <div style={{maxWidth:1200,margin:'0 auto',padding:'0 24px',
-        display:'grid',gridTemplateColumns:'1fr 1fr',gap:80,
+        display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,420px),1fr))',gap:80,
         alignItems:'center'}}>
 
         {/* Left - Text */}
@@ -263,8 +263,8 @@ function Hero({nav}) {
             color:B.muted,margin:'0 0 32px',lineHeight:1.7,
             fontWeight:400}}>
             42 languages. 1,10,000+ exam pathways.
-            From Class 1 to SWAYAM. One subscription
-            covers every exam in India.
+            From Class 1 Olympiads to PhD and SWAYAM.
+            Every exam, every stage, one subscription.
           </p>
 
           {/* CTAs */}
@@ -396,7 +396,7 @@ function Stats() {
   return (
     <section ref={ref} style={{background:B.primary,padding:'48px 24px'}}>
       <div style={{maxWidth:900,margin:'0 auto',
-        display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:0}}>
+        display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,140px),1fr))',gap:0}}>
         {STATS.map((s,i)=>(
           <div key={i} style={{textAlign:'center',padding:'8px 16px',
             borderRight: i<3 ? '1px solid rgba(255,255,255,0.12)' : 'none'}}>
@@ -472,7 +472,7 @@ function Features() {
             No shortcuts. No compromises.
           </p>
         </div>
-        <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:24}}>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,300px),1fr))',gap:24}}>
           {FEATURES.map((f,i)=>(
             <div key={i} style={{
               background:B.white,border:'1px solid '+B.border,
@@ -545,6 +545,16 @@ function RoleSections({nav}) {
       side:'left',
       color:'#0891B2',
     },
+    {
+      tag:'For Families',
+      title:'See everything. Guide better.',
+      desc:'Track every child in one dashboard - questions done today, subjects strong and weak, and what needs work next. Full history from day one, downloadable anytime.',
+      points:['All children in one dashboard','Daily activity and weak-topic tracking','Full history from join date','Download progress as PDF anytime'],
+      cta:'Start Family Tracking',
+      ctaPath:'/family',
+      side:'right',
+      color:'#DB2777',
+    },
   ]
 
   return (
@@ -555,7 +565,7 @@ function RoleSections({nav}) {
           return (
             <div key={i} ref={ref} style={{
               display:'grid',
-              gridTemplateColumns: role.side==='left' ? '1fr 1fr' : '1fr 1fr',
+              gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,380px),1fr))',
               gap:64,alignItems:'center',
               padding:'80px 0',
               borderBottom: i<ROLES.length-1 ? '1px solid '+B.border : 'none',
@@ -672,7 +682,7 @@ function Pricing({nav}) {
           </div>
         </div>
 
-        <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20}}>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,260px),1fr))',gap:20}}>
           {PLANS.map((plan,i)=>(
             <div key={i} style={{
               background: plan.highlight ? plan.color : B.white,
@@ -762,7 +772,7 @@ function Footer({nav}) {
     'Company': [
       {l:'About TryIT',href:'/landing'},
       {l:'Contact',href:'mailto:founder@tryiteducations.net'},
-      {l:'Privacy Policy',href:'/legal/privacy'},
+      {l:'Privacy Policy',href:'/privacy'},
       {l:'TatuLabs',href:'https://tatulabs.in'},
     ],
   }
