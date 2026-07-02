@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react'
+﻿import { lazy, Suspense, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { ThemeProvider } from './context/ThemeContext'
 import { ToastProvider } from './context/ToastContext'
@@ -134,10 +134,6 @@ const AccessibilityMode  = lazy(() => import('./pages/accessibility/Accessibilit
 const SchoolCircle       = lazy(() => import('./pages/circles/SchoolCircle'))
 const SisterhoodCircle   = lazy(() => import('./pages/circles/SisterhoodCircle'))
 const LiveImpactTracker  = lazy(() => import('./pages/impact/LiveImpactTracker'))
-const ParentLogin        = lazy(() => import('./pages/parent/ParentLogin'))
-const ParentOnboarding   = lazy(() => import('./pages/parent/ParentOnboarding'))
-const ParentDashboard    = lazy(() => import('./pages/parent/ParentDashboard'))
-const ChildDetail        = lazy(() => import('./pages/parent/ChildDetail'))
 const MyTestHistory      = lazy(() => import('./pages/student/MyTestHistory'))
 const AdminLogin            = lazy(() => import('./pages/admin/AdminLogin'))
 const AdminDashboard        = lazy(() => import('./pages/admin/AdminDashboard'))
@@ -354,12 +350,7 @@ function ThemedApp() {
                 <Route path="/impact"             element={<LiveImpactTracker />} />
                 {/* <Route path="/donate" element={<Stub title="Donation Page ??" />} /> */}
 
-                {/* PARENT */}
-                <Route path="/parent/login"         element={<ParentLogin />} />
-                <Route path="/parent/onboarding"    element={<ParentOnboarding />} />
-                <Route path="/parent/dashboard"     element={<ParentDashboard />} />
-                <Route path="/parent/child/:id"     element={<ChildDetail />} />
-                <Route path="/student/test-history" element={<MyTestHistory />} />
+                {/* PARENT */}                <Route path="/student/test-history" element={<MyTestHistory />} />
 
                 {/* ADMIN */}
                 <Route path="/admin/login"           element={<AdminLogin />} />
