@@ -262,9 +262,10 @@ function Hero({nav}) {
           <p style={{fontFamily:'Inter,sans-serif',fontSize:18,
             color:B.muted,margin:'0 0 32px',lineHeight:1.7,
             fontWeight:400}}>
-            42 languages. 1,10,000+ exam pathways.
-            From Class 1 Olympiads to PhD and SWAYAM.
-            Every exam, every stage, one subscription.
+            Class 1-6 entrance exams. Class 6-12 boards, JEE, NEET.
+            Competitive exams - SSC, UPSC, all State PSCs.
+            UG, PG, PhD entrances. Foreign and language exams.
+            42 languages. One subscription covers all of it.
           </p>
 
           {/* CTAs */}
@@ -351,17 +352,18 @@ function Hero({nav}) {
             </div>
           </div>
 
-          {/* Floating badge */}
-          <div style={{position:'absolute',top:-16,right:-16,
-            background:B.white,borderRadius:16,padding:'10px 14px',
-            boxShadow:'0 8px 32px rgba(0,0,0,0.12)',
+          {/* Rank badge - small, inline, below the card */}
+          <div style={{display:'flex',alignItems:'center',gap:8,
+            marginTop:12,background:B.white,borderRadius:10,
+            padding:'6px 12px',width:'fit-content',
+            boxShadow:'0 4px 16px rgba(0,0,0,0.08)',
             border:'1px solid '+B.border}}>
-            <p style={{fontFamily:'Inter,sans-serif',fontSize:10,
-              color:B.muted,margin:'0 0 2px',fontWeight:600}}>YOUR RANK</p>
-            <p style={{fontFamily:'Plus Jakarta Sans,sans-serif',
-              fontWeight:800,fontSize:20,color:B.primary,margin:0}}>#2,847</p>
-            <p style={{fontFamily:'Inter,sans-serif',fontSize:9,
-              color:'#16A34A',margin:'2px 0 0',fontWeight:600}}>▲ 312 this week</p>
+            <span style={{fontFamily:'Inter,sans-serif',fontSize:10,
+              color:B.muted,fontWeight:600}}>YOUR RANK</span>
+            <span style={{fontFamily:'Plus Jakarta Sans,sans-serif',
+              fontWeight:800,fontSize:13,color:B.primary}}>#2,847</span>
+            <span style={{fontFamily:'Inter,sans-serif',fontSize:10,
+              color:'#16A34A',fontWeight:600}}>▲ 312 this week</span>
           </div>
 
           {/* Language badge */}
