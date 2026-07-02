@@ -1,4 +1,4 @@
-// src/pages/institution/InstitutionRegister.jsx
+﻿// src/pages/institution/InstitutionRegister.jsx
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
@@ -72,7 +72,7 @@ export default function InstitutionRegister() {
       <div style={{background:'linear-gradient(135deg,'+p+','+p+'dd)',
         padding:'20px'}}>
         <div style={{maxWidth:560,margin:'0 auto'}}>
-          <button onClick={()=>nav('/student')} style={{background:'rgba(255,255,255,0.15)',
+          <button onClick={()=>nav('/role-select')} style={{background:'rgba(255,255,255,0.15)',
             border:'1px solid rgba(255,255,255,0.2)',borderRadius:10,
             padding:'6px 14px',color:'#fff',fontSize:13,cursor:'pointer',
             marginBottom:16}}>
