@@ -1,4 +1,4 @@
-// src/pages/bharat-pulse/BharatPulse.jsx
+﻿// src/pages/bharat-pulse/BharatPulse.jsx
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
@@ -116,7 +116,7 @@ export default function BharatPulse() {
   const nav = useNavigate()
   const { user } = useAuth()
   const { theme } = useTheme()
-  const p = theme?.primary||'#1E3A5F', a = theme?.accent||'#C9A84C'
+  const p = theme?.primary||'#2D1B69', a = theme?.accent||'#F59E0B'
   const t = theme?.text||'#1E293B', m = theme?.textLight||'#64748B'
   const bg = theme?.background||'#F8FAFC', surf = theme?.surface||'#FFFFFF'
   const b = theme?.border||'#E2E8F0'
@@ -285,7 +285,7 @@ export default function BharatPulse() {
 
       {/* HERO HEADER */}
       <div style={{
-        background:'linear-gradient(135deg, #0F0A1E 0%, #1E3A5F 40%, #0F2140 70%, #1A0A2E 100%)',
+        background:'linear-gradient(135deg, #0F0A1E 0%, #2D1B69 40%, #1A0D3D 70%, #0F0A1E 100%)',
         backgroundSize:'400% 400%',animation:'gradient-shift 8s ease infinite',
         padding:'0 0 32px',position:'relative',overflow:'hidden',
       }}>
@@ -310,10 +310,16 @@ export default function BharatPulse() {
               BHARAT PULSE
             </span>
           </div>
+          <button onClick={()=>window.print()}
+            style={{background:'rgba(255,255,255,0.1)',border:'1px solid rgba(255,255,255,0.2)',
+              borderRadius:12,padding:'9px 14px',color:'#fff',fontWeight:700,fontSize:13,
+              cursor:'pointer',marginRight:8}}>
+            Download PDF
+          </button>
           <button onClick={()=>setShowSubmit(true)}
-            style={{background:'linear-gradient(135deg,'+a+',#E8C44A)',
+            style={{background:'linear-gradient(135deg,'+a+',#FCD34D)',
               border:'none',borderRadius:12,padding:'9px 18px',
-              color:'var(--color-primary-dark, #0F2140)',fontWeight:800,fontSize:13,cursor:'pointer'}}>
+              color:'#1A0D3D',fontWeight:800,fontSize:13,cursor:'pointer'}}>
             + Share Story
           </button>
         </div>
