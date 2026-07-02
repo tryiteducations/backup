@@ -1,16 +1,13 @@
-// src/components/landing/InstitutionSection.jsx
+﻿// src/components/landing/InstitutionSection.jsx
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useTheme } from '../../context/ThemeContext'
-
 export default function InstitutionSection() {
   const navigate = useNavigate()
-  const { theme } = useTheme()
-  const isDark  = theme?.isDark ?? false
-  const accent  = theme?.accent ?? '#C9A84C'
-  const accentL = theme?.accentLight ?? '#E8C44A'
-  const primary = theme?.primary ?? '#1E3A5F'
-  const primD   = theme?.primaryDark ?? '#0F2140'
+  const isDark  = false
+  const accent  = '#F59E0B'
+  const accentL = '#FCD34D'
+  const primary = '#2D1B69'
+  const primD   = '#1A0D3D'
 
   const [tab, setTab] = useState(0)
 

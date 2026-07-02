@@ -26,7 +26,7 @@ const EXAMS = ['UPSC CSE','SSC CGL','IBPS PO','TNPSC','NEET UG',
   'JEE Main','RRB NTPC','GATE','NDA/CDS','State PSC']
 
 const NAV_LINKS = [
-  {label:'🇮🇳 Bharat Pulse', href:'/bharat-pulse', glow:true},
+  {label:'Bharat Pulse', href:'/bharat-pulse', glow:true},
   {label:'Exams',     href:'/exams'},
   {label:'Mentors',   href:'/student/mentor'},
   {label:'Pricing',   href:'/pro'},
@@ -202,6 +202,14 @@ function Navbar({nav}) {
                 transition:'all 0.15s'}}
               onMouseEnter={e=>{if(!link.glow){e.target.style.color=B.primary;e.target.style.background=B.light}}}
               onMouseLeave={e=>{if(!link.glow){e.target.style.color=B.muted;e.target.style.background='transparent'}}}>
+                            {link.glow && (
+                <svg width="16" height="12" viewBox="0 0 24 16" style={{marginRight:6,display:'inline-block',verticalAlign:'middle',borderRadius:2}}>
+                  <rect width="24" height="5.33" y="0" fill="#FF9933"/>
+                  <rect width="24" height="5.33" y="5.33" fill="#FFFFFF"/>
+                  <rect width="24" height="5.33" y="10.67" fill="#138808"/>
+                  <circle cx="12" cy="8" r="2" fill="none" stroke="#000080" strokeWidth="0.4"/>
+                </svg>
+              )}
               {link.label}
             </button>
           ))}

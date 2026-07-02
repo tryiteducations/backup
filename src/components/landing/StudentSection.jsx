@@ -1,15 +1,13 @@
-// src/components/landing/StudentSection.jsx
+﻿// src/components/landing/StudentSection.jsx
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useTheme } from '../../context/ThemeContext'
-
 export default function StudentSection() {
   const navigate = useNavigate()
-  const { theme } = useTheme()
-  const isDark  = theme?.isDark ?? false
-  const accent  = theme?.accent ?? '#C9A84C'
-  const primary = theme?.primary ?? '#1E3A5F'
-  const primD   = theme?.primaryDark ?? '#0F2140'
+  const isDark  = false
+  const accent  = '#F59E0B'
+  const accentL = '#FCD34D'
+  const primary = '#2D1B69'
+  const primD   = '#1A0D3D'
 
   const [tab, setTab] = useState(0)
 
@@ -115,7 +113,7 @@ export default function StudentSection() {
             </div>
           </div>
           <div style={{display:'flex',gap:8}}>
-            <div style={{width:28,height:28,borderRadius:'50%',background:`linear-gradient(135deg,${accent},${theme?.accentLight??'#E8C44A'})`,display:'flex',alignItems:'center',justifyContent:'center',color:primD,fontWeight:900,fontSize:11,flexShrink:0}}>D</div>
+            <div style={{width:28,height:28,borderRadius:'50%',background:`linear-gradient(135deg,${accent},${accentL})`,display:'flex',alignItems:'center',justifyContent:'center',color:primD,fontWeight:900,fontSize:11,flexShrink:0}}>D</div>
             <div style={{background:'rgba(74,222,128,0.10)',border:'1px solid rgba(74,222,128,0.2)',borderRadius:10,padding:'7px 10px',flex:1}}>
               <p style={{color:'#4ADE80',fontSize:9,fontWeight:700,margin:'0 0 2px'}}>Deepa · Kerala · ✅ Replied in 4 min</p>
               <p style={{color:txt,fontSize:10,margin:0}}>Article 32 = Supreme Court directly for Fundamental Rights. Article 226 = High Court for any legal right...</p>
@@ -289,7 +287,7 @@ export default function StudentSection() {
             <h3 style={{fontFamily:'Poppins,sans-serif',fontWeight:900,color:txt,fontSize:20,margin:'0 0 12px'}}>{CONTENT[tab].title}</h3>
             <p style={{color:muted,fontSize:14,lineHeight:1.75,margin:'0 0 20px'}}>{CONTENT[tab].desc}</p>
             <button onClick={()=>navigate('/register')}
-              style={{background:`linear-gradient(135deg,${accent},${theme?.accentLight??'#E8C44A'})`,border:'none',borderRadius:14,padding:'12px 28px',color:primD,fontWeight:800,fontSize:14,cursor:'pointer',fontFamily:'Poppins,sans-serif'}}>
+              style={{background:`linear-gradient(135deg,${accent},${accentL})`,border:'none',borderRadius:14,padding:'12px 28px',color:primD,fontWeight:800,fontSize:14,cursor:'pointer',fontFamily:'Poppins,sans-serif'}}>
               Start Free →
             </button>
           </div>
@@ -304,7 +302,7 @@ export default function StudentSection() {
             <p style={{color:'#fff',fontFamily:'Poppins,sans-serif',fontWeight:900,fontSize:17,margin:'0 0 4px'}}>Refer a Friend → Both Get Free Pro Month</p>
             <p style={{color:'rgba(255,255,255,0.65)',fontSize:13,margin:0}}>Refer 3 → you get 1 year free. Every subscription sponsors a student who cannot afford one. That is TryIT.</p>
           </div>
-          <button onClick={()=>navigate('/register')} style={{background:`linear-gradient(135deg,${accent},${theme?.accentLight??'#E8C44A'})`,border:'none',borderRadius:14,padding:'11px 24px',color:primD,fontWeight:800,fontSize:14,cursor:'pointer',whiteSpace:'nowrap'}}>Share & Earn Free Pro →</button>
+          <button onClick={()=>navigate('/register')} style={{background:`linear-gradient(135deg,${accent},${accentL})`,border:'none',borderRadius:14,padding:'11px 24px',color:primD,fontWeight:800,fontSize:14,cursor:'pointer',whiteSpace:'nowrap'}}>Share & Earn Free Pro →</button>
         </div>
       </div>
     </section>
