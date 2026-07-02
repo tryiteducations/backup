@@ -3,6 +3,10 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import StudentSection from '../components/landing/StudentSection'
+import MentorSection from '../components/landing/MentorSection'
+import InstitutionSection from '../components/landing/InstitutionSection'
+import FamilySection from '../components/landing/FamilySection'
 
 // Brand colors (hardcoded for landing - before ThemeContext loads)
 const B = {
@@ -933,7 +937,11 @@ export default function Landing() {
             </div>
           </div>
         </div>
-      </section>      <RoleSections nav={nav}/>
+      </section>
+      <StudentSection/>
+      <MentorSection/>
+      <InstitutionSection/>
+      <FamilySection/>
       <Pricing nav={nav}/>
       <Footer nav={nav}/>
     </div>
