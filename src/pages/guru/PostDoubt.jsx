@@ -38,6 +38,7 @@ export default function PostDoubt() {
   const [images, setImages] = useState([])       // [{file, url}]
   const [pdf, setPdf] = useState(null)            // {file, name}
   const [voiceBlob, setVoiceBlob] = useState(null) // {url, duration}
+  const [video, setVideo] = useState(null)         // {file, url, name}
   const [recording, setRecording] = useState(false)
   const [recordSeconds, setRecordSeconds] = useState(0)
   const mediaRecorderRef = useState({ current: null })[0]
@@ -79,7 +80,7 @@ export default function PostDoubt() {
       setRecording(true)
       setRecordSeconds(0)
       recordTimerRef.current = setInterval(() => setRecordSeconds(s => s + 1), 1000)
-    } catch (err) {
+    } catch {
       alert('Microphone access denied or unavailable.')
     }
   }
@@ -91,6 +92,14 @@ export default function PostDoubt() {
   }
 
   const removeVoice = () => setVoiceBlob(null)
+
+  const handleVideoSelect = (e) => {
+    const file = e.target.files?.[0]
+    if (file) setVideo({ file, url: URL.createObjectURL(file), name: file.name })
+    e.target.value = ''
+  }
+
+  const removeVideo = () => setVideo(null)
 
   const fmtTime = (s) => `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`
 
@@ -253,6 +262,16 @@ export default function PostDoubt() {
                     ⏺ Stop Recording ({fmtTime(recordSeconds)})
                   </button>
                 )}
+
+                <label style={{display:'flex',alignItems:'center',gap:6,padding:'9px 14px',
+                  borderRadius:12,border:'1.5px solid '+b,cursor:video?'not-allowed':'pointer',
+                  fontSize:12,fontWeight:700,color:m,opacity:video?0.5:1,
+                  background:isDark?'rgba(255,255,255,0.05)':c}}>
+                  🎬 Add Video
+                  <input type="file" accept="video/*" hidden
+                    disabled={!!video}
+                    onChange={handleVideoSelect}/>
+                </label>
               </div>
 
               {/* Image previews */}
@@ -294,6 +313,20 @@ export default function PostDoubt() {
                   <span style={{fontSize:16}}>🎤</span>
                   <audio controls src={voiceBlob.url} style={{flex:1,height:32}}/>
                   <button onClick={removeVoice}
+                    style={{background:'transparent',border:'none',color:'#EF4444',
+                      cursor:'pointer',fontSize:16,padding:0}}>×</button>
+                </div>
+              )}
+
+              {/* Video preview */}
+              {video && (
+                <div style={{display:'flex',alignItems:'center',gap:10,padding:'8px 12px',
+                  borderRadius:10,border:'1px solid '+b,marginBottom:12,
+                  background:isDark?'rgba(255,255,255,0.05)':c}}>
+                  <span style={{fontSize:16}}>🎬</span>
+                  <span style={{flex:1,color:t,fontSize:12,fontWeight:600,
+                    overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>{video.name}</span>
+                  <button onClick={removeVideo}
                     style={{background:'transparent',border:'none',color:'#EF4444',
                       cursor:'pointer',fontSize:16,padding:0}}>×</button>
                 </div>

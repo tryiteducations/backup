@@ -96,6 +96,7 @@ const EMOJIS = [
   {k:'thanks',e:'🙏',label:'Thanks'},
 ]
 
+// eslint-disable-next-line no-unused-vars
 function TrendBadge({trend}) {
   if (!trend) return null
   const cfg = {
@@ -162,6 +163,12 @@ export default function BharatPulse() {
   const [dupWarning, setDupWarning] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const [form, setForm] = useState({title:'',body:'',category:'Study Tip'})
+  const [formImages, setFormImages] = useState([])
+  const MAX_FORM_IMAGES = 7
+  const [showPastEntries, setShowPastEntries] = useState(false)
+  const [pastPage, setPastPage] = useState(1)
+  const PAST_PER_PAGE = 6
+  // eslint-disable-next-line no-unused-vars
   const [tickerPos, setTickerPos] = useState(0)
   const tickerRef = useRef(null)
 
@@ -200,11 +207,27 @@ export default function BharatPulse() {
 
   const roleInfo = ROLE_BADGE[user?.role||'student']
 
+  const pastPosts = posts.slice(PAST_PER_PAGE)
+  const paginatedPast = pastPosts.slice(0, pastPage * PAST_PER_PAGE)
+  const hasMorePast = paginatedPast.length < pastPosts.length
+
+  const handleFormImageSelect = (e) => {
+    const files = Array.from(e.target.files || []).slice(0, MAX_FORM_IMAGES - formImages.length)
+    const newImages = files.map(file => ({ file, url: URL.createObjectURL(file) }))
+    setFormImages(prev => [...prev, ...newImages].slice(0, MAX_FORM_IMAGES))
+    e.target.value = ''
+  }
+
+  const removeFormImage = (idx) => {
+    setFormImages(prev => prev.filter((_, i) => i !== idx))
+  }
+
   const CardHover = {
     transition:'all 0.3s cubic-bezier(0.4,0,0.2,1)',
     cursor:'pointer',
   }
 
+  // eslint-disable-next-line no-unused-vars
   const PulseCard = ({post, large=false}) => {
     const rb = ROLE_BADGE[post.role]||ROLE_BADGE.student
     const total = Object.values(post.reactions).reduce((s,v)=>s+v,0)
@@ -495,6 +518,45 @@ export default function BharatPulse() {
           </>
         )}
 
+        {/* Past entries toggle */}
+        <div style={{textAlign:'center',marginTop:24,marginBottom:16}}>
+          <button onClick={()=>{setShowPastEntries(!showPastEntries);setPastPage(1)}}
+            style={{background:'transparent',border:'1.5px solid '+b,borderRadius:14,
+              padding:'12px 28px',color:t,fontWeight:700,fontSize:13,cursor:'pointer',
+              display:'inline-flex',alignItems:'center',gap:8}}>
+            {showPastEntries ? '📂 Hide Past Entries' : '📂 View Past Bharat Pulse Entries'}
+            <span style={{color:m,fontSize:11}}>({pastPosts.length} entries)</span>
+          </button>
+        </div>
+
+        {showPastEntries && (
+          <>
+            <div style={{display:'flex',alignItems:'center',gap:10,marginBottom:16}}>
+              <div style={{height:3,width:4,borderRadius:2,background:'#8B5CF6'}}/>
+              <p style={{color:t,fontWeight:800,fontSize:16,margin:0}}>
+                📚 Past Entries
+              </p>
+            </div>
+            <div style={{display:'grid',
+              gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))',
+              gap:16}}>
+              {paginatedPast.map(post=>(
+                <PulseCard key={post.id} post={post}/>
+              ))}
+            </div>
+            {hasMorePast && (
+              <div style={{textAlign:'center',marginTop:16}}>
+                <button onClick={()=>setPastPage(p2=>p2+1)}
+                  style={{background:'linear-gradient(135deg,'+p+','+a+')',
+                    border:'none',borderRadius:14,padding:'12px 28px',
+                    color:'#fff',fontWeight:700,fontSize:13,cursor:'pointer'}}>
+                  Load More Entries
+                </button>
+              </div>
+            )}
+          </>
+        )}
+
         <div style={{height:40}}/>
       </div>
 
@@ -598,6 +660,39 @@ export default function BharatPulse() {
                   fontFamily:'Poppins,sans-serif',boxSizing:'border-box'}}/>
             </div>
 
+            {/* Image upload */}
+            <div style={{marginBottom:16}}>
+              <p style={{color:t,fontWeight:700,fontSize:12,margin:'0 0 8px'}}>
+                Add Images ({formImages.length}/{MAX_FORM_IMAGES})
+              </p>
+              <label style={{display:'inline-flex',alignItems:'center',gap:6,
+                padding:'9px 14px',borderRadius:12,border:'1.5px solid '+b,
+                cursor:formImages.length>=MAX_FORM_IMAGES?'not-allowed':'pointer',
+                fontSize:12,fontWeight:700,color:m,
+                opacity:formImages.length>=MAX_FORM_IMAGES?0.5:1,
+                background:bg}}>
+                📷 Choose Images
+                <input type="file" accept="image/*" multiple hidden
+                  disabled={formImages.length>=MAX_FORM_IMAGES}
+                  onChange={handleFormImageSelect}/>
+              </label>
+              {formImages.length > 0 && (
+                <div style={{display:'flex',gap:8,flexWrap:'wrap',marginTop:10}}>
+                  {formImages.map((img, i) => (
+                    <div key={i} style={{position:'relative',width:72,height:72}}>
+                      <img src={img.url} alt=""
+                        style={{width:72,height:72,objectFit:'cover',borderRadius:10,border:'1px solid '+b}}/>
+                      <button onClick={()=>removeFormImage(i)}
+                        style={{position:'absolute',top:-6,right:-6,width:20,height:20,
+                          borderRadius:'50%',background:'#EF4444',color:'#fff',border:'2px solid '+surf,
+                          fontSize:11,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',
+                          lineHeight:1,padding:0}}>×</button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
             {!submitted ? (
               <button
                 onClick={()=>{
@@ -611,11 +706,13 @@ export default function BharatPulse() {
                     authorCity:'India',
                     time:'Just now',
                     reactions:{fire:0,love:0,insight:0,wow:0,thanks:0},
-                    image:null,verified:false,trending:'',
+                    image:formImages.length>0?formImages[0].url:null,
+                    images:formImages.map(img=>img.url),
+                    verified:false,trending:'',
                   },...prev])
                   setSubmitted(true)
                   setTimeout(()=>{setSubmitted(false);setShowSubmit(false);
-                    setForm({title:'',body:'',category:'Study Tip'})},2000)
+                    setForm({title:'',body:'',category:'Study Tip'});setFormImages([])},2000)
                 }}
                 disabled={!form.title.trim()||!form.body.trim()||!!dupWarning}
                 style={{width:'100%',
