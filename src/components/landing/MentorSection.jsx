@@ -1,4 +1,4 @@
-﻿// src/components/landing/MentorSection.jsx
+// src/components/landing/MentorSection.jsx
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
@@ -21,9 +21,9 @@ export default function MentorSection() {
   const surf = isDark ? 'rgba(255,255,255,0.03)' : 'var(--color-bg,#F8FAFC)'
 
   const TABS = [
-    'ðŸ“ Qualify','ðŸ’¬ Answer & Earn','ðŸŽŸï¸ Auto Coupons',
-    'ðŸ“š Content Sales','ðŸŽ“ Classes','ðŸ’° Payout',
-    'ðŸ« Go Institution','ðŸš« AI Policy','🇮🇳 Bharat Pulse',
+    '📝 Qualify','💬 Answer & Earn','🎟️ Auto Coupons',
+    '📚 Content Sales','🎓 Classes','💰 Payout',
+    '🏫 Go Institution','🚫 AI Policy','🇮🇳 Bharat Pulse',
   ]
 
   const CONTENT = [
@@ -36,25 +36,25 @@ export default function MentorSection() {
           <p style={{color:muted,fontSize:9,fontWeight:700,margin:'0 0 8px',letterSpacing:'1px'}}>BIOLOGY PROFICIENCY TEST</p>
           {['Cell Division & Mitosis','Genetics & Heredity','Human Physiology','Ecology & Environment'].map((t,i)=>(
             <div key={i} style={{display:'flex',alignItems:'center',gap:8,padding:'6px 9px',borderRadius:8,background:i<3?`${accent}10`:'transparent',border:`1px solid ${i<3?accent+'28':bdr}`,marginBottom:5}}>
-              <span style={{color:i<3?'#4ADE80':muted,fontSize:12}}>{i<3?'âœ“':'â—‹'}</span>
+              <span style={{color:i<3?'#4ADE80':muted,fontSize:12}}>{i<3?'✓':'○'}</span>
               <span style={{color:i<3?txt:muted,fontSize:10,fontWeight:i<3?600:400}}>{t}</span>
               {i<3&&<span style={{marginLeft:'auto',color:'#4ADE80',fontSize:8,fontWeight:700}}>Passed</span>}
             </div>
           ))}
           <div style={{background:'rgba(74,222,128,0.10)',border:'1px solid rgba(74,222,128,0.2)',borderRadius:8,padding:'7px 10px',marginTop:6,textAlign:'center'}}>
-            <p style={{color:'#4ADE80',fontWeight:700,fontSize:10,margin:0}}>Score: 88% âœ… Biology Expert Badge Unlocked!</p>
+            <p style={{color:'#4ADE80',fontWeight:700,fontSize:10,margin:0}}>Score: 88% ✅ Biology Expert Badge Unlocked!</p>
           </div>
         </div>
       ),
     },
     {
       title:'Step 2 - Answer Doubts, Earn Per Rating',
-      desc:'Students post doubts. You answer in their language. Every 4â˜… or 5â˜… rating earns you coins and cashback automatically. Best Answer badge earns extra â‚¹5 cashback per answer.',
-      earn:'â‚¹5 cashback per Best Answer Â· 15 coins per 5â˜… rating',
+      desc:'Students post doubts. You answer in their language. Every 4★ or 5★ rating earns you coins and cashback automatically. Best Answer badge earns extra ₹5 cashback per answer.',
+      earn:'₹5 cashback per Best Answer · 15 coins per 5★ rating',
       preview:(
         <div style={{background:card,borderRadius:12,padding:12,border:`1px solid ${bdr}`}}>
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:7,marginBottom:10}}>
-            {[['â‚¹5','Per Best Answer',accent],['15','Coins per 5â˜…','#4ADE80'],['249','Answers this month','#60A5FA'],['â‚¹12,450','Cashback pending','#A78BFA']].map(([v,l,c])=>(
+            {[['₹5','Per Best Answer',accent],['15','Coins per 5★','#4ADE80'],['249','Answers this month','#60A5FA'],['₹12,450','Cashback pending','#A78BFA']].map(([v,l,c])=>(
               <div key={l} style={{background:surf,border:`1px solid ${c}22`,borderRadius:9,padding:'8px',textAlign:'center'}}>
                 <p style={{color:c,fontWeight:900,fontSize:15,fontFamily:'Poppins,sans-serif',margin:0}}>{v}</p>
                 <p style={{color:muted,fontSize:8,margin:'2px 0 0'}}>{l}</p>
@@ -62,24 +62,24 @@ export default function MentorSection() {
             ))}
           </div>
           <div style={{background:`${accent}12`,border:`1px solid ${accent}25`,borderRadius:8,padding:'7px 10px'}}>
-            <p style={{color:accent,fontSize:9,fontWeight:700,margin:0}}>Avg rating: 4.9â˜… Â· Top Mentor badge active Â· Cashback auto-transfers July 1</p>
+            <p style={{color:accent,fontSize:9,fontWeight:700,margin:0}}>Avg rating: 4.9★ · Top Mentor badge active · Cashback auto-transfers July 1</p>
           </div>
         </div>
       ),
     },
     {
       title:'Step 3 - Auto Coupon at Every Milestone',
-      desc:'Cross 50 answers â†’ TryIT auto-generates your personal coupon code. Student gets X% off their subscription. You earn the same X% as cashback. Both win. Completely automatic.',
+      desc:'Cross 50 answers → TryIT auto-generates your personal coupon code. Student gets X% off their subscription. You earn the same X% as cashback. Both win. Completely automatic.',
       earn:'10-25% cashback matching student discount',
       preview:(
         <div style={{background:card,borderRadius:12,padding:12,border:`1px solid ${bdr}`}}>
           {[[50,'10%','#60A5FA','ACTIVE'],[100,'15%','#4ADE80','ACTIVE'],[250,'20%',accent,'1 away!'],[500,'25%','#A78BFA','Locked']].map(([ans,pct,c,status])=>(
             <div key={ans} style={{display:'flex',alignItems:'center',gap:8,padding:'7px 9px',borderRadius:9,background:status==='ACTIVE'?`${c}10`:'transparent',border:`1px solid ${status==='ACTIVE'?c+'30':bdr}`,marginBottom:5}}>
               <div style={{width:20,height:20,borderRadius:'50%',background:`${c}20`,border:`1.5px solid ${c}`,display:'flex',alignItems:'center',justifyContent:'center',color:c,fontWeight:900,fontSize:9,flexShrink:0}}>
-                {status==='ACTIVE'?'âœ“':status==='1 away!'?'!':'ðŸ”’'}
+                {status==='ACTIVE'?'✓':status==='1 away!'?'!':'🔒'}
               </div>
               <div style={{flex:1}}>
-                <p style={{color:txt,fontSize:10,fontWeight:700,margin:0}}>{ans} answers â†’ {pct} slab</p>
+                <p style={{color:txt,fontSize:10,fontWeight:700,margin:0}}>{ans} answers → {pct} slab</p>
                 <p style={{color:muted,fontSize:8,margin:'1px 0 0'}}>Student discount = Your cashback = {pct}</p>
               </div>
               <span style={{background:`${c}18`,color:c,fontSize:8,fontWeight:700,padding:'2px 7px',borderRadius:20,flexShrink:0}}>{status}</span>
@@ -95,11 +95,11 @@ export default function MentorSection() {
       preview:(
         <div style={{background:card,borderRadius:12,padding:12,border:`1px solid ${bdr}`}}>
           <p style={{color:muted,fontSize:9,fontWeight:700,margin:'0 0 8px',letterSpacing:'1px'}}>MY CONTENT STORE</p>
-          {[{t:'NEET Biology PYQ Set',pr:'200 coins / â‚¹29',sales:234,earn:'â‚¹677',c:'#4ADE80'},{t:'Endosymbiosis Memory Guide',pr:'Free',sales:1240,earn:'â‚¹0 (reputation)',c:'#60A5FA'},{t:'Biology Complete Notes 2024',pr:'â‚¹49',sales:89,earn:'â‚¹3,492',c:accent}].map((x,i)=>(
+          {[{t:'NEET Biology PYQ Set',pr:'200 coins / ₹29',sales:234,earn:'₹677',c:'#4ADE80'},{t:'Endosymbiosis Memory Guide',pr:'Free',sales:1240,earn:'₹0 (reputation)',c:'#60A5FA'},{t:'Biology Complete Notes 2024',pr:'₹49',sales:89,earn:'₹3,492',c:accent}].map((x,i)=>(
             <div key={i} style={{display:'flex',alignItems:'center',gap:7,padding:'6px 0',borderBottom:`1px solid ${bdr}`}}>
               <div style={{flex:1}}>
                 <p style={{color:txt,fontSize:10,fontWeight:700,margin:0}}>{x.t}</p>
-                <p style={{color:muted,fontSize:8,margin:'1px 0 0'}}>{x.pr} Â· {x.sales} sales</p>
+                <p style={{color:muted,fontSize:8,margin:'1px 0 0'}}>{x.pr} · {x.sales} sales</p>
               </div>
               <span style={{color:'#4ADE80',fontSize:10,fontWeight:700,flexShrink:0}}>{x.earn}</span>
             </div>
@@ -109,18 +109,18 @@ export default function MentorSection() {
     },
     {
       title:'Step 5 - Conduct Paid Classes',
-      desc:'Live classes at â‚¹99-â‚¹199 per student enrollment. Pan-India reach. Teach from your room. Unlimited students per class. You earn 80% of every enrollment.',
-      earn:'â‚¹79-â‚¹159 per enrollment (you keep 80%)',
+      desc:'Live classes at ₹99-₹199 per student enrollment. Pan-India reach. Teach from your room. Unlimited students per class. You earn 80% of every enrollment.',
+      earn:'₹79-₹159 per enrollment (you keep 80%)',
       preview:(
         <div style={{background:card,borderRadius:12,padding:12,border:`1px solid ${bdr}`}}>
           <p style={{color:muted,fontSize:9,fontWeight:700,margin:'0 0 8px',letterSpacing:'1px'}}>MY ACTIVE CLASSES</p>
-          {[{t:'NEET Bio Masterclass - June',e:67,pr:'â‚¹149',earn:'â‚¹9,988',c:'#4ADE80'},{t:'UPSC GS Paper 1 Crash',e:34,pr:'â‚¹199',earn:'â‚¹5,398',c:accent},{t:'SSC CGL Complete Course',e:112,pr:'â‚¹99',earn:'â‚¹8,870',c:'#60A5FA'}].map((cl,i)=>(
+          {[{t:'NEET Bio Masterclass - June',e:67,pr:'₹149',earn:'₹9,988',c:'#4ADE80'},{t:'UPSC GS Paper 1 Crash',e:34,pr:'₹199',earn:'₹5,398',c:accent},{t:'SSC CGL Complete Course',e:112,pr:'₹99',earn:'₹8,870',c:'#60A5FA'}].map((cl,i)=>(
             <div key={i} style={{padding:'7px 9px',borderRadius:9,border:`1px solid ${cl.c}22`,background:`${cl.c}08`,marginBottom:6}}>
               <div style={{display:'flex',justifyContent:'space-between'}}>
                 <p style={{color:txt,fontSize:10,fontWeight:700,margin:0}}>{cl.t}</p>
                 <p style={{color:'#4ADE80',fontSize:10,fontWeight:800,margin:0}}>{cl.earn}</p>
               </div>
-              <p style={{color:muted,fontSize:8,margin:'2px 0 0'}}>{cl.e} students enrolled Â· {cl.pr}/student Â· 80% yours</p>
+              <p style={{color:muted,fontSize:8,margin:'2px 0 0'}}>{cl.e} students enrolled · {cl.pr}/student · 80% yours</p>
             </div>
           ))}
         </div>
@@ -134,7 +134,7 @@ export default function MentorSection() {
         <div style={{background:isDark?`linear-gradient(135deg,${primD},${primary}60)`:primary,borderRadius:12,padding:14,border:`1px solid ${accent}25`}}>
           <p style={{color:'rgba(255,255,255,0.4)',fontSize:8,fontWeight:700,letterSpacing:'1px',margin:'0 0 10px'}}>JULY 2026 PAYOUT - DEEPA NAIR</p>
           <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:7,marginBottom:10}}>
-            {[['â‚¹12,450','Answer Cashback',accent],['â‚¹9,988','Class Revenue','#4ADE80'],['â‚¹3,492','Content Sales','#60A5FA'],['July 1','Auto Payout','#F472B6']].map(([v,l,c])=>(
+            {[['₹12,450','Answer Cashback',accent],['₹9,988','Class Revenue','#4ADE80'],['₹3,492','Content Sales','#60A5FA'],['July 1','Auto Payout','#F472B6']].map(([v,l,c])=>(
               <div key={l} style={{background:'rgba(255,255,255,0.08)',borderRadius:8,padding:'7px',textAlign:'center'}}>
                 <p style={{color:c,fontWeight:900,fontSize:14,fontFamily:'Poppins,sans-serif',margin:0}}>{v}</p>
                 <p style={{color:'rgba(255,255,255,0.4)',fontSize:8,margin:'2px 0 0'}}>{l}</p>
@@ -142,7 +142,7 @@ export default function MentorSection() {
             ))}
           </div>
           <div style={{background:`${accent}18`,border:`1px solid ${accent}30`,borderRadius:8,padding:'6px 10px',textAlign:'center'}}>
-            <p style={{color:accent,fontSize:9,fontWeight:700,margin:0}}>ðŸ’³ deepa@okhdfc Â· KYC Verified âœ… Â· Auto-transfer active</p>
+            <p style={{color:accent,fontSize:9,fontWeight:700,margin:0}}>💳 deepa@okhdfc · KYC Verified ✅ · Auto-transfer active</p>
           </div>
         </div>
       ),
@@ -160,7 +160,7 @@ export default function MentorSection() {
             <span style={{color:accent,fontSize:10,fontWeight:700,flexShrink:0}}>249 / 500</span>
           </div>
           <p style={{color:muted,fontSize:9,margin:'0 0 10px'}}>251 more answers to unlock Institution Partner tier</p>
-          {[['ðŸŽ“','Mentor - Current','Answer doubts Â· Sell content Â· Classes','#4ADE80'],['ðŸ«','Institution Partner','Bulk students Â· Higher revenue Â· Full dashboard',accent]].map(([ic,t,d,c])=>(
+          {[['🎓','Mentor - Current','Answer doubts · Sell content · Classes','#4ADE80'],['🏫','Institution Partner','Bulk students · Higher revenue · Full dashboard',accent]].map(([ic,t,d,c])=>(
             <div key={t} style={{display:'flex',gap:8,padding:'7px 9px',borderRadius:9,background:`${c}08`,border:`1px solid ${c}22`,marginBottom:6}}>
               <span style={{fontSize:18}}>{ic}</span>
               <div><p style={{color:txt,fontSize:10,fontWeight:700,margin:0}}>{t}</p><p style={{color:muted,fontSize:8,margin:'1px 0 0'}}>{d}</p></div>
@@ -175,8 +175,8 @@ export default function MentorSection() {
       earn:null,
       preview:(
         <div style={{background:'rgba(248,113,113,0.06)',border:'1.5px solid rgba(248,113,113,0.25)',borderRadius:12,padding:12}}>
-          <p style={{color:'#F87171',fontWeight:800,fontSize:11,margin:'0 0 10px',fontFamily:'Poppins,sans-serif'}}>ðŸš« Zero Tolerance - AI Detection Active</p>
-          {[['âš ï¸','1st Detection','Warning sent. Answer flagged for review.','#F59E0B'],['â„ï¸','2nd Violation','Account frozen 3 days. Earnings paused.','#60A5FA'],['ðŸ§Š','3rd Violation','14-day suspension. Admin review initiated.','#A78BFA'],['ðŸš«','Repeated','Permanent ban. Earnings withheld.','#F87171']].map(([ic,t,d,c])=>(
+          <p style={{color:'#F87171',fontWeight:800,fontSize:11,margin:'0 0 10px',fontFamily:'Poppins,sans-serif'}}>🚫 Zero Tolerance - AI Detection Active</p>
+          {[['⚠️','1st Detection','Warning sent. Answer flagged for review.','#F59E0B'],['❄️','2nd Violation','Account frozen 3 days. Earnings paused.','#60A5FA'],['🧊','3rd Violation','14-day suspension. Admin review initiated.','#A78BFA'],['🚫','Repeated','Permanent ban. Earnings withheld.','#F87171']].map(([ic,t,d,c])=>(
             <div key={t} style={{display:'flex',gap:8,padding:'6px 0',borderBottom:'1px solid rgba(248,113,113,0.10)'}}>
               <span style={{fontSize:14,flexShrink:0}}>{ic}</span>
               <div><p style={{color:c,fontSize:10,fontWeight:700,margin:0}}>{t}</p><p style={{color:muted,fontSize:9,margin:'1px 0 0'}}>{d}</p></div>
@@ -196,7 +196,7 @@ export default function MentorSection() {
           <p style={{color:txt,fontWeight:700,fontSize:12,margin:'0 0 6px',lineHeight:1.4}}>Why Manipur gets two monsoons - a ready-made doubt-thread starter</p>
           <p style={{color:muted,fontSize:10,margin:'0 0 8px',lineHeight:1.6}}>Post today's story as a discussion prompt. Students who engage earn bonus coins - and you earn mentor engagement credit.</p>
           <div style={{background:surf,borderRadius:8,padding:'7px 10px'}}>
-            <p style={{color:accent,fontSize:9,fontWeight:700,margin:'0 0 3px'}}>?? Linked Exam Question</p>
+            <p style={{color:accent,fontSize:9,fontWeight:700,margin:'0 0 3px'}}>🎯 Linked Exam Question</p>
             <p style={{color:txt,fontSize:10,margin:0}}>Which state experiences both Southwest and Northeast Monsoon?</p>
           </div>
         </div>
@@ -212,7 +212,7 @@ export default function MentorSection() {
 
         <div style={{textAlign:'center',marginBottom:36}}>
           <div style={{display:'inline-flex',alignItems:'center',gap:8,background:`${accent}12`,border:`1px solid ${accent}28`,borderRadius:20,padding:'5px 16px',marginBottom:14}}>
-            <span style={{color:accent,fontSize:11,fontWeight:700,letterSpacing:'1px'}}>ðŸ§‘â€ðŸ« FOR MENTORS</span>
+            <span style={{color:accent,fontSize:11,fontWeight:700,letterSpacing:'1px'}}>🧑‍🏫 FOR MENTORS</span>
           </div>
           <h2 style={{fontFamily:'Poppins,sans-serif',fontWeight:900,fontSize:'clamp(22px,4vw,40px)',color:txt,margin:'0 0 10px'}}>
             Teach From Home. <span style={{color:accent}}>Earn Without Limits.</span>
@@ -244,12 +244,12 @@ export default function MentorSection() {
             <p style={{color:muted,fontSize:14,lineHeight:1.75,margin:'0 0 16px'}}>{CONTENT[tab].desc}</p>
             {CONTENT[tab].earn && (
               <div style={{background:`${accent}12`,border:`1px solid ${accent}28`,borderRadius:12,padding:'10px 14px',marginBottom:20}}>
-                <p style={{color:accent,fontSize:12,fontWeight:700,margin:0}}>ðŸ’° {CONTENT[tab].earn}</p>
+                <p style={{color:accent,fontSize:12,fontWeight:700,margin:0}}>💰 {CONTENT[tab].earn}</p>
               </div>
             )}
             <button onClick={()=>navigate('/register')}
               style={{background:`linear-gradient(135deg,${accent},${accentL})`,border:'none',borderRadius:14,padding:'12px 28px',color:primD,fontWeight:800,fontSize:14,cursor:'pointer',fontFamily:'Poppins,sans-serif'}}>
-              Become a Mentor â†’
+              Become a Mentor →
             </button>
           </div>
           <div style={{background:card,border:`1.5px solid ${accent}20`,borderRadius:18,padding:18,boxShadow:isDark?`0 8px 32px rgba(0,0,0,0.3)`:`0 4px 20px rgba(0,0,0,0.06)`}}>
@@ -259,7 +259,7 @@ export default function MentorSection() {
 
         {/* Earnings summary */}
         <div style={{marginTop:28,background:isDark?`linear-gradient(135deg,${primary}50,${primD}70)`:primary,borderRadius:20,padding:'18px 24px',border:`1px solid ${accent}25`,display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(150px,1fr))',gap:12}}>
-          {[['10% â†” 10%','50 answers slab'],['15% â†” 15%','100 answers slab'],['20% â†” 20%','250 answers slab'],['â‚¹ on 1st','Monthly UPI auto']].map(([v,l])=>(
+          {[['10% ↔ 10%','50 answers slab'],['15% ↔ 15%','100 answers slab'],['20% ↔ 20%','250 answers slab'],['₹ on 1st','Monthly UPI auto']].map(([v,l])=>(
             <div key={l} style={{textAlign:'center',background:'rgba(255,255,255,0.06)',border:`1px solid ${accent}20`,borderRadius:12,padding:'12px 10px'}}>
               <p style={{color:accent,fontFamily:'Poppins,sans-serif',fontWeight:900,fontSize:18,margin:0}}>{v}</p>
               <p style={{color:'rgba(255,255,255,0.45)',fontSize:10,margin:'3px 0 0'}}>{l}</p>
