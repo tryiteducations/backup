@@ -15,7 +15,7 @@ export default function PushManager({ compact = false }) {
     const result = await Notification.requestPermission()
     setPerm(result)
     if (result === 'granted') {
-      // In production: call Firebase getToken() here
+      // In production: integrate with push notification service
       const mockToken = `mock-fcm-${Date.now()}`
       setToken(mockToken)
       localStorage.setItem('fcm_token_mock', mockToken)
