@@ -7,11 +7,10 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
+import { useTheme } from '../../context/ThemeContext'
 import { supabase } from '../../lib/supabase'
 import { getMomentumInfo, hasCompletedDailyChallenge } from '../../lib/gameEngine'
 import { injectGameStyles } from '../../lib/gameJuice.jsx'
-
-const NAVY='#1E3A5F', GOLD='#C9A84C', BG='#F8FAFC'
 
 const TEMPLATE_ROUTES = {
   blitz_quiz:      (id) => id==='gk_blitz' ? '/games/gk-blitz' : id==='word_rush' ? '/games/word-rush' :
@@ -73,12 +72,21 @@ const EXAM_LABELS = { neet:'NEET', jee:'JEE', gate:'GATE', clat:'CLAT', ielts:'I
 export default function GamesHub(){
   const navigate = useNavigate()
   const { user, planTier, coins } = useAuth()
+  const { theme } = useTheme()
   const isAdmin = user?.role === 'admin'
   const [catalog, setCatalog] = useState(MOCK_CATALOG)
   const [filterTag, setFilterTag] = useState('all')
   const [search, setSearch] = useState('')
   const [momentum, setMomentum] = useState(null)
   const [dailyDone, setDailyDone] = useState(false)
+
+  const isDark = theme?.isDark ?? false
+  const accent = theme?.accent ?? '#C9A84C'
+  const primD = theme?.primaryDark ?? '#0F2140'
+  const card = isDark ? 'rgba(255,255,255,0.06)' : '#fff'
+  const bdr = isDark ? 'rgba(255,255,255,0.1)' : '#E2E8F0'
+  const muted = isDark ? 'rgba(255,255,255,0.7)' : '#64748B'
+  const txt = isDark ? '#fff' : '#0F1020'
 
   const isPro = planTier==='pro' || planTier==='ultra'
   const isUltra = planTier==='ultra'

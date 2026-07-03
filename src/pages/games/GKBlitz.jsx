@@ -1,4 +1,4 @@
-﻿// src/pages/games/GKBlitz.jsx - Premium redesign with dopamine mechanics
+// src/pages/games/GKBlitz.jsx - Premium redesign with dopamine mechanics
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'

@@ -440,12 +440,15 @@ export default function StudentDashboard() {
         style={{
           width:sideVisible?240:68,
           minHeight:'100vh',
-          background:`linear-gradient(180deg,${primD} 0%,${primary}dd 60%,${primD} 100%)`,
+          background: `linear-gradient(145deg, ${card}ee, ${primD}99)`,
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
           display:'flex',flexDirection:'column',
           position:'sticky',top:0,height:'100vh',
           transition:'width 0.28s cubic-bezier(0.23,1,0.32,1)',
           zIndex:200,flexShrink:0,
-          boxShadow:`4px 0 32px rgba(0,0,0,0.25),inset -1px 0 0 rgba(255,255,255,0.05)`,
+          borderRight: `1px solid ${bdr}`,
+          boxShadow: `0 10px 30px rgba(0,0,0,0.15), inset -1px 0 0 rgba(255,255,255,0.1)`,
         }}
         className="sidebar-desktop">
 
@@ -600,13 +603,31 @@ export default function StudentDashboard() {
                   boxShadow:active?`0 0 14px ${accent}44`:'none',
                   transition:'all 0.15s',
                 }}>{item.icon}</div>
-                {sideVisible&&(
-                  <span style={{
-                    color:active?accent:atLimit?'#F87171':'rgba(255,255,255,0.88)',
-                    fontSize:12,fontWeight:active?700:400,
-                    transition:'color 0.15s',flex:1,textAlign:'left',
-                    whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis',
-                  }}>{item.label}</span>
+                {sideVisible && (
+                  <div style={{flex:1, textAlign:'left', minWidth:0}}>
+                    <span style={{
+                      color:active?accent:atLimit?'#F87171':'rgba(255,255,255,0.88)',
+                      fontSize:12,fontWeight:active?700:400,
+                      transition:'color 0.15s',
+                      display:'block',
+                      whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis',
+                    }}>{item.label}</span>
+                    {item.purpose && (
+                      <span style={{
+                        color:muted,
+                        fontSize:10,
+                        display:'block',
+                        marginTop:1,
+                        opacity:0.7,
+                        lineHeight:1.2,
+                        whiteSpace:'nowrap',
+                        overflow:'hidden',
+                        textOverflow:'ellipsis'
+                      }}>
+                        {item.purpose}
+                      </span>
+                    )}
+                  </div>
                 )}
                 {sideVisible&&item.limit&&plan==='free'&&(
                   <span style={{
@@ -928,6 +949,81 @@ export default function StudentDashboard() {
                 </button>
               </div>
             )
+          )}
+
+          {/* -- CONCEPT LEARNING WIDGET (World-class interactive teaching UI) -- */}
+          {showWidget('concept') && (
+            <div style={{background:card, border:`1px solid ${bdr}`, borderRadius:18, marginBottom:24, padding:16, boxShadow:isDark ? '0 4px 24px rgba(0,0,0,0.2)' : '0 4px 20px rgba(0,0,0,0.06)'}}>
+              <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:14, paddingBottom:12, borderBottom:`1px solid ${bdr}`}}>
+                <div>
+                  <p style={{color:accent, fontFamily:'Poppins,sans-serif', fontWeight:700, fontSize:13, margin:0, letterSpacing:0.5}}>💡 CONCEPT LEARNING</p>
+                  <p style={{color:txt, fontSize:11, margin:2, opacity:0.8}}>We teach every topic here • Interactive explanations, visuals & instant practice</p>
+                </div>
+                <button 
+                  onClick={()=>navigate('/student/concept')}
+                  style={{background:`linear-gradient(135deg,${accent},${accentL})`, border:'none', borderRadius:10, padding:'6px 16px', color:primD, fontWeight:700, fontSize:11, cursor:'pointer', boxShadow:`0 4px 12px ${accent}30`}}>
+                  Explore All Topics →
+                </button>
+              </div>
+              
+              <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(280px, 1fr))', gap:14}}>
+                {/* Sample from Test Engine screenshot - Polity Amendment */}
+                <div style={{background:isDark?'rgba(255,255,255,0.06)':'#f8fafc', borderRadius:14, padding:16, border:`1px solid ${accent}25`, transition:'all 0.2s'}}
+                  onMouseEnter={e => {e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = `0 12px 28px ${accent}22`}}
+                  onMouseLeave={e => {e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'}}>
+                  <div style={{display:'flex', alignItems:'center', gap:8, marginBottom:10}}>
+                    <span style={{background:'#fef3c7', color:'#b45309', padding:'1px 9px', borderRadius:9999, fontSize:10, fontWeight:700}}>POLITY</span>
+                    <span style={{color:muted, fontSize:10}}>Fundamental Rights</span>
+                  </div>
+                  <p style={{color:txt, fontWeight:600, fontSize:13.5, lineHeight:1.45, marginBottom:14}}>
+                    Which Amendment removed Right to Property from Fundamental Rights?
+                  </p>
+                  <div style={{background:accent+'15', borderLeft:`4px solid ${accent}`, padding:12, borderRadius:8, marginBottom:14}}>
+                    <p style={{color:accent, fontSize:11, fontWeight:700, margin:'0 0 4px'}}>✅ Correct Answer</p>
+                    <p style={{color:txt, fontWeight:700, fontSize:15}}>44th Amendment (1978)</p>
+                    <p style={{color:muted, fontSize:10, marginTop:6, lineHeight:1.3}}>It converted Right to Property into a legal right under Article 300A. This is a high-yield topic for UPSC, SSC & State PSC.</p>
+                  </div>
+                  <button onClick={()=>navigate('/student/test')} style={{width:'100%', background:card, border:`1px solid ${accent}40`, color:accent, fontWeight:700, fontSize:11, padding:'9px', borderRadius:10, cursor:'pointer'}}>
+                    Practice 5 Similar MCQs →
+                  </button>
+                </div>
+
+                {/* Additional concept cards for visual treat & world-class feel */}
+                <div style={{background:isDark?'rgba(255,255,255,0.06)':'#f8fafc', borderRadius:14, padding:16, border:`1px solid ${accent}25`, transition:'all 0.2s'}}
+                  onMouseEnter={e => {e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = `0 12px 28px ${accent}22`}}
+                  onMouseLeave={e => {e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'}}>
+                  <div style={{display:'flex', alignItems:'center', gap:8, marginBottom:10}}>
+                    <span style={{background:'#ecfdf5', color:'#10b981', padding:'1px 9px', borderRadius:9999, fontSize:10, fontWeight:700}}>ECONOMY</span>
+                    <span style={{color:muted, fontSize:10}}>Budget 2026</span>
+                  </div>
+                  <p style={{color:txt, fontWeight:600, fontSize:13.5, lineHeight:1.45, marginBottom:14}}>
+                    What is the target fiscal deficit for FY 2026-27 as per latest budget?
+                  </p>
+                  <div style={{fontSize:32, margin:'8px 0 12px', textAlign:'center', opacity:0.9}}>4.5%</div>
+                  <button onClick={()=>navigate('/student/test')} style={{width:'100%', background:card, border:`1px solid ${accent}40`, color:accent, fontWeight:700, fontSize:11, padding:'9px', borderRadius:10, cursor:'pointer'}}>
+                    Learn with Visuals & Quiz →
+                  </button>
+                </div>
+
+                <div style={{background:isDark?'rgba(255,255,255,0.06)':'#f8fafc', borderRadius:14, padding:16, border:`1px solid ${accent}25`, transition:'all 0.2s'}}
+                  onMouseEnter={e => {e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = `0 12px 28px ${accent}22`}}
+                  onMouseLeave={e => {e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'}}>
+                  <div style={{display:'flex', alignItems:'center', gap:8, marginBottom:10}}>
+                    <span style={{background:'#f0f9ff', color:'#0284c8', padding:'1px 9px', borderRadius:9999, fontSize:10, fontWeight:700}}>SCIENCE</span>
+                    <span style={{color:muted, fontSize:10}}>NCERT Class 10</span>
+                  </div>
+                  <p style={{color:txt, fontWeight:600, fontSize:13.5, lineHeight:1.45, marginBottom:14}}>
+                    Explain the working of an electric motor with diagram
+                  </p>
+                  <div style={{height:68, background:'linear-gradient(145deg,#e0f2fe,#bae6fd)', borderRadius:10, display:'flex', alignItems:'center', justifyContent:'center', fontSize:28, marginBottom:12, color:'#0369a1'}}>
+                    ⚙️
+                  </div>
+                  <button onClick={()=>navigate('/student/concept/science')} style={{width:'100%', background:card, border:`1px solid ${accent}40`, color:accent, fontWeight:700, fontSize:11, padding:'9px', borderRadius:10, cursor:'pointer'}}>
+                    Watch Animated Explanation →
+                  </button>
+                </div>
+              </div>
+            </div>
           )}
 
           {/* -- RECENT TESTS + ANALYTICS ROW -------------------- */}

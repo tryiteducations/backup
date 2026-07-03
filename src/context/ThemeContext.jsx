@@ -38,38 +38,66 @@ function isDarkColor(hex) {
   return getLuminance(hex) < 0.45
 }
 
-// Apply all CSS variables from theme
-  // Apply all CSS variables from theme
+// Re-altered from scratch per feedback: full ambient car-like glows, RGB vars, contrast enforcement, no painted-black surfaces, dynamic per-theme visual treats for every header/box/button/border. Matches GuruHub/dashboard/games requirements.
   function applyThemeToDOM(themeId) {
-    const t = THEMES[themeId] || THEMES[DEFAULT] || Object.values(THEMES)[0] || { bg: '#F8FAFC', surface: '#FFFFFF', text: '#1E293B', textLight: '#64748B', primary: '#2D1B69', primaryDark: '#1E1147', accent: '#F59E0B', accentLight: '#FCD34D', border: '#E2E8F0', success: '#22C55E', error: '#EF4444', warning: '#F59E0B' }
+    const t = THEMES[themeId] || THEMES[DEFAULT] || Object.values(THEMES)[0] || { 
+      primary: '#2D1B69', primaryDark: '#1E1147', accent: '#F59E0B', accentLight: '#FCD34D',
+      background: '#F8FAFC', surface: '#FAFAFA', text: '#0F0A1E', textLight: '#64748B',
+      border: '#E2E8F0', success: '#22C55E', error: '#EF4444', warning: '#F59E0B', isDark: false 
+    }
     if (!t) return
+
     const root = document.documentElement
+    const rgbP = hexToRgb(t.primary) || {r:45, g:27, b:105}
+    const rgbA = hexToRgb(t.accent) || {r:245, g:158, b:11}
+    
+    // Car ambient light glow - multi-layer soft glow that changes with every theme (visual treat)
+    const glowOpacity = t.isDark ? '0.35' : '0.22'
+    const ambientGlow = `0 0 12px rgba(${rgbA.r},${rgbA.g},${rgbA.b},0.45), 0 0 30px rgba(${rgbP.r},${rgbP.g},${rgbP.b},0.25), inset 0 1px 0 rgba(255,255,255,0.15)`
+    const boxGlow = `0 4px 25px -4px rgba(${rgbA.r},${rgbA.g},${rgbA.b},${glowOpacity}), 0 2px 8px -2px rgba(${rgbP.r},${rgbP.g},${rgbP.b},0.15), inset 0 1px 0 rgba(255,255,255,0.2)`
+    
+// Prevent "painted paper" black themes - enforce minimum luminance on surfaces for visibility/contrast (re-altered all dark surfaces in themes.js too)
+    let surface = t.surface
+    let bg = t.background
+    if (t.isDark && getLuminance(surface) < 0.08) {
+      surface = '#1a2332'  // re-altered dark surface with good contrast for left sidebar text/glow
+      bg = '#0f172a'
+    }
+
     const vars = {
-      '--color-primary':       t.primary,
-      '--color-primary-dark':  t.primaryDark,
-      '--color-accent':        t.accent,
-      '--color-accent-light':  t.accentLight,
-      '--color-background':    t.background,
-      '--color-bg':            t.background,
-      '--color-surface':       t.surface,
-      '--color-text':          t.text,
-      '--color-text-light':    t.textLight,
-      '--color-muted':         t.textLight,
-      '--color-border':        t.border,
-      '--color-success':       t.success,
-      '--color-error':         t.error,
-      '--color-warning':       t.warning,
-      '--card-bg':             t.surface,
-      '--card-text':           t.text,
-      '--card-accent':         t.accent,
-      '--heading-color':       t.text,
-      '--subtext-color':       t.textLight,
+      '--color-primary': t.primary,
+      '--color-primary-dark': t.primaryDark,
+      '--color-accent': t.accent,
+      '--color-accent-light': t.accentLight,
+      '--color-background': bg,
+      '--color-bg': bg,
+      '--color-surface': surface,
+      '--color-text': t.text,
+      '--color-text-light': t.textLight,
+      '--color-muted': t.textLight,
+      '--color-border': t.border,
+      '--color-success': t.success,
+      '--color-error': t.error,
+      '--color-warning': t.warning,
+      '--card-bg': surface,
+      '--card-text': t.text,
+      '--card-accent': t.accent,
+      '--heading-color': t.text,
+      '--subtext-color': t.textLight,
+      '--primary-rgb': `${rgbP.r}, ${rgbP.g}, ${rgbP.b}`,
+      '--accent-rgb': `${rgbA.r}, ${rgbA.g}, ${rgbA.b}`,
+      '--ambient-glow': ambientGlow,
+      '--box-glow': boxGlow,
+      '--glass-bg': t.isDark ? 'rgba(15, 23, 42, 0.75)' : 'rgba(255,255,255,0.85)',
     }
     Object.entries(vars).forEach(([key, value]) => {
-      if (value) root.style.setProperty(key, value)
+      if (value !== undefined) root.style.setProperty(key, value)
     })
-    document.body.style.background = t.background
+
+    document.body.style.background = bg
     document.body.style.color = t.text
+    root.classList.toggle('dark', !!t.isDark)
+
     const meta = document.querySelector("meta[name='theme-color']")
     if (meta) meta.setAttribute('content', t.primary)
   }
