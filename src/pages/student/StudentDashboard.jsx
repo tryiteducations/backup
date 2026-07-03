@@ -672,19 +672,7 @@ export default function StudentDashboard() {
             </p>
           </div>
           <div style={{display:'flex',alignItems:'center',gap:8}}>
-            {/* Theme picker */}
-            <button onClick={()=>setShowThemePicker(t=>!t)} style={{
-              background:card,border:`1px solid ${bdr}`,borderRadius:10,
-              padding:'8px 12px',cursor:'pointer',fontSize:12,
-              color:muted,fontWeight:600,display:'flex',alignItems:'center',gap:6,
-              transition:'all 0.15s'}}
-              onMouseEnter={e=>{e.currentTarget.style.border=`1px solid ${accent}40`}}
-              onMouseLeave={e=>{e.currentTarget.style.border=`1px solid ${bdr}`}}>
-              <div style={{width:14,height:14,borderRadius:'50%',
-                background:`linear-gradient(135deg,${accent},${accentL})`}}/>
-              Theme
-            </button>
-            {/* Customize */}
+            {/* Customize (kept, Theme button removed as unwanted per requirements) */}
             <button onClick={()=>setShowCustomize(true)} style={{
               background:card,border:`1px solid ${bdr}`,borderRadius:10,
               width:38,height:38,cursor:'pointer',

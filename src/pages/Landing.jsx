@@ -1,4 +1,4 @@
-﻿// src/pages/Landing.jsx - TryIT Educations
+// src/pages/Landing.jsx - TryIT Educations
 // Professional landing page - Vidya Indigo brand
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -902,59 +902,68 @@ export default function Landing() {
       <ExamTrust/>
       <Features/>
             <section style={{background:B.primary,padding:'72px 24px'}}>
-        <div style={{maxWidth:1000,margin:'0 auto',display:'grid',
-          gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,380px),1fr))',
-          gap:48,alignItems:'center'}}>
-          <div>
-            <span style={{background:'rgba(245,158,11,0.15)',color:B.accent,
-              fontFamily:'Inter,sans-serif',fontSize:12,fontWeight:700,
-              padding:'4px 12px',borderRadius:20,letterSpacing:'1px',
-              display:'inline-block',marginBottom:16}}>
-              🇮🇳 BHARAT PULSE
-            </span>
-            <h2 style={{fontFamily:'Plus Jakarta Sans,sans-serif',fontWeight:800,
-              fontSize:'clamp(24px,3vw,34px)',color:'#fff',
-              margin:'0 0 16px',letterSpacing:'-0.02em'}}>
-              Turn everyday scrolling into exam prep.
-            </h2>
-            <p style={{fontFamily:'Inter,sans-serif',fontSize:16,
-              color:'rgba(255,255,255,0.7)',margin:'0 0 24px',lineHeight:1.75}}>
-              One real India story every day, with a linked exam question attached.
-              Students read it, answer it, and it counts. Mentors use it to spark
-              doubt discussions. Institutions get it delivered automatically to
-              every enrolled student. Families see exactly what their child engaged
-              with today.
-            </p>
-            <button onClick={()=>nav('/bharat-pulse')}
-              style={{background:B.accent,border:'none',borderRadius:12,
-                padding:'13px 26px',color:B.primary,
-                fontFamily:'Inter,sans-serif',fontSize:15,fontWeight:700,
-                cursor:'pointer'}}>
-              See Today's Story →
-            </button>
-          </div>
-          <div style={{background:'rgba(255,255,255,0.06)',borderRadius:20,
-            padding:24,border:'1px solid rgba(255,255,255,0.1)'}}>
-            <p style={{color:B.accent,fontFamily:'Inter,sans-serif',
-              fontSize:11,fontWeight:700,letterSpacing:'1px',margin:'0 0 10px'}}>
-              TODAY'S STORY
-            </p>
-            <p style={{color:'#fff',fontFamily:'Plus Jakarta Sans,sans-serif',
-              fontWeight:700,fontSize:16,margin:'0 0 10px',lineHeight:1.4}}>
-              Why Manipur gets two monsoons
-            </p>
-            <p style={{color:'rgba(255,255,255,0.6)',fontFamily:'Inter,sans-serif',
-              fontSize:13,margin:'0 0 16px',lineHeight:1.7}}>
-              A quick read on the Southwest and Northeast monsoon systems -
-              and why one state gets hit by both.
-            </p>
-            <div style={{background:'rgba(0,0,0,0.2)',borderRadius:10,padding:'12px 14px'}}>
-              <p style={{color:B.accent,fontFamily:'Inter,sans-serif',
-                fontSize:11,fontWeight:700,margin:'0 0 4px'}}>🎯 LINKED QUESTION</p>
-              <p style={{color:'#fff',fontFamily:'Inter,sans-serif',
-                fontSize:13,margin:0}}>
-                Which state experiences both Southwest and Northeast Monsoon?
+        <div style={{maxWidth:1000,margin:'0 auto'}}>
+          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,420px),1fr))',gap:48,alignItems:'center',marginBottom:48}}>
+            <div>
+              <span style={{background:'rgba(245,158,11,0.15)',color:B.accent,
+                fontFamily:'Inter,sans-serif',fontSize:12,fontWeight:700,
+                padding:'4px 12px',borderRadius:20,letterSpacing:'1px',
+                display:'inline-block',marginBottom:16}}>
+                🇮🇳 IN BHARAT PULSE
+              </span>
+              <h2 style={{fontFamily:'Plus Jakarta Sans,sans-serif',fontWeight:800,
+                fontSize:'clamp(28px,3.5vw,42px)',color:'#fff',
+                margin:'0 0 16px',letterSpacing:'-0.02em'}}>
+                Turn everyday scrolling into exam prep.
+              </h2>
+              <p style={{fontFamily:'Inter,sans-serif',fontSize:16,
+                color:'rgba(255,255,255,0.85)',margin:'0 0 24px',lineHeight:1.75}}>
+                One real India story every day, with a linked exam question attached. 
+                Students read it, answer it, and it counts. Mentors use it to spark 
+                doubt discussions. Institutions get it delivered automatically to 
+                every enrolled student. Families see exactly what their child 
+                engaged with today.
               </p>
+              <button onClick={()=>nav('/bharat-pulse')}
+                style={{background:B.accent,border:'none',borderRadius:12,
+                  padding:'13px 26px',color:B.primary,
+                  fontFamily:'Inter,sans-serif',fontSize:15,fontWeight:700,
+                  cursor:'pointer',boxShadow:'0 4px 14px rgba(245,158,11,0.4)'}}>
+                See Today's Story →
+              </button>
+            </div>
+
+            {/* Replaced TODAY'S STORY box with HOW REAL BHARAT PULSE WORKS */}
+            <div style={{background:'rgba(255,255,255,0.08)',borderRadius:20,
+              padding:28,border:'1px solid rgba(255,255,255,0.15)'}}>
+              <p style={{color:B.accent,fontFamily:'Inter,sans-serif',
+                fontSize:13,fontWeight:700,letterSpacing:'2px',marginBottom:20}}>
+                HOW REAL BHARAT PULSE WORKS
+              </p>
+              <div style={{display:'flex',flexDirection:'column',gap:20}}>
+                {[
+                  {num:'01', title:'Daily Real Story', desc:'One verified India story + syllabus-linked exam question published daily by editorial & community.'},
+                  {num:'02', title:'Student Engagement', desc:'Read the story, answer the MCQ. Counts toward daily streak, coins, All-India rank & learning progress.'},
+                  {num:'03', title:'Mentor & Institution Use', desc:'Mentors spark doubt discussions. Institutions auto-deliver to every enrolled student via dashboard.'},
+                  {num:'04', title:'Family Transparency', desc:'Parents track exactly what their child read, answered, and learned today. Full visibility & reports.'},
+                ].map((step,i) => (
+                  <div key={i} style={{display:'flex',gap:16,alignItems:'flex-start'}}>
+                    <div style={{minWidth:36,height:36,background:'rgba(245,158,11,0.25)',borderRadius:'50%',
+                      display:'flex',alignItems:'center',justifyContent:'center',color:B.accent,
+                      fontWeight:700,fontSize:14,flexShrink:0,border:'2px solid rgba(245,158,11,0.4)'}}>
+                      {step.num}
+                    </div>
+                    <div style={{flex:1}}>
+                      <p style={{color:'#fff',fontWeight:700,fontSize:15,margin:'0 0 6px',letterSpacing:'-0.01em'}}>{step.title}</p>
+                      <p style={{color:'rgba(255,255,255,0.75)',fontSize:13.5,lineHeight:1.55,margin:0}}>{step.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div style={{marginTop:28,paddingTop:20,borderTop:'1px solid rgba(255,255,255,0.2)',
+                fontSize:12,color:'rgba(255,255,255,0.65)',textAlign:'center',fontStyle:'italic'}}>
+                Builds real knowledge • Unlocks premium themes • Feeds All-India rankings
+              </div>
             </div>
           </div>
         </div>
