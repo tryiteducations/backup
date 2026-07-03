@@ -84,21 +84,24 @@ function FullScreen({ title, onClose, children, accent }) {
 }
 
 // -- Nav config ----------------------------------------------------
+// Updated NAV with purposes (for subtitles), Concept Learning section ("we teach every topic here"), 
+// glassmorphism-friendly icons, fixed Battle Hall to actual hall creation flow (/student/hall/create)
 const NAV = [
-  {id:'home',      icon:'🏠',label:'Home',       path:'/student'},
-  {id:'test',      icon:'📝',label:'Tests',       path:'/student/test',      limit:'tests'},
-  {id:'rank',      icon:'🏆',label:'Rank',        path:'/student/rank'},
-  {id:'launchpad', icon:'🚀',label:'Launchpad',   path:'/student/launchpad'},
-  {id:'games',     icon:'🎮',label:'Games',        path:'/student/games',     limit:'games'},
-  {id:'hall',      icon:'⚔️',label:'Battle Hall',  path:'/student/hall'},
-  {id:'tournament',icon:'🏟️',label:'Tournaments', path:'/student/tournament'},
-  {id:'guruhub',   icon:'🤝',label:'GuruHub',     path:'/student/guruhub',   limit:'doubts'},
-  {id:'classroom', icon:'📚',label:'Classroom',   path:'/student/classroom'},
-  {id:'bookmarks', icon:'🔖',label:'Bookmarks',   path:'/student/bookmarks'},
-  {id:'pulse',     icon:'🇮🇳',label:'Bharat Pulse',path:'/student/pulse'},
-  {id:'analytics', icon:'📊',label:'Analytics',   path:'/student/analytics'},
-  {id:'career',    icon:'🧭',label:'Career AI', examBoard: true,   path:'/student/career'},
-  {id:'community', icon:'💬',label:'Community',   path:'/student/community'},
+  {id:'home',      icon:'🏠',label:'Home',       purpose:'Dashboard overview & streaks', path:'/student'},
+  {id:'test',      icon:'📝',label:'Tests',       purpose:'Quick, subject & full mocks', path:'/student/test', limit:'tests'},
+  {id:'rank',      icon:'🏆',label:'Rank',        purpose:'All-India live leaderboard', path:'/student/rank'},
+  {id:'launchpad', icon:'🚀',label:'Launchpad',   purpose:'Daily topics & weekly tests', path:'/student/launchpad'},
+  {id:'concept',   icon:'💡',label:'Concept Learning', purpose:'We teach every topic here', path:'/student/concept'},
+  {id:'games',     icon:'🎮',label:'Games',        purpose:'Stress-busting skill builders', path:'/student/games', limit:'games'},
+  {id:'hall',      icon:'⚔️',label:'Battle Hall',  purpose:'Create or join team vs team halls', path:'/student/hall/create'},
+  {id:'tournament',icon:'🏟️',label:'Tournaments', purpose:'Compete live with prizes', path:'/student/tournament'},
+  {id:'guruhub',   icon:'🤝',label:'GuruHub',     purpose:'Real mentors • Ask doubts', path:'/student/guruhub', limit:'doubts'},
+  {id:'classroom', icon:'📚',label:'Classroom',   purpose:'PDFs, planner, eBooks & notes', path:'/student/classroom'},
+  {id:'bookmarks', icon:'🔖',label:'Bookmarks',   purpose:'Saved questions & materials', path:'/student/bookmarks'},
+  {id:'analytics', icon:'📊',label:'Analytics',   purpose:'Performance trends & insights', path:'/student/analytics'},
+  {id:'career',    icon:'🧭',label:'Career AI',   purpose:'Find best exam & study track for you', examBoard: true, path:'/student/career'},
+  {id:'pulse',     icon:'🇮🇳',label:'Bharat Pulse',purpose:'Daily current affairs stories', path:'/student/pulse'},
+  {id:'community', icon:'💬',label:'Community',   purpose:'Connect with peers & family', path:'/student/community'},
 ]
 
 const FREE_LIMITS = {tests:3,games:3,doubts:3}
@@ -111,6 +114,7 @@ const BASE_THEMES = [
 ]
 
 // Default visible widgets (user can toggle)
+// Updated with Concept Learning per requirements (teaches every topic interactively)
 const ALL_WIDGETS = [
   {id:'stats',      label:'Stats Row',         default:true},
   {id:'actions',    label:'Quick Actions',     default:true},
@@ -121,6 +125,7 @@ const ALL_WIDGETS = [
   {id:'tournament', label:'Tournaments',       default:true},
   {id:'mentor',     label:'Mentor Card',       default:true},
   {id:'analytics',  label:'Analytics',         default:true},
+  {id:'concept',    label:'Concept Learning',  default:true, purpose:'We teach every topic here with interactive explanations, visuals & practice'},
   {id:'pulse',      label:'Bharat Pulse',      default:true},
   {id:'community',  label:'Community',         default:false},
 ]
@@ -268,7 +273,7 @@ export default function StudentDashboard() {
     :NAV.find(n=>location.pathname.startsWith(n.path)&&n.path!=='/student')?.id||'home'
 
   return(
-    <div style={{display:'flex',minHeight:'100vh',
+    <div className={sidebarOpen ? 'sidebar-open' : ''} style={{display:'flex',minHeight:'100vh',
       background:isDark?`radial-gradient(ellipse 80% 60% at 20% -10%,${primary}40,transparent 60%),${primD}`:'#F0F4F8',
       fontFamily:'Inter,sans-serif',position:'relative'}}>
 
