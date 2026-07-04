@@ -206,6 +206,20 @@ const PRO_THEMES = [
     accent: '#EF4444', accentLight: '#FCA5A5',
     bg: '#0D1117', surface: '#161B22', isDark: true,
   }),
+  buildTheme({
+    id: 'almond-light', name: 'Almond Light', emoji: '🌰', family: 'almond', mode: 'light',
+    category: 'Pro', tier: 'pro', plan: 'pro', instant: true,
+    primary: '#7C4A1E', primaryDark: '#5C3714',
+    accent: '#C2691E', accentLight: '#E8A25C',
+    bg: '#F5EBDD', surface: '#FFFCF7', isDark: false,
+  }),
+  buildTheme({
+    id: 'almond-dark', name: 'Almond Dark', emoji: '🌰', family: 'almond', mode: 'dark',
+    category: 'Pro', tier: 'pro', plan: 'pro', instant: true,
+    primary: '#E8A25C', primaryDark: '#C2691E',
+    accent: '#D97706', accentLight: '#FBBF77',
+    bg: '#0D1117', surface: '#161B22', isDark: true,
+  }),
 ]
 
 // ── Export ────────────────────────────────────────────────────
@@ -222,6 +236,7 @@ export const THEME_FAMILIES = [
   { id: 'rose',    label: 'Rose',    tier: 'pro' },
   { id: 'slate',   label: 'Slate',   tier: 'pro' },
   { id: 'crimson', label: 'Crimson', tier: 'pro' },
+  { id: 'almond',  label: 'Almond',  tier: 'pro' },
 ]
 
 export const THEME_CATEGORIES = [
