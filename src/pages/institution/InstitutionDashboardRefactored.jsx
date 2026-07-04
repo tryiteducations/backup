@@ -5,6 +5,7 @@ import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
 import DashboardLayout from '../../components/layout/DashboardLayout'
 import { doubtSystem, paperSystem, notificationSystem } from '../../lib/dataInterconnect'
+import { supabase } from '../../lib/supabase'
 
 const NAV = [
   { icon: '🏠', label: 'Dashboard', path: '/institution' },
@@ -53,6 +54,7 @@ export default function InstitutionDashboardRefactored() {
   })
   const [loading, setLoading] = useState(true)
   const [customization, setCustomization] = useState({})
+  const [sessionLogs, setSessionLogs] = useState([])
 
   useEffect(() => {
     loadDashboardData()
@@ -74,6 +76,20 @@ export default function InstitutionDashboardRefactored() {
         { id: 3, name: 'Class 10 Science', exam: 'School Board', mentors: 1, students: 35, fee: 0 },
         { id: 4, name: 'TNPSC Tamil Nadu', exam: 'TNPSC Group 1', mentors: 2, students: 420, fee: 400 },
       ])
+
+      // Real session-start logs from students
+      try {
+        const { data: sessions } = await supabase
+          .from('session_logs')
+          .select('*')
+          .eq('mentor_id', user?.id)
+          .order('started_at', { ascending: false })
+          .limit(5)
+        setSessionLogs(sessions || [])
+      } catch (e) {
+        console.log('Session logs not available yet:', e)
+        setSessionLogs([])
+      }
     } catch (err) {
       console.error('Error loading dashboard data:', err)
     } finally {
@@ -226,6 +242,9 @@ export default function InstitutionDashboardRefactored() {
           <h2 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 700, color: p }}>Recent Activity</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
             {[
+              ...sessionLogs.map(log => ({
+                icon: '🚀', text: 'A student started a session', time: new Date(log.started_at).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }),
+              })),
               { icon: '📝', text: 'Priya R. submitted homework in UPSC Morning Batch', time: '10m ago' },
               { icon: '👤', text: 'New student Karthik M. joined SSC CGL Evening', time: '25m ago' },
               { icon: '📋', text: 'Mentor Suresh posted new assignment in Hall 2', time: '1h ago' },

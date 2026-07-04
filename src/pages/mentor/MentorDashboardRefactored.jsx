@@ -6,6 +6,7 @@ import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
 import DashboardLayout from '../../components/layout/DashboardLayout'
 import { doubtSystem, paperSystem, notificationSystem } from '../../lib/dataInterconnect'
+import { supabase } from '../../lib/supabase'
 
 const NAV = [
   { icon: '🏠', label: 'Dashboard', path: '/mentor-hub' },
@@ -50,6 +51,7 @@ export default function MentorDashboardRefactored() {
   const [earnings, setEarnings] = useState({ thisMonth: 0, total: 0 })
   const [rating, setRating] = useState(0)
   const [pendingCount, setPendingCount] = useState(0)
+  const [sessionLogs, setSessionLogs] = useState([])
   const [loading, setLoading] = useState(true)
   const [customization, setCustomization] = useState({})
 
@@ -77,6 +79,20 @@ export default function MentorDashboardRefactored() {
 
       setEarnings({ thisMonth: 3840, total: 12540 })
       setRating(4.8)
+
+      // Recent sessions students have started with this mentor
+      try {
+        const { data: sessions } = await supabase
+          .from('session_logs')
+          .select('*')
+          .eq('mentor_id', user?.id)
+          .order('started_at', { ascending: false })
+          .limit(10)
+        setSessionLogs(sessions || [])
+      } catch (e) {
+        console.log('Session logs not available yet:', e)
+        setSessionLogs([])
+      }
     } catch (err) {
       console.error('Error loading dashboard data:', err)
     } finally {
@@ -205,6 +221,24 @@ export default function MentorDashboardRefactored() {
           )}
         </div>
       )}
+
+      {/* Recent Sessions - students who tapped "Start Session" */}
+      <div style={{ background: c, border: `1px solid ${b}`, borderRadius: 12, padding: 20, marginTop: 20 }}>
+        <h2 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 700, color: p }}>🚀 Recent Sessions</h2>
+        {sessionLogs.length > 0 ? (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {sessionLogs.map((log) => (
+              <div key={log.id} style={{ background: bg, padding: '10px 14px', borderRadius: 10,
+                borderLeft: `3px solid ${a}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ color: t, fontSize: 13, fontWeight: 600 }}>Student session started</span>
+                <span style={{ color: m, fontSize: 11 }}>{new Date(log.started_at).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' })}</span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p style={{ color: m, fontSize: 13 }}>No sessions started yet - this shows the moment a student taps "Start Session" on your profile.</p>
+        )}
+      </div>
 
       {/* Active Students */}
       {customization['active_students'] !== false && (
