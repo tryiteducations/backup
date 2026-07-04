@@ -11,6 +11,7 @@ const NAV = [
   { icon: '🏛️', label: 'Halls', path: '/institution/halls' },
   { icon: '👨‍🏫', label: 'Mentors', path: '/institution/mentors' },
   { icon: '📚', label: 'Homework', path: '/institution/homework' },
+  { icon: '💡', label: 'Concept Videos', path: '/concept-videos' },
   { icon: '📋', label: 'Exam Board', path: '/exam-board' },
   { icon: '👥', label: 'Students', path: '/institution/students' },
   { icon: '💰', label: 'Revenue', path: '/institution/revenue' },

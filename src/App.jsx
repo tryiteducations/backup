@@ -131,6 +131,7 @@ const MentorCommunity  = lazy(() => import('./pages/mentor/MentorCommunity'))
 const MentorSettings   = lazy(() => import('./pages/mentor/MentorSettings'))
 const MentorStudents = lazy(() => import('./pages/mentor/MentorStudents'))
 const MentorHub      = lazy(() => import('./pages/mentor/MentorHub'))
+const PostConceptVideo = lazy(() => import('./pages/guru/PostConceptVideo'))
 const MentorDashboardRefactored = lazy(() => import('./pages/mentor/MentorDashboardRefactored'))
 const CashbackCenter = lazy(() => import('./pages/mentor/CashbackCenter'))
 const MentorAnalytics= lazy(() => import('./pages/mentor/MentorAnalytics'))
@@ -339,6 +340,7 @@ function ThemedApp() {
 
                 {/* MENTOR HUB */}
                 <Route path="/mentor-hub/materials"   element={<RoleGuard allowedRoles={['mentor','institution']}><MentorMaterials/></RoleGuard>} />
+                <Route path="/concept-videos"          element={<RoleGuard allowedRoles={['mentor','institution']}><PostConceptVideo/></RoleGuard>} />
                 <Route path="/mentor-hub/community"   element={<RoleGuard allowedRoles={['mentor','institution']}><MentorCommunity/></RoleGuard>} />
                 <Route path="/mentor-hub/settings"    element={<RoleGuard allowedRoles={['mentor','institution']}><MentorSettings/></RoleGuard>} />
                 <Route path="/mentor-hub/students"    element={<RoleGuard allowedRoles={['mentor','institution']}><MentorStudents/></RoleGuard>} />
