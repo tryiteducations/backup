@@ -6,3 +6,4 @@ dist/
 src_today_backup/
 .aider*
 *.py
+.env

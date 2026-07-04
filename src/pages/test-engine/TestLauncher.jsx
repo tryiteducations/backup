@@ -4,11 +4,12 @@
 import { useState } from 'react'
 import { useNavigate }   from 'react-router-dom'
 import { useAuth }       from '../../context/AuthContext'
+import { useTheme }      from '../../context/ThemeContext'
 import SmartExamSearch   from '../../components/SmartExamSearch'
 
-const NAVY = '#1E3A5F'
-const GOLD = '#C9A84C'
-const BG   = '#F8FAFC'
+const DEFAULT_NAVY = '#1E3A5F'
+const DEFAULT_GOLD = '#C9A84C'
+const DEFAULT_BG   = '#F8FAFC'
 
 const TEST_MODES = [
   {
@@ -47,12 +48,23 @@ const QUICK_TOPICS = [
 export default function TestLauncher() {
   const navigate = useNavigate()
   const { user, planTier, canAccess } = useAuth()
+  const { theme } = useTheme()
 
   const [mode,       setMode]       = useState('practice')
   const [count,      setCount]      = useState(20)
   const [difficulty, setDifficulty] = useState('adaptive')
   const [examFilter, setExamFilter] = useState(null)
   const [tab,        setTab]        = useState('topic') // 'topic' | 'exam' | 'pyq'
+
+  // Theme variables
+  const NAVY = theme?.primaryDark || DEFAULT_NAVY
+  const GOLD = theme?.accent || DEFAULT_GOLD
+  const BG = theme?.isDark ? '#0F1020' : DEFAULT_BG
+  const cardBg = theme?.isDark ? 'rgba(255,255,255,0.06)' : '#fff'
+  const borderColor = theme?.isDark ? 'rgba(255,255,255,0.1)' : '#E2E8F0'
+  const textColor = theme?.isDark ? '#fff' : '#0F1020'
+  const mutedText = theme?.isDark ? 'rgba(255,255,255,0.7)' : '#64748B'
+  const mutedBorder = theme?.isDark ? 'rgba(255,255,255,0.1)' : '#E2E8F0'
 
   const enrolled = user?.exams || [
     { id:'ssc_cgl_t1',  name:'SSC CGL Tier 1',   icon:'📋' },
@@ -95,7 +107,7 @@ export default function TestLauncher() {
     <div style={{ minHeight:'100vh', background:BG, fontFamily:'Inter,sans-serif', paddingBottom:80 }}>
 
       {/* -- HEADER -------------------------------------------------------- */}
-      <div style={{ background:`linear-gradient(135deg,${NAVY},#0F2140)`, padding:'16px 16px 20px' }}>
+      <div style={{ background:`linear-gradient(135deg,${NAVY},${theme?.primaryDark || '#0F2140'})`, padding:'16px 16px 20px' }}>
         <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:14 }}>
           <button onClick={() => navigate('/')}
             style={{ background:'rgba(255,255,255,0.1)', border:'none', color:'#fff',
@@ -137,7 +149,7 @@ export default function TestLauncher() {
       <div style={{ padding:'0 16px', maxWidth:480, margin:'0 auto' }}>
 
         {/* -- TEST MODE --------------------------------------------------- */}
-        <p style={{ fontSize:11, fontWeight:700, color:'#94A3B8', letterSpacing:1.2,
+        <p style={{ fontSize:11, fontWeight:700, color:mutedText, letterSpacing:1.2,
           textTransform:'uppercase', marginTop:18, marginBottom:10 }}>
           SELECT MODE
         </p>
@@ -146,8 +158,8 @@ export default function TestLauncher() {
             <button key={m.id}
               onClick={() => setMode(m.id)}
               style={{ display:'flex', alignItems:'center', gap:12, padding:'12px 14px',
-                borderRadius:14, border:`2px solid ${mode===m.id?m.color:m.border}`,
-                background: mode===m.id ? m.bg : '#fff', cursor:'pointer',
+                borderRadius:14, border:`2px solid ${mode===m.id?m.color:mutedBorder}`,
+                background: mode===m.id ? m.bg : cardBg, cursor:'pointer',
                 textAlign:'left', position:'relative', overflow:'hidden' }}>
               {m.badge && (
                 <span style={{ position:'absolute', top:8, right:10, fontSize:9,
@@ -158,14 +170,14 @@ export default function TestLauncher() {
               )}
               <span style={{ fontSize:22, flexShrink:0 }}>{m.emoji}</span>
               <div style={{ flex:1 }}>
-                <p style={{ fontSize:14, fontWeight:700, color:mode===m.id?m.color:'var(--color-text,#1E293B)', margin:0 }}>
+                <p style={{ fontSize:14, fontWeight:700, color:mode===m.id?m.color:textColor, margin:0 }}>
                   {m.label}
                 </p>
-                <p style={{ fontSize:11, color:'var(--color-text-light,#64748B)', margin:'2px 0 0', lineHeight:1.4 }}>
+                <p style={{ fontSize:11, color:mutedText, margin:'2px 0 0', lineHeight:1.4 }}>
                   {m.desc}
                 </p>
               </div>
-              <span style={{ fontSize:10, color:'#94A3B8', flexShrink:0, whiteSpace:'nowrap' }}>
+              <span style={{ fontSize:10, color:mutedText, flexShrink:0, whiteSpace:'nowrap' }}>
                 {m.time}
               </span>
               {mode===m.id && (
@@ -177,7 +189,7 @@ export default function TestLauncher() {
         </div>
 
         {/* -- QUESTION COUNT ------------------------------------------------- */}
-        <p style={{ fontSize:11, fontWeight:700, color:'#94A3B8', letterSpacing:1.2,
+        <p style={{ fontSize:11, fontWeight:700, color:mutedText, letterSpacing:1.2,
           textTransform:'uppercase', marginTop:18, marginBottom:8 }}>
           NUMBER OF QUESTIONS
         </p>
@@ -187,16 +199,16 @@ export default function TestLauncher() {
               onClick={() => setCount(n)}
               style={{ flex:1, padding:'10px 0', borderRadius:10, cursor:'pointer',
                 fontWeight:700, fontSize:13,
-                background: count===n ? NAVY : '#fff',
-                color:      count===n ? '#fff' : '#64748B',
-                border: count===n ? 'none' : '1.5px solid #E2E8F0' }}>
+                background: count===n ? NAVY : cardBg,
+                color:      count===n ? '#fff' : mutedText,
+                border: count===n ? 'none' : `1.5px solid ${borderColor}` }}>
               {n}
             </button>
           ))}
         </div>
 
         {/* -- DIFFICULTY ----------------------------------------------------- */}
-        <p style={{ fontSize:11, fontWeight:700, color:'#94A3B8', letterSpacing:1.2,
+        <p style={{ fontSize:11, fontWeight:700, color:mutedText, letterSpacing:1.2,
           textTransform:'uppercase', marginTop:18, marginBottom:8 }}>
           DIFFICULTY
         </p>
@@ -211,16 +223,16 @@ export default function TestLauncher() {
               onClick={() => setDifficulty(d.id)}
               style={{ flex:1, padding:'8px 0', borderRadius:10, cursor:'pointer',
                 fontWeight:600, fontSize:11, whiteSpace:'nowrap',
-                background: difficulty===d.id ? NAVY : '#fff',
-                color:      difficulty===d.id ? '#fff' : '#64748B',
-                border: difficulty===d.id ? 'none' : '1.5px solid #E2E8F0' }}>
+                background: difficulty===d.id ? NAVY : cardBg,
+                color:      difficulty===d.id ? '#fff' : mutedText,
+                border: difficulty===d.id ? 'none' : `1.5px solid ${borderColor}` }}>
               {d.label}
             </button>
           ))}
         </div>
 
         {/* -- TOPIC / EXAM / PYQ TABS ---------------------------------------- */}
-        <div style={{ display:'flex', marginTop:20, borderBottom:'1px solid #E2E8F0' }}>
+        <div style={{ display:'flex', marginTop:20, borderBottom:`1px solid ${borderColor}` }}>
           {[
             { id:'topic', label:'By Topic'    },
             { id:'exam',  label:'By Exam'     },
@@ -229,7 +241,7 @@ export default function TestLauncher() {
             <button key={t.id} onClick={() => setTab(t.id)}
               style={{ flex:1, padding:'10px 0', cursor:'pointer',
                 background:'transparent', fontWeight:700, fontSize:12,
-                color: tab===t.id ? NAVY : '#94A3B8',
+                color: tab===t.id ? NAVY : mutedText,
                 borderBottom: tab===t.id ? `2.5px solid ${GOLD}` : '2.5px solid transparent' }}>
               {t.label}
             </button>
@@ -239,19 +251,19 @@ export default function TestLauncher() {
         {/* TOPIC TAB */}
         {tab === 'topic' && (
           <div>
-            <p style={{ fontSize:11, color:'var(--color-text-light,#64748B)', marginTop:12, marginBottom:10 }}>
+            <p style={{ fontSize:11, color:mutedText, marginTop:12, marginBottom:10 }}>
               Quick topic-wise practice - 20 questions, instant feedback:
             </p>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:8 }}>
               {QUICK_TOPICS.map(t => (
                 <button key={t.id} onClick={() => startTopicTest(t.id)}
                   style={{ display:'flex', alignItems:'center', gap:10, padding:'12px',
-                    background:'#fff', borderRadius:12, border:'1.5px solid #E2E8F0',
+                    background:cardBg, borderRadius:12, border:`1.5px solid ${borderColor}`,
                     cursor:'pointer', textAlign:'left' }}>
                   <span style={{ fontSize:20 }}>{t.emoji}</span>
                   <div>
-                    <p style={{ fontSize:12, fontWeight:700, color:'var(--color-text,#1E293B)', margin:0 }}>{t.name}</p>
-                    <p style={{ fontSize:10, color:'#94A3B8', margin:0 }}>{t.subject}</p>
+                    <p style={{ fontSize:12, fontWeight:700, color:textColor, margin:0 }}>{t.name}</p>
+                    <p style={{ fontSize:10, color:mutedText, margin:0 }}>{t.subject}</p>
                   </div>
                 </button>
               ))}
@@ -262,18 +274,18 @@ export default function TestLauncher() {
         {/* EXAM TAB */}
         {tab === 'exam' && (
           <div>
-            <p style={{ fontSize:11, color:'var(--color-text-light,#64748B)', marginTop:12, marginBottom:10 }}>
+            <p style={{ fontSize:11, color:mutedText, marginTop:12, marginBottom:10 }}>
               Your enrolled exams - full mock with PYQ-aligned weightage:
             </p>
             {enrolled.map(exam => (
-              <div key={exam.id} style={{ background:'#fff', borderRadius:12, padding:'12px 14px',
-                marginBottom:8, border:'1.5px solid #E2E8F0' }}>
+              <div key={exam.id} style={{ background:cardBg, borderRadius:12, padding:'12px 14px',
+                marginBottom:8, border:`1.5px solid ${borderColor}` }}>
                 <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
                   <div style={{ display:'flex', alignItems:'center', gap:10 }}>
                     <span style={{ fontSize:20 }}>{exam.icon}</span>
                     <div>
-                      <p style={{ fontSize:13, fontWeight:700, color:'var(--color-text,#1E293B)', margin:0 }}>{exam.name}</p>
-                      <p style={{ fontSize:10, color:'#94A3B8', margin:0 }}>PYQ-aligned · 10% stricter time</p>
+                      <p style={{ fontSize:13, fontWeight:700, color:textColor, margin:0 }}>{exam.name}</p>
+                      <p style={{ fontSize:10, color:mutedText, margin:0 }}>PYQ-aligned · 10% stricter time</p>
                     </div>
                   </div>
                   <button onClick={() => startExamMock(exam.id, exam.name)}
@@ -285,8 +297,8 @@ export default function TestLauncher() {
               </div>
             ))}
             <button onClick={() => navigate('/exams')}
-              style={{ width:'100%', padding:'12px', background:'#F1F5F9', color:'var(--color-text-light,#64748B)',
-                border:'1.5px solid #E2E8F0', borderRadius:12, fontSize:13, cursor:'pointer', fontWeight:600 }}>
+              style={{ width:'100%', padding:'12px', background:theme?.isDark ? 'rgba(255,255,255,0.05)' : '#F1F5F9', color:mutedText,
+                border:`1.5px solid ${borderColor}`, borderRadius:12, fontSize:13, cursor:'pointer', fontWeight:600 }}>
               + Enroll in More Exams
             </button>
           </div>
@@ -295,24 +307,24 @@ export default function TestLauncher() {
         {/* PYQ TAB */}
         {tab === 'pyq' && (
           <div>
-            <div style={{ background:'linear-gradient(135deg,#FFF7E6,#FFFBF0)',
+            <div style={{ background:theme?.isDark ? 'rgba(196, 181, 253, 0.1)' : 'linear-gradient(135deg,#FFF7E6,#FFFBF0)',
               border:`1px solid ${GOLD}`, borderRadius:12, padding:12, marginTop:12, marginBottom:12 }}>
-              <p style={{ fontSize:13, fontWeight:700, color:'#92400E', margin:'0 0 4px' }}>
+              <p style={{ fontSize:13, fontWeight:700, color:theme?.isDark ? GOLD : '#92400E', margin:'0 0 4px' }}>
                 📄 Previous Year Questions (PYQ)
               </p>
-              <p style={{ fontSize:12, color:'#78350F', margin:0, lineHeight:1.6 }}>
+              <p style={{ fontSize:12, color:theme?.isDark ? 'rgba(255,255,255,0.7)' : '#78350F', margin:0, lineHeight:1.6 }}>
                 Real questions from past papers. Free users get unlimited PYQ access - no limit on these.
               </p>
             </div>
             {enrolled.map(exam => (
-              <div key={exam.id} style={{ background:'#fff', borderRadius:12, padding:'12px 14px',
-                marginBottom:8, border:'1.5px solid #E2E8F0' }}>
+              <div key={exam.id} style={{ background:cardBg, borderRadius:12, padding:'12px 14px',
+                marginBottom:8, border:`1.5px solid ${borderColor}` }}>
                 <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
                   <div style={{ display:'flex', alignItems:'center', gap:10 }}>
                     <span style={{ fontSize:20 }}>{exam.icon}</span>
                     <div>
-                      <p style={{ fontSize:13, fontWeight:700, color:'var(--color-text,#1E293B)', margin:0 }}>{exam.name}</p>
-                      <p style={{ fontSize:10, color:'var(--color-text-light,#64748B)', margin:0 }}>PYQ 2019-2024 · 500+ questions</p>
+                      <p style={{ fontSize:13, fontWeight:700, color:textColor, margin:0 }}>{exam.name}</p>
+                      <p style={{ fontSize:10, color:mutedText, margin:0 }}>PYQ 2019-2024 · 500+ questions</p>
                     </div>
                   </div>
                   <button onClick={() => startPYQ(exam.id)}
@@ -330,24 +342,24 @@ export default function TestLauncher() {
         <div style={{ marginTop:20 }}>
           {!access.allowed && !access.canByCoin ? (
             <div>
-              <div style={{ background:'#FEF2F2', border:'1.5px solid #FECACA',
+              <div style={{ background:theme?.isDark ? 'rgba(239, 68, 68, 0.1)' : '#FEF2F2', border:`1.5px solid ${theme?.isDark ? 'rgba(239, 68, 68, 0.3)' : '#FECACA'}`,
                 borderRadius:12, padding:'12px 14px', marginBottom:10, textAlign:'center' }}>
-                <p style={{ fontSize:13, fontWeight:700, color:'#991B1B', margin:'0 0 4px' }}>
+                <p style={{ fontSize:13, fontWeight:700, color:theme?.isDark ? '#FCA5A5' : '#991B1B', margin:'0 0 4px' }}>
                   🔒 Daily Test Limit Reached (5/5)
                 </p>
-                <p style={{ fontSize:12, color:'#DC2626', margin:0 }}>
+                <p style={{ fontSize:12, color:theme?.isDark ? '#FCA5A5' : '#DC2626', margin:0 }}>
                   Upgrade to Pro for unlimited tests
                 </p>
               </div>
               <button onClick={() => navigate('/pro')}
-                style={{ width:'100%', padding:'14px', background:`linear-gradient(135deg,${GOLD},#E8C96A)`,
+                style={{ width:'100%', padding:'14px', background:`linear-gradient(135deg,${GOLD},${theme?.accentLight || '#E8C96A'})`,
                   color:NAVY, border:'none', borderRadius:14, fontWeight:800, fontSize:15, cursor:'pointer' }}>
                 Upgrade to Pro - Unlimited Tests →
               </button>
             </div>
           ) : (
             <button onClick={() => startTest()}
-              style={{ width:'100%', padding:'16px', background:`linear-gradient(135deg,${NAVY},#0F2140)`,
+              style={{ width:'100%', padding:'16px', background:`linear-gradient(135deg,${NAVY},${theme?.primaryDark || '#0F2140'})`,
                 color:'#fff', border:'none', borderRadius:14, fontWeight:800, fontSize:16, cursor:'pointer',
                 display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}>
               <span style={{ fontSize:20 }}>

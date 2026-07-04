@@ -1,4 +1,4 @@
-﻿import { lazy, Suspense, useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { ThemeProvider } from './context/ThemeContext'
 import { ToastProvider } from './context/ToastContext'
@@ -7,6 +7,12 @@ import ImpersonationBanner from './components/ImpersonationBanner'
 import { AnimatePresence } from 'framer-motion'
 import MotionLayer from './components/global/MotionLayer'
 import NotificationBar from './components/NotificationBar'
+import useTwemoji from './hooks/useTwemoji'
+
+function TwemojiEnhancer() {
+  useTwemoji()
+  return null
+}
 
 const Splash          = lazy(() => import('./pages/Splash'))
 const Landing         = lazy(() => import('./pages/Landing'))
@@ -204,6 +210,7 @@ function ThemedApp() {
     >
       <MotionLayer />
       <BrowserRouter>
+        <TwemojiEnhancer />
         <ImpersonationBanner />
         <NotificationBar />
         <Suspense fallback={<Loader />}>

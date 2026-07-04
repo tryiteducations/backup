@@ -142,7 +142,7 @@ export default function GamesHub(){
   const allExamTags = ['all','neet','jee','gate','clat','ielts','upsc','ssc']
 
   return (
-    <div style={{ minHeight:'100vh', background:BG, fontFamily:'Inter,sans-serif', paddingBottom:80 }}>
+    <div data-testid="games-hub-container" style={{ minHeight:'100vh', background:BG, fontFamily:'Inter,sans-serif', paddingBottom:80 }}>
 
       {/* Header */}
       <div style={{ background:`linear-gradient(135deg,${NAVY},#0F2140)`, padding:'20px 16px 20px' }}>
