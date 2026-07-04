@@ -19,6 +19,7 @@ const NAV = [
   { icon: '📊', label: 'Analytics', path: '/mentor-hub/analytics' },
   { icon: '🎟️', label: 'Coupons', path: '/mentor-hub/coupons' },
   { icon: '👥', label: 'Community', path: '/mentor-hub/community' },
+  { icon: '🇮🇳', label: 'Bharat Pulse', path: '/bharat-pulse' },
   { icon: '📋', label: 'Exam Board', path: '/exam-board' },
   { icon: '⚙️', label: 'Settings', path: '/mentor-hub/settings' },
 ]
