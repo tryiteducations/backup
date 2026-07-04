@@ -203,6 +203,7 @@ export default function StudentDashboard() {
           getRecentAttempts(uid,6).catch(()=>[]),
           getLaunchpadEnrollment(uid).catch(()=>null),
           getLeaderboard(8).catch(()=>[]),
+          updateStreak(uid).catch(()=>console.log('Streak update skipped - mock user')),
         ])
         setProfile(p||{name:authUser.name||'Student',avatar_url:null,
           coins:authUser.coins||0,xp:authUser.xp||0,level:authUser.level||1,
@@ -210,7 +211,6 @@ export default function StudentDashboard() {
           state:authUser.state||''})
         setStreak(s);setUsage(u);setAttempts(att);setLaunchpad(lp);setLeaders(lb)
         if(lp){const t=await getTodayTopic(lp).catch(()=>null);setTodayTopic(t)}
-        await updateStreak(uid).catch(()=>console.log('Streak update skipped - mock user'))
       } catch(e){console.error(e)}
       finally{setLoading(false)}
     }
