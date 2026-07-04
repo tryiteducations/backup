@@ -95,7 +95,7 @@ const FREE_THEMES = [
     category: 'Free', tier: 'base', plan: 'free', instant: true,
     primary: '#2D1B69', primaryDark: '#1A0D3D',
     accent: '#F59E0B', accentLight: '#FCD34D',
-    bg: '#F5F3FC', surface: '#FFFFFF', isDark: false,
+    bg: '#F5F3FF', surface: '#FAFAFA', isDark: false,
   }),
   buildTheme({
     id: 'vidya-midnight', name: 'Vidya Dark', emoji: '🌙', family: 'vidya', mode: 'dark',

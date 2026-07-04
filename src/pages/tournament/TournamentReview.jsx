@@ -603,7 +603,7 @@ export default function TournamentReview() {
             <p style={{ fontSize:12, color:'rgba(255,255,255,0.6)', margin:'0 0 12px' }}>
               Practice them in TestLauncher to close your weak areas before the next tournament.
             </p>
-            <button onClick={() => navigate('/tests')}
+            <button onClick={() => navigate('/student/test')}
               style={{ padding:'10px 24px', background:GOLD, color:NAVY, border:'none',
                 borderRadius:10, fontWeight:800, fontSize:13, cursor:'pointer' }}>
               Start Practice →
