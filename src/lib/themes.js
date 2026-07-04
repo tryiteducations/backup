@@ -95,14 +95,14 @@ const FREE_THEMES = [
     category: 'Free', tier: 'base', plan: 'free', instant: true,
     primary: '#2D1B69', primaryDark: '#1A0D3D',
     accent: '#F59E0B', accentLight: '#FCD34D',
-    bg: '#FFFFFF', surface: '#FAFAFA', isDark: false,
+    bg: '#F5F3FC', surface: '#FFFFFF', isDark: false,
   }),
   buildTheme({
     id: 'vidya-midnight', name: 'Vidya Dark', emoji: '🌙', family: 'vidya', mode: 'dark',
     category: 'Free', tier: 'base', plan: 'free', instant: true,
     primary: '#A78BFA', primaryDark: '#7C3AED',
     accent: '#F59E0B', accentLight: '#FCD34D',
-    bg: '#0F0A1E', surface: '#1A1033', isDark: true,
+    bg: '#0D1117', surface: '#161B22', isDark: true,
   }),
   buildTheme({
     id: 'ocean-light', name: 'Ocean Light', emoji: '🌊', family: 'ocean', mode: 'light',
@@ -116,7 +116,7 @@ const FREE_THEMES = [
     category: 'Free', tier: 'base', plan: 'free', instant: true,
     primary: '#38BDF8', primaryDark: '#0284C7',
     accent: '#22D3EE', accentLight: '#A5F3FC',
-    bg: '#031A2B', surface: '#0C2A3E', isDark: true,
+    bg: '#0D1117', surface: '#161B22', isDark: true,
   }),
 ]
 
@@ -134,7 +134,7 @@ const PRO_THEMES = [
     category: 'Pro', tier: 'pro', plan: 'pro', instant: true,
     primary: '#4ADE80', primaryDark: '#16A34A',
     accent: '#86EFAC', accentLight: '#BBF7D0',
-    bg: '#052012', surface: '#0D3320', isDark: true,
+    bg: '#0D1117', surface: '#161B22', isDark: true,
   }),
   buildTheme({
     id: 'sunset-light', name: 'Sunset Light', emoji: '🌅', family: 'sunset', mode: 'light',
@@ -148,7 +148,7 @@ const PRO_THEMES = [
     category: 'Pro', tier: 'pro', plan: 'pro', instant: false, coinPrice: 150,
     primary: '#FB923C', primaryDark: '#EA580C',
     accent: '#FDBA74', accentLight: '#FED7AA',
-    bg: '#2B1206', surface: '#3D1A08', isDark: true,
+    bg: '#0D1117', surface: '#161B22', isDark: true,
   }),
   buildTheme({
     id: 'royal-light', name: 'Royal Light', emoji: '👑', family: 'royal', mode: 'light',
@@ -162,7 +162,7 @@ const PRO_THEMES = [
     category: 'Pro', tier: 'pro', plan: 'pro', instant: false, coinPrice: 200,
     primary: '#A78BFA', primaryDark: '#7C3AED',
     accent: '#F59E0B', accentLight: '#FDE68A',
-    bg: '#1E1B4B', surface: '#2E2B5E', isDark: true,
+    bg: '#0D1117', surface: '#161B22', isDark: true,
   }),
   buildTheme({
     id: 'rose-light', name: 'Rose Light', emoji: '🌸', family: 'rose', mode: 'light',
@@ -176,7 +176,7 @@ const PRO_THEMES = [
     category: 'Pro', tier: 'pro', plan: 'pro', instant: false, coinPrice: 200,
     primary: '#FB7185', primaryDark: '#E11D48',
     accent: '#FDA4AF', accentLight: '#FECDD3',
-    bg: '#2B0A11', surface: '#3D0F19', isDark: true,
+    bg: '#0D1117', surface: '#161B22', isDark: true,
   }),
   buildTheme({
     id: 'slate-light', name: 'Slate Light', emoji: '⚡', family: 'slate', mode: 'light',
@@ -190,7 +190,7 @@ const PRO_THEMES = [
     category: 'Pro', tier: 'pro', plan: 'pro', instant: true,
     primary: '#6366F1', primaryDark: '#4338CA',
     accent: '#A5B4FC', accentLight: '#C7D2FE',
-    bg: '#09090B', surface: '#18181B', isDark: true,
+    bg: '#0D1117', surface: '#161B22', isDark: true,
   }),
   buildTheme({
     id: 'crimson-light', name: 'Crimson Light', emoji: '🔴', family: 'crimson', mode: 'light',
@@ -204,7 +204,7 @@ const PRO_THEMES = [
     category: 'Pro', tier: 'pro', plan: 'pro', instant: false, coinPrice: 250,
     primary: '#FCA5A5', primaryDark: '#F87171',
     accent: '#EF4444', accentLight: '#FCA5A5',
-    bg: '#1C0A0A', surface: '#2D1010', isDark: true,
+    bg: '#0D1117', surface: '#161B22', isDark: true,
   }),
 ]
 
