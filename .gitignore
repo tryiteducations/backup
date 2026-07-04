@@ -7,3 +7,6 @@ src_today_backup/
 .aider*
 *.py
 .env
+aider-env/
+*.pyc
+__pycache__/
