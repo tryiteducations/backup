@@ -252,10 +252,82 @@ export default function StudentDashboard() {
     setShowThemePicker(false)
   }
 
-  const share=()=>{
-    const text=`I scored ${attempts[0]?.score||0}/${attempts[0]?.total||100} on ${attempts[0]?.exam_name||'TryIT exam'}! Rank #${profile?.rank||'-'} All-India. 🎓 tryiteducations.net`
-    if(navigator.share){navigator.share({title:'My TryIT Score',text})}
-    else{navigator.clipboard?.writeText(text)}
+  const share=async()=>{
+    const scoreVal = attempts[0]?.score||0
+    const totalVal = attempts[0]?.total||100
+    const examVal = attempts[0]?.exam_name||'TryIT exam'
+    const rankVal = profile?.rank||'-'
+    const nameVal = profile?.name||authUser?.name||'Student'
+    const text=`I scored ${scoreVal}/${totalVal} on ${examVal}! Rank #${rankVal} All-India. 🎓 tryiteducations.net`
+
+    try {
+      const canvas = document.createElement('canvas')
+      canvas.width = 1080; canvas.height = 1080
+      const ctx = canvas.getContext('2d')
+
+      // Background gradient using the active theme's colors
+      const grad = ctx.createLinearGradient(0, 0, 1080, 1080)
+      grad.addColorStop(0, primary); grad.addColorStop(1, primD)
+      ctx.fillStyle = grad; ctx.fillRect(0, 0, 1080, 1080)
+
+      // Ambient glow accent circle
+      const glow = ctx.createRadialGradient(860, 220, 20, 860, 220, 400)
+      glow.addColorStop(0, `${accent}55`); glow.addColorStop(1, `${accent}00`)
+      ctx.fillStyle = glow; ctx.fillRect(0, 0, 1080, 1080)
+
+      // TryIT Educations wordmark
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 46px Poppins, sans-serif'
+      ctx.fillText('TryIT Educations', 70, 110)
+      ctx.fillStyle = accent; ctx.fillRect(70, 130, 90, 6)
+
+      // Avatar circle with initial
+      ctx.beginPath(); ctx.arc(150, 300, 70, 0, Math.PI*2)
+      ctx.fillStyle = accent; ctx.fill()
+      ctx.fillStyle = primD; ctx.font = 'bold 60px Poppins, sans-serif'
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle'
+      ctx.fillText((nameVal[0]||'S').toUpperCase(), 150, 305)
+      ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic'
+
+      // Name + batch
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 40px Poppins, sans-serif'
+      ctx.fillText(nameVal, 250, 290)
+      ctx.fillStyle = 'rgba(255,255,255,0.75)'; ctx.font = '26px Inter, sans-serif'
+      ctx.fillText(`${profile?.plan?.toUpperCase()||'FREE'} · ${profile?.badge||'Newcomer'}`, 250, 330)
+
+      // The big stat
+      ctx.fillStyle = accent; ctx.font = 'bold 120px Poppins, sans-serif'
+      ctx.fillText(`${scoreVal}/${totalVal}`, 70, 560)
+      ctx.fillStyle = '#fff'; ctx.font = '34px Inter, sans-serif'
+      ctx.fillText(examVal, 70, 610)
+
+      // Rank badge
+      ctx.fillStyle = 'rgba(255,255,255,0.12)'
+      ctx.fillRect(70, 660, 400, 90)
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 32px Poppins, sans-serif'
+      ctx.fillText(`🏆 All-India Rank #${rankVal}`, 95, 715)
+
+      // Footer tagline
+      ctx.fillStyle = 'rgba(255,255,255,0.6)'; ctx.font = '28px Inter, sans-serif'
+      ctx.fillText('tryiteducations.net · Your Exam. Your Rank. Your Success.', 70, 1010)
+
+      canvas.toBlob(async (blob) => {
+        if (!blob) { if(navigator.share){navigator.share({title:'My TryIT Score',text})} else {navigator.clipboard?.writeText(text)}; return }
+        const file = new File([blob], 'tryit-score.png', { type: 'image/png' })
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({ title: 'My TryIT Score', text, files: [file] })
+        } else if (navigator.share) {
+          await navigator.share({ title: 'My TryIT Score', text })
+        } else {
+          const link = document.createElement('a')
+          link.href = URL.createObjectURL(blob); link.download = 'tryit-score.png'
+          link.click()
+        }
+      }, 'image/png')
+    } catch (e) {
+      console.error('Share image generation failed, falling back to text:', e)
+      if(navigator.share){navigator.share({title:'My TryIT Score',text})}
+      else{navigator.clipboard?.writeText(text)}
+    }
   }
 
   if(loading)return(

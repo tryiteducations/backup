@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
+import { useAuth } from '../../context/AuthContext'
+import { supabase } from '../../lib/supabase'
 
 const MENTORS = [
   {
@@ -193,11 +195,34 @@ const SORT_OPTIONS = [
 export default function StudentMentor() {
   const nav = useNavigate()
   const { theme } = useTheme()
+  const { user } = useAuth()
   const p = theme?.primary||'#1E3A5F', a = theme?.accent||'#C9A84C'
   const t = theme?.text||'#1E293B', m = theme?.textLight||'#64748B'
   const bg = theme?.background||'#F8FAFC', c = theme?.surface||'#FFFFFF'
   const b = theme?.border||'#E2E8F0'
   const isDark = theme?.isDark||false
+  const [sessionStarted, setSessionStarted] = useState(false)
+  const [sessionStarting, setSessionStarting] = useState(false)
+
+  async function handleStartSession(mentorProfile) {
+    setSessionStarting(true)
+    try {
+      await supabase.from('session_logs').insert({
+        student_id: user?.id,
+        mentor_id: mentorProfile.id || mentorProfile.name,
+        started_at: new Date().toISOString(),
+        status: 'started',
+      })
+      setSessionStarted(true)
+      setTimeout(() => setSessionStarted(false), 4000)
+    } catch (e) {
+      console.error('Session log failed (will not block student):', e)
+      setSessionStarted(true) // Student's own tap is the verification - don't block on a logging failure
+      setTimeout(() => setSessionStarted(false), 4000)
+    } finally {
+      setSessionStarting(false)
+    }
+  }
 
   const [filter, setFilter] = useState('All')
   const [topicFilter, setTopicFilter] = useState('All')
@@ -355,6 +380,16 @@ export default function StudentMentor() {
                     <h4 style={{color:t,fontWeight:700,fontSize:13,margin:'0 0 8px'}}>📅 Schedule</h4>
                     <p style={{color:m,fontSize:13,margin:0}}>{prof.lockedInfo.schedule}</p>
                   </div>
+                )}
+
+                {canSeeAll && (
+                  <button onClick={()=>handleStartSession(prof)} disabled={sessionStarting}
+                    style={{width:'100%', background: sessionStarted ? '#16A34A' : `linear-gradient(135deg,${p},${a})`,
+                      border:'none', borderRadius:14, padding:'13px', color:'#fff', fontWeight:700, fontSize:13,
+                      cursor: sessionStarting ? 'default' : 'pointer', marginBottom:16,
+                      boxShadow:`0 4px 20px ${a}35`}}>
+                    {sessionStarted ? '✅ Session Started' : sessionStarting ? 'Starting...' : '🚀 Start Session'}
+                  </button>
                 )}
 
                 {!canSeeAll && (

@@ -49,6 +49,7 @@ export default function StudentSettings() {
   const { theme, applyTheme, setActiveTheme, themes, themesWithStatus } = useTheme()
   const { user: authUser, logout } = useAuth()
   const fileRef = useRef()
+  const cameraRef = useRef()
 
   const isDark  = theme?.isDark ?? false
   const accent  = theme?.accent ?? '#C9A84C'
@@ -300,12 +301,21 @@ export default function StudentSettings() {
                   </p>
                   <input ref={fileRef} type="file" accept="image/*"
                     style={{ display: 'none' }} onChange={handleAvatarChange}/>
-                  <button onClick={() => fileRef.current?.click()} style={{
+                  <input ref={cameraRef} type="file" accept="image/*" capture="user"
+                    style={{ display: 'none' }} onChange={handleAvatarChange}/>
+                  <button onClick={() => cameraRef.current?.click()} style={{
                     background: `linear-gradient(135deg,${accent},${accentL})`,
                     border: 'none', borderRadius: 10, padding: '8px 16px',
                     color: primD, fontWeight: 700, fontSize: 12, cursor: 'pointer',
                     marginRight: 8 }}>
-                    📷 Change Photo
+                    📸 Take Photo
+                  </button>
+                  <button onClick={() => fileRef.current?.click()} style={{
+                    background: isDark ? 'rgba(255,255,255,0.08)' : '#F1F5F9',
+                    border: `1px solid ${bdr}`, borderRadius: 10, padding: '8px 16px',
+                    color: txt, fontWeight: 700, fontSize: 12, cursor: 'pointer',
+                    marginRight: 8 }}>
+                    🖼️ Choose from Gallery
                   </button>
                   {profile?.avatar_url && (
                     <button onClick={async () => {
