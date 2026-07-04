@@ -979,7 +979,7 @@ export default function StudentDashboard() {
                   onMouseEnter={e => {e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = `0 12px 28px ${accent}22`}}
                   onMouseLeave={e => {e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'}}>
                   <div style={{display:'flex', alignItems:'center', gap:8, marginBottom:10}}>
-                    <span style={{background:'#fef3c7', color:'#b45309', padding:'1px 9px', borderRadius:9999, fontSize:10, fontWeight:700}}>POLITY</span>
+                    <span style={{background:isDark?'rgba(180,83,9,0.25)':'#fef3c7', color:isDark?'#FBBF24':'#b45309', padding:'1px 9px', borderRadius:9999, fontSize:10, fontWeight:700}}>POLITY</span>
                     <span style={{color:muted, fontSize:10}}>Fundamental Rights</span>
                   </div>
                   <p style={{color:txt, fontWeight:600, fontSize:13.5, lineHeight:1.45, marginBottom:14}}>
@@ -1000,7 +1000,7 @@ export default function StudentDashboard() {
                   onMouseEnter={e => {e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = `0 12px 28px ${accent}22`}}
                   onMouseLeave={e => {e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'}}>
                   <div style={{display:'flex', alignItems:'center', gap:8, marginBottom:10}}>
-                    <span style={{background:'#ecfdf5', color:'#10b981', padding:'1px 9px', borderRadius:9999, fontSize:10, fontWeight:700}}>ECONOMY</span>
+                    <span style={{background:isDark?'rgba(16,185,129,0.2)':'#ecfdf5', color:isDark?'#34D399':'#10b981', padding:'1px 9px', borderRadius:9999, fontSize:10, fontWeight:700}}>ECONOMY</span>
                     <span style={{color:muted, fontSize:10}}>Budget 2026</span>
                   </div>
                   <p style={{color:txt, fontWeight:600, fontSize:13.5, lineHeight:1.45, marginBottom:14}}>
@@ -1016,13 +1016,13 @@ export default function StudentDashboard() {
                   onMouseEnter={e => {e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = `0 12px 28px ${accent}22`}}
                   onMouseLeave={e => {e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'}}>
                   <div style={{display:'flex', alignItems:'center', gap:8, marginBottom:10}}>
-                    <span style={{background:'#f0f9ff', color:'#0284c8', padding:'1px 9px', borderRadius:9999, fontSize:10, fontWeight:700}}>SCIENCE</span>
+                    <span style={{background:isDark?'rgba(2,132,200,0.2)':'#f0f9ff', color:isDark?'#38BDF8':'#0284c8', padding:'1px 9px', borderRadius:9999, fontSize:10, fontWeight:700}}>SCIENCE</span>
                     <span style={{color:muted, fontSize:10}}>NCERT Class 10</span>
                   </div>
                   <p style={{color:txt, fontWeight:600, fontSize:13.5, lineHeight:1.45, marginBottom:14}}>
                     Explain the working of an electric motor with diagram
                   </p>
-                  <div style={{height:68, background:'linear-gradient(145deg,#e0f2fe,#bae6fd)', borderRadius:10, display:'flex', alignItems:'center', justifyContent:'center', fontSize:28, marginBottom:12, color:'#0369a1'}}>
+                  <div style={{height:68, background:isDark?'linear-gradient(145deg,rgba(2,132,200,0.15),rgba(56,189,248,0.1))':'linear-gradient(145deg,#e0f2fe,#bae6fd)', borderRadius:10, display:'flex', alignItems:'center', justifyContent:'center', fontSize:28, marginBottom:12, color:isDark?'#38BDF8':'#0369a1'}}>
                     ⚙️
                   </div>
                   <button onClick={()=>navigate('/student/concept/science')} style={{width:'100%', background:card, border:`1px solid ${accent}40`, color:accent, fontWeight:700, fontSize:11, padding:'9px', borderRadius:10, cursor:'pointer'}}>

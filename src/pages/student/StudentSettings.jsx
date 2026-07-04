@@ -55,11 +55,11 @@ export default function StudentSettings() {
   const accentL = theme?.accentLight ?? '#E8C44A'
   const primary = theme?.primary ?? '#1E3A5F'
   const primD   = theme?.primaryDark ?? '#0F2140'
-  const txt     = isDark ? '#F8FAFC' : '#0F1020'
-  const muted   = isDark ? 'rgba(255,255,255,0.65)' : '#475569'
-  const card    = isDark ? 'rgba(255,255,255,0.08)' : '#ffffff'
-  const bdr     = isDark ? 'rgba(255,255,255,0.15)' : '#CBD5E1'
-  const bg      = isDark ? primD : '#F0F4F8'
+  const txt     = theme?.text ?? (isDark ? '#F8FAFC' : '#0F1020')
+  const muted   = theme?.textLight ?? (isDark ? 'rgba(255,255,255,0.65)' : '#475569')
+  const card    = theme?.surface ?? (isDark ? 'rgba(255,255,255,0.08)' : '#ffffff')
+  const bdr     = theme?.border ?? (isDark ? 'rgba(255,255,255,0.15)' : '#CBD5E1')
+  const bg      = theme?.background ?? (isDark ? '#0D1117' : '#F0F4F8')
 
   const [profile,      setProfile]      = useState(null)
   const [name,         setName]         = useState('')
