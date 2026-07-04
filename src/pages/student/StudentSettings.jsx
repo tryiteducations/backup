@@ -683,12 +683,10 @@ export default function StudentSettings() {
                 borderRadius: 20, padding: '20px' }}>
                 <p style={{ color: txt, fontFamily: 'Poppins,sans-serif',
                   fontWeight: 800, fontSize: 15, margin: '0 0 14px' }}>
-                  ⬆️ Upgrade Role
+                  ⬆️ Upgrade Plan
                 </p>
                 {[
-                  { label: 'Become a Mentor',     sub: 'Teach students, earn side income',  price: '₹99 one-time',   icon: '🧑‍🏫', path: '/student/become-mentor' },
                   { label: 'Switch to Family Plan',sub: '4 members, one subscription',       price: '₹2,499/year',    icon: '👨‍👩‍👧‍👦', path: '/pricing' },
-                  { label: 'Institution Partner',  sub: 'After 500 answers or 100 students', price: '₹499 one-time',  icon: '🏫', path: '/pricing' },
                 ].map((r, i) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'center',
                     justifyContent: 'space-between', padding: '12px',
@@ -713,6 +711,12 @@ export default function StudentSettings() {
                     </div>
                   </div>
                 ))}
+                <div style={{ marginTop: 8, padding: '12px 14px', borderRadius: 12,
+                  background: isDark ? 'rgba(255,255,255,0.03)' : '#F8FAFC', border: `1px solid ${bdr}` }}>
+                  <p style={{ color: muted, fontSize: 12, margin: 0, lineHeight: 1.5 }}>
+                    Need a Mentor or Institution account too? Email <b style={{ color: txt }}>support@tryiteducations.net</b> and our team will help you set up multiple roles.
+                  </p>
+                </div>
               </div>
 
               {/* Data */}

@@ -3,19 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
-
-const MENTOR_THEMES = [
-  {id:'mentor-pearl',        name:'Pearl Classic',   emoji:'🎓', isDark:false, preview:'#1E3A5F'},
-  {id:'mentor-kashi-dawn',   name:'Kashi Dawn',      emoji:'🏛️', isDark:false, preview:'#92400E'},
-  {id:'mentor-nilgiri-mist', name:'Nilgiri Mist',    emoji:'🌿', isDark:false, preview:'#065F46'},
-  {id:'mentor-himalayan',    name:'Himalayan Snow',  emoji:'🏔️', isDark:false, preview:'#1E40AF'},
-  {id:'mentor-vedic',        name:'Vedic Scroll',    emoji:'📜', isDark:false, preview:'#78350F'},
-  {id:'mentor-navy-command', name:'Navy Command',    emoji:'⚓', isDark:true,  preview:'#C9A84C'},
-  {id:'mentor-midnight',     name:'Midnight Indigo', emoji:'🌌', isDark:true,  preview:'#818CF8'},
-  {id:'mentor-graphite',     name:'Graphite Pro',    emoji:'⚙️', isDark:true,  preview:'#60A5FA'},
-  {id:'mentor-teak',         name:'Teak Forest',     emoji:'🌳', isDark:true,  preview:'#34D399'},
-  {id:'mentor-obsidian',     name:'Obsidian Gold',   emoji:'✨', isDark:true,  preview:'#D97706'},
-]
+import { THEME_LIST } from '../../lib/themes'
 
 const EXAMS = ['UPSC CSE','SSC CGL','IBPS PO','TNPSC Group 1','RRB NTPC',
   'NEET UG','JEE Main','GATE','NDA','CDS','State PSC','School (1-10)','College']
@@ -245,10 +233,10 @@ export default function MentorSettings() {
             Dashboard Theme
           </p>
           <p style={{color:m,fontSize:11,margin:'0 0 14px'}}>
-            10 professional themes - light & dark
+            9 theme families - light & dark, same as students see
           </p>
           <div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:10}}>
-            {MENTOR_THEMES.map(th=>(
+            {THEME_LIST.map(th=>(
               <button key={th.id}
                 onClick={()=>{ if(setActiveTheme) setActiveTheme(th.id) }}
                 style={{background:theme?.id===th.id?a+'15':bg,
@@ -256,8 +244,8 @@ export default function MentorSettings() {
                   borderRadius:14,padding:'12px 8px',cursor:'pointer',
                   textAlign:'center',transition:'all 0.2s'}}>
                 <div style={{width:32,height:32,borderRadius:'50%',
-                  background:th.preview,margin:'0 auto 6px',
-                  boxShadow:'0 2px 8px '+th.preview+'44'}}/>
+                  background:th.primary,margin:'0 auto 6px',
+                  boxShadow:'0 2px 8px '+th.primary+'44'}}/>
                 <p style={{color:t,fontSize:9,fontWeight:600,margin:'0 0 2px',
                   lineHeight:1.2}}>
                   {th.emoji} {th.name.split(' ')[0]}
@@ -268,26 +256,6 @@ export default function MentorSettings() {
               </button>
             ))}
           </div>
-        </div>
-
-        {/* Switch to student */}
-        <div style={{background:c,border:'1px solid '+b,borderRadius:18,
-          padding:'16px 20px',marginBottom:16,
-          display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-          <div>
-            <p style={{color:t,fontWeight:700,fontSize:13,margin:'0 0 2px'}}>
-              Switch to Student View
-            </p>
-            <p style={{color:m,fontSize:11,margin:0}}>
-              View the platform as a student
-            </p>
-          </div>
-          <button onClick={()=>nav('/student')}
-            style={{background:p+'10',border:'1px solid '+p+'30',
-              borderRadius:12,padding:'8px 16px',color:p,
-              fontWeight:700,fontSize:13,cursor:'pointer'}}>
-            Go to Student →
-          </button>
         </div>
 
         

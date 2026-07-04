@@ -3,19 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
-
-const INST_THEMES = [
-  {id:'mentor-pearl',       name:'Pearl Classic',  emoji:'🎓', preview:'#1E3A5F', isDark:false},
-  {id:'mentor-kashi-dawn',  name:'Kashi Dawn',     emoji:'🏛️', preview:'#92400E', isDark:false},
-  {id:'mentor-nilgiri-mist',name:'Nilgiri Mist',   emoji:'🌿', preview:'#065F46', isDark:false},
-  {id:'mentor-himalayan',   name:'Himalayan Snow', emoji:'🏔️', preview:'#1E40AF', isDark:false},
-  {id:'mentor-vedic',       name:'Vedic Scroll',   emoji:'📜', preview:'#78350F', isDark:false},
-  {id:'mentor-navy-command',name:'Navy Command',   emoji:'⚓', preview:'#C9A84C', isDark:true},
-  {id:'mentor-midnight',    name:'Midnight Indigo',emoji:'🌌', preview:'#818CF8', isDark:true},
-  {id:'mentor-graphite',    name:'Graphite Pro',   emoji:'⚙️', preview:'#60A5FA', isDark:true},
-  {id:'mentor-teak',        name:'Teak Forest',    emoji:'🌳', preview:'#34D399', isDark:true},
-  {id:'mentor-obsidian',    name:'Obsidian Gold',  emoji:'✨', preview:'#D97706', isDark:true},
-]
+import { THEME_LIST } from '../../lib/themes'
 
 export default function InstitutionSettings() {
   const nav = useNavigate()
@@ -104,17 +92,17 @@ export default function InstitutionSettings() {
         <div style={{background:c,border:'1px solid '+b,borderRadius:16,
           padding:'18px',marginBottom:14}}>
           <p style={{color:t,fontWeight:700,fontSize:14,margin:'0 0 4px'}}>Dashboard Theme</p>
-          <p style={{color:m,fontSize:11,margin:'0 0 14px'}}>10 professional themes</p>
+          <p style={{color:m,fontSize:11,margin:'0 0 14px'}}>9 theme families - light & dark, same as students see</p>
           <div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:10}}>
-            {INST_THEMES.map(th=>(
+            {THEME_LIST.map(th=>(
               <button key={th.id}
                 onClick={()=>setActiveTheme&&setActiveTheme(th.id)}
                 style={{background:theme?.id===th.id?a+'15':bg,
                   border:'2px solid '+(theme?.id===th.id?a:b),
                   borderRadius:14,padding:'12px 8px',cursor:'pointer',textAlign:'center',
                   transition:'all 0.2s'}}>
-                <div style={{width:32,height:32,borderRadius:'50%',background:th.preview,
-                  margin:'0 auto 6px',boxShadow:'0 2px 8px '+th.preview+'44'}}/>
+                <div style={{width:32,height:32,borderRadius:'50%',background:th.primary,
+                  margin:'0 auto 6px',boxShadow:'0 2px 8px '+th.primary+'44'}}/>
                 <p style={{color:t,fontSize:9,fontWeight:600,margin:'0 0 2px',lineHeight:1.2}}>
                   {th.emoji} {th.name.split(' ')[0]}
                 </p>

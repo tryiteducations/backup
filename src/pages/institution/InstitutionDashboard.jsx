@@ -116,14 +116,6 @@ export default function InstitutionDashboard() {
           )
         })}
       </div>
-
-      <div style={{padding:'12px 16px',borderTop:'1px solid rgba(255,255,255,0.1)'}}>
-        <p onClick={()=>nav('/student')}
-          style={{color:'rgba(255,255,255,0.4)',fontSize:11,cursor:'pointer',
-            margin:0,textAlign:'center',fontFamily:'Poppins,sans-serif'}}>
-          Switch to student view →
-        </p>
-      </div>
           <button onClick={()=>nav('/login')}
             style={{width:'100%',marginTop:6,background:'rgba(239,68,68,0.15)',
               border:'1px solid rgba(239,68,68,0.25)',borderRadius:10,

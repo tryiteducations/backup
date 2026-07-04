@@ -326,6 +326,7 @@ function ThemedApp() {
                 <Route path="/institution/mentors"  element={<RoleGuard allowedRoles={['institution']}><InstitutionMentors/></RoleGuard>} />
                 <Route path="/institution/homework" element={<RoleGuard allowedRoles={['institution']}><InstitutionHomework/></RoleGuard>} />
                 <Route path="/institution/students" element={<RoleGuard allowedRoles={['institution']}><InstitutionStudents/></RoleGuard>} />
+                <Route path="/institution/settings" element={<RoleGuard allowedRoles={['institution']}><InstitutionSettings/></RoleGuard>} />
 
                 {/* MENTOR HUB */}
                 <Route path="/mentor-hub/materials"   element={<RoleGuard allowedRoles={['mentor','institution']}><MentorMaterials/></RoleGuard>} />
