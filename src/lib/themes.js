@@ -65,7 +65,11 @@ function buildTheme(seed) {
   const primaryDk  = primaryDark || mix(primary, '#000000', 0.2)
   const accentL    = accentLight || mix(accent, '#FFFFFF', 0.3)
 
-  const accentOnPrimary = ensureContrast(accent, primary, 3.0)
+  // NOTE: accent is used as its own button/pill background throughout the app
+  // (not as text sitting on top of primary), so it must NOT be run through
+  // ensureContrast against primary - that was incorrectly pushing accent
+  // colors all the way to pure white for several dark themes (e.g. Vidya
+  // Dark and Ocean Dark were computing accent: '#FFFFFF').
   const primaryText = ensureContrast(primary, bg, 4.5)
 
   return {
@@ -73,7 +77,7 @@ function buildTheme(seed) {
     coinPrice, instant, unlock, isDark,
     primary: primaryText,
     primaryDark: primaryDk,
-    accent: accentOnPrimary,
+    accent: accent,
     accentLight: accentL,
     background: bg,
     surface,
