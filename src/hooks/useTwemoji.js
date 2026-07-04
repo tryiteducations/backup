@@ -3,8 +3,10 @@ import { useLocation } from 'react-router-dom'
 
 /**
  * Global Twemoji enhancer.
- * Automatically parses all emoji in document.body into Twemoji images
- * after initial load and after every route change.
+ * Parses all emoji in document.body into Twemoji images on load, on every
+ * route change, AND whenever new content is added to the DOM (e.g. a
+ * lazy-loaded page component finishing its render after the route already
+ * changed) - a plain location-based effect alone misses this race condition.
  *
  * Usage: call useTwemoji() once in your root App component.
  */
@@ -16,17 +18,40 @@ export default function useTwemoji() {
     const twemoji = window.twemoji
     if (!twemoji || typeof twemoji.parse !== 'function') return
 
-    try {
-      twemoji.parse(document.body, {
-        folder: 'svg',
-        ext: '.svg',
-        // override twemoji's internal default base (the now-defunct maxcdn) with a working CDN
-        base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/',
-        className: 'twemoji',
-      })
-    } catch (err) {
-      // best-effort enhancement; fail silently if parsing fails
+    const parseOptions = {
+      folder: 'svg',
+      ext: '.svg',
+      // override twemoji's internal default base (the now-defunct maxcdn) with a working CDN
+      base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/',
+      className: 'twemoji',
     }
-    // re-run on every pathname+search change to catch newly-rendered emoji
+
+    const runParse = () => {
+      try {
+        twemoji.parse(document.body, parseOptions)
+      } catch (err) {
+        // best-effort enhancement; fail silently if parsing fails
+      }
+    }
+
+    // initial parse for whatever's already rendered
+    runParse()
+
+    // catch lazy-loaded pages finishing their render AFTER the route change
+    // (Suspense resolving a lazy() import is not synchronous with navigation)
+    const observer = new MutationObserver(() => {
+      runParse()
+    })
+    observer.observe(document.body, { childList: true, subtree: true })
+
+    // stop observing after a few seconds - by then any lazy chunk has loaded,
+    // and we don't want to keep re-parsing on every minor state update forever
+    const stopTimer = setTimeout(() => observer.disconnect(), 3000)
+
+    return () => {
+      observer.disconnect()
+      clearTimeout(stopTimer)
+    }
+    // re-run this whole setup on every route change
   }, [location.pathname, location.search])
 }
