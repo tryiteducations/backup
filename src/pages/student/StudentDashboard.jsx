@@ -294,7 +294,7 @@ export default function StudentDashboard() {
             <p style={{fontFamily:'Poppins,sans-serif',fontWeight:700,fontSize:18,margin:'0 0 8px'}}>
               {fullScreen.title}
             </p>
-            <p style={{color:'rgba(255,255,255,0.5)',fontSize:14,margin:'0 0 24px'}}>
+            <p style={{color:isDark?'rgba(255,255,255,0.5)':muted,fontSize:14,margin:'0 0 24px'}}>
               This section opens in full view
             </p>
             <button onClick={()=>{setFullScreen(null);navigate(fullScreen.path)}}
@@ -473,7 +473,7 @@ export default function StudentDashboard() {
           <button onClick={()=>setSideOpen(o=>!o)} style={{
             background:'rgba(255,255,255,0.07)',border:'none',
             borderRadius:8,width:28,height:28,cursor:'pointer',
-            color:'rgba(255,255,255,0.5)',fontSize:13,display:'flex',
+            color:isDark?'rgba(255,255,255,0.5)':muted,fontSize:13,display:'flex',
             alignItems:'center',justifyContent:'center',flexShrink:0,
             transition:'background 0.15s'}}
             onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,0.12)'}
@@ -525,7 +525,7 @@ export default function StudentDashboard() {
                   <span style={{background:`${accent}22`,color:accent,
                     fontSize:8,fontWeight:700,padding:'1px 6px',
                     borderRadius:20,border:`1px solid ${accent}33`}}>{badge}</span>
-                  <span style={{color:'rgba(255,255,255,0.35)',fontSize:9}}>Lv.{lvl}</span>
+                  <span style={{color:isDark?'rgba(255,255,255,0.35)':muted,fontSize:9}}>Lv.{lvl}</span>
                 </div>
               </div>
             )}
@@ -540,7 +540,7 @@ export default function StudentDashboard() {
                   boxShadow:`0 0 8px ${accent}66`}}/>
               </div>
               <div style={{display:'flex',justifyContent:'space-between',marginTop:4}}>
-                <span style={{color:'rgba(255,255,255,0.60)',fontSize:8}}>XP {xp%500}/500</span>
+                <span style={{color:isDark?'rgba(255,255,255,0.60)':muted,fontSize:8}}>XP {xp%500}/500</span>
                 <span style={{color:accent,fontSize:8,fontWeight:700}}>Lv.{lvl+1} →</span>
               </div>
             </div>
@@ -563,7 +563,7 @@ export default function StudentDashboard() {
                   {s.icon}{' '}
                   {s.anim?<AnimNum value={s.val}/>:s.val}
                 </p>
-                <p style={{color:'rgba(255,255,255,0.65)',fontSize:8,margin:'2px 0 0'}}>{s.label}</p>
+                <p style={{color:isDark?'rgba(255,255,255,0.65)':muted,fontSize:8,margin:'2px 0 0'}}>{s.label}</p>
               </div>
             ))}
           </div>
@@ -606,7 +606,7 @@ export default function StudentDashboard() {
                 {sideVisible && (
                   <div style={{flex:1, textAlign:'left', minWidth:0}}>
                     <span style={{
-                      color:active?accent:atLimit?'#F87171':'rgba(255,255,255,0.88)',
+                      color:active?accent:atLimit?'#F87171':(isDark?'rgba(255,255,255,0.88)':muted),
                       fontSize:12,fontWeight:active?700:400,
                       transition:'color 0.15s',
                       display:'block',
@@ -632,7 +632,7 @@ export default function StudentDashboard() {
                 {sideVisible&&item.limit&&plan==='free'&&(
                   <span style={{
                     background:atLimit?'rgba(248,113,113,0.15)':'rgba(255,255,255,0.07)',
-                    color:atLimit?'#F87171':'rgba(255,255,255,0.3)',
+                    color:atLimit?'#F87171':(isDark?'rgba(255,255,255,0.3)':muted),
                     fontSize:8,padding:'1px 5px',borderRadius:20,flexShrink:0,fontWeight:700,
                   }}>
                     {atLimit?'0':FREE_LIMITS[item.limit]-used}/{FREE_LIMITS[item.limit]}
@@ -651,9 +651,9 @@ export default function StudentDashboard() {
             position:'relative'}}>
             <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
               <p style={{color:accent,fontWeight:700,fontSize:11,margin:0}}>⚡ Upgrade to Pro</p>
-              <button onClick={()=>setShowUpgradeCTA(false)} style={{background:'rgba(255,255,255,0.1)',border:'none',borderRadius:'50%',width:18,height:18,cursor:'pointer',color:'rgba(255,255,255,0.6)',fontSize:10,display:'flex',alignItems:'center',justifyContent:'center',padding:0}}>✕</button>
+              <button onClick={()=>setShowUpgradeCTA(false)} style={{background:'rgba(255,255,255,0.1)',border:'none',borderRadius:'50%',width:18,height:18,cursor:'pointer',color:isDark?'rgba(255,255,255,0.6)':muted,fontSize:10,display:'flex',alignItems:'center',justifyContent:'center',padding:0}}>✕</button>
             </div>
-            <p style={{color:'rgba(255,255,255,0.35)',fontSize:10,margin:'0 0 8px',lineHeight:1.5}}>
+            <p style={{color:isDark?'rgba(255,255,255,0.35)':muted,fontSize:10,margin:'0 0 8px',lineHeight:1.5}}>
               Unlimited tests · All themes · Full rank
             </p>
             <button onClick={()=>navigate('/pricing')} style={{
@@ -898,7 +898,7 @@ export default function StudentDashboard() {
                       fontWeight:800,fontSize:15,margin:'0 0 4px'}}>
                       Today: {todayTopic.topic_name}
                     </p>
-                    <p style={{color:'rgba(255,255,255,0.80)',fontSize:11,margin:0}}>
+                    <p style={{color:isDark?'rgba(255,255,255,0.80)':muted,fontSize:11,margin:0}}>
                       {todayTopic.subject} · Day {launchpad.current_topic_index+1}
                     </p>
                   </div>
@@ -925,7 +925,7 @@ export default function StudentDashboard() {
                   </button>
                   <button onClick={()=>setFullScreen({id:'launchpad',title:'Launchpad',icon:'🚀',path:'/student/launchpad'})}
                     style={{background:'rgba(255,255,255,0.08)',border:'1px solid rgba(255,255,255,0.12)',
-                      borderRadius:10,padding:'9px 14px',color:'rgba(255,255,255,0.6)',
+                      borderRadius:10,padding:'9px 14px',color:isDark?'rgba(255,255,255,0.6)':muted,
                       fontWeight:600,fontSize:12,cursor:'pointer'}}>
                     ⛶ Full View
                   </button>
@@ -1145,7 +1145,7 @@ export default function StudentDashboard() {
                   fontWeight:800,fontSize:14,margin:0}}>🏆 All-India Live Rankings</p>
                 <div style={{display:'flex',gap:8}}>
                   <button onClick={()=>setFullScreen({id:'rank',title:'Leaderboard',icon:'🏆',path:'/student/rank'})}
-                    style={{background:'transparent',border:'none',color:'rgba(255,255,255,0.70)',fontSize:14,cursor:'pointer'}}>⛶</button>
+                    style={{background:'transparent',border:'none',color:isDark?'rgba(255,255,255,0.70)':muted,fontSize:14,cursor:'pointer'}}>⛶</button>
                   <button onClick={()=>navigate('/student/rank')} style={{
                     background:'transparent',border:'none',color:accent,
                     fontSize:11,fontWeight:700,cursor:'pointer'}}>Full Board →</button>
@@ -1157,7 +1157,7 @@ export default function StudentDashboard() {
                   <div key={i} style={{padding:'10px 16px',
                     borderBottom:`1px solid rgba(255,255,255,0.04)`,
                     display:'flex',alignItems:'center',gap:10}}>
-                    <span style={{color:i===0?'#FFD700':i===1?'#C0C0C0':i===2?'#CD7F32':'rgba(255,255,255,0.25)',
+                    <span style={{color:i===0?'#FFD700':i===1?'#C0C0C0':i===2?'#CD7F32':(isDark?'rgba(255,255,255,0.25)':muted),
                       fontWeight:900,fontSize:i<3?15:11,width:22,flexShrink:0,textAlign:'center'}}>
                       {i===0?'🥇':i===1?'🥈':i===2?'🥉':`#${r.rank||i+1}`}
                     </span>
@@ -1175,7 +1175,7 @@ export default function StudentDashboard() {
                         overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>
                         {r.profiles?.name||'Student'}
                       </p>
-                      <p style={{color:'rgba(255,255,255,0.60)',fontSize:8,margin:0}}>
+                      <p style={{color:isDark?'rgba(255,255,255,0.60)':muted,fontSize:8,margin:0}}>
                         {r.exam_name||'-'}
                       </p>
                     </div>
@@ -1183,7 +1183,7 @@ export default function StudentDashboard() {
                   </div>
                 )):(
                   <div style={{padding:'24px',textAlign:'center',gridColumn:'1/-1'}}>
-                    <p style={{color:'rgba(255,255,255,0.65)',fontSize:13}}>
+                    <p style={{color:isDark?'rgba(255,255,255,0.65)':muted,fontSize:13}}>
                       Take a test to appear on the leaderboard! 🎯
                     </p>
                   </div>
@@ -1285,7 +1285,7 @@ export default function StudentDashboard() {
                   <p style={{color:'#fff',fontFamily:'Poppins,sans-serif',fontWeight:700,fontSize:13,margin:0}}>
                     🇮🇳 Bharat Pulse
                   </p>
-                  <span style={{color:'rgba(255,255,255,0.70)',fontSize:11}}>Today →</span>
+                  <span style={{color:isDark?'rgba(255,255,255,0.70)':muted,fontSize:11}}>Today →</span>
                 </div>
                 <div style={{padding:'14px 16px'}}>
                   <p style={{color:accent,fontSize:9,fontWeight:700,letterSpacing:'1px',margin:'0 0 6px'}}>
@@ -1295,7 +1295,7 @@ export default function StudentDashboard() {
                     fontSize:13,lineHeight:1.5,margin:'0 0 10px'}}>
                     India's semiconductor mission: 5 fabs to be operational by 2026
                   </p>
-                  <p style={{color:'rgba(255,255,255,0.80)',fontSize:10,margin:'0 0 12px',lineHeight:1.5}}>
+                  <p style={{color:isDark?'rgba(255,255,255,0.80)':muted,fontSize:10,margin:'0 0 12px',lineHeight:1.5}}>
                     Relates to GS3 Economy, Science & Tech - appears in UPSC, SSC, IBPS
                   </p>
                   <div style={{display:'flex',alignItems:'center',gap:8}}>
