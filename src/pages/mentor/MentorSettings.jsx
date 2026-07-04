@@ -125,6 +125,8 @@ export default function MentorSettings() {
             </div>
             <input id="avatar-upload" type="file" accept="image/*"
               style={{display:'none'}} onChange={handleAvatarChange}/>
+            <input id="avatar-camera" type="file" accept="image/*" capture="user"
+              style={{display:'none'}} onChange={handleAvatarChange}/>
             <div>
               <p style={{color:t,fontWeight:600,fontSize:13,margin:'0 0 4px'}}>
                 {name || 'Your Name'}
@@ -132,11 +134,17 @@ export default function MentorSettings() {
               <p style={{color:m,fontSize:11,margin:'0 0 8px'}}>
                 Click the photo to change it
               </p>
+              <button onClick={()=>document.getElementById('avatar-camera').click()}
+                style={{background:a,border:'none',
+                  borderRadius:10,padding:'6px 14px',color:'#fff',
+                  fontWeight:700,fontSize:12,cursor:'pointer',marginRight:8}}>
+                📸 Take Photo
+              </button>
               <button onClick={()=>document.getElementById('avatar-upload').click()}
                 style={{background:a+'15',border:'1px solid '+a+'30',
                   borderRadius:10,padding:'6px 14px',color:a,
                   fontWeight:700,fontSize:12,cursor:'pointer'}}>
-                Upload Photo
+                Choose from Gallery
               </button>
             </div>
           </div>

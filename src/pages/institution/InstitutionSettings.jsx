@@ -28,10 +28,19 @@ export default function InstitutionSettings() {
   const [name, setName] = useState('')
   const [saved, setSaved] = useState(false)
   const [confirmLogout, setConfirmLogout] = useState(false)
+  const [logoUrl, setLogoUrl] = useState(null)
 
   const handleLogout = () => {
     if (logout) logout()
     nav('/login')
+  }
+
+  function handleLogoChange(e) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = () => setLogoUrl(reader.result)
+    reader.readAsDataURL(file)
   }
 
   return (
@@ -56,6 +65,31 @@ export default function InstitutionSettings() {
         <div style={{background:c,border:'1px solid '+b,borderRadius:16,
           padding:'18px',marginBottom:14}}>
           <p style={{color:t,fontWeight:700,fontSize:14,margin:'0 0 12px'}}>Institution Profile</p>
+
+          <div style={{display:'flex',alignItems:'center',gap:14,marginBottom:16}}>
+            <div style={{width:64,height:64,borderRadius:16,flexShrink:0,
+              background:logoUrl?`url(${logoUrl}) center/cover`:`linear-gradient(135deg,${p},${a})`,
+              display:'flex',alignItems:'center',justifyContent:'center',fontSize:26,color:'#fff'}}>
+              {!logoUrl && '🏫'}
+            </div>
+            <div>
+              <input id="logo-upload" type="file" accept="image/*"
+                style={{display:'none'}} onChange={handleLogoChange}/>
+              <input id="logo-camera" type="file" accept="image/*" capture="environment"
+                style={{display:'none'}} onChange={handleLogoChange}/>
+              <button onClick={()=>document.getElementById('logo-camera').click()}
+                style={{background:a,border:'none',borderRadius:10,padding:'6px 14px',
+                  color:'#fff',fontWeight:700,fontSize:12,cursor:'pointer',marginRight:8}}>
+                📸 Take Photo
+              </button>
+              <button onClick={()=>document.getElementById('logo-upload').click()}
+                style={{background:a+'15',border:'1px solid '+a+'30',borderRadius:10,padding:'6px 14px',
+                  color:a,fontWeight:700,fontSize:12,cursor:'pointer'}}>
+                Choose from Gallery
+              </button>
+            </div>
+          </div>
+
           <label style={{display:'block',color:t,fontWeight:700,fontSize:12,marginBottom:6}}>
             Institution Name
           </label>
