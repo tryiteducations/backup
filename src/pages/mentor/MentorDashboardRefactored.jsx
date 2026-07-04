@@ -12,6 +12,7 @@ const NAV = [
   { icon: '👥', label: 'My Students', path: '/mentor-hub/students' },
   { icon: '💬', label: 'Doubts', path: '/mentor-hub/doubts' },
   { icon: '📁', label: 'Materials', path: '/mentor-hub/materials' },
+  { icon: '💡', label: 'Concept Videos', path: '/concept-videos' },
   { icon: '🏆', label: 'Leaderboard', path: '/mentor-hub/leaderboard' },
   { icon: '💰', label: 'Earnings', path: '/mentor-hub/cashback' },
   { icon: '📊', label: 'Analytics', path: '/mentor-hub/analytics' },

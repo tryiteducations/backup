@@ -169,16 +169,7 @@ const Stub = ({ title = 'Coming Soon' }) => (
 )
 
 const Loader = () => (
-  <div style={{ minHeight:'100vh', display:'flex', alignItems:'center',
-    justifyContent:'center', background:'linear-gradient(135deg,#1E3A5F,#0F2140)' }}>
-    <svg width="56" height="56" viewBox="0 0 56 56">
-      <circle cx="28" cy="28" r="22" fill="none" stroke="rgba(212,175,55,0.18)" strokeWidth="4"/>
-      <circle cx="28" cy="28" r="22" fill="none" stroke="#C9A84C" strokeWidth="4"
-        strokeDasharray="40 98"
-        style={{ animation:'spin 1.2s linear infinite', transformOrigin:'center' }}/>
-    </svg>
-    <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
-  </div>
+  <div style={{ minHeight:'100vh', background:'transparent' }} />
 )
 
 function useGlobalGlitter() {
