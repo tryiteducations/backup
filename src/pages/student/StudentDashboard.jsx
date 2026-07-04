@@ -145,10 +145,17 @@ export default function StudentDashboard() {
   const primary = theme?.primary??'#1E3A5F'
   const primD   = theme?.primaryDark??'#0F2140'
 
-  const txt   = isDark?'#fff':'#0F1020'
-  const muted = isDark?'rgba(255,255,255,0.80)':'#64748B'
-  const card  = isDark?'rgba(255,255,255,0.04)':'#fff'
-  const bdr   = isDark?'rgba(255,255,255,0.07)':'#E2E8F0'
+  // Page/card backgrounds - read from the theme's real dedicated fields
+  // (GitHub-style near-black for dark themes, warm-tinted for light),
+  // NOT derived from primary/primaryDark which are accent colors meant
+  // for buttons/highlights, not full-page backgrounds.
+  const pageBg  = theme?.background ?? (isDark ? '#0D1117' : '#F0F4F8')
+  const surface = theme?.surface ?? (isDark ? '#161B22' : '#FFFFFF')
+
+  const txt   = theme?.text ?? (isDark?'#fff':'#0F1020')
+  const muted = theme?.textLight ?? (isDark?'rgba(255,255,255,0.80)':'#64748B')
+  const card  = surface
+  const bdr   = theme?.border ?? (isDark?'rgba(255,255,255,0.07)':'#E2E8F0')
 
   // State
   const [profile,    setProfile]    = useState(null)
@@ -252,7 +259,7 @@ export default function StudentDashboard() {
   }
 
   if(loading)return(
-    <div style={{minHeight:'100vh',background:isDark?primD:'#F0F4F8',
+    <div style={{minHeight:'100vh',background:pageBg,
       display:'flex',alignItems:'center',justifyContent:'center',flexDirection:'column',gap:16}}>
       <Ring pct={75} size={64} color={accent}><span style={{fontSize:22}}>🎓</span></Ring>
       <p style={{color:muted,fontFamily:'Poppins,sans-serif',fontSize:14}}>Loading your dashboard...</p>
@@ -274,7 +281,7 @@ export default function StudentDashboard() {
 
   return(
     <div className={sidebarOpen ? 'sidebar-open' : ''} style={{display:'flex',minHeight:'100vh',
-      background:isDark?`radial-gradient(ellipse 80% 60% at 20% -10%,${primary}40,transparent 60%),${primD}`:'#F0F4F8',
+      background:isDark?`radial-gradient(ellipse 80% 60% at 20% -10%,${primary}40,transparent 60%),${pageBg}`:pageBg,
       fontFamily:'Inter,sans-serif',position:'relative'}}>
 
       {/* -- Overlays -------------------------------------------- */}
@@ -313,7 +320,7 @@ export default function StudentDashboard() {
           onClick={()=>setShowThemePicker(false)}>
           <div onClick={e=>e.stopPropagation()} style={{
             position:'absolute',top:70,right:80,
-            background:isDark?primD:'#fff',borderRadius:18,padding:'20px',
+            background:surface,borderRadius:18,padding:'20px',
             border:`1px solid ${accent}30`,width:280,
             boxShadow:'0 20px 60px rgba(0,0,0,0.3)'}}>
             <p style={{color:txt,fontFamily:'Poppins,sans-serif',fontWeight:800,
@@ -358,7 +365,7 @@ export default function StudentDashboard() {
           display:'flex',alignItems:'center',justifyContent:'center'}}
           onClick={()=>setShowCustomize(false)}>
           <div onClick={e=>e.stopPropagation()} style={{
-            background:isDark?primD:'#fff',borderRadius:24,padding:'24px',
+            background:surface,borderRadius:24,padding:'24px',
             width:'90%',maxWidth:400,border:`1px solid ${accent}25`,
             maxHeight:'80vh',overflowY:'auto'}}>
             <div style={{display:'flex',justifyContent:'space-between',
@@ -399,7 +406,7 @@ export default function StudentDashboard() {
           onClick={()=>setShowNotifs(false)}>
           <div onClick={e=>e.stopPropagation()} style={{
             position:'absolute',top:70,right:24,
-            background:isDark?primD:'#fff',borderRadius:18,
+            background:surface,borderRadius:18,
             padding:'16px',width:320,
             border:`1px solid ${bdr}`,
             boxShadow:'0 20px 60px rgba(0,0,0,0.2)'}}>
