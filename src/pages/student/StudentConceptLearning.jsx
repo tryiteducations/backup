@@ -3,7 +3,7 @@
 // students browse/search/filter by subject/exam/topic/language and react
 // with emojis. Helps students discover mentors worth booking for 1:1 tuition.
 import { useState, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
 
@@ -36,6 +36,8 @@ const VIDEOS = [
 
 export default function StudentConceptLearning() {
   const nav = useNavigate()
+  const [searchParams] = useSearchParams()
+  const mentorFilter = searchParams.get('mentor')
   const { theme } = useTheme()
   const { user } = useAuth()
   const isDark = theme?.isDark || false
@@ -59,13 +61,14 @@ export default function StudentConceptLearning() {
 
   const filtered = useMemo(() => {
     return VIDEOS.filter(v => {
+      if (mentorFilter && v.mentorId !== mentorFilter && v.mentorName !== mentorFilter) return false
       if (subject !== 'All' && v.subject !== subject) return false
       if (exam !== 'All Exams' && v.exam !== exam) return false
       if (language !== 'All Languages' && v.language !== language) return false
       if (search && !v.title.toLowerCase().includes(search.toLowerCase())) return false
       return true
     })
-  }, [subject, exam, language, search])
+  }, [subject, exam, language, search, mentorFilter])
 
   function handleReact(videoId, emoji) {
     setReacted(prev => ({ ...prev, [videoId]: prev[videoId] === emoji ? null : emoji }))
@@ -86,6 +89,15 @@ export default function StudentConceptLearning() {
       </div>
 
       <div style={{ padding: '20px', maxWidth: 960, margin: '0 auto' }}>
+        {mentorFilter && (
+          <div style={{ background: `${a}18`, border: `1px solid ${a}40`, borderRadius: 12,
+            padding: '10px 16px', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ color: t, fontSize: 12.5, fontWeight: 600 }}>Showing videos by <b>{mentorFilter}</b></span>
+            <button onClick={() => nav('/student/concept')} style={{
+              marginLeft: 'auto', background: 'transparent', border: 'none', color: a,
+              fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>Clear ✕</button>
+          </div>
+        )}
         {/* Search */}
         <input
           value={search}

@@ -319,6 +319,7 @@ export default function StudentMentor() {
           <div style={{display:'flex',borderBottom:`1px solid ${b}`,padding:'0 24px',gap:0}}>
             {[
               {id:'about',label:'About'},
+              {id:'videos',label:'💡 Videos'},
               {id:'stats',label:'Stats'},
               {id:'materials',label:'Materials',locked:true},
               {id:'reviews',label:'Reviews',locked:true},
@@ -451,6 +452,23 @@ export default function StudentMentor() {
                     </p>
                   </div>
                 )}
+              </div>
+            )}
+
+            {profileTab === 'videos' && (
+              <div>
+                <p style={{color:t,fontWeight:700,fontSize:14,margin:'0 0 4px'}}>
+                  💡 Concept Videos by {prof.name}
+                </p>
+                <p style={{color:m,fontSize:12,margin:'0 0 14px'}}>
+                  Explainer videos posted in Concept Learning - watch before booking to see their teaching style.
+                </p>
+                <button onClick={()=>nav(`/student/concept?mentor=${prof.id||prof.name}`)}
+                  style={{width:'100%', background:`linear-gradient(135deg,${p},${a})`,
+                    border:'none', borderRadius:14, padding:'13px', color:'#fff', fontWeight:700, fontSize:13,
+                    cursor:'pointer', boxShadow:`0 4px 20px ${a}35`}}>
+                  🎬 View all videos in Concept Learning →
+                </button>
               </div>
             )}
 
