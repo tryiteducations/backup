@@ -199,7 +199,7 @@ export default function StudentGames() {
 
   const shareLevel = (game) => {
     const level = gameLevels[game.id] || 1
-    const text = `I just reached Level ${level} in ${game.name} ${game.emoji} on TryIT Educations! ????\n\nImproving my ${game.skill} every day.\n\nJoin me: tryiteducations.net`
+    const text = `I just reached Level ${level} in ${game.name} ${game.emoji} on TryIT Educations! 🎉🎊\n\nImproving my ${game.skill} every day.\n\nJoin me: tryiteducations.net`
     if (navigator.share) {
       navigator.share({ title: `Level ${level} in ${game.name}!`, text })
     } else {

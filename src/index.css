@@ -412,3 +412,17 @@ button:active {
 ::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 3px; }
 ::-webkit-scrollbar-track { background: transparent; }
 
+
+/* ── Twemoji sizing ──────────────────────────────────────────
+   Twemoji replaces emoji characters with <img> tags. Without this
+   rule, those images render at their raw native size (often huge)
+   instead of scaling like an inline emoji character would. This
+   makes every Twemoji image inherit the font-size of whatever text
+   it's sitting next to, matching how a real emoji glyph behaves. */
+img.twemoji {
+  height: 1em;
+  width: 1em;
+  margin: 0 0.05em 0 0.1em;
+  vertical-align: -0.1em;
+  display: inline-block;
+}
