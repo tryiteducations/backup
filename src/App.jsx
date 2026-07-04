@@ -5,7 +5,6 @@ import { ToastProvider } from './context/ToastContext'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import ImpersonationBanner from './components/ImpersonationBanner'
 import { AnimatePresence } from 'framer-motion'
-import MotionLayer from './components/global/MotionLayer'
 import NotificationBar from './components/NotificationBar'
 import useTwemoji from './hooks/useTwemoji'
 
@@ -201,7 +200,6 @@ function ThemedApp() {
       userPlan={user?.is_admin || localStorage.getItem('tryit_is_admin')==='true' ? 'ultra' : (user?.plan ?? 'free')}
       userStats={{ tests_completed: user?.testsCompleted ?? 0, streak_days: user?.streak ?? 0, coins_earned: user?.coins ?? 0 }}
     >
-      <MotionLayer />
       <BrowserRouter>
         <TwemojiEnhancer />
         <ImpersonationBanner />
