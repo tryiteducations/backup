@@ -1025,7 +1025,7 @@ export default function StudentDashboard() {
                   <div style={{height:68, background:isDark?'linear-gradient(145deg,rgba(2,132,200,0.15),rgba(56,189,248,0.1))':'linear-gradient(145deg,#e0f2fe,#bae6fd)', borderRadius:10, display:'flex', alignItems:'center', justifyContent:'center', fontSize:28, marginBottom:12, color:isDark?'#38BDF8':'#0369a1'}}>
                     ⚙️
                   </div>
-                  <button onClick={()=>navigate('/student/concept/science')} style={{width:'100%', background:card, border:`1px solid ${accent}40`, color:accent, fontWeight:700, fontSize:11, padding:'9px', borderRadius:10, cursor:'pointer'}}>
+                  <button onClick={()=>navigate('/student/concept')} style={{width:'100%', background:card, border:`1px solid ${accent}40`, color:accent, fontWeight:700, fontSize:11, padding:'9px', borderRadius:10, cursor:'pointer'}}>
                     Watch Animated Explanation →
                   </button>
                 </div>
