@@ -45,6 +45,7 @@ export default function MentorHub() {
   const { user } = useAuth()
   const { theme } = useTheme()
   const p = theme?.primary||'#1E3A5F'
+  const isDark = theme?.isDark || false
   const a = theme?.accent||'#C9A84C'
   const t = theme?.text||'#1E293B'
   const m = theme?.textLight||'#64748B'
@@ -98,7 +99,7 @@ export default function MentorHub() {
   const sidebarJSX = (
     <div style={{
       width: 220,
-      background: p,
+      background: isDark ? (theme?.surface || '#161B22') : p,
       minHeight: '100vh',
       position: 'fixed',
       top: 0,

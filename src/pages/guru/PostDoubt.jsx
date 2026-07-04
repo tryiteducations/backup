@@ -169,9 +169,10 @@ export default function PostDoubt() {
               </label>
               <select value={exam} onChange={e=>setExam(e.target.value)}
                 style={{...inputStyle,cursor:'pointer',
-                  border:'1.5px solid '+(exam?a:b)}}>
-                <option value="">- Choose your exam -</option>
-                {EXAMS.map(e=><option key={e} value={e}>{e}</option>)}
+                  border:'1.5px solid '+(exam?a:b),
+                  colorScheme:isDark?'dark':'light'}}>
+                <option value="" style={{background:isDark?'#161B22':'#fff',color:t}}>- Choose your exam -</option>
+                {EXAMS.map(e=><option key={e} value={e} style={{background:isDark?'#161B22':'#fff',color:t}}>{e}</option>)}
               </select>
             </div>
 

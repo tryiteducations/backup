@@ -17,7 +17,7 @@ export default function StudentBookmarks() {
   const muted = isDark ? 'rgba(255,255,255,0.55)' : '#64748B'
   const card = isDark ? 'rgba(255,255,255,0.06)' : '#fff'
   const bdr = isDark ? 'rgba(255,255,255,0.1)' : '#E2E8F0'
-  const bg = isDark ? (theme?.primaryDark ?? '#0F2140') : '#F0F4F8'
+  const bg = theme?.background ?? (isDark ? '#0D1117' : '#F0F4F8')
 
   const [bookmarks, setBookmarks] = useState([])
   const [loading, setLoading] = useState(true)

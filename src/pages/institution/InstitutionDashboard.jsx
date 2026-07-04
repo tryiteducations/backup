@@ -45,6 +45,7 @@ export default function InstitutionDashboard() {
   const location = useLocation()
   const { user } = useAuth()
   const { theme } = useTheme()
+  const isDark = theme?.isDark || false
   const p = theme?.primary||'#1E3A5F', a = theme?.accent||'#C9A84C'
   const t = theme?.text||'#1E293B', m = theme?.textLight||'#64748B'
   const bg = theme?.background||'#F8FAFC', c = theme?.surface||'#FFFFFF'
@@ -70,7 +71,7 @@ export default function InstitutionDashboard() {
 
   const sidebarJSX = (
     <div style={{
-      width:220, background:p, minHeight:'100vh',
+      width:220, background:isDark ? (theme?.surface || '#161B22') : p, minHeight:'100vh',
       position:'fixed', top:0,
       left: isMobile ? (sidebarOpen ? 0 : -240) : 0,
       zIndex:200, display:'flex', flexDirection:'column',
