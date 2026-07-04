@@ -1,0 +1,88 @@
+/* ============================================
+   VIDYA INDIGO — SINGLE SOURCE OF THEME TRUTH
+   Every page (Home, Launchpad, Ultra, Subscribe,
+   Dashboard) must read ONLY from these variables.
+   No page may hardcode a hex color or its own
+   gradient. That's the root cause of the
+   green → purple → green flicker you saw.
+   ============================================ */
+
+:root,
+[data-theme="light"] {
+  /* Base surfaces — Radix-style neutral scale, indigo-tinted */
+  --color-bg: #F8F9FC;
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #F1F2F8;
+  --color-border: #E4E5F0;
+
+  /* Text */
+  --color-text: #1A1B25;
+  --color-text-muted: #5C5E70;
+  --color-text-on-primary: #FFFFFF;
+
+  /* Brand — Vidya Indigo */
+  --color-primary: #2D1B69;
+  --color-primary-hover: #241557;
+  --color-primary-soft: #EDEAFB;   /* tinted bg for badges/pills */
+
+  /* Accent — Amber (used sparingly: CTAs, highlights, streak icon) */
+  --color-accent: #F59E0B;
+  --color-accent-hover: #D9860A;
+  --color-accent-soft: #FEF3E0;
+
+  /* Semantic */
+  --color-success: #16A34A;
+  --color-danger: #DC2626;
+  --color-warning: #D97706;
+
+  /* Elevation */
+  --shadow-card: 0 1px 3px rgba(26, 27, 37, 0.06), 0 1px 2px rgba(26, 27, 37, 0.04);
+  --shadow-card-hover: 0 4px 12px rgba(26, 27, 37, 0.08);
+}
+
+[data-theme="dark"] {
+  /* Base surfaces — near-black, indigo-tinted (NOT solid brand purple) */
+  --color-bg: #0D0B14;
+  --color-surface: #16121F;
+  --color-surface-alt: #1E1930;
+  --color-border: #2A2440;
+
+  /* Text */
+  --color-text: #F2F1F8;
+  --color-text-muted: #A5A3B8;
+  --color-text-on-primary: #FFFFFF;
+
+  /* Brand — lightened indigo so it reads on dark bg */
+  --color-primary: #8B7CD8;
+  --color-primary-hover: #A392E8;
+  --color-primary-soft: #241D3D;
+
+  /* Accent stays consistent across modes */
+  --color-accent: #F59E0B;
+  --color-accent-hover: #FBBF24;
+  --color-accent-soft: #2E2410;
+
+  /* Semantic */
+  --color-success: #4ADE80;
+  --color-danger: #F87171;
+  --color-warning: #FBBF24;
+
+  /* Elevation */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================================
+   USAGE RULE FOR EVERY COMPONENT/PAGE
+   ============================================
+   background:  var(--color-bg)        <- page root
+   card bg:     var(--color-surface)   <- cards, panels
+   card border: var(--color-border)
+   text:        var(--color-text)
+   subtext:     var(--color-text-muted)
+   primary btn: var(--color-primary)
+   CTA/accent:  var(--color-accent)    <- use for ONE thing per screen
+                                          (Subscribe button, streak flame)
+   NEVER: bg-gradient-to-r from-green-... on one page and
+          from-purple-... on another. One brand = one --color-primary.
+*/
