@@ -1,7 +1,8 @@
 // src/lib/themes.js
-// TryIT Educations - 42 Theme System (matches 42 Indian languages)
+// TryIT Educations - Curated Ambient Theme System
+// 8 theme families, each with a matched Light + Dark pair (16 total)
 // buildTheme() auto-enforces WCAG AA 4.5:1 contrast - no theme can ship with unreadable text
-// FREE: 2 | PRO: 10 (3 instant + 7 coins/progress) | ULTRA: 30 (3 instant + 27 coins/progress)
+// FREE: 2 families (4 themes) | PRO: 6 families (12 themes)
 
 // ── Color math (dependency-free) ────────────────────────────
 function hexToRgb(hex) {
@@ -47,7 +48,7 @@ function ensureContrast(hex, bgHex, minRatio) {
 // ── Theme builder ────────────────────────────────────────────
 function buildTheme(seed) {
   const {
-    id, name, emoji, category, tier = 'pro',
+    id, name, emoji, family, mode, category, tier = 'pro',
     primary, primaryDark, accent, accentLight,
     bg = '#FFFFFF', surface = '#FFFFFF', isDark = false,
     success = '#16A34A', error = '#DC2626', warning = '#D97706',
@@ -64,13 +65,11 @@ function buildTheme(seed) {
   const primaryDk  = primaryDark || mix(primary, '#000000', 0.2)
   const accentL    = accentLight || mix(accent, '#FFFFFF', 0.3)
 
-  // Ensure accent is readable on primary background
   const accentOnPrimary = ensureContrast(accent, primary, 3.0)
-  // Ensure primary text is readable
   const primaryText = ensureContrast(primary, bg, 4.5)
 
-  const theme = {
-    id, name, emoji, category, tier, plan,
+  return {
+    id, name, emoji, family, mode, category, tier, plan,
     coinPrice, instant, unlock, isDark,
     primary: primaryText,
     primaryDark: primaryDk,
@@ -85,482 +84,164 @@ function buildTheme(seed) {
     success,
     error,
     warning,
-    // CSS variable map
     unlocked: tier === 'free' || instant,
   }
-  return theme
 }
 
-// ── FREE THEMES (2) ──────────────────────────────────────────
+// ── FREE THEMES (2 families x light/dark = 4) ────────────────
 const FREE_THEMES = [
   buildTheme({
-    id: 'vidya-classic', name: 'Vidya Classic', emoji: '🎓',
-    category: 'Free', tier: 'free', plan: 'free', instant: true,
+    id: 'vidya-classic', name: 'Vidya Light', emoji: '🎓', family: 'vidya', mode: 'light',
+    category: 'Free', tier: 'base', plan: 'free', instant: true,
     primary: '#2D1B69', primaryDark: '#1A0D3D',
     accent: '#F59E0B', accentLight: '#FCD34D',
     bg: '#FFFFFF', surface: '#FAFAFA', isDark: false,
   }),
   buildTheme({
-    id: 'vidya-midnight', name: 'Vidya Midnight', emoji: '🌙',
-    category: 'Free', tier: 'free', plan: 'free', instant: true,
+    id: 'vidya-midnight', name: 'Vidya Dark', emoji: '🌙', family: 'vidya', mode: 'dark',
+    category: 'Free', tier: 'base', plan: 'free', instant: true,
     primary: '#A78BFA', primaryDark: '#7C3AED',
     accent: '#F59E0B', accentLight: '#FCD34D',
     bg: '#0F0A1E', surface: '#1A1033', isDark: true,
   }),
-]
-
-// ── PRO THEMES (10) ─────────────────────────────────────────
-// 3 instant (users want to upgrade), 7 by coins/progress
-const PRO_THEMES = [
-  // --- 3 INSTANT (shown as locked preview on free, unlocks on Pro) ---
   buildTheme({
-    id: 'ocean-scholar', name: 'Ocean Scholar', emoji: '🌊',
-    category: 'Pro', tier: 'pro', plan: 'pro', instant: true,
+    id: 'ocean-light', name: 'Ocean Light', emoji: '🌊', family: 'ocean', mode: 'light',
+    category: 'Free', tier: 'base', plan: 'free', instant: true,
     primary: '#0C4A6E', primaryDark: '#082F49',
     accent: '#06B6D4', accentLight: '#67E8F9',
     bg: '#F0F9FF', surface: '#FFFFFF', isDark: false,
   }),
   buildTheme({
-    id: 'forest-scholar', name: 'Forest Scholar', emoji: '🌿',
+    id: 'ocean-dark', name: 'Ocean Dark', emoji: '🌊', family: 'ocean', mode: 'dark',
+    category: 'Free', tier: 'base', plan: 'free', instant: true,
+    primary: '#38BDF8', primaryDark: '#0284C7',
+    accent: '#22D3EE', accentLight: '#A5F3FC',
+    bg: '#031A2B', surface: '#0C2A3E', isDark: true,
+  }),
+]
+
+// ── PRO THEMES (6 families x light/dark = 12) ────────────────
+const PRO_THEMES = [
+  buildTheme({
+    id: 'forest-light', name: 'Forest Light', emoji: '🌿', family: 'forest', mode: 'light',
     category: 'Pro', tier: 'pro', plan: 'pro', instant: true,
     primary: '#14532D', primaryDark: '#052E16',
     accent: '#22C55E', accentLight: '#86EFAC',
     bg: '#F0FDF4', surface: '#FFFFFF', isDark: false,
   }),
   buildTheme({
-    id: 'carbon-tech', name: 'Carbon Tech', emoji: '⚡',
+    id: 'forest-dark', name: 'Forest Dark', emoji: '🌿', family: 'forest', mode: 'dark',
     category: 'Pro', tier: 'pro', plan: 'pro', instant: true,
-    primary: '#6366F1', primaryDark: '#4338CA',
-    accent: '#A5B4FC', accentLight: '#C7D2FE',
-    bg: '#09090B', surface: '#18181B', isDark: true,
+    primary: '#4ADE80', primaryDark: '#16A34A',
+    accent: '#86EFAC', accentLight: '#BBF7D0',
+    bg: '#052012', surface: '#0D3320', isDark: true,
   }),
-  // --- 7 COINS/PROGRESS ---
   buildTheme({
-    id: 'saffron-dawn', name: 'Saffron Dawn', emoji: '🌅',
-    category: 'Pro', tier: 'pro', plan: 'pro', instant: false,
-    coinPrice: 150,
+    id: 'sunset-light', name: 'Sunset Light', emoji: '🌅', family: 'sunset', mode: 'light',
+    category: 'Pro', tier: 'pro', plan: 'pro', instant: false, coinPrice: 150,
     primary: '#7C2D12', primaryDark: '#431407',
     accent: '#F97316', accentLight: '#FDBA74',
     bg: '#FFF7ED', surface: '#FFFFFF', isDark: false,
   }),
   buildTheme({
-    id: 'arctic-clean', name: 'Arctic Clean', emoji: '❄️',
-    category: 'Pro', tier: 'pro', plan: 'pro', instant: false,
-    coinPrice: 150,
-    primary: '#1E40AF', primaryDark: '#1E3A8A',
-    accent: '#60A5FA', accentLight: '#BFDBFE',
-    bg: '#EFF6FF', surface: '#FFFFFF', isDark: false,
+    id: 'sunset-dark', name: 'Sunset Dark', emoji: '🌅', family: 'sunset', mode: 'dark',
+    category: 'Pro', tier: 'pro', plan: 'pro', instant: false, coinPrice: 150,
+    primary: '#FB923C', primaryDark: '#EA580C',
+    accent: '#FDBA74', accentLight: '#FED7AA',
+    bg: '#2B1206', surface: '#3D1A08', isDark: true,
   }),
   buildTheme({
-    id: 'royal-court', name: 'Royal Court', emoji: '👑',
-    category: 'Pro', tier: 'pro', plan: 'pro', instant: false,
-    coinPrice: 200,
+    id: 'royal-light', name: 'Royal Light', emoji: '👑', family: 'royal', mode: 'light',
+    category: 'Pro', tier: 'pro', plan: 'pro', instant: false, coinPrice: 200,
+    primary: '#6D28D9', primaryDark: '#5B21B6',
+    accent: '#F59E0B', accentLight: '#FDE68A',
+    bg: '#FAF5FF', surface: '#FFFFFF', isDark: false,
+  }),
+  buildTheme({
+    id: 'royal-dark', name: 'Royal Dark', emoji: '👑', family: 'royal', mode: 'dark',
+    category: 'Pro', tier: 'pro', plan: 'pro', instant: false, coinPrice: 200,
     primary: '#A78BFA', primaryDark: '#7C3AED',
     accent: '#F59E0B', accentLight: '#FDE68A',
     bg: '#1E1B4B', surface: '#2E2B5E', isDark: true,
   }),
   buildTheme({
-    id: 'rose-scholar', name: 'Rose Scholar', emoji: '🌸',
-    category: 'Pro', tier: 'pro', plan: 'pro', instant: false,
-    coinPrice: 200,
+    id: 'rose-light', name: 'Rose Light', emoji: '🌸', family: 'rose', mode: 'light',
+    category: 'Pro', tier: 'pro', plan: 'pro', instant: false, coinPrice: 200,
     primary: '#881337', primaryDark: '#4C0519',
     accent: '#FB7185', accentLight: '#FECDD3',
     bg: '#FFF1F2', surface: '#FFFFFF', isDark: false,
   }),
   buildTheme({
-    id: 'jade-calm', name: 'Jade Calm', emoji: '🍃',
-    category: 'Pro', tier: 'pro', plan: 'pro', instant: false,
-    coinPrice: 200,
-    primary: '#34D399', primaryDark: '#10B981',
-    accent: '#6EE7B7', accentLight: '#A7F3D0',
-    bg: '#022C22', surface: '#064E3B', isDark: true,
+    id: 'rose-dark', name: 'Rose Dark', emoji: '🌸', family: 'rose', mode: 'dark',
+    category: 'Pro', tier: 'pro', plan: 'pro', instant: false, coinPrice: 200,
+    primary: '#FB7185', primaryDark: '#E11D48',
+    accent: '#FDA4AF', accentLight: '#FECDD3',
+    bg: '#2B0A11', surface: '#3D0F19', isDark: true,
   }),
   buildTheme({
-    id: 'copper-dusk', name: 'Copper Dusk', emoji: '🟤',
-    category: 'Pro', tier: 'pro', plan: 'pro', instant: false,
-    coinPrice: 250,
-    primary: '#FCD34D', primaryDark: '#F59E0B',
-    accent: '#FBBF24', accentLight: '#FDE68A',
-    bg: '#1C1410', surface: '#2C1F14', isDark: true,
+    id: 'slate-light', name: 'Slate Light', emoji: '⚡', family: 'slate', mode: 'light',
+    category: 'Pro', tier: 'pro', plan: 'pro', instant: true,
+    primary: '#4338CA', primaryDark: '#3730A3',
+    accent: '#6366F1', accentLight: '#A5B4FC',
+    bg: '#F8FAFC', surface: '#FFFFFF', isDark: false,
   }),
   buildTheme({
-    id: 'crimson-focus', name: 'Crimson Focus', emoji: '🔴',
-    category: 'Pro', tier: 'pro', plan: 'pro', instant: false,
-    coinPrice: 250,
+    id: 'slate-dark', name: 'Slate Dark', emoji: '⚡', family: 'slate', mode: 'dark',
+    category: 'Pro', tier: 'pro', plan: 'pro', instant: true,
+    primary: '#6366F1', primaryDark: '#4338CA',
+    accent: '#A5B4FC', accentLight: '#C7D2FE',
+    bg: '#09090B', surface: '#18181B', isDark: true,
+  }),
+  buildTheme({
+    id: 'crimson-light', name: 'Crimson Light', emoji: '🔴', family: 'crimson', mode: 'light',
+    category: 'Pro', tier: 'pro', plan: 'pro', instant: false, coinPrice: 250,
+    primary: '#B91C1C', primaryDark: '#7F1D1D',
+    accent: '#EF4444', accentLight: '#FCA5A5',
+    bg: '#FEF2F2', surface: '#FFFFFF', isDark: false,
+  }),
+  buildTheme({
+    id: 'crimson-dark', name: 'Crimson Dark', emoji: '🔴', family: 'crimson', mode: 'dark',
+    category: 'Pro', tier: 'pro', plan: 'pro', instant: false, coinPrice: 250,
     primary: '#FCA5A5', primaryDark: '#F87171',
     accent: '#EF4444', accentLight: '#FCA5A5',
     bg: '#1C0A0A', surface: '#2D1010', isDark: true,
   }),
 ]
 
-// ── ULTRA THEMES (30) ────────────────────────────────────────
-// 3 instant, 27 by coins/progress
-const ULTRA_THEMES = [
-  // --- 3 INSTANT ---
-  buildTheme({
-    id: 'firebase-dark', name: 'Firebase Dark', emoji: '🔥',
-    category: 'Ultra - Tech', tier: 'ultra', plan: 'ultra', instant: true,
-    primary: '#FFA000', primaryDark: '#FF6F00',
-    accent: '#FFCA28', accentLight: '#FFE082',
-    bg: '#1C1917', surface: '#292524', isDark: true,
-  }),
-  buildTheme({
-    id: 'github-night', name: 'GitHub Night', emoji: '🐙',
-    category: 'Ultra - Tech', tier: 'ultra', plan: 'ultra', instant: true,
-    primary: '#3FB950', primaryDark: '#2EA043',
-    accent: '#58A6FF', accentLight: '#79C0FF',
-    bg: '#0D1117', surface: '#161B22', isDark: true,
-  }),
-  buildTheme({
-    id: 'notion-gray', name: 'Notion Gray', emoji: '📝',
-    category: 'Ultra - Tech', tier: 'ultra', plan: 'ultra', instant: true,
-    primary: '#2D1B69', primaryDark: '#1A0D3D',
-    accent: '#F59E0B', accentLight: '#FCD34D',
-    bg: '#F7F6F3', surface: '#FFFFFF', isDark: false,
-  }),
-  // --- TECH BRAND (7 more) ---
-  buildTheme({
-    id: 'aws-deep', name: 'AWS Deep', emoji: '☁️',
-    category: 'Ultra - Tech', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 300,
-    primary: '#FF9900', primaryDark: '#EC7211',
-    accent: '#00A1C9', accentLight: '#67C8E2',
-    bg: '#0F172A', surface: '#1E293B', isDark: true,
-  }),
-  buildTheme({
-    id: 'linear-space', name: 'Linear Space', emoji: '🚀',
-    category: 'Ultra - Tech', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 300,
-    primary: '#8B5CF6', primaryDark: '#7C3AED',
-    accent: '#C4B5FD', accentLight: '#DDD6FE',
-    bg: '#060607', surface: '#111113', isDark: true,
-  }),
-  buildTheme({
-    id: 'stripe-indigo', name: 'Stripe Indigo', emoji: '💳',
-    category: 'Ultra - Tech', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 300,
-    primary: '#7A73FF', primaryDark: '#5851DB',
-    accent: '#00D4FF', accentLight: '#80EAFF',
-    bg: '#0A2540', surface: '#0D2F4F', isDark: true,
-  }),
-  buildTheme({
-    id: 'vercel-black', name: 'Vercel Black', emoji: '▲',
-    category: 'Ultra - Tech', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 350,
-    primary: '#EDEDED', primaryDark: '#FFFFFF',
-    accent: '#0070F3', accentLight: '#50A0FF',
-    bg: '#000000', surface: '#111111', isDark: true,
-  }),
-  buildTheme({
-    id: 'material-sky', name: 'Material Sky', emoji: '🎨',
-    category: 'Ultra - Tech', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 300,
-    primary: '#82B1FF', primaryDark: '#448AFF',
-    accent: '#40C4FF', accentLight: '#80D8FF',
-    bg: '#0D47A1', surface: '#1565C0', isDark: true,
-  }),
-  buildTheme({
-    id: 'vscode-blue', name: 'VS Code', emoji: '💻',
-    category: 'Ultra - Tech', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 300,
-    primary: '#9CDCFE', primaryDark: '#007ACC',
-    accent: '#007ACC', accentLight: '#569CD6',
-    bg: '#1E1E1E', surface: '#252526', isDark: true,
-  }),
-  buildTheme({
-    id: 'python-slate', name: 'Python Slate', emoji: '🐍',
-    category: 'Ultra - Tech', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 350,
-    primary: '#FFD43B', primaryDark: '#FCC419',
-    accent: '#4B8BBE', accentLight: '#6FA8D4',
-    bg: '#1A2332', surface: '#253040', isDark: true,
-  }),
-  // --- 5 ADDITIONAL TECH BRANDS (merged from deleted parallel system) ---
-  buildTheme({
-    id: 'supabase', name: 'Supabase', emoji: '⚡',
-    category: 'Ultra - Tech', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 300,
-    primary: '#1E1E1E', primaryDark: '#0D0D0D',
-    accent: '#3ECF8E', accentLight: '#6EE7B7',
-    bg: '#F8F9FA', surface: '#FFFFFF', isDark: false,
-  }),
-  buildTheme({
-    id: 'gemini', name: 'Gemini', emoji: '💎',
-    category: 'Ultra - Tech', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 300,
-    primary: '#000000', primaryDark: '#1A1A1A',
-    accent: '#4285F4', accentLight: '#7BAAF7',
-    bg: '#FAFAFA', surface: '#FFFFFF', isDark: false,
-  }),
-  buildTheme({
-    id: 'meta', name: 'Meta', emoji: '🌐',
-    category: 'Ultra - Tech', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 300,
-    primary: '#0866FF', primaryDark: '#0052CC',
-    accent: '#00A400', accentLight: '#4ADE80',
-    bg: '#F0F2F5', surface: '#FFFFFF', isDark: false,
-  }),
-  buildTheme({
-    id: 'mistral', name: 'Mistral', emoji: '🌪️',
-    category: 'Ultra - Tech', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 350,
-    primary: '#0A0E27', primaryDark: '#050818',
-    accent: '#00E5FF', accentLight: '#5EEBFF',
-    bg: '#0A0E27', surface: '#131840', isDark: true,
-  }),
-  buildTheme({
-    id: 'groq', name: 'Groq', emoji: '⚡',
-    category: 'Ultra - Tech', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 350,
-    primary: '#0D1117', primaryDark: '#010409',
-    accent: '#00FF41', accentLight: '#4DFF7A',
-    bg: '#0D1117', surface: '#161B22', isDark: true,
-  }),
-  // --- INDIAN SOUL (20) ---
-  buildTheme({
-    id: 'mysore-palace', name: 'Mysore Palace', emoji: '🏛️',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 300,
-    primary: '#D4AF37', primaryDark: '#B8960C',
-    accent: '#F5D76E', accentLight: '#F9E9A5',
-    bg: '#0D0019', surface: '#1A0033', isDark: true,
-  }),
-  buildTheme({
-    id: 'varanasi-ghat', name: 'Varanasi Ghat', emoji: '🪔',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 300,
-    primary: '#FF6B35', primaryDark: '#E54C17',
-    accent: '#FFB347', accentLight: '#FFD08A',
-    bg: '#1A0A00', surface: '#2A1200', isDark: true,
-  }),
-  buildTheme({
-    id: 'kashmir-dawn', name: 'Kashmir Dawn', emoji: '🏔️',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 300,
-    primary: '#2D1B69', primaryDark: '#1A0D3D',
-    accent: '#7DD3FC', accentLight: '#BAE6FD',
-    bg: '#E8F4FD', surface: '#FFFFFF', isDark: false,
-  }),
-  buildTheme({
-    id: 'chennai-marina', name: 'Chennai Marina', emoji: '🌊',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 300,
-    primary: '#00B4D8', primaryDark: '#0096B7',
-    accent: '#90E0EF', accentLight: '#CAF0F8',
-    bg: '#03045E', surface: '#0A0060', isDark: true,
-  }),
-  buildTheme({
-    id: 'mumbai-monsoon', name: 'Mumbai Monsoon', emoji: '🌧️',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 300,
-    primary: '#4FC3F7', primaryDark: '#0288D1',
-    accent: '#81D4FA', accentLight: '#B3E5FC',
-    bg: '#0F1923', surface: '#162030', isDark: true,
-  }),
-  buildTheme({
-    id: 'delhi-winter', name: 'Delhi Winter', emoji: '🌫️',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 350,
-    primary: '#F59E0B', primaryDark: '#D97706',
-    accent: '#FCD34D', accentLight: '#FDE68A',
-    bg: '#0F0F1A', surface: '#1A1A2E', isDark: true,
-  }),
-  buildTheme({
-    id: 'kerala-forest', name: 'Kerala Forest', emoji: '🌴',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 300,
-    primary: '#4ADE80', primaryDark: '#22C55E',
-    accent: '#86EFAC', accentLight: '#BBF7D0',
-    bg: '#001A0D', surface: '#002A14', isDark: true,
-  }),
-  buildTheme({
-    id: 'rajput-desert', name: 'Rajput Desert', emoji: '🏜️',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 350,
-    primary: '#FFB347', primaryDark: '#FF8C00',
-    accent: '#FF6B6B', accentLight: '#FFA5A5',
-    bg: '#1A0500', surface: '#2A0A00', isDark: true,
-  }),
-  buildTheme({
-    id: 'bengal-mustard', name: 'Bengal Mustard', emoji: '🌻',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 300,
-    primary: '#F4D03F', primaryDark: '#D4AC0D',
-    accent: '#F7DC6F', accentLight: '#FAE5A5',
-    bg: '#0D0E00', surface: '#1A1A00', isDark: true,
-  }),
-  buildTheme({
-    id: 'manipur-silk', name: 'Manipur Silk', emoji: '🎀',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 350,
-    primary: '#FF6EC7', primaryDark: '#FF1493',
-    accent: '#FFB3E6', accentLight: '#FFD6F0',
-    bg: '#0D0019', surface: '#1A0030', isDark: true,
-  }),
-  buildTheme({
-    id: 'assam-tea', name: 'Assam Tea', emoji: '🍵',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 300,
-    primary: '#77DD77', primaryDark: '#55CC55',
-    accent: '#A8E6A3', accentLight: '#C8F0C5',
-    bg: '#030F03', surface: '#071407', isDark: true,
-  }),
-  buildTheme({
-    id: 'orissan-temple', name: 'Orissan Temple', emoji: '⛪',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 350,
-    primary: '#FF8C00', primaryDark: '#E67300',
-    accent: '#FFA500', accentLight: '#FFD080',
-    bg: '#1A0A00', surface: '#2A1400', isDark: true,
-  }),
-  buildTheme({
-    id: 'punjabi-gold', name: 'Punjabi Gold', emoji: '⚡',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 350,
-    primary: '#FFD700', primaryDark: '#FFC200',
-    accent: '#FFE44D', accentLight: '#FFF0A0',
-    bg: '#0A0600', surface: '#150F00', isDark: true,
-  }),
-  buildTheme({
-    id: 'tamil-crimson', name: 'Tamil Crimson', emoji: '🔴',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 350,
-    primary: '#FF4444', primaryDark: '#CC0000',
-    accent: '#FF8888', accentLight: '#FFB3B3',
-    bg: '#0D0000', surface: '#1A0000', isDark: true,
-  }),
-  buildTheme({
-    id: 'himalayan-ice', name: 'Himalayan Ice', emoji: '❄️',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 400,
-    primary: '#1E3A8A', primaryDark: '#1E3A5F',
-    accent: '#93C5FD', accentLight: '#BFDBFE',
-    bg: '#F0F8FF', surface: '#FFFFFF', isDark: false,
-  }),
-  buildTheme({
-    id: 'rann-salt', name: 'Rann Salt', emoji: '🏞️',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 400,
-    primary: '#E65100', primaryDark: '#BF360C',
-    accent: '#FF8A50', accentLight: '#FFB280',
-    bg: '#FFFDE7', surface: '#FFFFFF', isDark: false,
-  }),
-  buildTheme({
-    id: 'andaman-teal', name: 'Andaman Teal', emoji: '🐠',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 400,
-    primary: '#2AA198', primaryDark: '#1A7A72',
-    accent: '#66C2BE', accentLight: '#9DD9D6',
-    bg: '#002B36', surface: '#073642', isDark: true,
-  }),
-  buildTheme({
-    id: 'coorg-coffee', name: 'Coorg Coffee', emoji: '☕',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 400,
-    primary: '#D2A679', primaryDark: '#A0522D',
-    accent: '#E8C9A0', accentLight: '#F5E3CC',
-    bg: '#0A0500', surface: '#140B00', isDark: true,
-  }),
-  buildTheme({
-    id: 'konkan-sunset', name: 'Konkan Sunset', emoji: '🌅',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 450,
-    primary: '#FF6B9D', primaryDark: '#E0456D',
-    accent: '#FFB347', accentLight: '#FFD08A',
-    bg: '#0D0008', surface: '#1A0012', isDark: true,
-  }),
-// Added 8 new ULTRA India-focused themes to reach top 50 total themes (2 free + 10 pro + 38 ultra)
-// All use buildTheme() for automatic WCAG AA contrast enforcement and Vidya-compatible colors
-  buildTheme({
-    id: 'deccan-stone', name: 'Deccan Stone', emoji: '🪨',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 500,
-    primary: '#B0BEC5', primaryDark: '#90A4AE',
-    accent: '#78909C', accentLight: '#B0BEC5',
-    bg: '#0A0A0A', surface: '#1A1A1A', isDark: true,
-  }),
-  buildTheme({
-    id: 'ganga-flow', name: 'Ganga Flow', emoji: '🏞️',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 450,
-    primary: '#1E88E5', primaryDark: '#1565C0',
-    accent: '#81D4FA', accentLight: '#B3E5FC',
-    bg: '#E0F2F1', surface: '#F1F8E9', isDark: false,
-  }),
-  buildTheme({
-    id: 'taj-mahal', name: 'Taj Mahal Glow', emoji: '🕌',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 450,
-    primary: '#B71C1C', primaryDark: '#7F0000',
-    accent: '#FFCDD2', accentLight: '#FFEBEE',
-    bg: '#F5F5F5', surface: '#FFFFFF', isDark: false,
-  }),
-  buildTheme({
-    id: 'kerala-backwaters', name: 'Kerala Backwaters', emoji: '🌴',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 400,
-    primary: '#2E7D32', primaryDark: '#1B5E20',
-    accent: '#A5D6A7', accentLight: '#C8E6C9',
-    bg: '#E8F5E9', surface: '#F1F8E9', isDark: false,
-  }),
-  buildTheme({
-    id: 'ladakh-lake', name: 'Ladakh Lake', emoji: '🏔️',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 500,
-    primary: '#0277BD', primaryDark: '#01579B',
-    accent: '#81D4FA', accentLight: '#B3E5FC',
-    bg: '#E1F0F7', surface: '#F0F9FF', isDark: false,
-  }),
-  buildTheme({
-    id: 'goa-vibes', name: 'Goa Vibes', emoji: '🏖️',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 400,
-    primary: '#FF6D00', primaryDark: '#E65100',
-    accent: '#FFAB40', accentLight: '#FFCC80',
-    bg: '#FFF3E0', surface: '#FFF8E1', isDark: false,
-  }),
-  buildTheme({
-    id: 'rajasthan-royal', name: 'Rajasthan Royal', emoji: '🏰',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 450,
-    primary: '#6A1B9A', primaryDark: '#4A148C',
-    accent: '#BA68C8', accentLight: '#E1BEE7',
-    bg: '#F3E5F5', surface: '#F8E8F8', isDark: false,
-  }),
-  buildTheme({
-    id: 'sikkim-himalaya', name: 'Sikkim Himalaya', emoji: '⛰️',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 450,
-    primary: '#2E7D32', primaryDark: '#1B5E20',
-    accent: '#81C784', accentLight: '#A5D6A7',
-    bg: '#E8F5E9', surface: '#F1F8E9', isDark: false,
-  }),
-  buildTheme({
-    id: 'andhra-spice', name: 'Andhra Spice', emoji: '🌶️',
-    category: 'Ultra - India', tier: 'ultra', plan: 'ultra', instant: false,
-    coinPrice: 400,
-    primary: '#C62828', primaryDark: '#B71C1C',
-    accent: '#EF5350', accentLight: '#FF8A80',
-    bg: '#FFEBEE', surface: '#FFEBEE', isDark: false,
-  }),
-]
-
 // ── Export ────────────────────────────────────────────────────
-export const THEME_LIST = [...FREE_THEMES, ...PRO_THEMES, ...ULTRA_THEMES]
+export const THEME_LIST = [...FREE_THEMES, ...PRO_THEMES]
 export const THEMES     = THEME_LIST.reduce((acc, t) => ({ ...acc, [t.id]: t }), {})
 export const DEFAULT    = 'vidya-classic'
 
+export const THEME_FAMILIES = [
+  { id: 'vidya',   label: 'Vidya',   tier: 'free' },
+  { id: 'ocean',   label: 'Ocean',   tier: 'free' },
+  { id: 'forest',  label: 'Forest',  tier: 'pro' },
+  { id: 'sunset',  label: 'Sunset',  tier: 'pro' },
+  { id: 'royal',   label: 'Royal',   tier: 'pro' },
+  { id: 'rose',    label: 'Rose',    tier: 'pro' },
+  { id: 'slate',   label: 'Slate',   tier: 'pro' },
+  { id: 'crimson', label: 'Crimson', tier: 'pro' },
+]
+
 export const THEME_CATEGORIES = [
-  { id: 'free',         label: 'Free',         count: FREE_THEMES.length },
-  { id: 'pro',          label: 'Pro',           count: PRO_THEMES.length },
-  { id: 'ultra-tech',   label: 'Ultra - Tech',  count: ULTRA_THEMES.filter(t=>t.category==='Ultra - Tech').length },
-  { id: 'ultra-india',  label: 'Ultra - India', count: ULTRA_THEMES.filter(t=>t.category==='Ultra - India').length },
+  { id: 'free', label: 'Free', count: FREE_THEMES.length },
+  { id: 'pro',  label: 'Pro',  count: PRO_THEMES.length },
 ]
 
 export function getTheme(id) {
   return THEMES[id] || THEMES[DEFAULT]
 }
 
+// Given a theme id, return the id of its light/dark counterpart within the same family
+export function getCounterpartThemeId(id) {
+  const current = THEMES[id]
+  if (!current) return DEFAULT
+  const targetMode = current.mode === 'dark' ? 'light' : 'dark'
+  const counterpart = THEME_LIST.find(t => t.family === current.family && t.mode === targetMode)
+  return counterpart ? counterpart.id : id
+}
+
 export const BASE_THEME_IDS = FREE_THEMES.map(t => t.id)
 export const PRO_THEME_IDS  = PRO_THEMES.map(t => t.id)
-export const ULTRA_THEME_IDS = ULTRA_THEMES.map(t => t.id)
+export const ULTRA_THEME_IDS = []

@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'
 import { Lock, Check, Sparkles, Crown } from 'lucide-react'
 import AppLayout from '../../components/layout/AppLayout'
 import { useTheme } from '../../context/ThemeContext'
+import { getCounterpartThemeId, getTheme } from '../../lib/themes'
+import { Sun, Moon } from 'lucide-react'
 
 const springTap = { type: 'spring', stiffness: 400, damping: 28 }
 
@@ -134,6 +136,30 @@ export default function ThemeSelector() {
         <p style={{ color: 'var(--color-accent, #D4AF37)', fontSize: 13, fontWeight: 700 }}>
           {unlockedCount} of {themesWithStatus.length} themes unlocked
         </p>
+      </div>
+
+      {/* Light / Dark switcher - swaps the current theme family's mode without changing the family */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 28,
+        background: 'var(--color-surface, #fff)', border: '1px solid var(--color-border, #E5E7EB)',
+        borderRadius: 16, padding: 10, width: 'fit-content' }}>
+        <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--color-text, #1E293B)', paddingLeft: 4 }}>
+          Ambient mode:
+        </span>
+        <button
+          onClick={() => setActiveTheme(getCounterpartThemeId(activeTheme))}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 8, padding: '8px 16px',
+            borderRadius: 12, border: 'none', cursor: 'pointer',
+            background: getTheme(activeTheme).isDark
+              ? 'linear-gradient(135deg, #1E1B4B, #0F0A1E)'
+              : 'linear-gradient(135deg, #FEF3C7, #FDE68A)',
+            color: getTheme(activeTheme).isDark ? '#F8FAFC' : '#78350F',
+            fontWeight: 700, fontSize: 13, transition: 'all 0.2s ease',
+          }}
+        >
+          {getTheme(activeTheme).isDark ? <Moon size={16} /> : <Sun size={16} />}
+          {getTheme(activeTheme).isDark ? 'Dark' : 'Light'} - tap to switch
+        </button>
       </div>
 
       <h2 style={{ fontFamily: 'Poppins,sans-serif', fontWeight: 700, fontSize: 14, color: 'var(--subtext-color, #64748B)', marginBottom: 12, textTransform: 'uppercase', letterSpacing: 0.5 }}>

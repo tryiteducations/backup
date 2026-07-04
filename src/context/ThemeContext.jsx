@@ -153,7 +153,7 @@ function isDarkColor(hex) {
   useEffect(() => {
     const current = themesWithStatus.find(t => t.id === activeTheme)
     if (current && !current.unlocked) {
-      const fallback = current.isDark ? 'midnight' : 'default'
+      const fallback = current.isDark ? 'vidya-midnight' : 'vidya-classic'
       setActiveThemeState(fallback)
       try { localStorage.setItem(STORAGE_KEY, fallback) } catch {}
     }
