@@ -38,20 +38,28 @@ export default function useTwemoji() {
 
     let observer
     let pollTimer
-    let stopTimer
+    let debounceTimer
 
-    const startObservingAndPolling = () => {
-      // catch lazy-loaded pages finishing their render AFTER the route change
-      observer = new MutationObserver(() => { runParse() })
+    const startObserving = () => {
+      // catch lazy-loaded pages AND later re-renders (e.g. async data like
+      // momentum/streak info arriving after mount, filter-tab clicks, etc.)
+      // finishing AFTER the initial parse - keep watching for the component's
+      // full lifetime instead of an arbitrary short timeout, since some pages
+      // (like Games Hub) have several separate async updates after mount.
+      // Debounced so rapid/successive mutations (including Twemoji's own
+      // <img> insertions) don't trigger constant re-parsing.
+      observer = new MutationObserver(() => {
+        clearTimeout(debounceTimer)
+        debounceTimer = setTimeout(runParse, 150)
+      })
       observer.observe(document.body, { childList: true, subtree: true })
-      stopTimer = setTimeout(() => observer && observer.disconnect(), 4000)
     }
 
     // Try immediately - if window.twemoji is already loaded, this succeeds right away
     const succeeded = runParse()
 
     if (succeeded) {
-      startObservingAndPolling()
+      startObserving()
     } else {
       // window.twemoji isn't ready yet (script still loading) - retry every 200ms
       // for up to 5 seconds instead of permanently giving up
@@ -60,7 +68,7 @@ export default function useTwemoji() {
         attempts += 1
         if (runParse() || attempts >= 25) {
           clearInterval(pollTimer)
-          startObservingAndPolling()
+          startObserving()
         }
       }, 200)
     }
@@ -68,7 +76,7 @@ export default function useTwemoji() {
     return () => {
       if (observer) observer.disconnect()
       if (pollTimer) clearInterval(pollTimer)
-      if (stopTimer) clearTimeout(stopTimer)
+      if (debounceTimer) clearTimeout(debounceTimer)
     }
     // re-run this whole setup on every route change
   }, [location.pathname, location.search])
