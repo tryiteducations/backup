@@ -253,12 +253,18 @@ export default function StudentDashboard() {
   }
 
   const share=async()=>{
+    const hasResults = attempts.length > 0
     const scoreVal = attempts[0]?.score||0
     const totalVal = attempts[0]?.total||100
     const examVal = attempts[0]?.exam_name||'TryIT exam'
     const rankVal = profile?.rank||'-'
     const nameVal = profile?.name||authUser?.name||'Student'
-    const text=`I scored ${scoreVal}/${totalVal} on ${examVal}! Rank #${rankVal} All-India. 🎓 tryiteducations.net`
+    const bigStat = hasResults ? `${scoreVal}/${totalVal}` : '🎯'
+    const statLine = hasResults ? examVal : 'Preparing for my exam'
+    const badgeLine = hasResults ? `🏆 All-India Rank #${rankVal}` : `🔥 ${curStr} day streak · Let's go!`
+    const text = hasResults
+      ? `I scored ${scoreVal}/${totalVal} on ${examVal}! Rank #${rankVal} All-India. 🎓 tryiteducations.net`
+      : `I'm preparing for my exam on TryIT Educations - join me! 🎓 tryiteducations.net`
 
     try {
       const canvas = document.createElement('canvas')
@@ -296,15 +302,15 @@ export default function StudentDashboard() {
 
       // The big stat
       ctx.fillStyle = accent; ctx.font = 'bold 120px Poppins, sans-serif'
-      ctx.fillText(`${scoreVal}/${totalVal}`, 70, 560)
+      ctx.fillText(bigStat, 70, 560)
       ctx.fillStyle = '#fff'; ctx.font = '34px Inter, sans-serif'
-      ctx.fillText(examVal, 70, 610)
+      ctx.fillText(statLine, 70, 610)
 
-      // Rank badge
+      // Rank / streak badge
       ctx.fillStyle = 'rgba(255,255,255,0.12)'
-      ctx.fillRect(70, 660, 400, 90)
+      ctx.fillRect(70, 660, 460, 90)
       ctx.fillStyle = '#fff'; ctx.font = 'bold 32px Poppins, sans-serif'
-      ctx.fillText(`🏆 All-India Rank #${rankVal}`, 95, 715)
+      ctx.fillText(badgeLine, 95, 715)
 
       // Footer tagline
       ctx.fillStyle = 'rgba(255,255,255,0.6)'; ctx.font = '28px Inter, sans-serif'
@@ -788,15 +794,13 @@ export default function StudentDashboard() {
               🎛️
             </button>
             {/* Share */}
-            {attempts.length>0&&(
-              <button onClick={share} style={{
-                background:card,border:`1px solid ${bdr}`,borderRadius:10,
-                width:38,height:38,cursor:'pointer',
-                display:'flex',alignItems:'center',justifyContent:'center',fontSize:16}}
-                title="Share my score">
-                📤
-              </button>
-            )}
+            <button onClick={share} style={{
+              background:card,border:`1px solid ${bdr}`,borderRadius:10,
+              width:38,height:38,cursor:'pointer',
+              display:'flex',alignItems:'center',justifyContent:'center',fontSize:16}}
+              title="Share my progress">
+              📤
+            </button>
             {/* Notifications */}
             <button onClick={()=>setShowNotifs(t=>!t)} style={{
               position:'relative',background:card,border:`1px solid ${bdr}`,
