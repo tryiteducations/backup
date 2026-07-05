@@ -123,6 +123,70 @@ export default function MentorDashboardRefactored() {
     loadDashboardData()
   }
 
+  async function handleShareAchievement() {
+    const nameVal = user?.name || 'Mentor'
+    const text = `I'm mentoring ${students.length} students with a ${rating.toFixed(1)}★ rating on TryIT Educations! 🎓 tryiteducations.net`
+    try {
+      const canvas = document.createElement('canvas')
+      canvas.width = 1080; canvas.height = 1080
+      const ctx = canvas.getContext('2d')
+
+      const grad = ctx.createLinearGradient(0, 0, 1080, 1080)
+      grad.addColorStop(0, p); grad.addColorStop(1, p)
+      ctx.fillStyle = grad; ctx.fillRect(0, 0, 1080, 1080)
+
+      const glow = ctx.createRadialGradient(860, 220, 20, 860, 220, 400)
+      glow.addColorStop(0, `${a}55`); glow.addColorStop(1, `${a}00`)
+      ctx.fillStyle = glow; ctx.fillRect(0, 0, 1080, 1080)
+
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 46px Poppins, sans-serif'
+      ctx.fillText('TryIT Educations', 70, 110)
+      ctx.fillStyle = a; ctx.fillRect(70, 130, 90, 6)
+
+      ctx.beginPath(); ctx.arc(150, 300, 70, 0, Math.PI * 2)
+      ctx.fillStyle = a; ctx.fill()
+      ctx.fillStyle = p; ctx.font = 'bold 60px Poppins, sans-serif'
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle'
+      ctx.fillText((nameVal[0] || 'M').toUpperCase(), 150, 305)
+      ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic'
+
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 40px Poppins, sans-serif'
+      ctx.fillText(nameVal, 250, 290)
+      ctx.fillStyle = 'rgba(255,255,255,0.75)'; ctx.font = '26px Inter, sans-serif'
+      ctx.fillText('MENTOR · TryIT Educations', 250, 330)
+
+      ctx.fillStyle = a; ctx.font = 'bold 110px Poppins, sans-serif'
+      ctx.fillText(`${rating.toFixed(1)}★`, 70, 560)
+      ctx.fillStyle = '#fff'; ctx.font = '34px Inter, sans-serif'
+      ctx.fillText('Average Student Rating', 70, 610)
+
+      ctx.fillStyle = 'rgba(255,255,255,0.12)'
+      ctx.fillRect(70, 660, 460, 90)
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 32px Poppins, sans-serif'
+      ctx.fillText(`👨‍🎓 Mentoring ${students.length} students`, 95, 715)
+
+      ctx.fillStyle = 'rgba(255,255,255,0.6)'; ctx.font = '28px Inter, sans-serif'
+      ctx.fillText('tryiteducations.net · Your Exam. Your Rank. Your Success.', 70, 1010)
+
+      canvas.toBlob(async (blob) => {
+        if (!blob) { if (navigator.share) { navigator.share({ title: 'My TryIT Mentor Stats', text }) } return }
+        const file = new File([blob], 'tryit-mentor-stats.png', { type: 'image/png' })
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({ title: 'My TryIT Mentor Stats', text, files: [file] })
+        } else if (navigator.share) {
+          await navigator.share({ title: 'My TryIT Mentor Stats', text })
+        } else {
+          const link = document.createElement('a')
+          link.href = URL.createObjectURL(blob); link.download = 'tryit-mentor-stats.png'
+          link.click()
+        }
+      }, 'image/png')
+    } catch (e) {
+      console.error('Share image generation failed:', e)
+      if (navigator.share) { navigator.share({ title: 'My TryIT Mentor Stats', text }) }
+    }
+  }
+
   const StatCard = ({ icon, label, value, color }) => (
     <div style={{
       background: c,
@@ -165,6 +229,13 @@ export default function MentorDashboardRefactored() {
           <StatCard icon="💰" label="This Month" value={`₹${earnings.thisMonth}`} color="#22C55E" />
         </div>
       )}
+
+      <button onClick={handleShareAchievement} style={{
+        alignSelf: 'flex-start', background: `linear-gradient(135deg,${p},${a})`,
+        border: 'none', borderRadius: 12, padding: '10px 20px', color: '#fff',
+        fontWeight: 700, fontSize: 13, cursor: 'pointer', boxShadow: `0 4px 20px ${a}35` }}>
+        📤 Share My Achievement
+      </button>
 
       {/* Pending Doubts */}
       {customization['pending_doubts'] !== false && (
