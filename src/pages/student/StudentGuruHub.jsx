@@ -1,6 +1,7 @@
 // src/pages/student/StudentGuruHub.jsx
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
+import ShareButton from '../../components/ShareButton'
 
 const CATS = [
   {e:'📐',l:'Mathematics',n:124},{e:'🔬',l:'Science',n:89},
@@ -34,6 +35,7 @@ export default function StudentGuruHub() {
           <h1 style={{color:t,fontSize:18,fontWeight:800,margin:0,textShadow:`0 0 20px ${a}50`}}>🤝 GuruHub</h1>
           <p style={{color:m,fontSize:11,margin:0}}>Ask doubts · Get answers from mentors & peers</p>
         </div>
+        <ShareButton headline="Ask doubts on TryIT GuruHub" stat="🤝" subLabel="Get answers from real mentors" context="GuruHub" emoji="🤝" />
         <button onClick={()=>nav('/guru-hub/post-doubt')} style={{background:`linear-gradient(135deg,${p},${a})`,
           border:'none',borderRadius:12,padding:'10px 18px',color:'#fff',fontWeight:700,fontSize:13,cursor:'pointer',
           boxShadow:`0 4px 20px ${a}45`}}>

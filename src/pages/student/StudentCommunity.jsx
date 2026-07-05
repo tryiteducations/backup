@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
 import { supabase } from '../../lib/supabase'
+import ShareButton from '../../components/ShareButton'
 
 export default function StudentCommunity() {
   const navigate = useNavigate()
@@ -86,6 +87,7 @@ export default function StudentCommunity() {
             <p style={{ color:muted, fontSize:11, margin:0 }}>Suggest features, report bugs, vote</p>
           </div>
         </div>
+        <ShareButton headline="Join the TryIT Community" stat="💬" subLabel="Suggest features, vote, connect" context="Community" emoji="💬" style={{marginRight:8}} />
         <button onClick={() => setShowNew(true)} style={{
           background:`linear-gradient(135deg,${accent},${accentL})`,
           border:'none', borderRadius:10, padding:'8px 14px',

@@ -1,6 +1,7 @@
 // src/pages/student/StudentTournament.jsx
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
+import ShareButton from '../../components/ShareButton'
 
 const LIVE = [
   {name:'TNPSC Grand Challenge',participants:8432,prize:'5000',exam:'TNPSC',ends:'2h 14m'},
@@ -41,6 +42,14 @@ export default function StudentTournament() {
             Compete live · Win coins · Climb ranks
           </p>
         </div>
+        <ShareButton
+          headline="Joining a TryIT Tournament"
+          stat="🏆"
+          subLabel="Compete live, All-India"
+          context="Tournament"
+          emoji="🏆"
+          style={{border:'1px solid rgba(255,255,255,0.3)',color:'#fff'}}
+        />
         <div style={{background:'#EF4444',borderRadius:20,padding:'4px 10px',
           display:'flex',alignItems:'center',gap:4}}>
           <div style={{width:6,height:6,borderRadius:'50%',background:'#fff',

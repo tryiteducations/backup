@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
 import { supabase } from '../../lib/supabase'
+import ShareButton from '../../components/ShareButton'
 
 function Ring({ pct=0, size=60, stroke=5, color='#C9A84C', children }) {
   const r = (size-stroke*2)/2
@@ -73,12 +74,19 @@ export default function StudentAnalytics() {
           background:card, border:`1px solid ${bdr}`, borderRadius:10,
           width:38, height:38, cursor:'pointer', color:txt, fontSize:18,
           display:'flex', alignItems:'center', justifyContent:'center' }}>←</button>
-        <div>
+        <div style={{ flex: 1 }}>
           <p style={{ color:txt, fontFamily:'Poppins,sans-serif', fontWeight:800, fontSize:18, margin:0 }}>
             📊 Analytics
           </p>
           <p style={{ color:muted, fontSize:11, margin:0 }}>Your performance breakdown</p>
         </div>
+        <ShareButton
+          headline="My Analytics Progress"
+          stat={attempts.length > 0 ? `${Math.round(attempts.reduce((s,a)=>s+(a.score/a.total*100||0),0)/attempts.length)}%` : `${streak?.current_streak||0}🔥`}
+          subLabel={attempts.length > 0 ? 'Average Score' : 'Day Streak'}
+          context="Analytics"
+          emoji="📊"
+        />
       </div>
 
       <div style={{ maxWidth:700, margin:'0 auto', padding:'20px' }}>

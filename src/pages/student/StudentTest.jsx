@@ -5,6 +5,7 @@ import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
 import { supabase } from '../../lib/supabase'
 import ExplanationPanel from '../../components/student/ExplanationPanel'
+import { shareProgress } from '../../lib/shareImage'
 
 const SAMPLE_QUESTIONS = [
   {
@@ -203,9 +204,15 @@ export default function StudentTest() {
 
   // Share result
   const shareResult = () => {
-    const text = `I scored ${result?.score}/${result?.total} (${result?.pct}%) on TryIT! 🎓 tryiteducations.net`
-    if (navigator.share) navigator.share({ title: 'My TryIT Score', text })
-    else navigator.clipboard?.writeText(text)
+    shareProgress({
+      theme,
+      name: authUser?.name || 'Student',
+      headline: `Scored ${result?.pct}% on my TryIT test`,
+      stat: `${result?.score}/${result?.total}`,
+      subLabel: 'Test Result',
+      context: 'Test Engine',
+      emoji: '📝',
+    })
   }
 
   return (
