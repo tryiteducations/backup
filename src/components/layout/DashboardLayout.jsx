@@ -15,6 +15,13 @@ import { useNavigate, useLocation } from 'react-router-dom'
  *   headerWidgets: optional right-side widgets
  *   customizableItems: items user can hide/show [{id, label, visible}, ...]
  */
+const SETTINGS_PATH = {
+  student: '/student/settings',
+  mentor: '/mentor-hub/settings',
+  institution: '/institution/settings',
+  family: '/family/settings',
+}
+
 export default function DashboardLayout({
   role = 'student',
   navigation = [],
@@ -41,10 +48,8 @@ export default function DashboardLayout({
   // State
   const [sidebarOpen, setSidebarOpen] = useState(() => window.innerWidth >= 768)
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
-  const [sideOpen, setSideOpen] = useState(true)
-  const [sideHover, setSideHover] = useState(false)
-  const sideVisible = isMobile ? true : (sideOpen || sideHover)
   const [showCustomizer, setShowCustomizer] = useState(false)
+  const [showNotifsPanel, setShowNotifsPanel] = useState(false)
   const [visibleItems, setVisibleItems] = useState(
     customizableItems.reduce((acc, item) => ({ ...acc, [item.id]: item.visible !== false }), {})
   )
@@ -101,23 +106,19 @@ export default function DashboardLayout({
       )}
 
       {/* SIDEBAR */}
-      <div
-        onMouseEnter={() => !isMobile && setSideHover(true)}
-        onMouseLeave={() => !isMobile && setSideHover(false)}
-        style={{
+      <div style={{
         position: isMobile ? 'fixed' : 'relative',
         left: isMobile ? (sidebarOpen ? 0 : -260) : 0,
         top: 0,
-        width: isMobile ? 260 : (sideVisible ? 260 : 68),
+        width: 260,
         height: '100vh',
         background: p,
         zIndex: 300,
         display: 'flex',
         flexDirection: 'column',
-        transition: 'left 0.3s ease, width 0.28s cubic-bezier(0.23,1,0.32,1)',
+        transition: 'left 0.3s ease',
         boxShadow: isMobile && sidebarOpen ? '4px 0 20px rgba(0,0,0,0.3)' : 'none',
         overflowY: 'auto',
-        overflowX: 'hidden',
       }}>
         {/* Sidebar Header */}
         <div style={{
@@ -140,13 +141,11 @@ export default function DashboardLayout({
               color: p,
               fontSize: 14,
             }}>T</div>
-            {sideVisible && (
-              <div style={{ color: '#fff', fontWeight: 700, fontSize: 13, whiteSpace: 'nowrap' }}>
-                TryIT
-                <br />
-                <span style={{ fontSize: 10, opacity: 0.7 }}>{role.toUpperCase()}</span>
-              </div>
-            )}
+            <div style={{ color: '#fff', fontWeight: 700, fontSize: 13 }}>
+              TryIT
+              <br />
+              <span style={{ fontSize: 10, opacity: 0.7 }}>{role.toUpperCase()}</span>
+            </div>
           </div>
           {isMobile && (
             <button onClick={() => setSidebarOpen(false)} style={{
@@ -161,21 +160,6 @@ export default function DashboardLayout({
               alignItems: 'center',
               justifyContent: 'center',
             }}>✕</button>
-          )}
-          {!isMobile && (
-            <button onClick={() => setSideOpen(o => !o)} style={{
-              background: 'rgba(255,255,255,0.1)',
-              border: 'none',
-              color: '#fff',
-              width: 28,
-              height: 28,
-              borderRadius: 8,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-            }}>{sideOpen ? '←' : '→'}</button>
           )}
         </div>
 
@@ -215,9 +199,9 @@ export default function DashboardLayout({
                   if (!isActive) e.target.style.background = 'transparent'
                 }}
               >
-                <span style={{ fontSize: 18, flexShrink: 0 }}>{item.icon}</span>
-                {sideVisible && <span style={{ whiteSpace: 'nowrap' }}>{item.label}</span>}
-                {isActive && sideVisible && <span style={{ marginLeft: 'auto', color: a }}>→</span>}
+                <span style={{ fontSize: 18 }}>{item.icon}</span>
+                <span>{item.label}</span>
+                {isActive && <span style={{ marginLeft: 'auto', color: a }}>→</span>}
               </button>
             )
           })}
@@ -299,7 +283,7 @@ export default function DashboardLayout({
           flexShrink: 0,
           boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
         }}>
-          {/* Left: Menu toggle & Title */}
+          {/* Left: Menu toggle & Greeting */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
             {isMobile && (
               <button
@@ -316,23 +300,74 @@ export default function DashboardLayout({
                 ☰
               </button>
             )}
-            <h1 style={{
-              margin: 0,
-              fontSize: 20,
-              fontWeight: 700,
-              color: p,
-              display: isMobile ? 'none' : 'block',
-            }}>
-              {title}
-            </h1>
+            <div>
+              <h1 style={{
+                margin: 0,
+                fontSize: 19,
+                fontWeight: 700,
+                color: p,
+                display: isMobile ? 'none' : 'block',
+              }}>
+                {new Date().getHours() < 12 ? 'Good Morning' : new Date().getHours() < 17 ? 'Good Afternoon' : 'Good Evening'}{' '}
+                <span style={{ color: a }}>{role.charAt(0).toUpperCase() + role.slice(1)}</span> 👋
+              </h1>
+              <p style={{ margin: '2px 0 0', fontSize: 12, color: m, display: isMobile ? 'none' : 'block' }}>
+                {title}
+              </p>
+            </div>
           </div>
 
-          {/* Right: Widgets & Customizer */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          {/* Right: Widgets & Customizer & Notifications & Profile */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             {/* Header Widgets */}
             {headerWidgets.map((widget, idx) => (
               <div key={idx}>{widget}</div>
             ))}
+
+            {/* Notifications bell */}
+            <div style={{ position: 'relative' }}>
+              <button
+                onClick={() => setShowNotifsPanel(v => !v)}
+                style={{
+                  position: 'relative',
+                  background: 'transparent',
+                  border: `1px solid ${b}`,
+                  borderRadius: 10,
+                  width: 38,
+                  height: 38,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: 16,
+                }}
+              >
+                🔔
+                <div style={{ position: 'absolute', top: 6, right: 6, width: 8, height: 8,
+                  borderRadius: '50%', background: '#F87171', border: `2px solid ${c}` }} />
+              </button>
+              {showNotifsPanel && (
+                <div style={{ position: 'absolute', top: '100%', right: 0, marginTop: 8,
+                  background: c, border: `1px solid ${b}`, borderRadius: 12,
+                  boxShadow: '0 8px 24px rgba(0,0,0,0.12)', zIndex: 1000, minWidth: 260, padding: '10px' }}>
+                  <p style={{ color: p, fontWeight: 700, fontSize: 13, margin: '4px 8px 8px' }}>Notifications</p>
+                  <p style={{ color: m, fontSize: 12, margin: '4px 8px', padding: '8px' }}>No new notifications right now.</p>
+                </div>
+              )}
+            </div>
+
+            {/* Profile avatar - navigates to this role's settings page */}
+            <div
+              onClick={() => nav(SETTINGS_PATH[role] || '/student/settings')}
+              style={{
+                width: 38, height: 38, borderRadius: '50%', flexShrink: 0, cursor: 'pointer',
+                background: `linear-gradient(135deg,${p},${a})`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                color: '#fff', fontWeight: 800, fontSize: 14,
+              }}
+            >
+              {(user?.name || role)[0].toUpperCase()}
+            </div>
 
             {/* Customizer Button */}
             {customizableItems.length > 0 && (

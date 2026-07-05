@@ -109,6 +109,7 @@ const FocusMode      = lazy(() => import('./pages/focus-mode/FocusMode'))
 const PricingPage    = lazy(() => import('./pages/pricing/PricingPage'))
 const WalletPage     = lazy(() => import('./pages/wallet/WalletPage'))
 const FamilyHub      = lazy(() => import('./pages/family/FamilyHub'))
+const FamilySettings = lazy(() => import('./pages/family/FamilySettings'))
 const FamilyDashboardRefactored = lazy(() => import('./pages/family/FamilyDashboardRefactored'))
 const ReferralPage   = lazy(() => import('./pages/referral/ReferralPage'))
 const MentorLeaderboard   = lazy(() => import('./pages/mentor/MentorLeaderboard'))
@@ -302,6 +303,7 @@ function ThemedApp() {
                 <Route path="/pricing"  element={<Navigate to="/pro" replace />} />
                 <Route path="/wallet"   element={<WalletPage />} />
                 <Route path="/family"   element={<FamilyDashboardRefactored />} />
+                <Route path="/family/settings" element={<RoleGuard allowedRoles={['family']}><FamilySettings/></RoleGuard>} />
                 <Route path="/family/v1" element={<FamilyHub />} />
                 <Route path="/referral" element={<ReferralPage />} />
 
