@@ -12,6 +12,7 @@ const NAV = [
   { icon: '📊', label: 'Analytics', path: '/family/analytics' },
   { icon: '📥', label: 'Reports', path: '/family/reports' },
   { icon: '💬', label: 'Messages', path: '/family/messages' },
+  { icon: '🇮🇳', label: 'Bharat Pulse', path: '/bharat-pulse' },
   { icon: '⚙️', label: 'Settings', path: '/family/settings' },
 ]
 

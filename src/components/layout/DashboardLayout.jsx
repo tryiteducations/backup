@@ -37,6 +37,7 @@ export default function DashboardLayout({
   const location = useLocation()
 
   // Colors from theme
+  const isDark = theme?.isDark || false
   const p = theme?.primary || '#1E3A5F'
   const a = theme?.accent || '#C9A84C'
   const t = theme?.text || '#1E293B'
@@ -118,14 +119,15 @@ export default function DashboardLayout({
         top: 0,
         width: isMobile ? 260 : (sideVisible ? 260 : 68),
         height: '100vh',
-        background: p,
+        background: isDark ? c : p,
         zIndex: 300,
         display: 'flex',
         flexDirection: 'column',
         transition: 'left 0.3s ease, width 0.28s cubic-bezier(0.23,1,0.32,1)',
-        boxShadow: isMobile && sidebarOpen ? '4px 0 20px rgba(0,0,0,0.3)' : 'none',
+        boxShadow: isMobile && sidebarOpen ? '4px 0 20px rgba(0,0,0,0.3)' : `2px 0 24px ${a}15`,
         overflowY: 'auto',
         overflowX: 'hidden',
+        borderRight: isDark ? `1px solid ${a}25` : 'none',
       }}>
         {/* Sidebar Header */}
         <div style={{
@@ -147,6 +149,8 @@ export default function DashboardLayout({
               fontWeight: 900,
               color: p,
               fontSize: 14,
+              boxShadow: `0 0 16px ${a}70`,
+              flexShrink: 0,
             }}>T</div>
             {sideVisible && (
               <div style={{ color: '#fff', fontWeight: 700, fontSize: 13, whiteSpace: 'nowrap' }}>
@@ -172,8 +176,8 @@ export default function DashboardLayout({
           )}
           {!isMobile && (
             <button onClick={() => setSideOpen(o => !o)} style={{
-              background: 'rgba(255,255,255,0.1)',
-              border: 'none',
+              background: `${a}20`,
+              border: `1px solid ${a}40`,
               color: '#fff',
               width: 28,
               height: 28,
@@ -215,6 +219,7 @@ export default function DashboardLayout({
                   transition: 'all 0.2s',
                   marginBottom: 4,
                   borderLeft: isActive ? `3px solid ${a}` : '3px solid transparent',
+                  boxShadow: isActive ? `0 0 20px ${a}25` : 'none',
                 }}
                 onMouseEnter={(e) => {
                   if (!isActive) e.target.style.background = 'rgba(255,255,255,0.08)'
