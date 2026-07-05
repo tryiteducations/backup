@@ -50,6 +50,9 @@ export default function DashboardLayout({
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
   const [showCustomizer, setShowCustomizer] = useState(false)
   const [showNotifsPanel, setShowNotifsPanel] = useState(false)
+  const [sideOpen, setSideOpen] = useState(true)
+  const [sideHover, setSideHover] = useState(false)
+  const sideVisible = isMobile ? true : (sideOpen || sideHover)
   const [visibleItems, setVisibleItems] = useState(
     customizableItems.reduce((acc, item) => ({ ...acc, [item.id]: item.visible !== false }), {})
   )
@@ -106,19 +109,23 @@ export default function DashboardLayout({
       )}
 
       {/* SIDEBAR */}
-      <div style={{
+      <div
+        onMouseEnter={() => !isMobile && setSideHover(true)}
+        onMouseLeave={() => !isMobile && setSideHover(false)}
+        style={{
         position: isMobile ? 'fixed' : 'relative',
         left: isMobile ? (sidebarOpen ? 0 : -260) : 0,
         top: 0,
-        width: 260,
+        width: isMobile ? 260 : (sideVisible ? 260 : 68),
         height: '100vh',
         background: p,
         zIndex: 300,
         display: 'flex',
         flexDirection: 'column',
-        transition: 'left 0.3s ease',
+        transition: 'left 0.3s ease, width 0.28s cubic-bezier(0.23,1,0.32,1)',
         boxShadow: isMobile && sidebarOpen ? '4px 0 20px rgba(0,0,0,0.3)' : 'none',
         overflowY: 'auto',
+        overflowX: 'hidden',
       }}>
         {/* Sidebar Header */}
         <div style={{
@@ -141,11 +148,13 @@ export default function DashboardLayout({
               color: p,
               fontSize: 14,
             }}>T</div>
-            <div style={{ color: '#fff', fontWeight: 700, fontSize: 13 }}>
-              TryIT
-              <br />
-              <span style={{ fontSize: 10, opacity: 0.7 }}>{role.toUpperCase()}</span>
-            </div>
+            {sideVisible && (
+              <div style={{ color: '#fff', fontWeight: 700, fontSize: 13, whiteSpace: 'nowrap' }}>
+                TryIT
+                <br />
+                <span style={{ fontSize: 10, opacity: 0.7 }}>{role.toUpperCase()}</span>
+              </div>
+            )}
           </div>
           {isMobile && (
             <button onClick={() => setSidebarOpen(false)} style={{
@@ -160,6 +169,21 @@ export default function DashboardLayout({
               alignItems: 'center',
               justifyContent: 'center',
             }}>✕</button>
+          )}
+          {!isMobile && (
+            <button onClick={() => setSideOpen(o => !o)} style={{
+              background: 'rgba(255,255,255,0.1)',
+              border: 'none',
+              color: '#fff',
+              width: 28,
+              height: 28,
+              borderRadius: 8,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+            }}>{sideOpen ? '←' : '→'}</button>
           )}
         </div>
 
@@ -199,9 +223,9 @@ export default function DashboardLayout({
                   if (!isActive) e.target.style.background = 'transparent'
                 }}
               >
-                <span style={{ fontSize: 18 }}>{item.icon}</span>
-                <span>{item.label}</span>
-                {isActive && <span style={{ marginLeft: 'auto', color: a }}>→</span>}
+                <span style={{ fontSize: 18, flexShrink: 0 }}>{item.icon}</span>
+                {sideVisible && <span style={{ whiteSpace: 'nowrap' }}>{item.label}</span>}
+                {isActive && sideVisible && <span style={{ marginLeft: 'auto', color: a }}>→</span>}
               </button>
             )
           })}
