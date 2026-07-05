@@ -35,6 +35,7 @@ export default function FamilyDashboardRefactored() {
   const m = theme?.textLight || '#64748B'
   const bg = theme?.background || '#F8FAFC'
   const c = theme?.surface || '#FFFFFF'
+  const isDark = theme?.isDark || false
   const b = theme?.border || '#E2E8F0'
 
   // State
@@ -92,6 +93,70 @@ export default function FamilyDashboardRefactored() {
   const [selectedChild, setSelectedChild] = useState(children[0])
   const [customization, setCustomization] = useState({})
   const [exporting, setExporting] = useState(false)
+
+  async function handleShareAchievement() {
+    const child = selectedChild || children[0] || { name: 'my child', streak: 0, today: { tests: 0 } }
+    const text = `${child.name} is on a ${child.streak}-day study streak on TryIT Educations! 🎉 tryiteducations.net`
+    try {
+      const canvas = document.createElement('canvas')
+      canvas.width = 1080; canvas.height = 1080
+      const ctx = canvas.getContext('2d')
+
+      const grad = ctx.createLinearGradient(0, 0, 1080, 1080)
+      grad.addColorStop(0, isDark ? bg : p); grad.addColorStop(1, isDark ? c : p)
+      ctx.fillStyle = grad; ctx.fillRect(0, 0, 1080, 1080)
+
+      const glow = ctx.createRadialGradient(860, 220, 20, 860, 220, 400)
+      glow.addColorStop(0, `${a}55`); glow.addColorStop(1, `${a}00`)
+      ctx.fillStyle = glow; ctx.fillRect(0, 0, 1080, 1080)
+
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 46px Poppins, sans-serif'
+      ctx.fillText('TryIT Educations', 70, 110)
+      ctx.fillStyle = a; ctx.fillRect(70, 130, 90, 6)
+
+      ctx.beginPath(); ctx.arc(150, 300, 70, 0, Math.PI * 2)
+      ctx.fillStyle = a; ctx.fill()
+      ctx.fillStyle = isDark ? bg : p; ctx.font = 'bold 60px Poppins, sans-serif'
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle'
+      ctx.fillText(child.avatar || '🎓', 150, 305)
+      ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic'
+
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 40px Poppins, sans-serif'
+      ctx.fillText(child.name, 250, 290)
+      ctx.fillStyle = 'rgba(255,255,255,0.75)'; ctx.font = '26px Inter, sans-serif'
+      ctx.fillText(`${child.class || ''} · ${child.exam || ''}`, 250, 330)
+
+      ctx.fillStyle = a; ctx.font = 'bold 110px Poppins, sans-serif'
+      ctx.fillText(`${child.streak}🔥`, 70, 560)
+      ctx.fillStyle = '#fff'; ctx.font = '34px Inter, sans-serif'
+      ctx.fillText('Day Study Streak', 70, 610)
+
+      ctx.fillStyle = 'rgba(255,255,255,0.12)'
+      ctx.fillRect(70, 660, 460, 90)
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 32px Poppins, sans-serif'
+      ctx.fillText(`📝 ${child.today?.tests || 0} tests completed today`, 95, 715)
+
+      ctx.fillStyle = 'rgba(255,255,255,0.6)'; ctx.font = '28px Inter, sans-serif'
+      ctx.fillText('tryiteducations.net · Your Exam. Your Rank. Your Success.', 70, 1010)
+
+      canvas.toBlob(async (blob) => {
+        if (!blob) { if (navigator.share) { navigator.share({ title: 'My Child on TryIT', text }) } return }
+        const file = new File([blob], 'tryit-family-progress.png', { type: 'image/png' })
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({ title: 'My Child on TryIT', text, files: [file] })
+        } else if (navigator.share) {
+          await navigator.share({ title: 'My Child on TryIT', text })
+        } else {
+          const link = document.createElement('a')
+          link.href = URL.createObjectURL(blob); link.download = 'tryit-family-progress.png'
+          link.click()
+        }
+      }, 'image/png')
+    } catch (e) {
+      console.error('Share image generation failed:', e)
+      if (navigator.share) { navigator.share({ title: 'My Child on TryIT', text }) }
+    }
+  }
 
   useEffect(() => {
     subscribeToUpdates()
@@ -184,7 +249,15 @@ export default function FamilyDashboardRefactored() {
       {/* Family Members */}
       {customization['member_cards'] !== false && (
         <div>
-          <h2 style={{ margin: '0 0 16px', fontSize: 16, fontWeight: 700, color: p }}>Family Members</h2>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+            <h2 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: p }}>Family Members</h2>
+            <button onClick={handleShareAchievement} style={{
+              background: `linear-gradient(135deg,${p},${a})`,
+              border: 'none', borderRadius: 12, padding: '8px 16px', color: '#fff',
+              fontWeight: 700, fontSize: 12, cursor: 'pointer', boxShadow: `0 4px 20px ${a}35` }}>
+              📤 Share Progress
+            </button>
+          </div>
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',

@@ -7,9 +7,16 @@
 export async function shareProgress({
   theme, name = 'Student', headline, stat, subLabel, context = 'TryIT Educations', emoji = '🎓',
 }) {
-  const p = theme?.primary || '#1E3A5F'
-  const primD = theme?.primaryDark || '#0F2140'
+  const bg = theme?.background || '#F8FAFC'
+  const surface = theme?.surface || '#FFFFFF'
+  const isDark = theme?.isDark || false
+  const primary = theme?.primary || '#1E3A5F'
   const accent = theme?.accent || '#C9A84C'
+  // Gradient uses the theme's actual dark/light background fields, not
+  // primary/primaryDark - those are accent colors meant for text on dark
+  // themes (often bright/light shades), not a full-bleed background.
+  const gradFrom = isDark ? bg : primary
+  const gradTo = isDark ? surface : (theme?.primaryDark || primary)
 
   const text = `${headline} - ${stat} on TryIT Educations! ${emoji} tryiteducations.net`
 
@@ -19,7 +26,7 @@ export async function shareProgress({
     const ctx = canvas.getContext('2d')
 
     const grad = ctx.createLinearGradient(0, 0, 1080, 1080)
-    grad.addColorStop(0, p); grad.addColorStop(1, primD)
+    grad.addColorStop(0, gradFrom); grad.addColorStop(1, gradTo)
     ctx.fillStyle = grad; ctx.fillRect(0, 0, 1080, 1080)
 
     const glow = ctx.createRadialGradient(860, 220, 20, 860, 220, 400)
@@ -32,7 +39,7 @@ export async function shareProgress({
 
     ctx.beginPath(); ctx.arc(150, 300, 70, 0, Math.PI * 2)
     ctx.fillStyle = accent; ctx.fill()
-    ctx.fillStyle = primD; ctx.font = 'bold 60px Poppins, sans-serif'
+    ctx.fillStyle = isDark ? bg : primary; ctx.font = 'bold 60px Poppins, sans-serif'
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle'
     ctx.fillText((name[0] || 'S').toUpperCase(), 150, 305)
     ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic'

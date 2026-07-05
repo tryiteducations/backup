@@ -44,6 +44,7 @@ export default function MentorDashboardRefactored() {
   const m = theme?.textLight || '#64748B'
   const bg = theme?.background || '#F8FAFC'
   const c = theme?.surface || '#FFFFFF'
+  const isDark = theme?.isDark || false
   const b = theme?.border || '#E2E8F0'
 
   // State
@@ -132,7 +133,7 @@ export default function MentorDashboardRefactored() {
       const ctx = canvas.getContext('2d')
 
       const grad = ctx.createLinearGradient(0, 0, 1080, 1080)
-      grad.addColorStop(0, p); grad.addColorStop(1, p)
+      grad.addColorStop(0, isDark?bg:p); grad.addColorStop(1, isDark?c:p)
       ctx.fillStyle = grad; ctx.fillRect(0, 0, 1080, 1080)
 
       const glow = ctx.createRadialGradient(860, 220, 20, 860, 220, 400)
@@ -145,7 +146,7 @@ export default function MentorDashboardRefactored() {
 
       ctx.beginPath(); ctx.arc(150, 300, 70, 0, Math.PI * 2)
       ctx.fillStyle = a; ctx.fill()
-      ctx.fillStyle = p; ctx.font = 'bold 60px Poppins, sans-serif'
+      ctx.fillStyle = isDark?bg:p; ctx.font = 'bold 60px Poppins, sans-serif'
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle'
       ctx.fillText((nameVal[0] || 'M').toUpperCase(), 150, 305)
       ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic'

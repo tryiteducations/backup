@@ -273,7 +273,7 @@ export default function StudentDashboard() {
 
       // Background gradient using the active theme's colors
       const grad = ctx.createLinearGradient(0, 0, 1080, 1080)
-      grad.addColorStop(0, primary); grad.addColorStop(1, primD)
+      grad.addColorStop(0, isDark?pageBg:primary); grad.addColorStop(1, isDark?surface:primD)
       ctx.fillStyle = grad; ctx.fillRect(0, 0, 1080, 1080)
 
       // Ambient glow accent circle
@@ -289,7 +289,7 @@ export default function StudentDashboard() {
       // Avatar circle with initial
       ctx.beginPath(); ctx.arc(150, 300, 70, 0, Math.PI*2)
       ctx.fillStyle = accent; ctx.fill()
-      ctx.fillStyle = primD; ctx.font = 'bold 60px Poppins, sans-serif'
+      ctx.fillStyle = isDark?pageBg:primD; ctx.font = 'bold 60px Poppins, sans-serif'
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle'
       ctx.fillText((nameVal[0]||'S').toUpperCase(), 150, 305)
       ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic'
