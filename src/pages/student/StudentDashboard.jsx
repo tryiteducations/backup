@@ -631,12 +631,11 @@ export default function StudentDashboard() {
           <div style={{display:'flex',gap:6,padding:'0 10px',marginBottom:6}}>
             {[
               {icon:'🔥',val:`${curStr}d`,label:'Streak',color:'#FF6B00'},
-              {icon:'🪙',val:coins,label:'Coins',color:'#FFD700',anim:true},
+              {icon:'🪙',val:coins,label:'Coins',color:accent,anim:true},
             ].map((s,i)=>(
-              <div key={i} style={{flex:1,background:`${s.color}20`,
-                border:`1px solid ${s.color}50`,borderRadius:10,
-                padding:'7px 8px',textAlign:'center',
-                boxShadow:`0 0 16px ${s.color}33,inset 0 1px 0 rgba(255,255,255,0.1)`}}>
+              <div key={i} style={{flex:1,background:isDark?'rgba(255,255,255,0.06)':'rgba(255,255,255,0.5)',
+                border:`1px solid ${isDark?'rgba(255,255,255,0.1)':'rgba(0,0,0,0.06)'}`,borderRadius:10,
+                padding:'7px 8px',textAlign:'center'}}>
                 <p style={{color:s.color,fontWeight:900,fontSize:15,
                   fontFamily:'Poppins,sans-serif',margin:0}}>
                   {s.icon}{' '}
