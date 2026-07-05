@@ -4,6 +4,8 @@
 // Social sharing OFF by default (admin toggle). Only fires when user chooses.
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
+import { shareProgress } from '../lib/shareImage'
+import { useTheme } from '../context/ThemeContext'
 
 const NAVY='#1E3A5F', GOLD='#C9A84C'
 
@@ -157,6 +159,7 @@ function GameResultCard({userName,gameName,gameEmoji,score,medal,bestStreak}){
 // -- MAIN ShareCard COMPONENT ----------------------------------------------
 export default function ShareCard({type,data,onClose}){
   const[sharing,setSharing]=useState(false)
+  const { theme } = useTheme()
 
   const getText=()=>{
     switch(type){
@@ -167,6 +170,18 @@ export default function ShareCard({type,data,onClose}){
       case 'parent_child':   return `🎉 My child ${data.childName} ranked #${data.rank?.toLocaleString('en-IN')} All India in ${data.exam}!\nPrepared on TryIT Educations 🇮🇳\n🌐 tryiteducations.net`
       case 'game_result':    return `🎮 Scored ${data.score} pts in ${data.gameName} on TryIT Educations!\n${data.medal?.emoji} ${data.medal?.label}${data.bestStreak?` · 🔥${data.bestStreak}x combo`:''}\nSharpening my mind for exams - join me! 🧠\n🌐 tryiteducations.net`
       default:               return 'Check out TryIT Educations - tryiteducations.net'
+    }
+  }
+
+  const getImageParams=()=>{
+    switch(type){
+      case 'student_result': return {headline:`All-India Rank in ${data.exam}`,stat:`#${data.rank?.toLocaleString('en-IN')}`,subLabel:`Score: ${data.score} · ${data.medal?.label||''}`,context:'Test Result',emoji:'🏆'}
+      case 'mentor_stats':   return {headline:'Students Helped Today',stat:`${data.solved}`,subLabel:data.isMentorOfDay?'Mentor of the Day 🏅':'',context:'Mentor Stats',emoji:'🧑‍🏫'}
+      case 'institution_live':return {headline:data.examName,stat:'LIVE NOW',subLabel:data.centreName,context:'Institution',emoji:'🔴'}
+      case 'institution_result':return {headline:`${data.examName} Results`,stat:`${data.avgScore}%`,subLabel:`${data.totalStudents} students · Avg Score`,context:data.centreName,emoji:'📊'}
+      case 'parent_child':   return {headline:`${data.childName}'s All-India Rank`,stat:`#${data.rank?.toLocaleString('en-IN')}`,subLabel:data.exam,context:'Family',emoji:'🎉'}
+      case 'game_result':    return {headline:data.gameName,stat:`${data.score} pts`,subLabel:`${data.medal?.label||''}${data.bestStreak?` · 🔥${data.bestStreak}x combo`:''}`,context:'Game Result',emoji:'🎮'}
+      default:               return {headline:'TryIT Educations',stat:'',subLabel:'',context:'',emoji:'🎓'}
     }
   }
 
@@ -184,8 +199,14 @@ export default function ShareCard({type,data,onClose}){
       })
     }catch{}
 
-    if(platform==='native'&&navigator.share){
-      try{await navigator.share({title:'TryIT Educations',text,url:'https://tryiteducations.net'})}catch{}
+    if(platform==='native'){
+      try{
+        const params=getImageParams()
+        await shareProgress({theme,name:data.userName||data.centreName||data.childName||'Student',...params})
+      }catch(e){
+        console.error('Image share failed, falling back to text:',e)
+        if(navigator.share){try{await navigator.share({title:'TryIT Educations',text,url:'https://tryiteducations.net'})}catch{}}
+      }
     }else{
       navigator.clipboard.writeText(text)
       alert('✅ Copied! Paste anywhere to share.')

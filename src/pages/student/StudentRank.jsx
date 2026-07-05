@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
+import ShareButton from '../../components/ShareButton'
 
 const MOCK = [
   {rank:1,name:'Priya Suresh',score:98.4,state:'Tamil Nadu',exam:'UPSC'},
@@ -32,6 +33,7 @@ export default function StudentRank() {
           <h1 style={{color:t,fontSize:18,fontWeight:800,margin:0}}>🏆 All-India Ranks</h1>
           <p style={{color:m,fontSize:11,margin:0}}>Live leaderboard · Updated after every test</p>
         </div>
+        <ShareButton headline="My All-India Rank" stat="Top Ranked" subLabel="On TryIT Educations" context="Leaderboard" emoji="🏆" />
       </div>
       <div style={{padding:'20px',maxWidth:760,margin:'0 auto'}}>
         <div style={{background:`linear-gradient(135deg,${p},${p}cc)`,borderRadius:18,
