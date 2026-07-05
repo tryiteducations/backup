@@ -1,6 +1,7 @@
 // src/pages/student/StudentLaunchpad.jsx
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
+import ShareButton from '../../components/ShareButton'
 
 const TRACKS = [
   {id:'upsc',label:'UPSC Civil Services',icon:'🏛️',days:365,desc:'Complete GS + Optional syllabus'},
@@ -27,6 +28,7 @@ export default function StudentLaunchpad() {
           <h1 style={{color:t,fontSize:18,fontWeight:800,margin:0}}>🚀 TryIT Launchpad</h1>
           <p style={{color:m,fontSize:11,margin:0}}>Daily topics · Weekly tests · Personal mentor</p>
         </div>
+        <ShareButton headline="I joined TryIT Launchpad" stat="🚀" subLabel="Daily topics, personal mentor" context="Launchpad" emoji="🚀" />
       </div>
       <div style={{padding:'20px',maxWidth:760,margin:'0 auto'}}>
         <div style={{background:`linear-gradient(135deg,${p},${p}dd)`,borderRadius:20,

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
 import { supabase } from '../../lib/supabase'
+import ShareButton from '../../components/ShareButton'
 
 const GAMES = [
   // FREE TIER
@@ -286,6 +287,7 @@ export default function StudentGames() {
               {playedCount} games active · {totalCoins}🪙 · {totalXP}⭐ XP
             </p>
           </div>
+          <ShareButton headline="My TryIT Games Progress" stat={`${totalXP}⭐`} subLabel={`${playedCount} games played · ${totalCoins} coins earned`} context="Games Hub" emoji="🎮" style={{marginLeft:'auto'}} />
         </div>
         {/* Search */}
         <input value={search} onChange={e=>setSearch(e.target.value)}

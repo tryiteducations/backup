@@ -1,6 +1,7 @@
 // src/pages/student/StudentHall.jsx
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
+import ShareButton from '../../components/ShareButton'
 
 const HALLS = [
   {name:'UPSC Warriors',members:234,level:'Advanced',tag:'UPSC',online:12},
@@ -25,6 +26,7 @@ export default function StudentHall() {
           <h1 style={{color:t,fontSize:18,fontWeight:800,margin:0}}>⚔️ Battle Hall</h1>
           <p style={{color:m,fontSize:11,margin:0}}>Study halls · Live battles · Compete</p>
         </div>
+        <ShareButton headline="Battling it out in TryIT Halls" stat="⚔️" subLabel="Live study battles, team vs team" context="Battle Hall" emoji="⚔️" style={{marginRight:8}} />
         <button onClick={()=>nav('/games/battle')} style={{background:`linear-gradient(135deg,${p},${a})`,
           border:'none',borderRadius:12,padding:'8px 16px',color:'#fff',fontWeight:700,fontSize:12,cursor:'pointer'}}>
           + Create Hall

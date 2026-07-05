@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
+import ShareButton from '../../components/ShareButton'
 
 const CATS = ['All','Economy','Science','Polity','International','Sports','Environment']
 const NEWS = [
@@ -40,6 +41,7 @@ export default function StudentPulse() {
           <h1 style={{color:t,fontSize:18,fontWeight:800,margin:0}}>🇮🇳 Bharat Pulse</h1>
           <p style={{color:m,fontSize:11,margin:0}}>Daily current affairs · Exam-mapped</p>
         </div>
+        <ShareButton headline="Staying current with TryIT" stat="🇮🇳" subLabel="Daily current affairs, exam-mapped" context="Current Affairs" emoji="📰" />
       </div>
       <div style={{padding:'20px',maxWidth:760,margin:'0 auto'}}>
         <div style={{display:'flex',gap:8,overflowX:'auto',paddingBottom:4,marginBottom:16}}>

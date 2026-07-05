@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
+import ShareButton from '../../components/ShareButton'
 
 const QUESTIONS = [
   {
@@ -80,6 +81,7 @@ export default function StudentCareer() {
           <h1 style={{color:t,fontSize:18,fontWeight:800,margin:0}}>Career AI</h1>
           <p style={{color:m,fontSize:11,margin:0}}>Find the best exam for you</p>
         </div>
+        <ShareButton headline="Finding my best exam with Career AI" stat="🧭" subLabel="Personalized exam recommendations" context="Career AI" emoji="🧭" />
         {!done && (
           <span style={{background:a+'20',color:a,fontSize:12,fontWeight:700,
             padding:'4px 12px',borderRadius:20}}>
