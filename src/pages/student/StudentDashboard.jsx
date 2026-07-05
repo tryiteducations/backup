@@ -1426,36 +1426,9 @@ export default function StudentDashboard() {
         </div>
       </main>
 
-      {/* -- BOTTOM NAV (mobile) ------------------------------------ */}
-      <div style={{position:'fixed',bottom:0,left:0,right:0,zIndex:200,
-        background:isDark?'rgba(15,23,42,0.97)':'rgba(255,255,255,0.97)',
-        backdropFilter:'blur(20px)',
-        borderTop:`1px solid ${bdr}`,
-        display:'flex',justifyContent:'space-around',
-        padding:'8px 0 max(8px,env(safe-area-inset-bottom))'
-      }} className="bottom-nav-mobile">
-        {[
-          {icon:'🏠',label:'Home',    path:'/student'},
-          {icon:'📝',label:'Test',    path:'/student/test'},
-          {icon:'🏆',label:'Rank',    path:'/student/rank'},
-          {icon:'🎮',label:'Games',   path:'/student/games'},
-          {icon:'📊',label:'Analytics',path:'/student/analytics'},
-        ].map((n,i)=>(
-          <button key={i} onClick={()=>navigate(n.path)} style={{
-            display:'flex',flexDirection:'column',
-            alignItems:'center',gap:2,
-            background:'transparent',border:'none',
-            cursor:'pointer',padding:'4px 10px'}}>
-            <span style={{fontSize:20}}>{n.icon}</span>
-            <span style={{color:muted,fontSize:9,fontWeight:600}}>{n.label}</span>
-          </button>
-        ))}
-      </div>
-
       <style>{`
         .sidebar-desktop{display:flex !important}
         .right-panel-desktop{display:block !important}
-        .bottom-nav-mobile{display:none !important}
         .two-col{grid-template-columns:1fr 1fr}
         @keyframes spin{to{transform:rotate(360deg)}}
         @media(max-width:768px){
@@ -1468,7 +1441,6 @@ export default function StudentDashboard() {
         .sidebar-open::after{content:'';position:fixed;inset:0;
           background:rgba(0,0,0,0.5);z-index:199;cursor:pointer}
       }
-          .bottom-nav-mobile{display:flex !important}
           .two-col{grid-template-columns:1fr !important}
         }
         @media(max-width:600px){
