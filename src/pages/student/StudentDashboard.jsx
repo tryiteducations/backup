@@ -198,23 +198,31 @@ export default function StudentDashboard() {
     const uid = authUser.id||authUser.userId
     const load = async()=>{
       try {
-        const [p,s,u,att,lp,lb] = await Promise.all([
+        // Critical path first - only what the stat cards need to paint
+        const [p,s,u] = await Promise.all([
           getProfile(uid).catch(()=>({name:authUser?.name||'Student',coins:0,xp:0,level:1,plan:'free',badge:'Newcomer',state:'',avatar_url:null})),
           getStreak(uid).catch(()=>({current_streak:0,longest_streak:0,total_study_days:0})),
           getUsage(uid).catch(()=>({tests_today:0,games_today:0,doubts_today:0,last_reset:new Date().toISOString().split('T')[0]})),
-          getRecentAttempts(uid,6).catch(()=>[]),
-          getLaunchpadEnrollment(uid).catch(()=>null),
-          getLeaderboard(8).catch(()=>[]),
-          updateStreak(uid).catch(()=>console.log('Streak update skipped - mock user')),
         ])
         setProfile(p||{name:authUser.name||'Student',avatar_url:null,
           coins:authUser.coins||0,xp:authUser.xp||0,level:authUser.level||1,
           rank:null,badge:authUser.levelTitle||'Newcomer',plan:authUser.plan||'free',
           state:authUser.state||''})
-        setStreak(s);setUsage(u);setAttempts(att);setLaunchpad(lp);setLeaders(lb)
-        if(lp){const t=await getTodayTopic(lp).catch(()=>null);setTodayTopic(t)}
+        setStreak(s);setUsage(u)
       } catch(e){console.error(e)}
       finally{setLoading(false)}
+
+      // Secondary data - loads after first paint, doesn't block the spinner
+      try {
+        const [att,lp,lb] = await Promise.all([
+          getRecentAttempts(uid,6).catch(()=>[]),
+          getLaunchpadEnrollment(uid).catch(()=>null),
+          getLeaderboard(8).catch(()=>[]),
+          updateStreak(uid).catch(()=>console.log('Streak update skipped - mock user')),
+        ])
+        setAttempts(att);setLaunchpad(lp);setLeaders(lb)
+        if(lp){const t=await getTodayTopic(lp).catch(()=>null);setTodayTopic(t)}
+      } catch(e){console.error(e)}
     }
     load()
   },[authUser,navigate])
@@ -226,6 +234,7 @@ export default function StudentDashboard() {
       if(used>=FREE_LIMITS[item.limit]){setUpgradeFor(item.limit);return}
     }
     navigate(item.path)
+    setSidebarOpen(false)
   },[profile,usage,navigate])
 
   const handleAvatarClick=()=>fileRef.current?.click()
@@ -365,6 +374,11 @@ export default function StudentDashboard() {
       fontFamily:'Inter,sans-serif',position:'relative'}}>
 
       {/* -- Overlays -------------------------------------------- */}
+      {sidebarOpen&&(
+        <div onClick={()=>setSidebarOpen(false)}
+          className="mobile-sidebar-backdrop"
+          style={{position:'fixed',inset:0,zIndex:199,background:'rgba(0,0,0,0.5)',cursor:'pointer'}}/>
+      )}
       {coinPop&&<CoinPop amount={coinPop} onDone={()=>setCoinPop(null)}/>}
       {upgradeFor&&(
         <UpgradePopup type={upgradeFor}
@@ -527,7 +541,7 @@ export default function StudentDashboard() {
         style={{
           width:sideVisible?240:68,
           minHeight:'100vh',
-          background: `linear-gradient(145deg, ${card}ee, ${primD}99)`,
+          background: `linear-gradient(145deg, ${card}fa, ${primD}fa)`,
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
           display:'flex',flexDirection:'column',
@@ -557,7 +571,7 @@ export default function StudentDashboard() {
               </span>
             )}
           </div>
-          <button onClick={()=>setSideOpen(o=>!o)} style={{
+          <button onClick={()=>{setSideOpen(o=>!o);setSidebarOpen(false)}} style={{
             background:'rgba(255,255,255,0.07)',border:'none',
             borderRadius:8,width:28,height:28,cursor:'pointer',
             color:isDark?'rgba(255,255,255,0.5)':muted,fontSize:13,display:'flex',
@@ -1442,10 +1456,6 @@ export default function StudentDashboard() {
       .mobile-ham{display:none}
       @media(max-width:900px){.mobile-ham{display:flex !important}}
       .sidebar-open .sidebar-desktop{left:0 !important}
-      @media(max-width:900px){
-        .sidebar-open::after{content:'';position:fixed;inset:0;
-          background:rgba(0,0,0,0.5);z-index:199;cursor:pointer}
-      }
           .two-col{grid-template-columns:1fr !important}
         }
         @media(max-width:600px){
