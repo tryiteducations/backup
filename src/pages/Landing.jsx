@@ -164,8 +164,7 @@ function Navbar({nav}) {
   return (
     <nav style={{
       position:'fixed',top:0,left:0,right:0,zIndex:1000,
-      background: scrolled ? 'rgba(255,255,255,0.96)' : 'transparent',
-      backdropFilter: scrolled ? 'blur(12px)' : 'none',
+      background: scrolled ? '#FFFFFF' : 'transparent',
       borderBottom: scrolled ? '1px solid '+B.border : 'none',
       transition:'all 0.3s ease',
       padding:'0 24px',
@@ -192,8 +191,7 @@ function Navbar({nav}) {
         </div>
 
         {/* Desktop nav */}
-        <div style={{display:'flex',gap:4,flex:1,
-          '@media(max-width:768px)':{display:'none'}}}>
+        <div className="landing-desktop-nav" style={{display:'flex',gap:4,flex:1}}>
           {NAV_LINKS.map((link,i)=>(
             <button key={i} onClick={()=>nav(link.href)}
               style={link.glow ? {
@@ -221,8 +219,8 @@ function Navbar({nav}) {
           ))}
         </div>
 
-        {/* CTAs */}
-        <div style={{display:'flex',gap:8,flexShrink:0}}>
+        {/* CTAs - hidden on mobile, replaced by hamburger */}
+        <div className="landing-desktop-ctas" style={{display:'flex',gap:8,flexShrink:0}}>
           <button onClick={()=>nav('/login')}
             style={{background:'transparent',border:'1px solid '+B.border,
               borderRadius:10,padding:'8px 18px',color:B.text,
@@ -242,7 +240,61 @@ function Navbar({nav}) {
             Get Started →
           </button>
         </div>
+
+        {/* Mobile hamburger - hidden on desktop */}
+        <button className="landing-mobile-ham" onClick={()=>setMobileOpen(o=>!o)}
+          aria-label="Menu"
+          style={{display:'none',background:'transparent',border:'none',
+            cursor:'pointer',width:40,height:40,alignItems:'center',
+            justifyContent:'center',borderRadius:8,flexShrink:0,marginLeft:'auto'}}>
+          <div style={{width:20,display:'flex',flexDirection:'column',gap:4}}>
+            <span style={{height:2,background:B.text,borderRadius:2,
+              transition:'transform 0.2s',
+              transform:mobileOpen?'translateY(6px) rotate(45deg)':'none'}}/>
+            <span style={{height:2,background:B.text,borderRadius:2,
+              opacity:mobileOpen?0:1,transition:'opacity 0.2s'}}/>
+            <span style={{height:2,background:B.text,borderRadius:2,
+              transition:'transform 0.2s',
+              transform:mobileOpen?'translateY(-6px) rotate(-45deg)':'none'}}/>
+          </div>
+        </button>
       </div>
+
+      {/* Mobile dropdown menu */}
+      {mobileOpen && (
+        <div style={{background:'#fff',borderTop:'1px solid '+B.border,
+          padding:'12px 24px 20px',display:'flex',flexDirection:'column',gap:2}}>
+          {NAV_LINKS.map((link,i)=>(
+            <button key={i} onClick={()=>{nav(link.href);setMobileOpen(false)}}
+              style={{background:'transparent',border:'none',textAlign:'left',
+                padding:'12px 8px',color:B.text,fontFamily:'Inter,sans-serif',
+                fontSize:15,fontWeight:600,cursor:'pointer',borderRadius:8}}>
+              {link.label}
+            </button>
+          ))}
+          <div style={{display:'flex',gap:10,marginTop:10}}>
+            <button onClick={()=>{nav('/login');setMobileOpen(false)}}
+              style={{flex:1,background:'transparent',border:'1px solid '+B.border,
+                borderRadius:10,padding:'11px 18px',color:B.text,
+                fontFamily:'Inter,sans-serif',fontSize:14,fontWeight:600,cursor:'pointer'}}>
+              Login
+            </button>
+            <button onClick={()=>{nav('/role-select');setMobileOpen(false)}}
+              style={{flex:1,background:B.primary,border:'none',borderRadius:10,
+                padding:'11px 18px',color:'#fff',fontFamily:'Inter,sans-serif',
+                fontSize:14,fontWeight:600,cursor:'pointer'}}>
+              Get Started →
+            </button>
+          </div>
+        </div>
+      )}
+      <style>{`
+        @media(max-width:768px){
+          .landing-desktop-nav{display:none !important}
+          .landing-desktop-ctas{display:none !important}
+          .landing-mobile-ham{display:flex !important}
+        }
+      `}</style>
     </nav>
   )
 }

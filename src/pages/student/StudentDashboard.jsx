@@ -347,15 +347,6 @@ export default function StudentDashboard() {
     }
   }
 
-  if(loading)return(
-    <div style={{minHeight:'100vh',background:pageBg,
-      display:'flex',alignItems:'center',justifyContent:'center',flexDirection:'column',gap:16}}>
-      <Ring pct={75} size={64} color={accent}><span style={{fontSize:22}}>🎓</span></Ring>
-      <p style={{color:muted,fontFamily:'Poppins,sans-serif',fontSize:14}}>Loading your dashboard...</p>
-      <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
-    </div>
-  )
-
   const plan   = profile?.plan||'free'
   const isPro  = plan==='pro'||plan==='ultra'
   const coins  = profile?.coins||0
@@ -541,15 +532,13 @@ export default function StudentDashboard() {
         style={{
           width:sideVisible?240:68,
           minHeight:'100vh',
-          background: `linear-gradient(145deg, ${card}fa, ${primD}fa)`,
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
+          background: `color-mix(in srgb, ${primary} 20%, #0B0D14 80%)`,
           display:'flex',flexDirection:'column',
           position:'sticky',top:0,height:'100vh',
           transition:'width 0.28s cubic-bezier(0.23,1,0.32,1)',
           zIndex:200,flexShrink:0,
-          borderRight: `1px solid ${bdr}`,
-          boxShadow: `0 10px 30px rgba(0,0,0,0.15), inset -1px 0 0 rgba(255,255,255,0.1)`,
+          borderRight: `1px solid rgba(255,255,255,0.08)`,
+          boxShadow: `4px 0 24px rgba(0,0,0,0.12)`,
         }}
         className="sidebar-desktop">
 
@@ -585,11 +574,9 @@ export default function StudentDashboard() {
 
         {/* User mini card */}
         <div style={{padding:'12px 10px',margin:'8px',
-          background:'linear-gradient(135deg,rgba(255,255,255,0.12),rgba(255,255,255,0.06))',
+          background:'rgba(255,255,255,0.06)',
           borderRadius:14,
-          border:'1px solid rgba(255,255,255,0.25)',
-          backdropFilter:'blur(12px)',
-          boxShadow:'0 4px 24px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.15)'}}>
+          border:'1px solid rgba(255,255,255,0.10)'}}>
           <div style={{display:'flex',alignItems:'center',
             gap:sideVisible?10:0,justifyContent:sideVisible?'flex-start':'center'}}>
             <div onClick={handleAvatarClick}
@@ -774,8 +761,7 @@ export default function StudentDashboard() {
         <div style={{
           display:'flex',alignItems:'center',justifyContent:'space-between',
           padding:'14px 24px',
-          background:isDark?'rgba(0,0,0,0.25)':'rgba(255,255,255,0.88)',
-        backdropFilter:'blur(24px)',WebkitBackdropFilter:'blur(24px)',
+          background: card,
           borderBottom:`1px solid ${bdr}`,
           position:'sticky',top:0,zIndex:100,
           boxShadow:isDark?'0 1px 0 rgba(255,255,255,0.04)':'0 1px 20px rgba(0,0,0,0.06)',
@@ -863,11 +849,10 @@ export default function StudentDashboard() {
                 {label:'Tests Done',val:attempts.length,display:attempts.length,
                   icon:'📝',color:'#60A5FA',ring:Math.min(100,attempts.length*10),sub:`Level ${lvl}`,anim:true},
               ].map((s,i)=>(
-                <div key={i} style={{background:isDark?'rgba(255,255,255,0.07)':'rgba(255,255,255,0.9)',
-                  backdropFilter:'blur(12px)',
+                <div key={i} style={{background:card,
                   border:`1px solid ${s.color}30`,borderRadius:18,
                   padding:'14px',
-                  boxShadow:isDark?`0 4px 24px rgba(0,0,0,0.15),inset 0 1px 0 rgba(255,255,255,0.04)`:`0 2px 12px ${s.color}12`,
+                  boxShadow:isDark?`0 4px 24px rgba(0,0,0,0.15)`:`0 2px 12px ${s.color}12`,
                   display:'flex',alignItems:'center',gap:12,
                   transition:'all 0.2s',cursor:'default'}}
                   onMouseEnter={e=>{e.currentTarget.style.transform='translateY(-2px)';e.currentTarget.style.boxShadow=`0 8px 28px ${s.color}22`}}
@@ -943,10 +928,9 @@ export default function StudentDashboard() {
                   return(
                     <button key={i}
                       onClick={()=>handleNav(a)}
-                      style={{background:atLimit?'rgba(248,113,113,0.05)':isDark?'rgba(255,255,255,0.10)':'rgba(255,255,255,0.95)',
-                        backdropFilter:'blur(16px)',WebkitBackdropFilter:'blur(16px)',
+                      style={{background:atLimit?'rgba(248,113,113,0.05)':card,
                         border:`1.5px solid ${atLimit?'#F87171':bdr}`,
-                        boxShadow:isDark?`0 4px 20px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.08)`:`0 2px 12px rgba(0,0,0,0.05),0 1px 0 rgba(255,255,255,0.9)`,
+                        boxShadow:isDark?`0 4px 20px rgba(0,0,0,0.25)`:`0 2px 12px rgba(0,0,0,0.05)`,
                         borderRadius:16,padding:'13px 10px',
                         cursor:'pointer',textAlign:'left',
                         transition:'all 0.15s'}}
@@ -1129,7 +1113,7 @@ export default function StudentDashboard() {
             className="two-col">
             {/* Recent tests */}
             {showWidget('tests')&&attempts.length>0&&(
-              <div style={{background:isDark?'rgba(255,255,255,0.07)':'rgba(255,255,255,0.9)',backdropFilter:'blur(12px)',WebkitBackdropFilter:'blur(12px)',border:`1px solid ${bdr}`,borderRadius:18,overflow:'hidden'}}>
+              <div style={{background:card,border:`1px solid ${bdr}`,borderRadius:18,overflow:'hidden'}}>
                 <div style={{padding:'14px 16px',
                   borderBottom:`1px solid ${bdr}`,
                   display:'flex',justifyContent:'space-between',alignItems:'center'}}>
