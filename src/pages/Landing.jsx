@@ -806,7 +806,7 @@ function Footer({nav}) {
   return (
     <footer style={{background:B.dark,padding:'64px 24px 32px'}}>
       <div style={{maxWidth:1100,margin:'0 auto'}}>
-        <div style={{display:'grid',gridTemplateColumns:'2fr 1fr 1fr 1fr',
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,180px),1fr))',
           gap:48,marginBottom:48}}>
           {/* Brand */}
           <div>
