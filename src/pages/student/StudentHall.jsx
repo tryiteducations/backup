@@ -19,7 +19,7 @@ export default function StudentHall() {
   return (
     <div style={{minHeight:'100vh',background:bg,fontFamily:'Poppins,sans-serif'}}>
       <div style={{background:c,borderBottom:`1px solid ${b}`,padding:'16px 20px',
-        display:'flex',alignItems:'center',gap:12,position:'sticky',top:0,zIndex:10}}>
+        display:'flex',alignItems:'center',gap:12,position:'sticky',top:0,zIndex:10,boxShadow:`0 4px 24px ${a}18`}}>
         <button onClick={()=>nav('/student')} style={{background:'transparent',border:`1px solid ${b}`,
           borderRadius:10,padding:'6px 14px',color:m,fontSize:13,cursor:'pointer'}}>← Back</button>
         <div style={{flex:1}}>

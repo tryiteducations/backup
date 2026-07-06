@@ -74,7 +74,7 @@ export default function StudentCommunity() {
         padding:'16px 20px',
         background:isDark?'rgba(255,255,255,0.02)':'rgba(255,255,255,0.9)',
         backdropFilter:'blur(20px)', borderBottom:`1px solid ${bdr}`,
-        position:'sticky', top:0, zIndex:100 }}>
+        position:'sticky', top:0, zIndex:100, boxShadow:`0 4px 24px ${accent}18` }}>
         <div style={{ display:'flex', alignItems:'center', gap:14 }}>
           <button onClick={() => navigate('/student')} style={{
             background:card, border:`1px solid ${bdr}`, borderRadius:10,

@@ -48,7 +48,7 @@ export default function StudentBookmarks() {
       <div style={{ display:'flex', alignItems:'center', gap:14, padding:'16px 20px',
         background:isDark?'rgba(255,255,255,0.02)':'rgba(255,255,255,0.9)',
         backdropFilter:'blur(20px)', borderBottom:`1px solid ${bdr}`,
-        position:'sticky', top:0, zIndex:100 }}>
+        position:'sticky', top:0, zIndex:100, boxShadow:`0 4px 24px ${accent}18` }}>
         <button onClick={() => navigate('/student')} style={{
           background:card, border:`1px solid ${bdr}`, borderRadius:10,
           width:38, height:38, cursor:'pointer', color:txt, fontSize:18,

@@ -30,7 +30,7 @@ export default function StudentTournament() {
 
       {/* Header */}
       <div style={{background:p,padding:'16px 20px',
-        display:'flex',alignItems:'center',gap:12,position:'sticky',top:0,zIndex:10}}>
+        display:'flex',alignItems:'center',gap:12,position:'sticky',top:0,zIndex:10,boxShadow:`0 4px 24px ${a}18`}}>
         <button onClick={()=>nav('/student')} style={{background:'rgba(255,255,255,0.15)',
           border:'1px solid rgba(255,255,255,0.3)',borderRadius:10,padding:'6px 14px',
           color:'#fff',fontSize:13,cursor:'pointer',fontWeight:600}}>

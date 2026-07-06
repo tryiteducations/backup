@@ -270,7 +270,7 @@ export default function StudentGames() {
         padding:'14px 20px',
         background:isDark?'rgba(0,0,0,0.3)':'rgba(255,255,255,0.9)',
         backdropFilter:'blur(24px)', borderBottom:`1px solid ${bdr}`,
-        position:'sticky', top:0, zIndex:100,
+        position:'sticky', top:0, zIndex:100, boxShadow:`0 4px 24px ${accent}18`,
       }}>
         <div style={{ display:'flex', alignItems:'center', gap:12 }}>
           <button onClick={() => navigate('/student')} style={{

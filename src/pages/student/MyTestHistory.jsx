@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AppLayout from '../../components/layout/AppLayout'
+import { useTheme } from '../../context/ThemeContext'
 
 const MOCK_HISTORY = [
   { id:'r1', exam:'SSC CGL', testName:'Mock Test 1', date:'2026-06-08', score:78, total:100, rank:1243, time:'26:34', type:'Mock'     },
@@ -15,16 +16,20 @@ const FILTERS = ['All', 'Mock', 'Practice', 'Speed']
 
 export default function MyTestHistory() {
   const navigate = useNavigate()
+  const { theme } = useTheme()
+  const primary = theme?.primary || '#1E3A5F'
+  const accent = theme?.accent || '#C9A84C'
+  const muted = theme?.textLight || '#94A3B8'
   const [filter, setFilter] = useState('All')
   const filtered = filter === 'All' ? MOCK_HISTORY : MOCK_HISTORY.filter(r => r.type === filter)
   const avg = Math.round(filtered.reduce((a,r) => a + (r.score/r.total)*100, 0) / (filtered.length || 1))
 
   return (
     <AppLayout>
-      <h1 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:'var(--color-primary, #1E3A5F)', fontSize:26, marginBottom:6 }}>
+      <h1 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:primary, fontSize:26, marginBottom:6, textShadow:`0 0 20px ${accent}30` }}>
         📝 My Test History
       </h1>
-      <p style={{ color:'#94A3B8', fontSize:14, marginBottom:20 }}>{MOCK_HISTORY.length} tests recorded</p>
+      <p style={{ color:muted, fontSize:14, marginBottom:20 }}>{MOCK_HISTORY.length} tests recorded</p>
 
       {/* Stats */}
       <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:12, marginBottom:20 }}>

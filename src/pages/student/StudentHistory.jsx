@@ -11,7 +11,7 @@ export default function StudentHistory() {
   return (
     <div style={{minHeight:'100vh',background:bg,fontFamily:'Poppins,sans-serif'}}>
       <div style={{background:c,borderBottom:`1px solid ${b}`,padding:'16px 20px',
-        display:'flex',alignItems:'center',gap:12}}>
+        display:'flex',alignItems:'center',gap:12,boxShadow:`0 4px 24px ${a}18`}}>
         <button onClick={()=>nav('/student')} style={{background:'transparent',border:`1px solid ${b}`,
           borderRadius:10,padding:'6px 14px',color:m,fontSize:13,cursor:'pointer'}}>← Back</button>
         <h1 style={{color:t,fontSize:18,fontWeight:800,margin:0}}>📖 Test History</h1>
