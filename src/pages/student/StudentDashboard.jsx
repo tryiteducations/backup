@@ -555,7 +555,7 @@ export default function StudentDashboard() {
               </span>
             )}
           </div>
-          <button onClick={()=>{setSideOpen(o=>!o);setSideHover(false)}} style={{
+          <button onClick={()=>setSideOpen(o=>!o)} style={{
             background:'rgba(255,255,255,0.07)',border:'none',
             borderRadius:8,width:28,height:28,cursor:'pointer',
             color:isDark?'rgba(255,255,255,0.5)':muted,fontSize:13,display:'flex',
@@ -766,7 +766,7 @@ export default function StudentDashboard() {
         }}>
           <button onClick={()=>setSidebarOpen(true)}
               className="mobile-ham"
-              style={{background:'var(--color-primary,#1E3A5F)',border:'none',
+              style={{background:primary,border:'none',
                 borderRadius:10,width:38,height:38,color:'#fff',fontSize:20,
                 cursor:'pointer',alignItems:'center',justifyContent:'center',
                 flexShrink:0,marginRight:4}}>
@@ -929,20 +929,20 @@ export default function StudentDashboard() {
                       onClick={()=>handleNav(a)}
                       style={{background:atLimit?'rgba(248,113,113,0.05)':isDark?'rgba(255,255,255,0.10)':'rgba(255,255,255,0.95)',
                         backdropFilter:'blur(16px)',WebkitBackdropFilter:'blur(16px)',
-                        border:`1.5px solid ${atLimit?'#F87171':a.color}50`,
-                        boxShadow:isDark?`0 4px 20px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.08)`:`0 2px 12px ${a.color}15,0 1px 0 rgba(255,255,255,0.9)`,
+                        border:`1.5px solid ${atLimit?'#F87171':bdr}`,
+                        boxShadow:isDark?`0 4px 20px rgba(0,0,0,0.25),inset 0 1px 0 rgba(255,255,255,0.08)`:`0 2px 12px rgba(0,0,0,0.05),0 1px 0 rgba(255,255,255,0.9)`,
                         borderRadius:16,padding:'13px 10px',
                         cursor:'pointer',textAlign:'left',
                         transition:'all 0.15s'}}
                       onMouseEnter={e=>{
                         e.currentTarget.style.transform='translateY(-3px)'
-                        e.currentTarget.style.boxShadow=`0 10px 28px ${a.color}28`
-                        e.currentTarget.style.border=`1.5px solid ${a.color}50`
+                        e.currentTarget.style.boxShadow=`0 10px 28px ${accent}20`
+                        e.currentTarget.style.border=`1.5px solid ${accent}50`
                       }}
                       onMouseLeave={e=>{
                         e.currentTarget.style.transform='translateY(0)'
-                        e.currentTarget.style.boxShadow=isDark?'none':`0 2px 8px ${a.color}10`
-                        e.currentTarget.style.border=`1.5px solid ${atLimit?'#F87171':a.color}22`
+                        e.currentTarget.style.boxShadow=isDark?'none':`0 2px 12px rgba(0,0,0,0.05)`
+                        e.currentTarget.style.border=`1.5px solid ${atLimit?'#F87171':bdr}`
                       }}>
                       <div style={{width:36,height:36,borderRadius:10,
                         background:`${a.color}18`,display:'flex',
