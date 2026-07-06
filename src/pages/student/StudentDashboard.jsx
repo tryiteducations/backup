@@ -532,7 +532,7 @@ export default function StudentDashboard() {
         style={{
           width:sideVisible?240:68,
           minHeight:'100vh',
-          background: `color-mix(in srgb, ${primary} 20%, #0B0D14 80%)`,
+          background: `var(--sidebar-bg, ${primD})`,
           display:'flex',flexDirection:'column',
           position:'sticky',top:0,height:'100vh',
           transition:'width 0.28s cubic-bezier(0.23,1,0.32,1)',

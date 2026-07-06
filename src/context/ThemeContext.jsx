@@ -64,6 +64,15 @@ function isDarkColor(hex) {
       bg = '#0f172a'
     }
 
+    // Adaptive sidebar tint: the sidebar is always dark (for guaranteed white-text contrast),
+    // but how much of the theme's actual brand color shows through should adapt to that color's
+    // own darkness. An already-dark, rich brand color (e.g. Vidya's deep indigo) should read as
+    // strongly, recognizably on-brand. A naturally bright primary (e.g. a sunset orange) needs to
+    // be pulled back harder toward black to stay safely dark - so its weight is lower.
+    const primaryLum = getLuminance(t.primary)
+    const sidebarWeight = Math.min(0.55, Math.max(0.15, 0.12 / Math.max(primaryLum, 0.05)))
+    const sidebarBg = `rgb(${Math.round(rgbP.r * sidebarWeight)}, ${Math.round(rgbP.g * sidebarWeight)}, ${Math.round(rgbP.b * sidebarWeight)})`
+
     const vars = {
       '--color-primary': t.primary,
       '--color-primary-dark': t.primaryDark,
@@ -93,6 +102,7 @@ function isDarkColor(hex) {
       '--ambient-glow': ambientGlow,
       '--box-glow': boxGlow,
       '--glass-bg': t.isDark ? 'rgba(15, 23, 42, 0.75)' : 'rgba(255,255,255,0.85)',
+      '--sidebar-bg': sidebarBg,
       '--glass-surface': t.isDark ? 'rgba(15, 23, 42, 0.75)' : 'rgba(255,255,255,0.85)',
       '--glass-border': t.isDark ? 'rgba(255,255,255,0.12)' : 'rgba(226,232,240,0.9)',
       '--button-surface': surface,
