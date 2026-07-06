@@ -115,7 +115,6 @@ const FamilyDashboardRefactored = lazy(() => import('./pages/family/FamilyDashbo
 const ReferralPage   = lazy(() => import('./pages/referral/ReferralPage'))
 const MentorLeaderboard   = lazy(() => import('./pages/mentor/MentorLeaderboard'))
 const MentorDoubts        = lazy(() => import('./pages/mentor/MentorDoubts'))
-const InstitutionDashboard = lazy(() => import('./pages/institution/InstitutionDashboard'))
 const InstitutionDashboardRefactored = lazy(() => import('./pages/institution/InstitutionDashboardRefactored'))
 const InstitutionRegister  = lazy(() => import('./pages/institution/InstitutionRegister'))
 const InstitutionHalls     = lazy(() => import('./pages/institution/InstitutionHalls'))
@@ -132,7 +131,6 @@ const MentorMaterials  = lazy(() => import('./pages/mentor/MentorMaterials'))
 const MentorCommunity  = lazy(() => import('./pages/mentor/MentorCommunity'))
 const MentorSettings   = lazy(() => import('./pages/mentor/MentorSettings'))
 const MentorStudents = lazy(() => import('./pages/mentor/MentorStudents'))
-const MentorHub      = lazy(() => import('./pages/mentor/MentorHub'))
 const PostConceptVideo = lazy(() => import('./pages/guru/PostConceptVideo'))
 const MentorDashboardRefactored = lazy(() => import('./pages/mentor/MentorDashboardRefactored'))
 const CashbackCenter = lazy(() => import('./pages/mentor/CashbackCenter'))
@@ -325,7 +323,6 @@ function ThemedApp() {
 
                 {/* INSTITUTION */}
                 <Route path="/institution"          element={<RoleGuard allowedRoles={['institution']}><InstitutionDashboardRefactored/></RoleGuard>} />
-                <Route path="/institution/v1"       element={<RoleGuard allowedRoles={['institution']}><InstitutionDashboard/></RoleGuard>} />
                 <Route path="/institution/register" element={<InstitutionRegister/>} />
                 <Route path="/institution/halls"    element={<RoleGuard allowedRoles={['institution']}><InstitutionHalls/></RoleGuard>} />
                 <Route path="/institution/mentors"  element={<RoleGuard allowedRoles={['institution']}><InstitutionMentors/></RoleGuard>} />
@@ -343,7 +340,6 @@ function ThemedApp() {
                 <Route path="/mentor-hub/doubts"      element={<RoleGuard allowedRoles={['mentor','institution']}><MentorDoubts/></RoleGuard>} />
                 <Route path="/mentor-hub/leaderboard" element={<RoleGuard allowedRoles={['mentor','institution']}><MentorLeaderboard/></RoleGuard>} />
                 <Route path="/mentor-hub"             element={<RoleGuard allowedRoles={['mentor','institution']}><MentorDashboardRefactored/></RoleGuard>} />
-                <Route path="/mentor-hub/v1"          element={<RoleGuard allowedRoles={['mentor','institution']}><MentorHub/></RoleGuard>} />
                 <Route path="/mentor-hub/cashback"    element={<RoleGuard allowedRoles={['mentor','institution']}><CashbackCenter/></RoleGuard>} />
                 <Route path="/mentor-hub/analytics"   element={<RoleGuard allowedRoles={['mentor','institution']}><MentorAnalytics/></RoleGuard>} />
                 <Route path="/mentor-hub/coupons"     element={<RoleGuard allowedRoles={['mentor','institution']}><CouponManager/></RoleGuard>} />
