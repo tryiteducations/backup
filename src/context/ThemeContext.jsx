@@ -86,9 +86,17 @@ function isDarkColor(hex) {
       '--subtext-color': t.textLight,
       '--primary-rgb': `${rgbP.r}, ${rgbP.g}, ${rgbP.b}`,
       '--accent-rgb': `${rgbA.r}, ${rgbA.g}, ${rgbA.b}`,
+      '--color-primary-rgb': `${rgbP.r}, ${rgbP.g}, ${rgbP.b}`,
+      '--color-accent-rgb': `${rgbA.r}, ${rgbA.g}, ${rgbA.b}`,
+      '--color-error-rgb': hexToRgb(t.error) ? `${hexToRgb(t.error).r}, ${hexToRgb(t.error).g}, ${hexToRgb(t.error).b}` : '239, 68, 68',
+      '--color-success-rgb': hexToRgb(t.success) ? `${hexToRgb(t.success).r}, ${hexToRgb(t.success).g}, ${hexToRgb(t.success).b}` : '34, 197, 94',
       '--ambient-glow': ambientGlow,
       '--box-glow': boxGlow,
       '--glass-bg': t.isDark ? 'rgba(15, 23, 42, 0.75)' : 'rgba(255,255,255,0.85)',
+      '--glass-surface': t.isDark ? 'rgba(15, 23, 42, 0.75)' : 'rgba(255,255,255,0.85)',
+      '--glass-border': t.isDark ? 'rgba(255,255,255,0.12)' : 'rgba(226,232,240,0.9)',
+      '--button-surface': surface,
+      '--button-text': t.text,
     }
     Object.entries(vars).forEach(([key, value]) => {
       if (value !== undefined) root.style.setProperty(key, value)
