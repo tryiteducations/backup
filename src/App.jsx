@@ -23,6 +23,7 @@ const Dashboard          = lazy(() => import('./pages/Dashboard'))
 const StudentDashboard   = lazy(() => import('./pages/student/StudentDashboard'))
 const Profile         = lazy(() => import('./pages/Profile'))
 const Settings        = lazy(() => import('./pages/settings/Settings'))
+const ChangePassword  = lazy(() => import('./pages/settings/ChangePassword'))
 const StudentSettings = lazy(() => import('./pages/student/StudentSettings'))
 const StudentProfile  = lazy(() => import('./pages/student/StudentProfile'))
 const StudentTest          = lazy(() => import('./pages/student/StudentTest'))
@@ -36,6 +37,7 @@ const StudentGuruHub       = lazy(() => import('./pages/student/StudentGuruHub')
 const StudentClassroom     = lazy(() => import('./pages/student/StudentClassroom'))
 const StudentBookmarks     = lazy(() => import('./pages/student/StudentBookmarks'))
 const StudentConceptLearning = lazy(() => import('./pages/student/StudentConceptLearning'))
+const StudentPulse         = lazy(() => import('./pages/student/StudentPulse'))
 const StudentAnalytics     = lazy(() => import('./pages/student/StudentAnalytics'))
 const StudentCareer        = lazy(() => import('./pages/student/StudentCareer'))
 const StudentCommunity     = lazy(() => import('./pages/student/StudentCommunity'))
@@ -121,6 +123,7 @@ const InstitutionMentors   = lazy(() => import('./pages/institution/InstitutionM
 const InstitutionStudents  = lazy(() => import('./pages/institution/InstitutionStudents'))
 const InstitutionRevenue   = lazy(() => import('./pages/institution/InstitutionRevenue'))
 const InstitutionSettings  = lazy(() => import('./pages/institution/InstitutionSettings'))
+const InstitutionConsent   = lazy(() => import('./pages/institution/InstitutionConsent'))
 const InstitutionHomework  = lazy(() => import('./pages/institution/InstitutionHomework'))
 const RoleGuard = lazy(() => import('./components/guards/RoleGuard'))
 const ExamBoard    = lazy(() => import('./pages/exam-board/ExamBoard'))
@@ -301,6 +304,7 @@ function ThemedApp() {
                 <Route path="/pro"      element={<PricingPage />} />
                 <Route path="/pricing"  element={<Navigate to="/pro" replace />} />
                 <Route path="/wallet"   element={<WalletPage />} />
+                <Route path="/change-password" element={<ChangePassword />} />
                 <Route path="/family"   element={<FamilyDashboardRefactored />} />
                 <Route path="/family/settings" element={<RoleGuard allowedRoles={['family']}><FamilySettings/></RoleGuard>} />
                 <Route path="/family/v1" element={<FamilyHub />} />
@@ -328,6 +332,7 @@ function ThemedApp() {
                 <Route path="/institution/homework" element={<RoleGuard allowedRoles={['institution']}><InstitutionHomework/></RoleGuard>} />
                 <Route path="/institution/students" element={<RoleGuard allowedRoles={['institution']}><InstitutionStudents/></RoleGuard>} />
                 <Route path="/institution/settings" element={<RoleGuard allowedRoles={['institution']}><InstitutionSettings/></RoleGuard>} />
+                <Route path="/centre/consent" element={<RoleGuard allowedRoles={['institution']}><InstitutionConsent/></RoleGuard>} />
 
                 {/* MENTOR HUB */}
                 <Route path="/mentor-hub/materials"   element={<RoleGuard allowedRoles={['mentor','institution']}><MentorMaterials/></RoleGuard>} />
@@ -383,6 +388,7 @@ function ThemedApp() {
                 <Route path="/student/classroom"      element={<StudentClassroom/>} />
                 <Route path="/student/bookmarks"      element={<StudentBookmarks/>} />
                 <Route path="/student/concept"         element={<StudentConceptLearning/>} />
+                <Route path="/student/pulse"          element={<StudentPulse/>} />
                 <Route path="/student/settings"       element={<StudentSettings/>} />
                 <Route path="/student/mentor"         element={<StudentMentor/>} />
                 <Route path="/student/career"         element={<StudentCareer/>} />
