@@ -8,7 +8,7 @@ export function withTimeout(promise, ms = 3500, fallback = null) {
 // src/lib/studentLib.js
 import { supabase } from './supabase'
 
-// â"€â"€ Profile â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// ── Profile ──────────────────────────────────────────────────────
 export async function getProfile(userId) {
   const { data, error } = await supabase
     .from('profiles')
@@ -30,7 +30,7 @@ export async function updateProfile(userId, updates) {
   return data
 }
 
-// â"€â"€ Avatar â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// ── Avatar ───────────────────────────────────────────────────────
 export async function uploadAvatar(userId, file) {
   const ext  = file.name.split('.').pop()
   const path = `${userId}/avatar.${ext}`
@@ -45,7 +45,7 @@ export async function uploadAvatar(userId, file) {
   return data.publicUrl
 }
 
-// â"€â"€ Streak â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// ── Streak ───────────────────────────────────────────────────────
 export async function getStreak(userId) {
   const { data, error } = await supabase
     .from('user_streaks')
@@ -60,7 +60,7 @@ export async function updateStreak(userId) {
   await supabase.rpc('update_streak', { p_user_id: userId })
 }
 
-// â"€â"€ Test attempts â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// ── Test attempts ────────────────────────────────────────────────
 export async function getRecentAttempts(userId, limit = 5) {
   const { data, error } = await supabase
     .from('test_attempts')
@@ -72,7 +72,7 @@ export async function getRecentAttempts(userId, limit = 5) {
   return data || []
 }
 
-// â"€â"€ Free usage â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// ── Free usage ───────────────────────────────────────────────────
 export async function getUsage(userId) {
   const { data, error } = await supabase
     .from('free_usage_tracker')
@@ -105,7 +105,7 @@ export async function incrementUsage(userId, field) {
     })
 }
 
-// â"€â"€ Coins â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// ── Coins ────────────────────────────────────────────────────────
 export async function addCoins(userId, amount, reason) {
   const { error } = await supabase.rpc('add_coins', {
     p_user_id: userId,
@@ -115,7 +115,7 @@ export async function addCoins(userId, amount, reason) {
   if (error) console.error('addCoins error:', error)
 }
 
-// â"€â"€ Pricing â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// ── Pricing ──────────────────────────────────────────────────────
 export async function getPricing(category) {
   const { data, error } = await supabase
     .from('pricing_config')
@@ -126,7 +126,7 @@ export async function getPricing(category) {
   return data
 }
 
-// â"€â"€ Leaderboard â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// ── Leaderboard ──────────────────────────────────────────────────
 export async function getLeaderboard(limit = 10) {
   const { data, error } = await supabase
     .from('test_attempts')
@@ -141,7 +141,7 @@ export async function getLeaderboard(limit = 10) {
   return data || []
 }
 
-// â"€â"€ Launchpad â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+// ── Launchpad ────────────────────────────────────────────────────
 export async function getLaunchpadEnrollment(userId) {
   const { data, error } = await supabase
     .from('launchpad_enrollments')

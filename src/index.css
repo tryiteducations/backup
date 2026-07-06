@@ -15,14 +15,14 @@ html, body {
 }
 
 /*
- * â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
- * TryIT â€" Global stylesheet
- * â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+ * ─────────────────────────────────────────────────────────────────
+ * TryIT — Global stylesheet
+ * ─────────────────────────────────────────────────────────────────
  * Text-color rules below are DELIBERATELY MINIMAL. Every color that
  * matters (text, textLight, border, card colors) is already computed
  * and contrast-checked per-theme in src/lib/themes.js and pushed into
  * these CSS variables by src/context/ThemeContext.jsx. This file's
- * job is to consume those variables consistently â€" not to patch
+ * job is to consume those variables consistently — not to patch
  * individual components with !important overrides.
  *
  * If you ever find a spot where text is hard to read, the fix belongs
@@ -46,7 +46,7 @@ html, body {
   --theme-transition-duration: 0.48s;
 }
 
-/* â"€â"€ FONTS â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ── FONTS ─────────────────────────────────────────── */
 body {
   font-family: 'Inter', sans-serif;
   background: var(--color-bg, #F8FAFC);
@@ -57,11 +57,11 @@ body {
 }
 h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
 
-/* â"€â"€ SCROLLBAR â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ── SCROLLBAR ─────────────────────────────────────── */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* â"€â"€ CLAYMORPHISM â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ── CLAYMORPHISM ──────────────────────────────────── */
 .clay {
   background: var(--color-surface, #FFFFFF);
   border-radius: 24px;
@@ -96,7 +96,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
   color: var(--color-primary-dark, #1E3A5F);
 }
 
-/* â"€â"€ GLASSMORPHISM â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ── GLASSMORPHISM ─────────────────────────────────── */
 .glass {
   background: var(--glass-surface, rgba(255,255,255,0.72));
   backdrop-filter: blur(20px) saturate(180%);
@@ -115,7 +115,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
   box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
   color: var(--color-on-dark, #FFFFFF);
 }
-/* Children inherit color from .glass-dark naturally â€" no per-tag
+/* Children inherit color from .glass-dark naturally — no per-tag
    override list needed, this is what `color` inheritance is for. */
 .glass-dark * { color: inherit; }
 
@@ -129,7 +129,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
   color: var(--color-on-surface, var(--color-text, #1E3A5F));
 }
 
-/* â"€â"€ BUTTONS â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ── BUTTONS ───────────────────────────────────────── */
 .btn-gold {
   background: linear-gradient(135deg, var(--color-accent,#D4AF37), var(--color-accent-light,#E8C84A));
   color: var(--color-primary-dark, #1E3A5F);
@@ -181,10 +181,10 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
 }
 .btn-primary:active { transform: translateY(0) scale(0.98); }
 
-/* â"€â"€ TEXT UTILITIES â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€
+/* ── TEXT UTILITIES ──────────────────────────────────
  * Every one of these reads from a CSS variable that ThemeContext.jsx
  * already guarantees is contrast-safe for the active theme. None of
- * these need !important â€" they're applied as the component's actual
+ * these need !important — they're applied as the component's actual
  * color, not fighting against a conflicting rule, because there is
  * no longer a parallel system of hardcoded per-theme text colors to
  * fight against.
@@ -219,21 +219,21 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
   text-shadow: 0 0 2px rgba(255,255,255,0.85), 0 0 6px rgba(255,255,255,0.45);
 }
 
-/* â"€â"€ REVEAL ANIMATIONS â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ── REVEAL ANIMATIONS ─────────────────────────────── */
 .reveal       { opacity:0; transform:translateY(30px);  transition:opacity 0.7s ease,transform 0.7s ease; }
 .reveal-l     { opacity:0; transform:translateX(-50px); transition:opacity 0.7s ease,transform 0.7s ease; }
 .reveal-r     { opacity:0; transform:translateX(50px);  transition:opacity 0.7s ease,transform 0.7s ease; }
 .reveal-s     { opacity:0; transform:scale(0.85);       transition:opacity 0.6s ease,transform 0.6s ease; }
 .reveal.show,.reveal-l.show,.reveal-r.show,.reveal-s.show { opacity:1; transform:none; }
 
-/* â"€â"€ SCROLL PROGRESS â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ── SCROLL PROGRESS ───────────────────────────────── */
 .scroll-progress {
   position:fixed; top:0; left:0; height:3px; z-index:9999;
   background:linear-gradient(90deg,var(--color-accent,#D4AF37),var(--color-accent-light,#E8C84A),var(--color-accent,#D4AF37));
   transition:width 0.1s linear; pointer-events:none;
 }
 
-/* â"€â"€ CLAY INPUT â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ── CLAY INPUT ────────────────────────────────────── */
 .clay-input {
   background:var(--color-surface,#F8FAFC); border-radius:14px;
   border:2px solid rgba(255,255,255,0.8);
@@ -248,7 +248,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
 }
 .clay-input::placeholder { color:var(--color-text-light,#94A3B8); }
 
-/* â"€â"€ KEYFRAMES â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ── KEYFRAMES ─────────────────────────────────────── */
 @keyframes pulseGold {
   0%,100% { box-shadow:0 0 0 0 rgba(var(--color-accent-rgb,212,175,55),0.5),4px 4px 12px rgba(var(--color-accent-rgb,212,175,55),0.3); }
   50%     { box-shadow:0 0 0 10px rgba(var(--color-accent-rgb,212,175,55),0),4px 4px 20px rgba(var(--color-accent-rgb,212,175,55),0.6); }
@@ -314,7 +314,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
 .animate-pulse-dot   { animation:pulseDot 1.5s ease-in-out infinite; }
 .animate-spin-slow   { animation:spin 2s linear infinite; }
 
-/* â"€â"€ ACCESSIBILITY â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ── ACCESSIBILITY ──────────────────────────────────── */
 .a11y-high-contrast { filter:contrast(1.5) brightness(1.1); }
 .a11y-audio * { outline:3px solid var(--color-accent,#D4AF37) !important; outline-offset:2px; }
 .a11y-audio *:focus { outline:4px solid #FFFFFF !important; box-shadow:0 0 0 6px #7C3AED !important; }
@@ -329,7 +329,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
   }
 }
 
-/* â"€â"€ THEME TRANSITIONS â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ── THEME TRANSITIONS ──────────────────────────────── */
 .theme-transitioning *,
 .theme-transitioning *::before,
 .theme-transitioning *::after {
@@ -339,7 +339,7 @@ h1,h2,h3,h4,h5,h6 { font-family: 'Poppins', sans-serif; }
     border-color var(--theme-transition-duration,0.48s) cubic-bezier(0.22,1,0.36,1),
     box-shadow var(--theme-transition-duration,0.48s) ease;
 }
-/* â"€â"€ TryIT Global Button Polish â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ── TryIT Global Button Polish ─────────────────────────── */
 button {
   transition: all 0.15s cubic-bezier(0.23,1,0.32,1) !important;
 }
@@ -353,20 +353,20 @@ button:active {
   filter: brightness(0.95) !important;
 }
 
-/* â"€â"€ Better text contrast everywhere â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ── Better text contrast everywhere ────────────────────── */
 :root {
   --text-high: rgba(255,255,255,0.95);
   --text-mid:  rgba(255,255,255,0.65);
   --text-low:  rgba(255,255,255,0.35);
 }
 
-/* â"€â"€ Sidebar nav button glow â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ── Sidebar nav button glow ─────────────────────────────── */
 .sidebar-desktop button:hover {
   background: rgba(255,255,255,0.10) !important;
   box-shadow: 0 0 16px rgba(201,168,76,0.15) !important;
 }
 
-/* â"€â"€ Card hover lift â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ── Card hover lift ─────────────────────────────────────── */
 .card-hover {
   transition: transform 0.15s ease, box-shadow 0.15s ease !important;
 }
@@ -375,54 +375,11 @@ button:active {
   box-shadow: 0 12px 32px rgba(0,0,0,0.12) !important;
 }
 
-/* â"€â"€ Scrollbar thin â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
+/* ── Scrollbar thin ──────────────────────────────────────── */
 * { scrollbar-width: thin; scrollbar-color: rgba(201,168,76,0.3) transparent; }
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 3px; }
 ::-webkit-scrollbar-track { background: transparent; }
-
-/* â"€â"€ TryIT Global Button Polish â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
-button {
-  transition: all 0.15s cubic-bezier(0.23,1,0.32,1) !important;
-}
-button:hover {
-  filter: brightness(1.15) !important;
-  transform: translateY(-1px) !important;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.15) !important;
-}
-button:active {
-  transform: translateY(0) scale(0.97) !important;
-  filter: brightness(0.95) !important;
-}
-
-/* â"€â"€ Better text contrast everywhere â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
-:root {
-  --text-high: rgba(255,255,255,0.95);
-  --text-mid:  rgba(255,255,255,0.65);
-  --text-low:  rgba(255,255,255,0.35);
-}
-
-/* â"€â"€ Sidebar nav button glow â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
-.sidebar-desktop button:hover {
-  background: rgba(255,255,255,0.10) !important;
-  box-shadow: 0 0 16px rgba(201,168,76,0.15) !important;
-}
-
-/* â"€â"€ Card hover lift â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
-.card-hover {
-  transition: transform 0.15s ease, box-shadow 0.15s ease !important;
-}
-.card-hover:hover {
-  transform: translateY(-3px) !important;
-  box-shadow: 0 12px 32px rgba(0,0,0,0.12) !important;
-}
-
-/* â"€â"€ Scrollbar thin â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
-* { scrollbar-width: thin; scrollbar-color: rgba(201,168,76,0.3) transparent; }
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 3px; }
-::-webkit-scrollbar-track { background: transparent; }
-
 
 /* ── Twemoji sizing ──────────────────────────────────────────
    Twemoji replaces emoji characters with <img> tags. Without this

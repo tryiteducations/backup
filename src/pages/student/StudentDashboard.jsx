@@ -37,9 +37,11 @@ function Ring({ pct=0, size=56, stroke=4, color='#C9A84C', children }) {
 <div style={{position:'relative',width:size,height:size,flexShrink:0}}>
 <svg width={size} height={size} style={{transform:'rotate(-90deg)'}}>
         <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="rgba(255,255,255,0.07)" strokeWidth={stroke}/>
-        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={color} strokeWidth={stroke}
-          strokeDasharray={`${(pct/100)*c} ${c-(pct/100)*c}`} strokeLinecap="round"
-          style={{transition:'stroke-dasharray 1.2s cubic-bezier(0.23,1,0.32,1)'}}/>
+        {pct>0&&(
+          <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={color} strokeWidth={stroke}
+            strokeDasharray={`${(pct/100)*c} ${c-(pct/100)*c}`} strokeLinecap="round"
+            style={{transition:'stroke-dasharray 1.2s cubic-bezier(0.23,1,0.32,1)'}}/>
+        )}
       </svg>
       <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center',justifyContent:'center'}}>{children}</div>
     </div>
@@ -100,7 +102,7 @@ const NAV = [
   {id:'bookmarks', icon:'🔖',label:'Bookmarks',   purpose:'Saved questions & materials', path:'/student/bookmarks'},
   {id:'analytics', icon:'📊',label:'Analytics',   purpose:'Performance trends & insights', path:'/student/analytics'},
   {id:'career',    icon:'🧭',label:'Career AI',   purpose:'Find best exam & study track for you', examBoard: true, path:'/student/career'},
-  {id:'pulse',     icon:'🇮🇳',label:'Bharat Pulse',purpose:'Daily current affairs stories', path:'/student/pulse'},
+  {id:'pulse',     icon:'🇮🇳',label:'Bharat Pulse',purpose:'Daily current affairs stories', path:'/bharat-pulse'},
   {id:'community', icon:'💬',label:'Community',   purpose:'Connect with peers & family', path:'/student/community'},
 ]
 
@@ -1361,7 +1363,7 @@ export default function StudentDashboard() {
             {showWidget('pulse')&&(
               <div style={{background:`linear-gradient(135deg,${primary}90,${primD})`,
                 borderRadius:18,overflow:'hidden',cursor:'pointer'}}
-                onClick={()=>navigate('/student/pulse')}>
+                onClick={()=>navigate('/bharat-pulse')}>
                 <div style={{padding:'14px 16px',borderBottom:'1px solid rgba(255,255,255,0.06)',
                   display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                   <p style={{color:'#fff',fontFamily:'Poppins,sans-serif',fontWeight:700,fontSize:13,margin:0}}>
