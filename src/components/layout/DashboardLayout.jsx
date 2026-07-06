@@ -175,7 +175,7 @@ export default function DashboardLayout({
             }}>✕</button>
           )}
           {!isMobile && (
-            <button onClick={() => setSideOpen(o => !o)} style={{
+            <button onClick={() => { setSideOpen(o => !o); setSideHover(false) }} style={{
               background: `${a}20`,
               border: `1px solid ${a}40`,
               color: '#fff',

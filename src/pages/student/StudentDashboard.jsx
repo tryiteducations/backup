@@ -100,7 +100,7 @@ const NAV = [
   {id:'bookmarks', icon:'🔖',label:'Bookmarks',   purpose:'Saved questions & materials', path:'/student/bookmarks'},
   {id:'analytics', icon:'📊',label:'Analytics',   purpose:'Performance trends & insights', path:'/student/analytics'},
   {id:'career',    icon:'🧭',label:'Career AI',   purpose:'Find best exam & study track for you', examBoard: true, path:'/student/career'},
-  {id:'pulse',     icon:'🇮🇳',label:'Bharat Pulse',purpose:'Daily current affairs stories', path:'/bharat-pulse'},
+  {id:'pulse',     icon:'🇮🇳',label:'Bharat Pulse',purpose:'Daily current affairs stories', path:'/student/pulse'},
   {id:'community', icon:'💬',label:'Community',   purpose:'Connect with peers & family', path:'/student/community'},
 ]
 
@@ -555,7 +555,7 @@ export default function StudentDashboard() {
               </span>
             )}
           </div>
-          <button onClick={()=>setSideOpen(o=>!o)} style={{
+          <button onClick={()=>{setSideOpen(o=>!o);setSideHover(false)}} style={{
             background:'rgba(255,255,255,0.07)',border:'none',
             borderRadius:8,width:28,height:28,cursor:'pointer',
             color:isDark?'rgba(255,255,255,0.5)':muted,fontSize:13,display:'flex',
@@ -1361,7 +1361,7 @@ export default function StudentDashboard() {
             {showWidget('pulse')&&(
               <div style={{background:`linear-gradient(135deg,${primary}90,${primD})`,
                 borderRadius:18,overflow:'hidden',cursor:'pointer'}}
-                onClick={()=>navigate('/bharat-pulse')}>
+                onClick={()=>navigate('/student/pulse')}>
                 <div style={{padding:'14px 16px',borderBottom:'1px solid rgba(255,255,255,0.06)',
                   display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                   <p style={{color:'#fff',fontFamily:'Poppins,sans-serif',fontWeight:700,fontSize:13,margin:0}}>
