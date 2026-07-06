@@ -1,6 +1,7 @@
 // src/pages/student/StudentClassroom.jsx
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
+import ShareButton from '../../components/ShareButton'
 
 const SECTIONS = [
   {icon:'📄',title:'PDF Library',desc:'Previous year papers, notes, shortcuts',path:'/classroom/pdf',count:'2,400+ files'},
@@ -27,6 +28,7 @@ export default function StudentClassroom() {
           <h1 style={{color:t,fontSize:18,fontWeight:800,margin:0}}>📚 Classroom</h1>
           <p style={{color:m,fontSize:11,margin:0}}>Study materials · PDFs · Planner</p>
         </div>
+        <ShareButton headline="Studying smart with TryIT Classroom" stat="📚" subLabel="Materials, PDFs, planner" context="Classroom" emoji="📚" />
       </div>
       <div style={{padding:'20px',maxWidth:760,margin:'0 auto'}}>
         <div style={{background:`linear-gradient(135deg,${p},${p}bb)`,borderRadius:18,

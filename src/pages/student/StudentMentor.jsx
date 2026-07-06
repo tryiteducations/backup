@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
 import { supabase } from '../../lib/supabase'
+import ShareButton from '../../components/ShareButton'
 
 const MENTORS = [
   {
@@ -706,6 +707,7 @@ export default function StudentMentor() {
             Weekly or monthly · Cancel anytime · Change after 7 days
           </p>
         </div>
+        <ShareButton headline="Found my mentor on TryIT" stat="👨‍🏫" subLabel="1:1 personal mentorship" context="Find a Mentor" emoji="🤝" style={{marginRight:8}} />
         <div style={{display:'flex',alignItems:'center',gap:8}}>
           <label style={{display:'flex',alignItems:'center',gap:6,cursor:'pointer'}}>
             <span style={{color:m,fontSize:11}}>Demo: Monthly Student</span>
