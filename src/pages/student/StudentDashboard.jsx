@@ -563,7 +563,7 @@ export default function StudentDashboard() {
           <button onClick={()=>{setSideOpen(o=>!o);setSidebarOpen(false)}} style={{
             background:'rgba(255,255,255,0.07)',border:'none',
             borderRadius:8,width:28,height:28,cursor:'pointer',
-            color:isDark?'rgba(255,255,255,0.5)':muted,fontSize:13,display:'flex',
+            color:'rgba(255,255,255,0.6)',fontSize:13,display:'flex',
             alignItems:'center',justifyContent:'center',flexShrink:0,
             transition:'background 0.15s'}}
             onMouseEnter={e=>e.currentTarget.style.background='rgba(255,255,255,0.12)'}
@@ -576,7 +576,8 @@ export default function StudentDashboard() {
         <div style={{padding:'12px 10px',margin:'8px',
           background:'rgba(255,255,255,0.06)',
           borderRadius:14,
-          border:'1px solid rgba(255,255,255,0.10)'}}>
+          border:`1px solid ${accent}35`,
+          boxShadow:`0 0 16px ${accent}18`}}>
           <div style={{display:'flex',alignItems:'center',
             gap:sideVisible?10:0,justifyContent:sideVisible?'flex-start':'center'}}>
             <div onClick={handleAvatarClick}
@@ -613,7 +614,7 @@ export default function StudentDashboard() {
                   <span style={{background:`${accent}22`,color:accent,
                     fontSize:8,fontWeight:700,padding:'1px 6px',
                     borderRadius:20,border:`1px solid ${accent}33`}}>{badge}</span>
-                  <span style={{color:isDark?'rgba(255,255,255,0.35)':muted,fontSize:9}}>Lv.{lvl}</span>
+                  <span style={{color:'rgba(255,255,255,0.55)',fontSize:9}}>Lv.{lvl}</span>
                 </div>
               </div>
             )}
@@ -628,7 +629,7 @@ export default function StudentDashboard() {
                   boxShadow:`0 0 8px ${accent}66`}}/>
               </div>
               <div style={{display:'flex',justifyContent:'space-between',marginTop:4}}>
-                <span style={{color:isDark?'rgba(255,255,255,0.60)':muted,fontSize:8}}>XP {xp%500}/500</span>
+                <span style={{color:'rgba(255,255,255,0.55)',fontSize:8}}>XP {xp%500}/500</span>
                 <span style={{color:accent,fontSize:8,fontWeight:700}}>Lv.{lvl+1} →</span>
               </div>
             </div>
@@ -642,15 +643,16 @@ export default function StudentDashboard() {
               {icon:'🔥',val:`${curStr}d`,label:'Streak',color:'#FF6B00'},
               {icon:'🪙',val:coins,label:'Coins',color:accent,anim:true},
             ].map((s,i)=>(
-              <div key={i} style={{flex:1,background:isDark?'rgba(255,255,255,0.06)':'rgba(255,255,255,0.5)',
-                border:`1px solid ${isDark?'rgba(255,255,255,0.1)':'rgba(0,0,0,0.06)'}`,borderRadius:10,
+              <div key={i} style={{flex:1,background:'rgba(255,255,255,0.06)',
+                border:`1px solid ${s.color}45`,borderRadius:10,
+                boxShadow:`0 0 12px ${s.color}20`,
                 padding:'7px 8px',textAlign:'center'}}>
                 <p style={{color:s.color,fontWeight:900,fontSize:15,
                   fontFamily:'Poppins,sans-serif',margin:0}}>
                   {s.icon}{' '}
                   {s.anim?<AnimNum value={s.val}/>:s.val}
                 </p>
-                <p style={{color:isDark?'rgba(255,255,255,0.65)':muted,fontSize:8,margin:'2px 0 0'}}>{s.label}</p>
+                <p style={{color:'rgba(255,255,255,0.6)',fontSize:8,margin:'2px 0 0'}}>{s.label}</p>
               </div>
             ))}
           </div>
@@ -672,40 +674,40 @@ export default function StudentDashboard() {
                   gap:sideVisible?10:0,
                   justifyContent:sideVisible?'flex-start':'center',
                   width:'100%',padding:sideVisible?'9px 10px':'9px 0',
-                  borderRadius:11,cursor:'pointer',marginBottom:2,
-                  border:'none',transition:'all 0.15s',
+                  borderRadius:11,cursor:'pointer',marginBottom:6,
+                  border:active?`1px solid ${accent}70`:`1px solid ${accent}22`,
+                  transition:'all 0.15s',
                   background:active
-                    ?`linear-gradient(135deg,${accent}22,${accent}0a)`
-                    :atLimit?'rgba(248,113,113,0.05)':'transparent',
-                  borderLeft:active?`3px solid ${accent}`:'3px solid transparent',
-                  boxShadow:active?`0 0 20px ${accent}55,0 4px 12px rgba(0,0,0,0.3)`:'0 2px 6px rgba(0,0,0,0.15)',
+                    ?`linear-gradient(135deg,${accent}25,${accent}0c)`
+                    :atLimit?'rgba(248,113,113,0.05)':'rgba(255,255,255,0.02)',
+                  boxShadow:active?`0 0 18px ${accent}50,0 0 0 1px ${accent}25 inset`:`0 0 8px ${accent}12`,
                 }}
-                onMouseEnter={e=>{if(!active)e.currentTarget.style.background='rgba(255,255,255,0.06)'}}
-                onMouseLeave={e=>{if(!active)e.currentTarget.style.background='transparent'}}>
+                onMouseEnter={e=>{if(!active){e.currentTarget.style.background=`${accent}12`;e.currentTarget.style.boxShadow=`0 0 14px ${accent}30`;e.currentTarget.style.borderColor=`${accent}55`}}}
+                onMouseLeave={e=>{if(!active){e.currentTarget.style.background='rgba(255,255,255,0.02)';e.currentTarget.style.boxShadow=`0 0 8px ${accent}12`;e.currentTarget.style.borderColor=`${accent}22`}}}>
                 <div style={{
                   width:32,height:32,borderRadius:9,flexShrink:0,
                   display:'flex',alignItems:'center',justifyContent:'center',
                   fontSize:16,
-                  background:active?`${accent}22`:atLimit?'rgba(248,113,113,0.12)':'rgba(255,255,255,0.05)',
+                  background:active?`${accent}22`:atLimit?'rgba(248,113,113,0.12)':'rgba(255,255,255,0.06)',
+                  border:`1px solid ${accent}${active?'50':'20'}`,
                   boxShadow:active?`0 0 14px ${accent}44`:'none',
                   transition:'all 0.15s',
                 }}>{item.icon}</div>
                 {sideVisible && (
                   <div style={{flex:1, textAlign:'left', minWidth:0}}>
                     <span style={{
-                      color:active?accent:atLimit?'#F87171':(isDark?'rgba(255,255,255,0.88)':muted),
-                      fontSize:12,fontWeight:active?700:400,
+                      color:active?accent:atLimit?'#F87171':'rgba(255,255,255,0.92)',
+                      fontSize:12,fontWeight:active?700:500,
                       transition:'color 0.15s',
                       display:'block',
                       whiteSpace:'nowrap',overflow:'hidden',textOverflow:'ellipsis',
                     }}>{item.label}</span>
                     {item.purpose && (
                       <span style={{
-                        color:muted,
+                        color:'rgba(255,255,255,0.5)',
                         fontSize:10,
                         display:'block',
                         marginTop:1,
-                        opacity:0.7,
                         lineHeight:1.2,
                         whiteSpace:'nowrap',
                         overflow:'hidden',
@@ -718,8 +720,8 @@ export default function StudentDashboard() {
                 )}
                 {sideVisible&&item.limit&&plan==='free'&&(
                   <span style={{
-                    background:atLimit?'rgba(248,113,113,0.15)':'rgba(255,255,255,0.07)',
-                    color:atLimit?'#F87171':(isDark?'rgba(255,255,255,0.3)':muted),
+                    background:atLimit?'rgba(248,113,113,0.15)':'rgba(255,255,255,0.08)',
+                    color:atLimit?'#F87171':'rgba(255,255,255,0.75)',
                     fontSize:8,padding:'1px 5px',borderRadius:20,flexShrink:0,fontWeight:700,
                   }}>
                     {atLimit?'0':FREE_LIMITS[item.limit]-used}/{FREE_LIMITS[item.limit]}
@@ -738,9 +740,9 @@ export default function StudentDashboard() {
             position:'relative'}}>
             <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
               <p style={{color:accent,fontWeight:700,fontSize:11,margin:0}}>⚡ Upgrade to Pro</p>
-              <button onClick={()=>setShowUpgradeCTA(false)} style={{background:'rgba(255,255,255,0.1)',border:'none',borderRadius:'50%',width:18,height:18,cursor:'pointer',color:isDark?'rgba(255,255,255,0.6)':muted,fontSize:10,display:'flex',alignItems:'center',justifyContent:'center',padding:0}}>✕</button>
+              <button onClick={()=>setShowUpgradeCTA(false)} style={{background:'rgba(255,255,255,0.1)',border:'none',borderRadius:'50%',width:18,height:18,cursor:'pointer',color:'rgba(255,255,255,0.6)',fontSize:10,display:'flex',alignItems:'center',justifyContent:'center',padding:0}}>✕</button>
             </div>
-            <p style={{color:isDark?'rgba(255,255,255,0.35)':muted,fontSize:10,margin:'0 0 8px',lineHeight:1.5}}>
+            <p style={{color:'rgba(255,255,255,0.55)',fontSize:10,margin:'0 0 8px',lineHeight:1.5}}>
               Unlimited tests · All themes · Full rank
             </p>
             <button onClick={()=>navigate('/pricing')} style={{
