@@ -96,7 +96,7 @@ const NAV = [
   {id:'concept',   icon:'💡',label:'Concept Learning', purpose:'We teach every topic here', path:'/student/concept'},
   {id:'foundation',icon:'🎯',label:'Foundation',       purpose:'Basics to exam-speed, level by level', path:'/student/foundation'},
   {id:'games',     icon:'🎮',label:'Games',        purpose:'Stress-busting skill builders', path:'/student/games', limit:'games'},
-  {id:'hall',      icon:'⚔️',label:'Battle Hall',  purpose:'Create or join team vs team halls', path:'/student/hall/create'},
+  {id:'hall',      icon:'⚔️',label:'Battle Hall',  purpose:'Create or join team vs team halls', path:'/student/hall'},
   {id:'tournament',icon:'🏟️',label:'Tournaments', purpose:'Compete live with prizes', path:'/student/tournament'},
   {id:'guruhub',   icon:'🤝',label:'GuruHub',     purpose:'Real mentors • Ask doubts', path:'/student/guruhub', limit:'doubts'},
   {id:'classroom', icon:'📚',label:'Classroom',   purpose:'PDFs, planner, eBooks & notes', path:'/student/classroom'},
