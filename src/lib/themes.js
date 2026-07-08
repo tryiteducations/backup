@@ -118,7 +118,7 @@ const FREE_THEMES = [
   buildTheme({
     id: 'ocean-dark', name: 'Ocean Dark', emoji: '🌊', family: 'ocean', mode: 'dark',
     category: 'Free', tier: 'base', plan: 'free', instant: true,
-    primary: '#38BDF8', primaryDark: '#0284C7',
+    primary: '#38BDF8', primaryDark: '#075985',
     accent: '#22D3EE', accentLight: '#A5F3FC',
     bg: '#0D1117', surface: '#161B22', isDark: true,
   }),
@@ -136,7 +136,7 @@ const PRO_THEMES = [
   buildTheme({
     id: 'forest-dark', name: 'Forest Dark', emoji: '🌿', family: 'forest', mode: 'dark',
     category: 'Pro', tier: 'pro', plan: 'pro', instant: true,
-    primary: '#4ADE80', primaryDark: '#16A34A',
+    primary: '#4ADE80', primaryDark: '#166534',
     accent: '#86EFAC', accentLight: '#BBF7D0',
     bg: '#0D1117', surface: '#161B22', isDark: true,
   }),
@@ -150,7 +150,7 @@ const PRO_THEMES = [
   buildTheme({
     id: 'sunset-dark', name: 'Sunset Dark', emoji: '🌅', family: 'sunset', mode: 'dark',
     category: 'Pro', tier: 'pro', plan: 'pro', instant: false, coinPrice: 150,
-    primary: '#FB923C', primaryDark: '#EA580C',
+    primary: '#FB923C', primaryDark: '#9A3412',
     accent: '#FDBA74', accentLight: '#FED7AA',
     bg: '#0D1117', surface: '#161B22', isDark: true,
   }),
@@ -178,7 +178,7 @@ const PRO_THEMES = [
   buildTheme({
     id: 'rose-dark', name: 'Rose Dark', emoji: '🌸', family: 'rose', mode: 'dark',
     category: 'Pro', tier: 'pro', plan: 'pro', instant: false, coinPrice: 200,
-    primary: '#FB7185', primaryDark: '#E11D48',
+    primary: '#FB7185', primaryDark: '#9F1239',
     accent: '#FDA4AF', accentLight: '#FECDD3',
     bg: '#0D1117', surface: '#161B22', isDark: true,
   }),
@@ -206,7 +206,7 @@ const PRO_THEMES = [
   buildTheme({
     id: 'crimson-dark', name: 'Crimson Dark', emoji: '🔴', family: 'crimson', mode: 'dark',
     category: 'Pro', tier: 'pro', plan: 'pro', instant: false, coinPrice: 250,
-    primary: '#FCA5A5', primaryDark: '#F87171',
+    primary: '#FCA5A5', primaryDark: '#991B1B',
     accent: '#EF4444', accentLight: '#FCA5A5',
     bg: '#0D1117', surface: '#161B22', isDark: true,
   }),
@@ -220,7 +220,7 @@ const PRO_THEMES = [
   buildTheme({
     id: 'almond-dark', name: 'Almond Dark', emoji: '🌰', family: 'almond', mode: 'dark',
     category: 'Pro', tier: 'pro', plan: 'pro', instant: true,
-    primary: '#E8A25C', primaryDark: '#C2691E',
+    primary: '#E8A25C', primaryDark: '#7C4A1E',
     accent: '#D97706', accentLight: '#FBBF77',
     bg: '#0D1117', surface: '#161B22', isDark: true,
   }),
