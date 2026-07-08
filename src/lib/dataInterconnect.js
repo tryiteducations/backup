@@ -1,7 +1,7 @@
-﻿// src/lib/dataInterconnect.js
+// src/lib/dataInterconnect.js
 // Service for interconnecting data between all 4 roles
-// - Students post doubts â†’ Mentors/Institutions see
-// - Mentors/Institutions upload papers â†’ Students see
+// - Students post doubts → Mentors/Institutions see
+// - Mentors/Institutions upload papers → Students see
 // - Family tracks real-time progress
 import { supabase } from './supabase'
 
@@ -104,7 +104,7 @@ export const doubtSystem = {
 }
 
 /**
- * QUESTION PAPERS - Mentors/Institutions upload â†’ Students see
+ * QUESTION PAPERS - Mentors/Institutions upload → Students see
  */
 export const paperSystem = {
   // Upload question paper

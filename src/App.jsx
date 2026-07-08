@@ -38,6 +38,8 @@ const StudentClassroom     = lazy(() => import('./pages/student/StudentClassroom
 const StudentBookmarks     = lazy(() => import('./pages/student/StudentBookmarks'))
 const StudentConceptLearning = lazy(() => import('./pages/student/StudentConceptLearning'))
 const StudentFoundation      = lazy(() => import('./pages/student/StudentFoundation'))
+const BrowseLiveTests        = lazy(() => import('./pages/student/BrowseLiveTests'))
+const InstitutionTests       = lazy(() => import('./pages/institution/InstitutionTests'))
 const StudentAnalytics     = lazy(() => import('./pages/student/StudentAnalytics'))
 const StudentCommunity     = lazy(() => import('./pages/student/StudentCommunity'))
 const StudentNotifications = lazy(() => import('./pages/student/StudentNotifications'))
@@ -328,6 +330,8 @@ function ThemedApp() {
                 <Route path="/institution/mentors"  element={<RoleGuard allowedRoles={['institution']}><InstitutionMentors/></RoleGuard>} />
                 <Route path="/institution/homework" element={<RoleGuard allowedRoles={['institution']}><InstitutionHomework/></RoleGuard>} />
                 <Route path="/institution/students" element={<RoleGuard allowedRoles={['institution']}><InstitutionStudents/></RoleGuard>} />
+                <Route path="/institution/revenue" element={<RoleGuard allowedRoles={['institution']}><InstitutionRevenue/></RoleGuard>} />
+                <Route path="/institution/tests" element={<RoleGuard allowedRoles={['institution']}><InstitutionTests/></RoleGuard>} />
                 <Route path="/institution/settings" element={<RoleGuard allowedRoles={['institution']}><InstitutionSettings/></RoleGuard>} />
                 <Route path="/centre/consent" element={<RoleGuard allowedRoles={['institution']}><InstitutionConsent/></RoleGuard>} />
 
@@ -386,6 +390,7 @@ function ThemedApp() {
                 <Route path="/student/bookmarks"      element={<StudentBookmarks/>} />
                 <Route path="/student/concept"         element={<StudentConceptLearning/>} />
                 <Route path="/student/foundation"      element={<StudentFoundation/>} />
+                <Route path="/student/live-tests"      element={<BrowseLiveTests/>} />
                 <Route path="/student/settings"       element={<StudentSettings/>} />
                 <Route path="/student/mentor"         element={<StudentMentor/>} />
                 <Route path="/student/community"      element={<StudentCommunity/>} />

@@ -1,9 +1,18 @@
 // src/pages/institution/InstitutionSettings.jsx
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
 import { THEME_LIST } from '../../lib/themes'
+import { supabase } from '../../lib/supabase'
+import { updateProfile } from '../../lib/studentLib'
+
+function generateJoinCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789' // no ambiguous chars (0/O, 1/I)
+  let code = ''
+  for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)]
+  return `TRYIT-${code}`
+}
 
 export default function InstitutionSettings() {
   const nav = useNavigate()
@@ -17,6 +26,29 @@ export default function InstitutionSettings() {
   const [saved, setSaved] = useState(false)
   const [confirmLogout, setConfirmLogout] = useState(false)
   const [logoUrl, setLogoUrl] = useState(null)
+  const [joinCode, setJoinCode] = useState('')
+  const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    if (!user?.id) return
+    supabase.from('profiles').select('institution_join_code').eq('id', user.id).single()
+      .then(async ({ data }) => {
+        if (data?.institution_join_code) {
+          setJoinCode(data.institution_join_code)
+        } else {
+          const code = generateJoinCode()
+          await updateProfile(user.id, { institution_join_code: code }).catch(() => {})
+          setJoinCode(code)
+        }
+      })
+      .catch(() => setJoinCode(generateJoinCode())) // display-only fallback if column doesn't exist yet
+  }, [user?.id])
+
+  const copyCode = () => {
+    navigator.clipboard.writeText(joinCode)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   const handleLogout = () => {
     if (logout) logout()
@@ -48,6 +80,30 @@ export default function InstitutionSettings() {
         </button>
       </div>
       <div style={{padding:'20px',maxWidth:640,margin:'0 auto'}}>
+
+        {/* Student Join Code */}
+        <div style={{background:`${p}08`,border:`1.5px solid ${p}30`,borderRadius:16,padding:18,marginBottom:20}}>
+          <p style={{color:t,fontWeight:800,fontSize:14,margin:'0 0 4px'}}>🔑 Your Student Join Code</p>
+          <p style={{color:m,fontSize:12,margin:'0 0 12px',lineHeight:1.6}}>
+            Share this code with your students. Once they enter it in their own Settings,
+            they'll be linked to your institution and can access your test series and halls
+            for free - without needing an individual Pro or Ultra subscription.
+          </p>
+          <div style={{display:'flex',gap:8,alignItems:'center'}}>
+            <span style={{flex:1,background:c,border:`1.5px dashed ${p}50`,borderRadius:10,
+              padding:'12px 16px',fontFamily:'monospace',fontSize:18,fontWeight:800,
+              color:p,letterSpacing:'1px',textAlign:'center'}}>
+              {joinCode || 'Generating...'}
+            </span>
+            <button onClick={copyCode} disabled={!joinCode}
+              style={{background:copied?'#22C55E':`linear-gradient(135deg,${p},${a})`,
+                border:'none',borderRadius:10,padding:'12px 18px',color:'#fff',
+                fontWeight:700,fontSize:12,cursor:'pointer',whiteSpace:'nowrap'}}>
+              {copied ? '✓ Copied' : 'Copy'}
+            </button>
+          </div>
+        </div>
+
 
         {/* Institution name */}
         <div style={{background:c,border:'1px solid '+b,borderRadius:16,

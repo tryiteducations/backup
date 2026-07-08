@@ -169,6 +169,7 @@ export default function StudentSettings() {
 
   const TABS = [
     { id: 'profile',       label: 'Profile',        icon: '👤' },
+    { id: 'institution',   label: 'Institution',    icon: '🏫' },
     { id: 'themes',        label: 'Themes',          icon: '🎨' },
     { id: 'language',      label: 'Language',        icon: '🌐' },
     { id: 'notifications', label: 'Notifications',   icon: '🔔' },
@@ -369,6 +370,13 @@ export default function StudentSettings() {
                 fontSize: 14, cursor: 'pointer', transition: 'all 0.3s' }}>
                 {saving ? 'Saving...' : saved ? '✅ Saved!' : 'Save Changes'}
               </button>
+            </div>
+          )}
+
+          {/* -- INSTITUTION TAB ------------------------------------ */}
+          {activeTab === 'institution' && (
+            <div>
+              <InstitutionJoinSection />
             </div>
           )}
 
@@ -800,6 +808,110 @@ export default function StudentSettings() {
         @keyframes spin{to{transform:rotate(360deg)}}
         div::-webkit-scrollbar{display:none}
       `}</style>
+    </div>
+  )
+}
+
+function InstitutionJoinSection() {
+  const { theme } = useTheme()
+  const { user } = useAuth()
+  const p = theme?.primary || '#1E3A5F'
+  const a = theme?.accent || '#C9A84C'
+  const t = theme?.text || '#1E293B'
+  const m = theme?.textLight || '#64748B'
+  const c = theme?.surface || '#FFFFFF'
+  const b = theme?.border || '#E2E8F0'
+
+  const [code, setCode] = useState('')
+  const [linkedInstitution, setLinkedInstitution] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [joining, setJoining] = useState(false)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    if (!user?.id) { setLoading(false); return }
+    supabase.from('profiles').select('institution_id').eq('id', user.id).single()
+      .then(async ({ data }) => {
+        if (data?.institution_id) {
+          const { data: inst } = await supabase.from('profiles')
+            .select('id, institution_name, name').eq('id', data.institution_id).single()
+          setLinkedInstitution(inst)
+        }
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false))
+  }, [user?.id])
+
+  const joinInstitution = async () => {
+    if (!code.trim() || !user?.id) return
+    setError('')
+    setJoining(true)
+    try {
+      const { data: inst, error: lookupErr } = await supabase.from('profiles')
+        .select('id, institution_name, name')
+        .eq('institution_join_code', code.trim().toUpperCase())
+        .eq('role', 'institution')
+        .single()
+      if (lookupErr || !inst) throw new Error('No institution found with that code - please check and try again.')
+
+      const { error: updateErr } = await supabase.from('profiles')
+        .update({ institution_id: inst.id }).eq('id', user.id)
+      if (updateErr) throw updateErr
+
+      setLinkedInstitution(inst)
+      setCode('')
+    } catch (e) {
+      setError(e.message || 'Could not join - please check the code and try again.')
+    } finally {
+      setJoining(false)
+    }
+  }
+
+  const leaveInstitution = async () => {
+    if (!user?.id) return
+    await supabase.from('profiles').update({ institution_id: null }).eq('id', user.id).catch(() => {})
+    setLinkedInstitution(null)
+  }
+
+  if (loading) return <p style={{color:m,fontSize:13}}>Loading...</p>
+
+  return (
+    <div style={{maxWidth:480}}>
+      <p style={{color:t,fontWeight:800,fontSize:16,margin:'0 0 6px'}}>🏫 Your Institution</p>
+      <p style={{color:m,fontSize:12,margin:'0 0 18px',lineHeight:1.6}}>
+        If your school, college, or coaching centre uses TryIT, enter the code they've shared with you.
+        This unlocks their private test series and halls for free - no Pro or Ultra subscription needed
+        for that content.
+      </p>
+
+      {linkedInstitution ? (
+        <div style={{background:`${p}0a`,border:`1.5px solid ${p}30`,borderRadius:16,padding:18}}>
+          <p style={{color:m,fontSize:11,margin:'0 0 4px'}}>Currently linked to</p>
+          <p style={{color:p,fontWeight:800,fontSize:16,margin:'0 0 14px'}}>
+            {linkedInstitution.institution_name || linkedInstitution.name}
+          </p>
+          <button onClick={leaveInstitution}
+            style={{background:'transparent',border:`1px solid ${b}`,borderRadius:10,
+              padding:'8px 16px',color:m,fontWeight:600,fontSize:12,cursor:'pointer'}}>
+            Leave this institution
+          </button>
+        </div>
+      ) : (
+        <div>
+          <input value={code} onChange={e=>setCode(e.target.value.toUpperCase())}
+            placeholder="e.g. TRYIT-A7K2M9"
+            style={{width:'100%',padding:'12px 14px',borderRadius:12,border:`1.5px solid ${code?a:b}`,
+              background:c,color:t,fontSize:14,fontFamily:'monospace',fontWeight:700,
+              letterSpacing:'1px',outline:'none',boxSizing:'border-box',marginBottom:10}}/>
+          {error && <p style={{color:'#DC2626',fontSize:12,margin:'0 0 10px'}}>{error}</p>}
+          <button onClick={joinInstitution} disabled={!code.trim()||joining}
+            style={{width:'100%',background:code.trim()?`linear-gradient(135deg,${p},${a})`:b,
+              border:'none',borderRadius:12,padding:'12px',color:code.trim()?'#fff':m,
+              fontWeight:700,fontSize:13,cursor:code.trim()?'pointer':'not-allowed'}}>
+            {joining ? 'Joining...' : 'Join Institution'}
+          </button>
+        </div>
+      )}
     </div>
   )
 }

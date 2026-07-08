@@ -2,6 +2,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
+import { useAuth } from '../../context/AuthContext'
+import { supabase } from '../../lib/supabase'
+import { doubtSystem } from '../../lib/dataInterconnect'
 
 const EXAMS = [
   'UPSC CSE','UPSC CDS','SSC CGL','SSC CHSL','SSC MTS',
@@ -18,6 +21,7 @@ const SUBJECTS = [
 export default function PostDoubt() {
   const nav = useNavigate()
   const { theme } = useTheme()
+  const { user } = useAuth()
   const p = theme?.primary||'#1E3A5F'
   const a = theme?.accent||'#C9A84C'
   const t = theme?.text||'#1E293B'
@@ -103,13 +107,44 @@ export default function PostDoubt() {
 
   const fmtTime = (s) => `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`
 
+  const [submitError, setSubmitError] = useState('')
+
   const submit = async () => {
-    if (!exam || !subject || !title.trim()) return
+    if (!exam || !subject || !title.trim() || !user?.id) return
+    setSubmitError('')
     setSubmitting(true)
-    // TODO: once Supabase Storage is wired, upload images[].file, pdf.file, and voiceBlob here
-    await new Promise(r => setTimeout(r, 1200))
-    setSubmitting(false)
-    setDone(true)
+    try {
+      const attachmentUrls = []
+
+      const uploadOne = async (file, prefix) => {
+        const path = `doubts/${user.id}/${Date.now()}_${prefix}_${file.name}`
+        const { error: upErr } = await supabase.storage.from('user-content').upload(path, file)
+        if (upErr) throw upErr
+        const { data } = supabase.storage.from('user-content').getPublicUrl(path)
+        return data.publicUrl
+      }
+
+      for (const img of images) {
+        attachmentUrls.push(await uploadOne(img.file, 'image'))
+      }
+      if (pdf) attachmentUrls.push(await uploadOne(pdf.file, 'pdf'))
+      if (video) attachmentUrls.push(await uploadOne(video.file, 'video'))
+      if (voiceBlob) {
+        const voiceFile = new File([await (await fetch(voiceBlob.url)).blob()], `voice_${Date.now()}.webm`, { type: 'audio/webm' })
+        attachmentUrls.push(await uploadOne(voiceFile, 'voice'))
+      }
+
+      const saved = await doubtSystem.postDoubt(
+        user.id, exam, subject, title.trim(), desc.trim() || title.trim(), attachmentUrls
+      )
+      if (!saved) throw new Error('Could not save your doubt - please try again.')
+
+      setSubmitting(false)
+      setDone(true)
+    } catch (e) {
+      setSubmitError(e.message || 'Something went wrong posting your doubt.')
+      setSubmitting(false)
+    }
   }
 
   const inputStyle = {
@@ -347,6 +382,9 @@ export default function PostDoubt() {
             </div>
 
             {/* Submit */}
+            {submitError && (
+              <p style={{color:'#DC2626',fontSize:12,marginBottom:10,textAlign:'center'}}>{submitError}</p>
+            )}
             <button onClick={submit}
               disabled={!exam||!subject||!title.trim()||submitting}
               style={{width:'100%',

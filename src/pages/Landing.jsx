@@ -833,24 +833,9 @@ function Pricing({nav}) {
 // --- Footer -----------------------------------------------
 function Footer({nav}) {
   const LINKS = {
-    'Platform': [
-      {l:'Exams',href:'/exams'},
-      {l:'Mentors',href:'/student/mentor'},
-      {l:'Institutions',href:'/institution/register'},
-      {l:'Pricing',href:'/pro'},
-      {l:'Bharat Pulse',href:'/bharat-pulse'},
-    ],
-    'Students': [
-      {l:'Quick Test',href:'/student'},
-      {l:'Leaderboard',href:'/leaderboard'},
-      {l:'Games',href:'/games'},
-      {l:'Scholarships',href:'/scholarships'},
-    ],
     'Company': [
-      {l:'About TryIT',href:'/landing'},
-      {l:'Contact',href:'mailto:founder@tryiteducations.net'},
+      {l:'About TryIT',href:'/about'},
       {l:'Privacy Policy',href:'/privacy'},
-      {l:'TatuLabs',href:'https://tatulabs.in'},
     ],
   }
 
@@ -905,6 +890,28 @@ function Footer({nav}) {
               ))}
             </div>
           ))}
+
+          {/* Contact */}
+          <div>
+            <p style={{color:'rgba(255,255,255,0.5)',fontFamily:'Inter,sans-serif',
+              fontSize:11,fontWeight:700,letterSpacing:'1.5px',margin:'0 0 16px'}}>
+              CONTACT
+            </p>
+            <a href="mailto:support@tryiteducations.net"
+              style={{display:'block',color:'rgba(255,255,255,0.55)',fontFamily:'Inter,sans-serif',
+                fontSize:13,textDecoration:'none',marginBottom:4,transition:'color 0.15s'}}
+              onMouseEnter={e=>{e.target.style.color='#fff'}}
+              onMouseLeave={e=>{e.target.style.color='rgba(255,255,255,0.55)'}}>
+              support@tryiteducations.net
+            </a>
+            <a href="mailto:info@tryiteducations.net"
+              style={{display:'block',color:'rgba(255,255,255,0.55)',fontFamily:'Inter,sans-serif',
+                fontSize:13,textDecoration:'none',marginBottom:4,transition:'color 0.15s'}}
+              onMouseEnter={e=>{e.target.style.color='#fff'}}
+              onMouseLeave={e=>{e.target.style.color='rgba(255,255,255,0.55)'}}>
+              info@tryiteducations.net
+            </a>
+          </div>
         </div>
 
         <div style={{borderTop:'1px solid rgba(255,255,255,0.08)',
@@ -913,11 +920,6 @@ function Footer({nav}) {
           <p style={{color:'rgba(255,255,255,0.35)',fontFamily:'Inter,sans-serif',
             fontSize:12,margin:0}}>
             © 2026 TryIT Educations. All rights reserved.
-            All uploaded content is assigned to TryIT Educations permanently.
-          </p>
-          <p style={{color:'rgba(255,255,255,0.35)',fontFamily:'Inter,sans-serif',
-            fontSize:12,margin:0}}>
-            founder@tryiteducations.net · +91 9566698821
           </p>
         </div>
       </div>

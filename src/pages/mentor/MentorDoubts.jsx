@@ -1,58 +1,82 @@
 // src/pages/mentor/MentorDoubts.jsx
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
+import { useAuth } from '../../context/AuthContext'
+import { supabase } from '../../lib/supabase'
+import { doubtSystem } from '../../lib/dataInterconnect'
 
-const DOUBTS = [
-  {id:1,student:'Priya R.',exam:'UPSC',subject:'Polity',
-   q:'Explain Directive Principles vs Fundamental Rights in simple terms',
-   detail:'I understand both are in Part III and IV but I get confused in exam questions',
-   time:'10m ago',status:'pending',emojis:{}},
-  {id:2,student:'Karthik M.',exam:'SSC CGL',subject:'Maths',
-   q:'Time and work shortcut for 3 workers with different rates?',
-   detail:'The LCM method confuses me. Can you give a formula I can remember?',
-   time:'25m ago',status:'pending',emojis:{}},
-  {id:3,student:'Anjali S.',exam:'TNPSC',subject:'Polity',
-   q:'What is the 73rd Amendment? Why is it important?',
-   detail:'Is this asked in TNPSC Group 2? What is the key content to remember?',
-   time:'1h ago',status:'answered',
-   answer:'The 73rd Amendment 1992 gave constitutional status to Panchayati Raj. Key points: 3-tier system, reservations for women & SC/ST, State Finance Commission. Very frequently asked in TNPSC!',
-   emojis:{fire:12,star:8,heart:5}},
-  {id:4,student:'Rahul V.',exam:'IBPS PO',subject:'Economy',
-   q:'Difference between CRR and SLR?',
-   detail:'I keep mixing these up in banking awareness section',
-   time:'2h ago',status:'pending',emojis:{}},
-]
-
-const EMOJI_OPTIONS = [
-  {e:'🔥',k:'fire',label:'Fire'},{e:'⭐',k:'star',label:'Star'},
-  {e:'❤️',k:'heart',label:'Love'},{e:'👍',k:'thumb',label:'Helpful'},
-  {e:'🙏',k:'thanks',label:'Thanks'},{e:'💡',k:'idea',label:'Clear'},
-]
+function timeAgo(iso) {
+  if (!iso) return ''
+  const diffMs = Date.now() - new Date(iso).getTime()
+  const mins = Math.floor(diffMs / 60000)
+  if (mins < 60) return `${mins}m ago`
+  const hrs = Math.floor(mins / 60)
+  if (hrs < 24) return `${hrs}h ago`
+  return `${Math.floor(hrs / 24)}d ago`
+}
 
 export default function MentorDoubts() {
   const nav = useNavigate()
   const { theme } = useTheme()
+  const { user } = useAuth()
   const p = theme?.primary||'#1E3A5F', a = theme?.accent||'#C9A84C'
   const t = theme?.text||'#1E293B', m = theme?.textLight||'#64748B'
   const bg = theme?.background||'#F8FAFC', c = theme?.surface||'#FFFFFF'
   const b = theme?.border||'#E2E8F0'
 
-  const [doubts, setDoubts] = useState(DOUBTS)
+  const [doubts, setDoubts] = useState([])
+  const [loading, setLoading] = useState(true)
   const [selected, setSelected] = useState(null)
   const [answer, setAnswer] = useState('')
   const [filter, setFilter] = useState('pending')
+  const [busyId, setBusyId] = useState(null)
 
-  const submitAnswer = (id) => {
-    if (!answer.trim()) return
-    setDoubts(prev => prev.map(d =>
-      d.id === id ? {...d, status:'answered', answer, emojis:{}} : d
-    ))
-    setSelected(null)
-    setAnswer('')
+  const loadDoubts = async () => {
+    if (!user?.id) return
+    setLoading(true)
+    try {
+      const mine = await doubtSystem.getDoubts(user.id, 'mentor')
+      const { data: openPool } = await supabase
+        .from('doubts').select('*')
+        .eq('status', 'open').is('assigned_mentor_id', null)
+        .order('posted_at', { ascending: false })
+      const merged = [...(mine || []), ...(openPool || [])]
+      const dedup = Array.from(new Map(merged.map(d => [d.id, d])).values())
+      setDoubts(dedup)
+    } finally {
+      setLoading(false)
+    }
   }
 
-  const filtered = doubts.filter(d => filter === 'all' || d.status === filter)
+  useEffect(() => { loadDoubts() }, [user?.id])
+
+  const claimAndAnswer = async (doubtId) => {
+    setSelected(doubtId)
+  }
+
+  const submitAnswer = async (id) => {
+    if (!answer.trim() || !user?.id) return
+    setBusyId(id)
+    try {
+      const doubt = doubts.find(d => d.id === id)
+      if (doubt && !doubt.assigned_mentor_id) {
+        await doubtSystem.assignDoubt(id, user.id)
+      }
+      await doubtSystem.resolveDoubt(id, answer.trim())
+      setSelected(null)
+      setAnswer('')
+      await loadDoubts()
+    } finally {
+      setBusyId(null)
+    }
+  }
+
+  const filtered = doubts.filter(d => {
+    if (filter === 'all') return true
+    if (filter === 'answered') return d.status === 'resolved'
+    return d.status !== 'resolved'
+  })
 
   return (
     <div style={{minHeight:'100vh',background:bg,fontFamily:'Poppins,sans-serif',display:'flex'}}>
@@ -67,7 +91,7 @@ export default function MentorDoubts() {
         <h1 style={{color:t,fontSize:17,fontWeight:800,margin:0}}>💬 Student Doubts</h1>
         <span style={{background:'#EF444420',color:'#EF4444',fontSize:12,fontWeight:700,
           padding:'3px 10px',borderRadius:20,marginLeft:'auto'}}>
-          {doubts.filter(d=>d.status==='pending').length} pending
+          {doubts.filter(d=>d.status!=='resolved').length} pending
         </span>
       </div>
 
@@ -86,64 +110,61 @@ export default function MentorDoubts() {
           ))}
         </div>
 
+        {loading && <p style={{textAlign:'center',color:m,fontSize:13,padding:20}}>Loading doubts...</p>}
+        {!loading && filtered.length===0 && (
+          <p style={{textAlign:'center',color:m,fontSize:13,padding:30}}>
+            No doubts here right now - check back soon or switch filters.
+          </p>
+        )}
+
         {/* Doubt cards */}
-        {filtered.map(d=>(
+        {!loading && filtered.map(d=>(
           <div key={d.id} style={{background:c,border:'1.5px solid '+(selected===d.id?a:b),
             borderRadius:18,padding:'18px',marginBottom:12,
             boxShadow:'0 2px 12px rgba(0,0,0,0.05)',transition:'all 0.2s'}}>
 
             <div style={{display:'flex',gap:8,marginBottom:10,flexWrap:'wrap'}}>
               <span style={{background:p+'12',color:p,fontSize:9,fontWeight:700,
-                padding:'3px 10px',borderRadius:20}}>{d.exam}</span>
+                padding:'3px 10px',borderRadius:20}}>{d.exam_id}</span>
               <span style={{background:a+'15',color:a,fontSize:9,fontWeight:700,
                 padding:'3px 10px',borderRadius:20}}>{d.subject}</span>
-              <span style={{marginLeft:'auto',color:m,fontSize:10}}>{d.time}</span>
-              <span style={{background:d.status==='answered'?'#22C55E15':'#F59E0B15',
-                color:d.status==='answered'?'#22C55E':'#F59E0B',
+              <span style={{marginLeft:'auto',color:m,fontSize:10}}>{timeAgo(d.posted_at)}</span>
+              <span style={{background:d.status==='resolved'?'#22C55E15':'#F59E0B15',
+                color:d.status==='resolved'?'#22C55E':'#F59E0B',
                 fontSize:9,fontWeight:700,padding:'3px 10px',borderRadius:20}}>
-                {d.status==='answered'?'✓ Answered':'⏳ Pending'}
+                {d.status==='resolved'?'✓ Answered':d.assigned_mentor_id?'👨‍🏫 Assigned to you':'⏳ Open'}
               </span>
             </div>
 
-            <div style={{display:'flex',gap:10,alignItems:'center',marginBottom:8}}>
-              <div style={{width:28,height:28,borderRadius:'50%',flexShrink:0,
-                background:'linear-gradient(135deg,'+p+','+a+')',
-                display:'flex',alignItems:'center',justifyContent:'center',
-                fontSize:11,fontWeight:700,color:'#fff'}}>
-                {d.student[0]}
+            <p style={{color:t,fontWeight:700,fontSize:14,margin:'0 0 6px'}}>{d.topic}</p>
+            <p style={{color:m,fontSize:12,margin:'0 0 10px',lineHeight:1.6}}>{d.question}</p>
+
+            {d.images?.length > 0 && (
+              <div style={{display:'flex',gap:8,flexWrap:'wrap',marginBottom:10}}>
+                {d.images.map((url,i) => (
+                  url.match(/\.(jpg|jpeg|png|gif|webp)$/i)
+                    ? <img key={i} src={url} alt="" style={{width:60,height:60,objectFit:'cover',borderRadius:8,border:'1px solid '+b}}/>
+                    : <a key={i} href={url} target="_blank" rel="noreferrer"
+                        style={{fontSize:11,color:p,background:p+'10',padding:'6px 10px',borderRadius:8,textDecoration:'none'}}>
+                        📎 Attachment {i+1}
+                      </a>
+                ))}
               </div>
-              <span style={{color:m,fontSize:11,fontWeight:600}}>{d.student}</span>
-            </div>
+            )}
 
-            <p style={{color:t,fontWeight:700,fontSize:14,margin:'0 0 6px'}}>{d.q}</p>
-            <p style={{color:m,fontSize:12,margin:'0 0 10px',lineHeight:1.6}}>{d.detail}</p>
-
-            {d.status === 'answered' && d.answer && (
+            {d.status === 'resolved' && d.solution && (
               <div style={{background:p+'08',border:'1px solid '+p+'20',
                 borderRadius:12,padding:'12px',marginBottom:10}}>
                 <p style={{color:p,fontWeight:700,fontSize:11,margin:'0 0 6px'}}>
                   Your Answer:
                 </p>
-                <p style={{color:t,fontSize:13,margin:'0 0 10px',lineHeight:1.6}}>
-                  {d.answer}
+                <p style={{color:t,fontSize:13,margin:0,lineHeight:1.6}}>
+                  {d.solution}
                 </p>
-                {/* Emoji reactions */}
-                <div style={{display:'flex',gap:8,flexWrap:'wrap'}}>
-                  {EMOJI_OPTIONS.map(({e,k,label})=>(
-                    <span key={k} style={{background:c,border:'1px solid '+b,
-                      borderRadius:20,padding:'3px 10px',fontSize:12,
-                      cursor:'pointer',display:'flex',alignItems:'center',gap:4}}>
-                      {e}
-                      <span style={{color:m,fontSize:10,fontWeight:700}}>
-                        {d.emojis[k]||0}
-                      </span>
-                    </span>
-                  ))}
-                </div>
               </div>
             )}
 
-            {d.status === 'pending' && (
+            {d.status !== 'resolved' && (
               selected === d.id ? (
                 <div>
                   <textarea value={answer} onChange={e=>setAnswer(e.target.value)}
@@ -156,13 +177,13 @@ export default function MentorDoubts() {
                       lineHeight:1.6,marginBottom:10}}/>
                   <div style={{display:'flex',gap:8}}>
                     <button onClick={()=>submitAnswer(d.id)}
-                      disabled={!answer.trim()}
+                      disabled={!answer.trim()||busyId===d.id}
                       style={{flex:1,background:answer.trim()
                         ?'linear-gradient(135deg,'+p+','+a+')':b,
                         border:'none',borderRadius:12,padding:'10px',
                         color:answer.trim()?'#fff':m,fontWeight:700,
-                        fontSize:13,cursor:'pointer'}}>
-                      ✅ Submit Answer
+                        fontSize:13,cursor:busyId===d.id?'wait':'pointer'}}>
+                      {busyId===d.id ? 'Saving...' : '✅ Submit Answer'}
                     </button>
                     <button onClick={()=>{setSelected(null);setAnswer('')}}
                       style={{background:'transparent',border:'1px solid '+b,
@@ -173,11 +194,11 @@ export default function MentorDoubts() {
                   </div>
                 </div>
               ) : (
-                <button onClick={()=>setSelected(d.id)}
+                <button onClick={()=>claimAndAnswer(d.id)}
                   style={{background:'linear-gradient(135deg,'+p+','+a+')',
                     border:'none',borderRadius:12,padding:'10px 20px',
                     color:'#fff',fontWeight:700,fontSize:13,cursor:'pointer'}}>
-                  Answer This Doubt →
+                  {d.assigned_mentor_id ? 'Answer This Doubt →' : 'Claim & Answer →'}
                 </button>
               )
             )}

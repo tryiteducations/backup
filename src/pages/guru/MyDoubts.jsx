@@ -1,26 +1,26 @@
 // src/pages/guru/MyDoubts.jsx - Premium standalone
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
-
-const MOCK_DOUBTS = [
-  {id:1,title:'Difference between Fundamental Rights and DPSP?',
-   exam:'UPSC CSE',subject:'Polity',answers:3,time:'2h ago',status:'answered'},
-  {id:2,title:'How to solve Time & Work problems in under 30 seconds?',
-   exam:'SSC CGL',subject:'Maths',answers:7,time:'4h ago',status:'answered'},
-  {id:3,title:'What is the significance of the Preamble?',
-   exam:'UPSC CSE',subject:'Polity',answers:0,time:'1h ago',status:'pending'},
-  {id:4,title:'Difference between NDA and CDS exam pattern?',
-   exam:'NDA',subject:'GK / GS',answers:2,time:'6h ago',status:'answered'},
-  {id:5,title:'How is the Rajya Sabha different from Lok Sabha in composition?',
-   exam:'TNPSC Group 1',subject:'Polity',answers:0,time:'30m ago',status:'pending'},
-]
+import { useAuth } from '../../context/AuthContext'
+import { doubtSystem } from '../../lib/dataInterconnect'
 
 const FILTERS = ['All', 'Answered', 'Pending']
+
+function timeAgo(iso) {
+  if (!iso) return ''
+  const diffMs = Date.now() - new Date(iso).getTime()
+  const mins = Math.floor(diffMs / 60000)
+  if (mins < 60) return `${mins}m ago`
+  const hrs = Math.floor(mins / 60)
+  if (hrs < 24) return `${hrs}h ago`
+  return `${Math.floor(hrs / 24)}d ago`
+}
 
 export default function MyDoubts() {
   const nav = useNavigate()
   const { theme } = useTheme()
+  const { user } = useAuth()
   const p = theme?.primary||'#1E3A5F'
   const a = theme?.accent||'#C9A84C'
   const t = theme?.text||'#1E293B'
@@ -31,11 +31,20 @@ export default function MyDoubts() {
   const isDark = theme?.isDark||false
 
   const [filter, setFilter] = useState('All')
+  const [doubts, setDoubts] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  const filtered = MOCK_DOUBTS.filter(d => {
+  useEffect(() => {
+    if (!user?.id) { setLoading(false); return }
+    doubtSystem.getDoubts(user.id, 'student')
+      .then(data => setDoubts(data || []))
+      .finally(() => setLoading(false))
+  }, [user?.id])
+
+  const filtered = doubts.filter(d => {
     if (filter === 'All') return true
-    if (filter === 'Answered') return d.status === 'answered'
-    return d.status === 'pending'
+    if (filter === 'Answered') return d.status === 'resolved'
+    return d.status !== 'resolved'
   })
 
   return (
@@ -52,7 +61,7 @@ export default function MyDoubts() {
         </button>
         <div style={{flex:1}}>
           <h1 style={{color:t,fontSize:17,fontWeight:800,margin:0}}>My Doubts</h1>
-          <p style={{color:m,fontSize:11,margin:0}}>{MOCK_DOUBTS.length} doubts posted</p>
+          <p style={{color:m,fontSize:11,margin:0}}>{doubts.length} doubts posted</p>
         </div>
         <button onClick={()=>nav('/guru-hub/post-doubt')}
           style={{background:'linear-gradient(135deg,'+p+','+a+')',border:'none',
@@ -67,9 +76,9 @@ export default function MyDoubts() {
         {/* Stats row */}
         <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:10,marginBottom:20}}>
           {[
-            {l:'Total',v:MOCK_DOUBTS.length,e:'📝'},
-            {l:'Answered',v:MOCK_DOUBTS.filter(d=>d.status==='answered').length,e:'✅'},
-            {l:'Pending',v:MOCK_DOUBTS.filter(d=>d.status==='pending').length,e:'⏳'},
+            {l:'Total',v:doubts.length,e:'📝'},
+            {l:'Answered',v:doubts.filter(d=>d.status==='resolved').length,e:'✅'},
+            {l:'Pending',v:doubts.filter(d=>d.status!=='resolved').length,e:'⏳'},
           ].map((s,i)=>(
             <div key={i} style={{background:c,border:'1px solid '+b,borderRadius:14,
               padding:'14px',textAlign:'center',
@@ -96,8 +105,11 @@ export default function MyDoubts() {
         </div>
 
         {/* Doubt cards */}
+        {loading && (
+          <p style={{textAlign:'center',color:m,fontSize:13,padding:20}}>Loading your doubts...</p>
+        )}
         <div style={{display:'flex',flexDirection:'column',gap:10}}>
-          {filtered.map(d=>(
+          {!loading && filtered.map(d=>(
             <div key={d.id}
               style={{background:c,border:'1px solid '+b,borderRadius:16,
                 padding:'16px',cursor:'pointer',transition:'all 0.2s',
@@ -111,31 +123,31 @@ export default function MyDoubts() {
 
               <div style={{display:'flex',gap:8,marginBottom:8,flexWrap:'wrap'}}>
                 <span style={{background:p+'12',color:p,fontSize:9,fontWeight:700,
-                  padding:'3px 10px',borderRadius:20}}>{d.exam}</span>
+                  padding:'3px 10px',borderRadius:20}}>{d.exam_id}</span>
                 <span style={{background:a+'15',color:a,fontSize:9,fontWeight:700,
                   padding:'3px 10px',borderRadius:20}}>{d.subject}</span>
-                <span style={{background:d.status==='answered'?'#22C55E15':'#F59E0B15',
-                  color:d.status==='answered'?'#22C55E':'#F59E0B',
+                <span style={{background:d.status==='resolved'?'#22C55E15':'#F59E0B15',
+                  color:d.status==='resolved'?'#22C55E':'#F59E0B',
                   fontSize:9,fontWeight:700,padding:'3px 10px',borderRadius:20,
                   marginLeft:'auto'}}>
-                  {d.status==='answered'?'✓ Answered':'⏳ Pending'}
+                  {d.status==='resolved'?'✓ Answered':d.status==='in_progress'?'👨‍🏫 Mentor assigned':'⏳ Pending'}
                 </span>
               </div>
 
               <p style={{color:t,fontWeight:600,fontSize:14,margin:'0 0 10px',lineHeight:1.5}}>
-                {d.title}
+                {d.topic || d.question}
               </p>
 
               <div style={{display:'flex',gap:16,alignItems:'center'}}>
                 <span style={{color:m,fontSize:11}}>
-                  {d.answers > 0 ? '💬 '+d.answers+' answers' : '💬 No answers yet'}
+                  {d.status==='resolved' ? '✅ Answered' : '💬 No answer yet'}
                 </span>
-                <span style={{color:m,fontSize:11}}>🕐 {d.time}</span>
-                {d.status==='answered'&&(
+                <span style={{color:m,fontSize:11}}>🕐 {timeAgo(d.posted_at)}</span>
+                {d.status==='resolved'&&(
                   <span style={{marginLeft:'auto',color:a,fontSize:11,fontWeight:700,
                     cursor:'pointer'}}
                     onClick={()=>nav('/guru-hub/'+d.id)}>
-                    View answers →
+                    View answer →
                   </span>
                 )}
               </div>
@@ -143,7 +155,7 @@ export default function MyDoubts() {
           ))}
         </div>
 
-        {filtered.length === 0 && (
+        {!loading && filtered.length === 0 && (
           <div style={{textAlign:'center',padding:'40px 20px',
             background:c,border:'1.5px dashed '+b,borderRadius:18}}>
             <div style={{fontSize:40,marginBottom:12}}>🤔</div>
