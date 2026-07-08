@@ -42,9 +42,9 @@ export default function ReferralPage() {
   const { user, coins } = useAuth()
 
   const [referrals,     setReferrals]     = useState(MOCK_REFERRALS)
-  const [totalCoins,    setTotalCoins]    = useState(650)
-  const [totalCash,     setTotalCash]     = useState(50)
-  const [pendingPayout, setPendingPayout] = useState(50)
+  const [totalCoins,    setTotalCoins]    = useState(0)
+  const [totalCash,     setTotalCash]     = useState(0)
+  const [pendingPayout, setPendingPayout] = useState(0)
   const [copied,        setCopied]        = useState(false)
   const [tab,           setTab]           = useState('overview')
 
@@ -59,7 +59,15 @@ export default function ReferralPage() {
     if (!user?.id) return
     supabase.from('referrals')
       .select('*').eq('referrer_id', user.id).order('created_at',{ascending:false})
-      .then(({ data }) => { if (data?.length) setReferrals(data) })
+      .then(({ data }) => {
+        if (data) {
+          setReferrals(data)
+          setTotalCoins(data.reduce((sum, r) => sum + (r.coins_earned || 0), 0))
+          setTotalCash(data.reduce((sum, r) => sum + (r.cash_earned || 0), 0))
+          setPendingPayout(data.filter(r => r.status === 'upgraded_pending_payout')
+            .reduce((sum, r) => sum + (r.cash_earned || 0), 0))
+        }
+      })
       .catch(() => {})
   }, [user?.id])
 

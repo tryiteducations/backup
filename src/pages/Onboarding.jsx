@@ -212,6 +212,14 @@ function StudentStep3({ data, setData, exams }) {
   }, [search, exams])
 
   const grouped = groupBy(filtered, 'category')
+  const exactMatch = search.trim() && exams.some(e => e.name.toLowerCase() === search.trim().toLowerCase())
+  const canAddCustom = search.trim().length >= 3 && !exactMatch && selected.length < 3
+
+  function addCustom() {
+    const customExam = { id: `custom_${Date.now()}`, name: search.trim(), category: 'Other (your own entry)' }
+    setData(d => ({...d, exams: [...selected, customExam]}))
+    setSearch('')
+  }
 
   function toggle(exam) {
     const already = selected.find(e => e.id === exam.id)
@@ -238,6 +246,13 @@ function StudentStep3({ data, setData, exams }) {
           onBlur={e => e.target.style.borderColor = 'var(--color-border, #E2E8F0)'}
         />
       </div>
+
+      {canAddCustom && (
+        <button onClick={addCustom} className="w-full mb-4 flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold"
+          style={{ background: 'var(--color-accent, #D4AF37)15', border: '1.5px dashed var(--color-accent, #D4AF37)', color: 'var(--color-primary, #1E3A5F)' }}>
+          + Add "{search.trim()}" as my exam
+        </button>
+      )}
 
       {selected.length > 0 && (
         <div className="flex flex-wrap gap-2 mb-4">

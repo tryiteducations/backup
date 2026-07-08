@@ -39,7 +39,6 @@ const StudentBookmarks     = lazy(() => import('./pages/student/StudentBookmarks
 const StudentConceptLearning = lazy(() => import('./pages/student/StudentConceptLearning'))
 const StudentFoundation      = lazy(() => import('./pages/student/StudentFoundation'))
 const StudentAnalytics     = lazy(() => import('./pages/student/StudentAnalytics'))
-const StudentCareer        = lazy(() => import('./pages/student/StudentCareer'))
 const StudentCommunity     = lazy(() => import('./pages/student/StudentCommunity'))
 const StudentNotifications = lazy(() => import('./pages/student/StudentNotifications'))
 const MyHistory            = lazy(() => import('./pages/student/StudentHistory'))
@@ -387,7 +386,6 @@ function ThemedApp() {
                 <Route path="/student/foundation"      element={<StudentFoundation/>} />
                 <Route path="/student/settings"       element={<StudentSettings/>} />
                 <Route path="/student/mentor"         element={<StudentMentor/>} />
-                <Route path="/student/career"         element={<StudentCareer/>} />
                 <Route path="/student/community"      element={<StudentCommunity/>} />
                 <Route path="/student/notifications"  element={<StudentNotifications/>} />
                 <Route path="/student/profile"        element={<StudentProfile/>} />

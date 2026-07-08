@@ -844,7 +844,6 @@ function Footer({nav}) {
       {l:'Quick Test',href:'/student'},
       {l:'Leaderboard',href:'/leaderboard'},
       {l:'Games',href:'/games'},
-      {l:'Career AI',href:'/student/career'},
       {l:'Scholarships',href:'/scholarships'},
     ],
     'Company': [

@@ -165,10 +165,6 @@ export default function BharatPulse() {
   const [form, setForm] = useState({title:'',body:'',category:'Study Tip'})
   const [formImages, setFormImages] = useState([])
   const MAX_FORM_IMAGES = 7
-  const [formAudios, setFormAudios] = useState([])
-  const [formPdfs, setFormPdfs] = useState([])
-  const MAX_FORM_AUDIOS = 2
-  const MAX_FORM_PDFS = 3
   const [showPastEntries, setShowPastEntries] = useState(false)
   const [pastPage, setPastPage] = useState(1)
   const PAST_PER_PAGE = 6
@@ -231,43 +227,6 @@ export default function BharatPulse() {
     const imageToRemove = formImages[idx]
     if (imageToRemove?.url) URL.revokeObjectURL(imageToRemove.url)
     setFormImages(prev => prev.filter((_, i) => i !== idx))
-  }
-
-// Audio and PDF handlers (with memory cleanup)
-  const handleFormAudioSelect = (e) => {
-    const files = Array.from(e.target.files || []).slice(0, MAX_FORM_AUDIOS - formAudios.length)
-    const newAudios = files.map(file => ({ 
-      file, 
-      url: URL.createObjectURL(file),
-      name: file.name,
-      type: file.type 
-    }))
-    setFormAudios(prev => [...prev, ...newAudios].slice(0, MAX_FORM_AUDIOS))
-    e.target.value = ''
-  }
-
-  const removeFormAudio = (idx) => {
-    const audioToRemove = formAudios[idx]
-    if (audioToRemove?.url) URL.revokeObjectURL(audioToRemove.url)
-    setFormAudios(prev => prev.filter((_, i) => i !== idx))
-  }
-
-  const handleFormPdfSelect = (e) => {
-    const files = Array.from(e.target.files || []).slice(0, MAX_FORM_PDFS - formPdfs.length)
-    const newPdfs = files.map(file => ({ 
-      file, 
-      url: URL.createObjectURL(file),
-      name: file.name,
-      type: file.type 
-    }))
-    setFormPdfs(prev => [...prev, ...newPdfs].slice(0, MAX_FORM_PDFS))
-    e.target.value = ''
-  }
-
-  const removeFormPdf = (idx) => {
-    const pdfToRemove = formPdfs[idx]
-    if (pdfToRemove?.url) URL.revokeObjectURL(pdfToRemove.url)
-    setFormPdfs(prev => prev.filter((_, i) => i !== idx))
   }
 
   const CardHover = {
@@ -721,7 +680,7 @@ export default function BharatPulse() {
             </div>
 
             {/* Image upload */}
-            <div style={{marginBottom:16}}>
+            <div style={{marginBottom:24}}>
               <p style={{color:t,fontWeight:700,fontSize:12,margin:'0 0 8px'}}>
                 Add Images ({formImages.length}/{MAX_FORM_IMAGES})
               </p>
@@ -753,78 +712,6 @@ export default function BharatPulse() {
               )}
             </div>
 
-            {/* Audio upload */}
-            <div style={{marginBottom:16}}>
-              <p style={{color:t,fontWeight:700,fontSize:12,margin:'0 0 8px'}}>
-                Add Audio ({formAudios.length}/{MAX_FORM_AUDIOS})
-              </p>
-              <label style={{display:'inline-flex',alignItems:'center',gap:6,
-                padding:'9px 14px',borderRadius:12,border:'1.5px solid '+b,
-                cursor:formAudios.length>=MAX_FORM_AUDIOS?'not-allowed':'pointer',
-                fontSize:12,fontWeight:700,color:m,
-                opacity:formAudios.length>=MAX_FORM_AUDIOS?0.5:1,
-                background:bg}}>
-                🎵 Choose Audio
-                <input type="file" accept="audio/*" multiple hidden
-                  disabled={formAudios.length>=MAX_FORM_AUDIOS}
-                  onChange={handleFormAudioSelect}/>
-              </label>
-              {formAudios.length > 0 && (
-                <div style={{marginTop:10}}>
-                  {formAudios.map((audio, i) => (
-                    <div key={i} style={{display:'flex',alignItems:'center',gap:8,
-                      padding:'8px 12px',background:bg,borderRadius:8,marginBottom:6,
-                      border:'1px solid '+b}}>
-                      <span style={{fontSize:18}}>🎵</span>
-                      <span style={{flex:1,fontSize:13,color:t,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>
-                        {audio.name}
-                      </span>
-                      <button onClick={()=>removeFormAudio(i)}
-                        style={{width:24,height:24,borderRadius:'50%',background:'#EF4444',color:'#fff',
-                          border:'2px solid '+surf,fontSize:12,cursor:'pointer',display:'flex',
-                          alignItems:'center',justifyContent:'center',lineHeight:1,padding:0}}>×</button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* PDF upload */}
-            <div style={{marginBottom:24}}>
-              <p style={{color:t,fontWeight:700,fontSize:12,margin:'0 0 8px'}}>
-                Add PDFs ({formPdfs.length}/{MAX_FORM_PDFS})
-              </p>
-              <label style={{display:'inline-flex',alignItems:'center',gap:6,
-                padding:'9px 14px',borderRadius:12,border:'1.5px solid '+b,
-                cursor:formPdfs.length>=MAX_FORM_PDFS?'not-allowed':'pointer',
-                fontSize:12,fontWeight:700,color:m,
-                opacity:formPdfs.length>=MAX_FORM_PDFS?0.5:1,
-                background:bg}}>
-                📄 Choose PDF
-                <input type="file" accept="application/pdf" multiple hidden
-                  disabled={formPdfs.length>=MAX_FORM_PDFS}
-                  onChange={handleFormPdfSelect}/>
-              </label>
-              {formPdfs.length > 0 && (
-                <div style={{marginTop:10}}>
-                  {formPdfs.map((pdf, i) => (
-                    <div key={i} style={{display:'flex',alignItems:'center',gap:8,
-                      padding:'8px 12px',background:bg,borderRadius:8,marginBottom:6,
-                      border:'1px solid '+b}}>
-                      <span style={{fontSize:18}}>📄</span>
-                      <span style={{flex:1,fontSize:13,color:t,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap'}}>
-                        {pdf.name}
-                      </span>
-                      <button onClick={()=>removeFormPdf(i)}
-                        style={{width:24,height:24,borderRadius:'50%',background:'#EF4444',color:'#fff',
-                          border:'2px solid '+surf,fontSize:12,cursor:'pointer',display:'flex',
-                          alignItems:'center',justifyContent:'center',lineHeight:1,padding:0}}>×</button>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-
             {!submitted ? (
               <button
                 onClick={()=>{
@@ -840,14 +727,12 @@ export default function BharatPulse() {
                     reactions:{fire:0,love:0,insight:0,wow:0,thanks:0},
                     image:formImages.length>0?formImages[0].url:null,
                     images:formImages.map(img=>img.url),
-                    audios:formAudios.map(a=>({url:a.url,name:a.name})),
-                    pdfs:formPdfs.map(p=>({url:p.url,name:p.name})),
                     verified:false,trending:'',
                   },...prev])
                   setSubmitted(true)
                   setTimeout(()=>{setSubmitted(false);setShowSubmit(false);
                     setForm({title:'',body:'',category:'Study Tip'});
-                    setFormImages([]);setFormAudios([]);setFormPdfs([])},2000)
+                    setFormImages([])},2000)
                 }}
                 disabled={!form.title.trim()||!form.body.trim()||!!dupWarning}
                 style={{width:'100%',

@@ -1,21 +1,32 @@
 // src/pages/student/StudentHall.jsx
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
+import { useAuth } from '../../context/AuthContext'
+import { supabase } from '../../lib/supabase'
 import ShareButton from '../../components/ShareButton'
-
-const HALLS = [
-  {name:'UPSC Warriors',members:234,level:'Advanced',tag:'UPSC',online:12},
-  {name:'SSC Challengers',members:891,level:'Intermediate',tag:'SSC',online:34},
-  {name:'Tamil Nadu Toppers',members:456,level:'All levels',tag:'TNPSC',online:18},
-  {name:'Banking Blitz Squad',members:312,level:'Beginner',tag:'IBPS',online:9},
-]
 
 export default function StudentHall() {
   const nav = useNavigate()
   const { theme } = useTheme()
+  const { user } = useAuth()
   const p = theme?.primary||'#1E3A5F', a = theme?.accent||'#C9A84C'
   const t = theme?.text||'#1E293B', m = theme?.textLight||'#64748B'
   const bg = theme?.background||'#F8FAFC', c = theme?.surface||'#FFFFFF', b = theme?.border||'#E2E8F0'
+
+  const [halls, setHalls] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    supabase.from('halls')
+      .select('*')
+      .order('member_count', { ascending: false })
+      .limit(20)
+      .then(({ data }) => { if (data) setHalls(data) })
+      .catch(() => {})
+      .finally(() => setLoading(false))
+  }, [])
+
   return (
     <div style={{minHeight:'100vh',background:bg,fontFamily:'Poppins,sans-serif'}}>
       <div style={{background:c,borderBottom:`1px solid ${b}`,padding:'16px 20px',
@@ -27,14 +38,15 @@ export default function StudentHall() {
           <p style={{color:m,fontSize:11,margin:0}}>Study halls · Live battles · Compete</p>
         </div>
         <ShareButton headline="Battling it out in TryIT Halls" stat="⚔️" subLabel="Live study battles, team vs team" context="Battle Hall" emoji="⚔️" style={{marginRight:8}} />
-        <button onClick={()=>nav('/games/battle')} style={{background:`linear-gradient(135deg,${p},${a})`,
+        <button onClick={()=>nav('/hall/create')} style={{background:`linear-gradient(135deg,${p},${a})`,
           border:'none',borderRadius:12,padding:'8px 16px',color:'#fff',fontWeight:700,fontSize:12,cursor:'pointer'}}>
           + Create Hall
         </button>
       </div>
       <div style={{padding:'20px',maxWidth:760,margin:'0 auto'}}>
-        <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:10,marginBottom:20}}>
-          {[{l:'Active Halls',v:'142',e:'🏛️'},{l:'Students Online',v:'2,840',e:'👥'},{l:'Battles Today',v:'38',e:'⚔️'}].map((x,i)=>(
+        <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:10,marginBottom:20}}>
+          {[{l:'Active Halls',v:String(halls.length),e:'🏛️'},
+            {l:'Total Members',v:String(halls.reduce((s,h)=>s+(h.member_count||0),0)),e:'👥'}].map((x,i)=>(
             <div key={i} style={{background:c,border:`1px solid ${b}`,borderRadius:14,padding:'14px',textAlign:'center'}}>
               <div style={{fontSize:22,marginBottom:4}}>{x.e}</div>
               <p style={{color:t,fontWeight:800,fontSize:15,margin:'0 0 2px'}}>{x.v}</p>
@@ -57,22 +69,26 @@ export default function StudentHall() {
           </button>
         </div>
         <p style={{color:t,fontWeight:700,fontSize:14,marginBottom:10}}>Popular Halls</p>
-        {HALLS.map((h,i)=>(
-          <div key={i} onClick={()=>nav('/games/battle')}
+        {!loading && halls.length === 0 && (
+          <div style={{textAlign:'center',padding:'30px 20px',color:m,fontSize:13}}>
+            No halls yet - be the first to create one! ⚔️
+          </div>
+        )}
+        {halls.map((h)=>(
+          <div key={h.id} onClick={()=>nav('/games/battle')}
             style={{background:c,border:`1px solid ${b}`,borderRadius:16,padding:'14px 16px',
               marginBottom:8,cursor:'pointer',display:'flex',alignItems:'center',gap:12,
               transition:'all 0.2s'}}
             onMouseEnter={e=>e.currentTarget.style.borderColor=a}
             onMouseLeave={e=>e.currentTarget.style.borderColor=b}>
             <div style={{width:44,height:44,borderRadius:12,background:`${p}15`,
-              display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,flexShrink:0}}>🏛️</div>
+              display:'flex',alignItems:'center',justifyContent:'center',fontSize:22,flexShrink:0}}>{h.emoji || '🏛️'}</div>
             <div style={{flex:1}}>
               <p style={{color:t,fontWeight:700,fontSize:13,margin:'0 0 4px'}}>{h.name}</p>
               <div style={{display:'flex',gap:10}}>
-                <span style={{color:m,fontSize:11}}>👥 {h.members}</span>
-                <span style={{color:'#22C55E',fontSize:11}}>● {h.online} online</span>
+                <span style={{color:m,fontSize:11}}>👥 {h.member_count || 1}</span>
                 <span style={{background:`${a}15`,color:a,fontSize:9,fontWeight:700,
-                  padding:'2px 8px',borderRadius:20}}>{h.tag}</span>
+                  padding:'2px 8px',borderRadius:20}}>{h.subject}</span>
               </div>
             </div>
             <button onClick={e=>{e.stopPropagation();nav('/games/battle')}}

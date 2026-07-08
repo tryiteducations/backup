@@ -2,6 +2,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
+import { useAuth } from '../../context/AuthContext'
+import { supabase } from '../../lib/supabase'
 
 const SUBJECTS = ['SSC CGL','UPSC CSE','IBPS PO','TNPSC Group 1','RRB NTPC','NEET UG','JEE Main','Other']
 const LEVELS = ['Beginner','Intermediate','Advanced','All Levels']
@@ -9,6 +11,7 @@ const LEVELS = ['Beginner','Intermediate','Advanced','All Levels']
 export default function CreateHall() {
   const nav = useNavigate()
   const { theme } = useTheme()
+  const { user } = useAuth()
   const p = theme?.primary||'#1E3A5F', a = theme?.accent||'#C9A84C'
   const t = theme?.text||'#1E293B', m = theme?.textLight||'#64748B'
   const bg = theme?.background||'#F8FAFC', c = theme?.surface||'#FFFFFF'
@@ -19,14 +22,29 @@ export default function CreateHall() {
   const [level, setLevel] = useState('')
   const [emoji, setEmoji] = useState('⚔️')
   const [creating, setCreating] = useState(false)
+  const [error, setError] = useState('')
 
   const EMOJIS = ['⚔️','🏆','🔥','📚','💡','🎯','🚀','🌟']
 
   const create = async () => {
-    if (!name.trim() || !subject || !level) return
+    if (!name.trim() || !subject || !level || !user?.id) return
+    setError('')
     setCreating(true)
-    await new Promise(r => setTimeout(r, 1000))
-    nav('/student/hall')
+    try {
+      const { data, error: insertError } = await supabase.from('halls').insert({
+        name: name.trim(),
+        subject,
+        level,
+        emoji,
+        creator_id: user.id,
+        member_count: 1,
+      }).select().single()
+      if (insertError) throw insertError
+      nav('/student/hall', { state: { justCreatedHallId: data?.id } })
+    } catch (e) {
+      setError('Could not create the hall - please try again.')
+      setCreating(false)
+    }
   }
 
   const inp = {width:'100%',padding:'12px 14px',borderRadius:12,border:'1.5px solid '+b,
@@ -106,6 +124,9 @@ export default function CreateHall() {
           </div>
         </div>
 
+        {error && (
+          <p style={{color:'#DC2626',fontSize:12,marginBottom:12,textAlign:'center'}}>{error}</p>
+        )}
         <button onClick={create}
           disabled={!name.trim()||!subject||!level||creating}
           style={{width:'100%',

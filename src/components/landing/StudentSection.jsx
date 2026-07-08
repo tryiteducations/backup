@@ -21,7 +21,7 @@ export default function StudentSection() {
     '🏆 Leaderboard','⚔️ Hall & Battle','📚 Classroom',
     '🇮🇳 Bharat Pulse','🤝 GuruHub','🏆 Tournaments',
     '🎮 Games','⚡ Quick Test','📊 Analytics',
-    '💰 Referral','🧭 Career AI','🌐 42+ Languages',
+    '💰 Referral','🌐 42+ Languages',
   ]
 
   const CONTENT = [
