@@ -19,7 +19,7 @@ const CLASS_STORAGE_KEY = 'tryit_foundation_class'
 export default function StudentFoundation() {
   const nav = useNavigate()
   const { theme } = useTheme()
-  const { user } = useAuth()
+  const { user, isTopicUnlocked, planTier } = useAuth()
   const isDark = theme?.isDark || false
   const primary = theme?.primary || '#2D1B69'
   const accent  = theme?.accent  || '#F59E0B'
@@ -203,6 +203,21 @@ export default function StudentFoundation() {
         </div>
         <HeaderClassBar />
 
+        {planTier !== 'pro' && planTier !== 'ultra' && (
+          <div style={{ margin: '14px 20px 0', background: 'linear-gradient(135deg,#166534,#15803D)',
+            borderRadius: 16, padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+            <span style={{ fontSize: 24 }}>💎</span>
+            <div style={{ flex: 1, minWidth: 200 }}>
+              <p style={{ color: '#fff', fontWeight: 800, fontSize: 13, margin: 0 }}>Upgrade to Pro or Ultra</p>
+              <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: 11, margin: '2px 0 0' }}>Get every Foundation topic free for a full year - no ₹5-per-topic payments, ever.</p>
+            </div>
+            <button onClick={() => nav('/pricing')} style={{ background: '#fff', color: '#166534', border: 'none',
+              borderRadius: 10, padding: '9px 16px', fontWeight: 700, fontSize: 12, cursor: 'pointer', whiteSpace: 'nowrap' }}>
+              See Plans →
+            </button>
+          </div>
+        )}
+
         <div style={{ padding: 20, display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(160px,1fr))', gap: 14 }}>
           {SUBJECTS.map(s => {
             const authoredCount = s.topics.reduce((sum, t) => sum + getTopicAuthoredCount(t), 0)
@@ -253,12 +268,23 @@ export default function StudentFoundation() {
               <div key={topic.id} style={{ background: card, border: `1px solid ${border}`, borderRadius: 14, padding: 14 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <p style={{ color: text, fontWeight: 700, fontSize: 14, margin: 0 }}>{topic.label}</p>
-                  {authoredCount === 0 && (
-                    <span style={{ fontSize: 10, color: muted, background: `${muted}18`, padding: '2px 8px', borderRadius: 20 }}>Coming soon</span>
-                  )}
-                  {authoredCount > 0 && authoredCount < 5 && (
-                    <span style={{ fontSize: 10, color: accent, background: `${accent}18`, padding: '2px 8px', borderRadius: 20 }}>{authoredCount}/5 levels</span>
-                  )}
+                  <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+                    {authoredCount === 0 && (
+                      <span style={{ fontSize: 10, color: muted, background: `${muted}18`, padding: '2px 8px', borderRadius: 20 }}>Coming soon</span>
+                    )}
+                    {authoredCount > 0 && authoredCount < 5 && (
+                      <span style={{ fontSize: 10, color: accent, background: `${accent}18`, padding: '2px 8px', borderRadius: 20 }}>{authoredCount}/5 levels</span>
+                    )}
+                    {authoredCount > 0 && (planTier === 'pro' || planTier === 'ultra') && (
+                      <span style={{ fontSize: 10, color: '#166534', background: '#DCFCE7', padding: '2px 8px', borderRadius: 20 }}>💎 Free with your plan</span>
+                    )}
+                    {authoredCount > 0 && planTier !== 'pro' && planTier !== 'ultra' && isTopicUnlocked(topic.id) && (
+                      <span style={{ fontSize: 10, color: '#166534', background: '#DCFCE7', padding: '2px 8px', borderRadius: 20 }}>✓ Unlocked</span>
+                    )}
+                    {authoredCount > 0 && planTier !== 'pro' && planTier !== 'ultra' && !isTopicUnlocked(topic.id) && (
+                      <span style={{ fontSize: 10, color: '#92400E', background: '#FFF7E6', padding: '2px 8px', borderRadius: 20 }}>🔒 ₹5 to unlock</span>
+                    )}
+                  </div>
                 </div>
                 <RelevanceTags topic={topic} />
                 <LevelLadder topic={topic} />

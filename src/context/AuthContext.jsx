@@ -367,7 +367,8 @@ export function AuthProvider({ children }) {
   }
 
   const isTopicUnlocked = (topicId) => {
-    if (normalizePlan(user?.plan) === 'ultra') return true
+    const tier = normalizePlan(user?.plan)
+    if (tier === 'ultra' || tier === 'pro') return true
     const key      = `tryit_topic_unlocks_${user?.id}`
     const unlocked = JSON.parse(localStorage.getItem(key) || '[]')
     return unlocked.includes(topicId)

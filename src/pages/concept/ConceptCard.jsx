@@ -5,6 +5,8 @@ import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { supabase } from '../../lib/supabase'
+import { openPayment, PAY_AMOUNTS } from '../../lib/payment'
+import { findTopic } from '../../lib/foundationTopics'
 
 const NAVY = '#1E3A5F'
 const GOLD = '#C9A84C'
@@ -546,7 +548,7 @@ const LAYERS = [
 export default function ConceptCard() {
   const { topicId, level }  = useParams()
   const navigate             = useNavigate()
-  const { user, canAccess, isTopicUnlocked, planTier } = useAuth()
+  const { user, canAccess, isTopicUnlocked, unlockTopic, planTier } = useAuth()
 
   const [concept,      setConcept]      = useState(null)
   const [loading,      setLoading]      = useState(true)
@@ -554,11 +556,36 @@ export default function ConceptCard() {
   const [readLayers,   setReadLayers]   = useState(new Set([0]))
   const [readSecs,     setReadSecs]     = useState(0)
   const [showGate,     setShowGate]     = useState(false)
+  const [paying,       setPaying]       = useState(false)
+  const [payError,     setPayError]     = useState('')
+  const [justUnlocked, setJustUnlocked] = useState(false)
   const timerRef = useRef(null)
   const lvl = parseInt(level) || 1
 
   // -- ACCESS CHECK ---------------------------------------------------------
-  const hasAccess = planTier === 'ultra' || isTopicUnlocked(topicId)
+  const hasAccess = planTier === 'ultra' || planTier === 'pro' || isTopicUnlocked(topicId) || justUnlocked
+
+  // -- PAYMENT: unlock this single topic for ₹5 ------------------------------
+  const handleUnlockTopic = async () => {
+    setPayError('')
+    setPaying(true)
+    await openPayment({
+      amount: PAY_AMOUNTS.day1, // 500 paise = ₹5
+      description: `TryIT Foundation - Unlock "${findTopic(topicId)?.topic?.label || topicId}"`,
+      prefill: { name: user?.name || '', contact: user?.phone || '' },
+      notes: { userId: user?.id, topicId, type: 'foundation_topic_unlock' },
+      onSuccess: () => {
+        unlockTopic(topicId)
+        setJustUnlocked(true)
+        setPaying(false)
+      },
+      onFailure: (err) => {
+        setPayError(err?.message || 'Payment failed - please try again.')
+        setPaying(false)
+      },
+      onDismiss: () => setPaying(false),
+    })
+  }
 
   // -- LOAD CONCEPT ---------------------------------------------------------
   useEffect(() => {
@@ -817,23 +844,31 @@ export default function ConceptCard() {
         <div style={{ background:'#fff', borderRadius:24, padding:28, maxWidth:360, textAlign:'center', border:'1.5px solid #E2E8F0' }}>
           <p style={{ fontSize:40, marginBottom:8 }}>🔒</p>
           <h2 style={{ fontFamily:'Poppins,sans-serif', fontWeight:800, color:NAVY, fontSize:18, marginBottom:8 }}>
-            Concept Learning
+            Foundation
           </h2>
           <p style={{ fontSize:13, color:'#475569', marginBottom:20, lineHeight:1.7 }}>
-            Learn any topic from Level 1 to Level 10 with 7-layer explanations, Indian stories, mnemonics and more.
+            Learn this topic from basics to exam-speed with worked examples, mnemonics, shortcuts and a checkpoint quiz.
           </p>
-          <div style={{ background:'#FFF7E6', borderRadius:14, padding:14, marginBottom:16, border:'1px solid #FDE68A' }}>
-            <p style={{ fontSize:13, fontWeight:700, color:'#92400E', marginBottom:4 }}>₹25 - This Topic Only</p>
-            <p style={{ fontSize:11, color:'#78350F' }}>All 10 levels for this topic · Lifetime access</p>
-            <button onClick={() => navigate('/pro')}
-              style={{ marginTop:10, padding:'10px 20px', background:GOLD, color:NAVY, border:'none', borderRadius:10, fontWeight:800, fontSize:13, cursor:'pointer', width:'100%' }}>
-              Unlock This Topic ₹25 →
+
+          <div style={{ background:'#FFF7E6', borderRadius:14, padding:14, marginBottom:14, border:'1px solid #FDE68A' }}>
+            <p style={{ fontSize:13, fontWeight:700, color:'#92400E', marginBottom:4 }}>₹5 - This Topic Only</p>
+            <p style={{ fontSize:11, color:'#78350F', marginBottom:10 }}>All 5 levels for this topic · Lifetime access</p>
+            {payError && <p style={{ fontSize:11, color:'#B91C1C', marginBottom:8 }}>{payError}</p>}
+            <button onClick={handleUnlockTopic} disabled={paying}
+              style={{ padding:'10px 20px', background:GOLD, color:NAVY, border:'none', borderRadius:10, fontWeight:800, fontSize:13, cursor:paying?'wait':'pointer', width:'100%', opacity:paying?0.7:1 }}>
+              {paying ? 'Opening payment...' : 'Unlock This Topic ₹5 →'}
             </button>
           </div>
-          <button onClick={() => navigate('/pro')}
-            style={{ width:'100%', padding:'12px', background:NAVY, color:'#fff', border:'none', borderRadius:12, fontWeight:700, fontSize:13, cursor:'pointer', marginBottom:10 }}>
-            Upgrade to Ultra - All Topics
-          </button>
+
+          <div style={{ background:'#F0FDF4', borderRadius:14, padding:14, marginBottom:16, border:'1px solid #BBF7D0' }}>
+            <p style={{ fontSize:13, fontWeight:700, color:'#166534', marginBottom:4 }}>💎 Pro or Ultra members</p>
+            <p style={{ fontSize:11, color:'#15803D', marginBottom:10 }}>Get every Foundation topic free for a full year - no per-topic payments, ever.</p>
+            <button onClick={() => navigate('/pricing')}
+              style={{ width:'100%', padding:'11px', background:NAVY, color:'#fff', border:'none', borderRadius:10, fontWeight:700, fontSize:13, cursor:'pointer' }}>
+              See Pro & Ultra Plans
+            </button>
+          </div>
+
           <button onClick={() => navigate(-1)} style={{ fontSize:12, color:'#94A3B8', background:'none', border:'none', cursor:'pointer' }}>
             ← Go Back
           </button>

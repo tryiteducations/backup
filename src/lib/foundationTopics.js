@@ -40,8 +40,12 @@ export const CLASS_OPTIONS = [
   { id: 'c10',   label: 'Class 10',   maxLevel: 3 },
   { id: 'c11',   label: 'Class 11',   maxLevel: 4 },
   { id: 'c12',   label: 'Class 12',   maxLevel: 4 },
-  { id: 'competitive', label: 'Competitive Exam / UG Prep', maxLevel: 5 },
-  { id: 'pg_prof', label: 'PG / Professional', maxLevel: 5 },
+  { id: 'ug_entrance',  label: 'UG Entrance (JEE/NEET/CUET)',      maxLevel: 5 },
+  { id: 'state_psc',    label: 'State PSC / Public Service Exams', maxLevel: 5 },
+  { id: 'central_govt', label: 'Central Govt (SSC/Banking/Railways)', maxLevel: 5 },
+  { id: 'pg_entrance',  label: 'PG Entrance (GATE/CAT/NET)',       maxLevel: 5 },
+  { id: 'phd_research', label: 'PhD / Research Entrance',         maxLevel: 5 },
+  { id: 'departmental', label: 'Departmental / Promotion Exams',  maxLevel: 5 },
 ]
 
 export function getMaxLevelForClass(classId) {
