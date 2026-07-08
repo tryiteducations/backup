@@ -22,13 +22,17 @@ const TIER_FEATURES = [
   { feature:'Daily Materials & Current Affairs',free:true,   pro:true,   ultra:true  },
   { feature:'Leaderboard (All India Rank)',      free:true,   pro:true,   ultra:true  },
   { feature:'Battle Hall (Head-to-Head)',        free:'3/day',pro:true,   ultra:true  },
+  { feature:'Exam Marathons & Tournaments',      free:'Limited',pro:true, ultra:true  },
   { feature:'Basic Games (after test)',          free:true,   pro:true,   ultra:true  },
   { feature:'Advanced Games',                   free:'100🪙',pro:true,   ultra:true  },
   { feature:'Offline Question Packs',           free:'50🪙', pro:true,   ultra:true  },
-  { feature:'Concept Learning (Level 1-10)',    free:false,  pro:false,  ultra:true  },
+  { feature:'Community Access',                 free:true,   pro:true,   ultra:true  },
+  { feature:'Premium Themes Unlock',            free:false,  pro:true,   ultra:true  },
+  { feature:'GuruHub - Ask a Mentor',            free:'3/day',pro:'5/mo', ultra:true  },
+  { feature:'GuruHub - 1:1 Live Session',        free:false,  pro:false,  ultra:true  },
+  { feature:'Foundation (Level 1-5, all subjects)',free:false,pro:false,  ultra:true  },
   { feature:'Preparation Pathways (JEE/NEET...)',free:false,  pro:false,  ultra:true  },
   { feature:'Spaced Repetition System',         free:false,  pro:false,  ultra:true  },
-  { feature:'Mentor Doubt Resolution',          free:'100🪙',pro:'5/mo', ultra:true  },
 ]
 
 const COMPETITORS = [
@@ -63,7 +67,7 @@ export default function PricingPage() {
     coins2amount:  getConfig('coin_pack_2_coins',   500),
     coins3price:   getConfig('coin_pack_3_price',    49),
     coins3amount:  getConfig('coin_pack_3_coins', 1500),
-    topicUnlock:   getConfig('topic_unlock_price',   25),
+    topicUnlock:   getConfig('topic_unlock_price',   5),
   }
 
   const showToast = (msg) => {
@@ -390,9 +394,9 @@ export default function PricingPage() {
                 Not ready for Ultra? Buy concept learning for one specific topic - permanently.
               </p>
               <ul style={{ listStyle:'none', padding:0, margin:0, display:'flex', flexDirection:'column', gap:4 }}>
-                <li style={{ fontSize:12, color:'#92400E' }}>✅ All 10 concept levels for that topic</li>
-                <li style={{ fontSize:12, color:'#92400E' }}>✅ Cultural story + 7-layer explanation</li>
-                <li style={{ fontSize:12, color:'#92400E' }}>✅ Checkpoint quiz + spaced repetition</li>
+                <li style={{ fontSize:12, color:'#92400E' }}>✅ All 5 Foundation levels for that topic</li>
+                <li style={{ fontSize:12, color:'#92400E' }}>✅ Worked examples, mnemonic & shortcuts</li>
+                <li style={{ fontSize:12, color:'#92400E' }}>✅ Checkpoint quiz to confirm mastery</li>
                 <li style={{ fontSize:12, color:'#92400E' }}>✅ Lifetime access - no expiry</li>
               </ul>
             </div>

@@ -5,12 +5,8 @@
 import { useState, useEffect } from 'react'
 import { useNavigate }         from 'react-router-dom'
 import { useAuth }             from '../../context/AuthContext'
+import { useTheme }            from '../../context/ThemeContext'
 import { supabase }            from '../../lib/supabase'
-
-const NAVY = '#1E3A5F'
-const GOLD = '#C9A84C'
-const BG   = '#F8FAFC'
-const GREEN = '#059669'
 
 const REWARD_TIERS = [
   { event:'Friend signs up',         coins:50,  cash:0,   emoji:'👋' },
@@ -20,14 +16,6 @@ const REWARD_TIERS = [
   { event:'Friend buys Ultra monthly',coins:300,cash:30,  emoji:'🏆' },
   { event:'Friend buys Ultra yearly', coins:700, cash:149, emoji:'🏆' },
   { event:'3 friends join + pay',    coins:500, cash:0,   emoji:'🎉', special:'Your tournament entry is FREE' },
-]
-
-// Mock referral history
-const MOCK_REFERRALS = [
-  { id:1, name:'Priya K.',    joined:'2 days ago',  status:'upgraded_pro',  coins_earned:200, cash_earned:20  },
-  { id:2, name:'Arjun S.',    joined:'1 week ago',  status:'signed_up',     coins_earned:50,  cash_earned:0   },
-  { id:3, name:'Kavitha R.',  joined:'2 weeks ago', status:'took_test',     coins_earned:100, cash_earned:0   },
-  { id:4, name:'Ravi M.',     joined:'1 month ago', status:'upgraded_ultra',coins_earned:300, cash_earned:30  },
 ]
 
 const STATUS_LABELS = {
@@ -40,8 +28,14 @@ const STATUS_LABELS = {
 export default function ReferralPage() {
   const navigate        = useNavigate()
   const { user, coins } = useAuth()
+  const { theme }       = useTheme()
+  const isDark = theme?.isDark || false
+  const NAVY   = theme?.primary || '#1E3A5F'
+  const GOLD   = theme?.accent  || '#C9A84C'
+  const BG     = theme?.background || (isDark ? '#0D1117' : '#F8FAFC')
+  const GREEN  = theme?.success || '#059669'
 
-  const [referrals,     setReferrals]     = useState(MOCK_REFERRALS)
+  const [referrals,     setReferrals]     = useState([])
   const [totalCoins,    setTotalCoins]    = useState(0)
   const [totalCash,     setTotalCash]     = useState(0)
   const [pendingPayout, setPendingPayout] = useState(0)

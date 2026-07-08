@@ -16,13 +16,6 @@ function Flag({ s = 20 }) {
   )
 }
 
-const LINKS = {
-  Platform: ['Features','Pricing','All Exams','Career Compass','Impact Dashboard','2G Mode'],
-  Students: ['Test Engine','Guru Hub','Brain Games','Leaderboard','Scholarships','Bharat Pulse'],
-  Partners: ['Become a Mentor','Institution Partner','CSR Partnership','API Access','TryIT Fellowship'],
-  Legal:    ['Privacy Policy','Terms of Service','Refund Policy','Community Standards','Section 80G'],
-}
-
 const LANG_TICKER = [
   'தமிழ்','हिंदी','తెలుగు','ಕನ್ನಡ','മലയാളം','বাংলা','मराठी','ગુજરાતી',
   'ਪੰਜਾਬੀ','ଓଡ଼ିଆ','অসমীয়া','মৈতৈলোন্','اردو','संस्कृत','मैथिली',
@@ -51,14 +44,11 @@ export default function Footer() {
       <div style={{ maxWidth:1200, margin:'0 auto', padding:'0 clamp(16px,3vw,28px)' }}>
 
         {/* -- Main grid -- */}
-        <div style={{ display:'grid',
-          gridTemplateColumns:'1.6fr repeat(4,1fr)',
-          gap:28, marginBottom:40,
-          '@media(max-width:768px)': { gridTemplateColumns:'1fr' },
-        }}>
+        <div style={{ display:'flex', flexWrap:'wrap', gap:28, marginBottom:40,
+          justifyContent:'space-between' }}>
 
           {/* Brand column */}
-          <div>
+          <div style={{ maxWidth:420 }}>
             {/* Text logo - LogoAnimated reserved for Splash only */}
             <div onClick={() => navigate('/landing')}
               style={{ display:'flex', alignItems:'center', gap:8,
@@ -96,20 +86,6 @@ export default function Footer() {
                 fontFamily:'Inter,sans-serif' }}>Platform Live · 2G Ready</span>
             </div>
 
-            {/* App badges */}
-            <div style={{ display:'flex', gap:7, flexWrap:'wrap', marginBottom:16 }}>
-              {[['📱','Android'],['🍎','iOS'],['💻','Web']].map(([e,l]) => (
-                <div key={l} style={{ display:'flex', alignItems:'center', gap:5,
-                  background:'rgba(255,255,255,0.08)',
-                  border:'1px solid rgba(255,255,255,0.14)',
-                  borderRadius:9, padding:'5px 10px' }}>
-                  <span style={{ fontSize:12 }}>{e}</span>
-                  <span style={{ color:'rgba(255,255,255,0.7)', fontSize:11,
-                    fontWeight:600, fontFamily:'Inter,sans-serif' }}>{l}</span>
-                </div>
-              ))}
-            </div>
-
             {/* Proudly built in Bharat */}
             <div style={{ display:'flex', alignItems:'center', gap:7 }}>
               <Flag s={22}/>
@@ -118,26 +94,55 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Link columns */}
-          {Object.entries(LINKS).map(([section, items]) => (
-            <div key={section}>
-              <p style={{ color:'rgba(255,255,255,0.28)', fontFamily:'Poppins,sans-serif',
-                fontWeight:700, fontSize:10, letterSpacing:'1.5px',
-                marginBottom:12, textTransform:'uppercase' }}>
-                {section}
-              </p>
-              {items.map(item => (
-                <a key={item} href="#"
-                  style={{ display:'block', color:'rgba(255,255,255,0.48)',
-                    fontSize:12, marginBottom:9, textDecoration:'none',
-                    fontFamily:'Inter,sans-serif', transition:'color 0.2s' }}
-                  onMouseEnter={e => e.currentTarget.style.color = accent}
-                  onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.48)'}>
-                  {item}
-                </a>
-              ))}
-            </div>
-          ))}
+          {/* Company column */}
+          <div>
+            <p style={{ color:'rgba(255,255,255,0.28)', fontFamily:'Poppins,sans-serif',
+              fontWeight:700, fontSize:10, letterSpacing:'1.5px',
+              marginBottom:12, textTransform:'uppercase' }}>
+              Company
+            </p>
+            <button onClick={() => navigate('/about')}
+              style={{ display:'block', background:'none', border:'none', textAlign:'left',
+                color:'rgba(255,255,255,0.48)', fontSize:12, marginBottom:9, cursor:'pointer',
+                fontFamily:'Inter,sans-serif', padding:0, transition:'color 0.2s' }}
+              onMouseEnter={e => e.currentTarget.style.color = accent}
+              onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.48)'}>
+              About Us
+            </button>
+            <button onClick={() => navigate('/privacy')}
+              style={{ display:'block', background:'none', border:'none', textAlign:'left',
+                color:'rgba(255,255,255,0.48)', fontSize:12, marginBottom:9, cursor:'pointer',
+                fontFamily:'Inter,sans-serif', padding:0, transition:'color 0.2s' }}
+              onMouseEnter={e => e.currentTarget.style.color = accent}
+              onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.48)'}>
+              Privacy Policy
+            </button>
+          </div>
+
+          {/* Contact column */}
+          <div>
+            <p style={{ color:'rgba(255,255,255,0.28)', fontFamily:'Poppins,sans-serif',
+              fontWeight:700, fontSize:10, letterSpacing:'1.5px',
+              marginBottom:12, textTransform:'uppercase' }}>
+              Contact
+            </p>
+            <a href="mailto:support@tryiteducations.net"
+              style={{ display:'block', color:'rgba(255,255,255,0.48)',
+                fontSize:12, marginBottom:9, textDecoration:'none',
+                fontFamily:'Inter,sans-serif', transition:'color 0.2s' }}
+              onMouseEnter={e => e.currentTarget.style.color = accent}
+              onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.48)'}>
+              ✉️ support@tryiteducations.net
+            </a>
+            <a href="mailto:info@tryiteducations.net"
+              style={{ display:'block', color:'rgba(255,255,255,0.48)',
+                fontSize:12, marginBottom:9, textDecoration:'none',
+                fontFamily:'Inter,sans-serif', transition:'color 0.2s' }}
+              onMouseEnter={e => e.currentTarget.style.color = accent}
+              onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.48)'}>
+              ✉️ info@tryiteducations.net
+            </a>
+          </div>
         </div>
 
         {/* -- Language ticker -- */}
@@ -163,11 +168,6 @@ export default function Footer() {
             fontFamily:'Inter,sans-serif', margin:0 }}>
             © 2026 TryIT Educations · Every Indian student deserves a fair shot.
           </p>
-          <a href="mailto:founder@tryiteducations.net"
-            style={{ color:accent, fontSize:11, fontWeight:600,
-              textDecoration:'none', fontFamily:'Inter,sans-serif' }}>
-            ✉️ founder@tryiteducations.net
-          </a>
         </div>
       </div>
 

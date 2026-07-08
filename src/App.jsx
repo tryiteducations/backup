@@ -151,6 +151,7 @@ const CurrentAffairsManager = lazy(() => import('./pages/admin/CurrentAffairsMan
 const ThemeSelector         = lazy(() => import('./pages/settings/ThemeSelector'))
 const Terms                 = lazy(() => import('./pages/legal/Terms'))
 const Privacy               = lazy(() => import('./pages/legal/Privacy'))
+const AboutPage              = lazy(() => import('./pages/legal/AboutPage'))
 const CommunityStandards    = lazy(() => import('./pages/legal/CommunityStandards'))
 
 const Stub = ({ title = 'Coming Soon' }) => (
@@ -368,6 +369,7 @@ function ThemedApp() {
                 {/* LEGAL */}
                 <Route path="/terms"               element={<Terms />} />
                 <Route path="/privacy"             element={<Privacy />} />
+                <Route path="/about"               element={<AboutPage />} />
                 <Route path="/community-standards" element={<CommunityStandards />} />
 
                 {/* STUDENT */}
