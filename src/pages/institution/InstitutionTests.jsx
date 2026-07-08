@@ -35,6 +35,10 @@ export default function InstitutionTests() {
   const [error, setError] = useState('')
   const [viewingRoster, setViewingRoster] = useState(null)
   const [roster, setRoster] = useState([])
+  const [managingQuestions, setManagingQuestions] = useState(null)
+  const [questions, setQuestions] = useState([])
+  const [qForm, setQForm] = useState({ questionText:'', optA:'', optB:'', optC:'', optD:'', correct:'A', marks:1 })
+  const [addingQ, setAddingQ] = useState(false)
 
   const [form, setForm] = useState({
     name: '', exam: '', subject: '', city: '', scheduledStart: '', durationMinutes: 60,
@@ -75,6 +79,37 @@ export default function InstitutionTests() {
     setViewingRoster(testId)
     const data = await testEnrollment.getTestRoster(testId)
     setRoster(data)
+  }
+
+  const openQuestions = async (testId) => {
+    setManagingQuestions(testId)
+    const data = await testEnrollment.getQuestions(testId)
+    setQuestions(data)
+  }
+
+  const addQuestion = async () => {
+    if (!qForm.questionText.trim() || !qForm.optA.trim() || !qForm.optB.trim()) return
+    setAddingQ(true)
+    const options = [
+      { label:'A', text: qForm.optA.trim() },
+      { label:'B', text: qForm.optB.trim() },
+      ...(qForm.optC.trim() ? [{ label:'C', text: qForm.optC.trim() }] : []),
+      ...(qForm.optD.trim() ? [{ label:'D', text: qForm.optD.trim() }] : []),
+    ]
+    const result = await testEnrollment.addQuestion(managingQuestions, {
+      questionText: qForm.questionText.trim(), options,
+      correctAnswer: qForm.correct, marks: parseFloat(qForm.marks) || 1,
+    })
+    if (result) {
+      setQuestions(prev => [...prev, result])
+      setQForm({ questionText:'', optA:'', optB:'', optC:'', optD:'', correct:'A', marks:1 })
+    }
+    setAddingQ(false)
+  }
+
+  const removeQuestion = async (questionId) => {
+    await testEnrollment.deleteQuestion(questionId)
+    setQuestions(prev => prev.filter(q => q.id !== questionId))
   }
 
   return (
@@ -119,11 +154,18 @@ export default function InstitutionTests() {
               🕐 {fmtDateTime(test.scheduled_start)} · ⏱ {test.duration_minutes} mins ·
               🔒 Enrollment closes {fmtDateTime(test.enrollment_closes_at)}
             </p>
-            <button onClick={()=>openRoster(test.id)}
-              style={{background:`${p}10`,border:`1px solid ${p}30`,borderRadius:10,
-                padding:'8px 16px',color:p,fontWeight:600,fontSize:12,cursor:'pointer'}}>
-              View Enrolled Students →
-            </button>
+            <div style={{display:'flex',gap:8}}>
+              <button onClick={()=>openRoster(test.id)}
+                style={{background:`${p}10`,border:`1px solid ${p}30`,borderRadius:10,
+                  padding:'8px 16px',color:p,fontWeight:600,fontSize:12,cursor:'pointer'}}>
+                View Enrolled Students →
+              </button>
+              <button onClick={()=>openQuestions(test.id)}
+                style={{background:`${a}10`,border:`1px solid ${a}30`,borderRadius:10,
+                  padding:'8px 16px',color:a,fontWeight:600,fontSize:12,cursor:'pointer'}}>
+                📝 Manage Questions →
+              </button>
+            </div>
 
             {viewingRoster === test.id && (
               <div style={{marginTop:14,borderTop:`1px solid ${b}`,paddingTop:14}}>
@@ -147,6 +189,73 @@ export default function InstitutionTests() {
         ))}
         <div style={{height:60}}/>
       </div>
+
+      {managingQuestions && (
+        <div style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.5)',display:'flex',
+          alignItems:'center',justifyContent:'center',padding:20,zIndex:999}}
+          onClick={()=>setManagingQuestions(null)}>
+          <div onClick={e=>e.stopPropagation()}
+            style={{background:c,borderRadius:20,padding:24,maxWidth:520,width:'100%',maxHeight:'85vh',overflowY:'auto'}}>
+            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:16}}>
+              <p style={{color:t,fontWeight:800,fontSize:16,margin:0}}>Question Bank ({questions.length})</p>
+              <button onClick={()=>setManagingQuestions(null)}
+                style={{background:'transparent',border:'none',color:m,fontSize:20,cursor:'pointer'}}>×</button>
+            </div>
+
+            {questions.map((q,i) => (
+              <div key={q.id} style={{background:bg,border:`1px solid ${b}`,borderRadius:12,padding:12,marginBottom:8}}>
+                <div style={{display:'flex',justifyContent:'space-between',gap:8}}>
+                  <p style={{color:t,fontSize:13,fontWeight:600,margin:'0 0 6px',flex:1}}>{i+1}. {q.question_text}</p>
+                  <button onClick={()=>removeQuestion(q.id)}
+                    style={{background:'transparent',border:'none',color:'#DC2626',cursor:'pointer',fontSize:16,flexShrink:0}}>🗑</button>
+                </div>
+                {(q.options||[]).map(o => (
+                  <p key={o.label} style={{fontSize:12,margin:'2px 0',
+                    color: o.label===q.correct_answer ? '#22C55E' : m,
+                    fontWeight: o.label===q.correct_answer ? 700 : 400}}>
+                    {o.label}. {o.text} {o.label===q.correct_answer && '✓'}
+                  </p>
+                ))}
+              </div>
+            ))}
+
+            <div style={{borderTop:`1px solid ${b}`,paddingTop:14,marginTop:14}}>
+              <p style={{color:t,fontWeight:700,fontSize:13,margin:'0 0 10px'}}>Add a question</p>
+              <textarea value={qForm.questionText} onChange={e=>setQForm(f=>({...f,questionText:e.target.value}))}
+                placeholder="Question text"
+                rows={2}
+                style={{width:'100%',padding:'10px 12px',borderRadius:10,border:`1.5px solid ${b}`,
+                  marginBottom:8,fontSize:13,boxSizing:'border-box',resize:'vertical'}}/>
+              <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,marginBottom:8}}>
+                <input value={qForm.optA} onChange={e=>setQForm(f=>({...f,optA:e.target.value}))} placeholder="Option A"
+                  style={{padding:'9px 12px',borderRadius:10,border:`1.5px solid ${b}`,fontSize:12,boxSizing:'border-box'}}/>
+                <input value={qForm.optB} onChange={e=>setQForm(f=>({...f,optB:e.target.value}))} placeholder="Option B"
+                  style={{padding:'9px 12px',borderRadius:10,border:`1.5px solid ${b}`,fontSize:12,boxSizing:'border-box'}}/>
+                <input value={qForm.optC} onChange={e=>setQForm(f=>({...f,optC:e.target.value}))} placeholder="Option C (optional)"
+                  style={{padding:'9px 12px',borderRadius:10,border:`1.5px solid ${b}`,fontSize:12,boxSizing:'border-box'}}/>
+                <input value={qForm.optD} onChange={e=>setQForm(f=>({...f,optD:e.target.value}))} placeholder="Option D (optional)"
+                  style={{padding:'9px 12px',borderRadius:10,border:`1.5px solid ${b}`,fontSize:12,boxSizing:'border-box'}}/>
+              </div>
+              <div style={{display:'flex',gap:8,marginBottom:10,alignItems:'center'}}>
+                <label style={{fontSize:12,color:m}}>Correct answer:</label>
+                <select value={qForm.correct} onChange={e=>setQForm(f=>({...f,correct:e.target.value}))}
+                  style={{padding:'7px 10px',borderRadius:8,border:`1.5px solid ${b}`,fontSize:12}}>
+                  <option value="A">A</option><option value="B">B</option>
+                  <option value="C">C</option><option value="D">D</option>
+                </select>
+                <label style={{fontSize:12,color:m,marginLeft:10}}>Marks:</label>
+                <input type="number" value={qForm.marks} onChange={e=>setQForm(f=>({...f,marks:e.target.value}))}
+                  style={{width:50,padding:'7px 10px',borderRadius:8,border:`1.5px solid ${b}`,fontSize:12}}/>
+              </div>
+              <button onClick={addQuestion} disabled={addingQ}
+                style={{width:'100%',background:`linear-gradient(135deg,${p},${a})`,border:'none',borderRadius:10,
+                  padding:'11px',color:'#fff',fontWeight:700,fontSize:13,cursor:addingQ?'wait':'pointer'}}>
+                {addingQ ? 'Adding...' : '+ Add Question'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {showCreate && (
         <div style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.5)',display:'flex',

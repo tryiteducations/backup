@@ -123,7 +123,14 @@ export default function BrowseLiveTests() {
                 🕐 {fmtDateTime(test.scheduled_start)} · ⏱ {test.duration_minutes} mins
               </p>
               {enrolled ? (
-                <span style={{color:'#22C55E',fontSize:12,fontWeight:700}}>✓ You're enrolled</span>
+                <button onClick={()=>{
+                  const myEnr = myEnrollments.find(e=>e.test_id===test.id)
+                  if (myEnr) nav(`/student/exam/${myEnr.id}`)
+                }}
+                  style={{background:`linear-gradient(135deg,${p},${a})`,border:'none',borderRadius:10,
+                    padding:'9px 20px',color:'#fff',fontWeight:700,fontSize:12,cursor:'pointer'}}>
+                  ✓ Enrolled - Go to Exam Room →
+                </button>
               ) : closed ? (
                 <span style={{color:'#F59E0B',fontSize:12,fontWeight:700}}>⏳ Enrollment closed</span>
               ) : (

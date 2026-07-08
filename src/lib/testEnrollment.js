@@ -132,4 +132,65 @@ export const testEnrollment = {
       return []
     }
   },
+
+  // ---- QUESTION BANK (institution side) ----
+
+  addQuestion: async (testId, { questionText, options, correctAnswer, marks = 1, topic = '' }) => {
+    try {
+      const { data, error } = await supabase.from('question_bank').insert({
+        test_id: testId, question_text: questionText, options,
+        correct_answer: correctAnswer, marks, topic,
+      }).select().single()
+      if (error) throw error
+      return data
+    } catch (err) {
+      console.error('addQuestion error:', err)
+      return null
+    }
+  },
+
+  getQuestions: async (testId) => {
+    try {
+      const { data, error } = await supabase
+        .from('question_bank').select('*').eq('test_id', testId).order('created_at', { ascending: true })
+      if (error) throw error
+      return data || []
+    } catch (err) {
+      console.error('getQuestions error:', err)
+      return []
+    }
+  },
+
+  deleteQuestion: async (questionId) => {
+    try {
+      const { error } = await supabase.from('question_bank').delete().eq('id', questionId)
+      if (error) throw error
+      return true
+    } catch (err) {
+      console.error('deleteQuestion error:', err)
+      return false
+    }
+  },
+
+  // ---- EXAM DAY (student side) - both calls hit server-side Edge Functions.
+  // Timing, shuffling, and scoring all happen there - never trust the browser clock
+  // or a client-computed score for something a student has a direct incentive to fake.
+
+  startExam: async (enrollmentId, studentId) => {
+    const { data, error } = await supabase.functions.invoke('start-exam', {
+      body: { enrollment_id: enrollmentId, student_id: studentId },
+    })
+    if (error) throw new Error(data?.error || error.message || 'Could not start the exam.')
+    if (data?.error) throw new Error(data.error)
+    return data
+  },
+
+  submitExam: async (enrollmentId, studentId, token, answers) => {
+    const { data, error } = await supabase.functions.invoke('submit-exam', {
+      body: { enrollment_id: enrollmentId, student_id: studentId, token, answers },
+    })
+    if (error) throw new Error(data?.error || error.message || 'Could not submit the exam.')
+    if (data?.error) throw new Error(data.error)
+    return data
+  },
 }
