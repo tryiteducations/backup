@@ -19,10 +19,18 @@ export default function StudentHall() {
 
   useEffect(() => {
     supabase.from('halls')
-      .select('*')
-      .order('member_count', { ascending: false })
+      .select('*, hall_members(count)')
+      .eq('is_public', true)
+      .order('total_score', { ascending: false })
       .limit(20)
-      .then(({ data }) => { if (data) setHalls(data) })
+      .then(({ data }) => {
+        if (data) {
+          setHalls(data.map(h => ({
+            ...h,
+            memberCount: h.hall_members?.[0]?.count || 0,
+          })))
+        }
+      })
       .catch(() => {})
       .finally(() => setLoading(false))
   }, [])
@@ -46,7 +54,7 @@ export default function StudentHall() {
       <div style={{padding:'20px',maxWidth:760,margin:'0 auto'}}>
         <div style={{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:10,marginBottom:20}}>
           {[{l:'Active Halls',v:String(halls.length),e:'🏛️'},
-            {l:'Total Members',v:String(halls.reduce((s,h)=>s+(h.member_count||0),0)),e:'👥'}].map((x,i)=>(
+            {l:'Total Members',v:String(halls.reduce((s,h)=>s+(h.memberCount||0),0)),e:'👥'}].map((x,i)=>(
             <div key={i} style={{background:c,border:`1px solid ${b}`,borderRadius:14,padding:'14px',textAlign:'center'}}>
               <div style={{fontSize:22,marginBottom:4}}>{x.e}</div>
               <p style={{color:t,fontWeight:800,fontSize:15,margin:'0 0 2px'}}>{x.v}</p>
@@ -86,7 +94,7 @@ export default function StudentHall() {
             <div style={{flex:1}}>
               <p style={{color:t,fontWeight:700,fontSize:13,margin:'0 0 4px'}}>{h.name}</p>
               <div style={{display:'flex',gap:10}}>
-                <span style={{color:m,fontSize:11}}>👥 {h.member_count || 1}</span>
+                <span style={{color:m,fontSize:11}}>👥 {h.memberCount || 1}</span>
                 <span style={{background:`${a}15`,color:a,fontSize:9,fontWeight:700,
                   padding:'2px 8px',borderRadius:20}}>{h.subject}</span>
               </div>

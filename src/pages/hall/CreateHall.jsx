@@ -34,12 +34,20 @@ export default function CreateHall() {
       const { data, error: insertError } = await supabase.from('halls').insert({
         name: name.trim(),
         subject,
-        level,
+        description: level,
         emoji,
-        creator_id: user.id,
-        member_count: 1,
+        captain_id: user.id,
+        max_members: 10,
+        is_public: true,
       }).select().single()
       if (insertError) throw insertError
+
+      // Auto-join the creator as the hall's first member
+      await supabase.from('hall_members').insert({
+        hall_id: data.id,
+        user_id: user.id,
+      })
+
       nav('/student/hall', { state: { justCreatedHallId: data?.id } })
     } catch (e) {
       setError('Could not create the hall - please try again.')
