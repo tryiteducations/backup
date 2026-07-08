@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">TryIT Educations</string>
+    <string name="title_activity_main">TryIT Educations</string>
+    <string name="package_name">net.tryiteducations.app</string>
+    <string name="custom_url_scheme">net.tryiteducations.app</string>
+</resources>
