@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { supabase } from '../../lib/supabase'
+import { spacedRepetition } from '../../lib/spacedRepetition'
 
 const NAVY = '#1E3A5F'
 const GOLD = '#C9A84C'
@@ -42,12 +43,22 @@ export default function ConceptCheckpoint() {
 
   // -- NEXT QUESTION ---------------------------------------------------------
   const handleNext = () => {
+    const wasCorrect = selected === q?.correct
     const newAnswers = [...answers, {
       selected,
       correct: q?.correct,
-      passed:  selected === q?.correct,
+      passed:  wasCorrect,
     }]
     setAnswers(newAnswers)
+
+    if (user?.id && q) {
+      const itemId = `${topicId}_L${lvl}_Q${currentIdx}`
+      spacedRepetition.recordReview(user.id, 'foundation_question', itemId, wasCorrect, {
+        question: q.question, options: q.options, correct: q.correct,
+        micro_explanation: q.micro_explanation, topicId, level: lvl,
+      }).catch(() => {})
+    }
+
     setSelected(null)
     setShowResult(false)
 

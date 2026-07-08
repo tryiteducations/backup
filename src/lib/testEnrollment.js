@@ -135,11 +135,11 @@ export const testEnrollment = {
 
   // ---- QUESTION BANK (institution side) ----
 
-  addQuestion: async (testId, { questionText, options, correctAnswer, marks = 1, topic = '' }) => {
+  addQuestion: async (testId, { questionText, options, correctAnswer, marks = 1, topic = '', questionType = 'mcq', gradingRubric = null }) => {
     try {
       const { data, error } = await supabase.from('question_bank').insert({
-        test_id: testId, question_text: questionText, options,
-        correct_answer: correctAnswer, marks, topic,
+        test_id: testId, question_text: questionText, options, question_type: questionType,
+        correct_answer: correctAnswer, marks, topic, grading_rubric: gradingRubric,
       }).select().single()
       if (error) throw error
       return data
@@ -192,5 +192,152 @@ export const testEnrollment = {
     if (error) throw new Error(data?.error || error.message || 'Could not submit the exam.')
     if (data?.error) throw new Error(data.error)
     return data
+  },
+
+  // ---- PAPER UPLOAD & REVIEW (institution) ----
+
+  uploadPaper: async (institutionId, testId, file) => {
+    try {
+      const path = `paper-uploads/${institutionId}/${Date.now()}_${file.name}`
+      const { error: upErr } = await supabase.storage.from('user-content').upload(path, file)
+      if (upErr) throw upErr
+      const { data: urlData } = supabase.storage.from('user-content').getPublicUrl(path)
+      const { data, error } = await supabase.from('paper_uploads').insert({
+        institution_id: institutionId, test_id: testId,
+        file_url: urlData.publicUrl, file_type: file.type === 'application/pdf' ? 'pdf' : 'image',
+        extraction_status: 'pending',
+      }).select().single()
+      if (error) throw error
+      return data
+    } catch (err) {
+      console.error('uploadPaper error:', err)
+      throw err
+    }
+  },
+
+  saveExtractedQuestions: async (paperUploadId, candidateQuestions) => {
+    try {
+      const { error } = await supabase.from('paper_uploads').update({
+        extraction_status: 'extracted', extracted_questions: candidateQuestions,
+      }).eq('id', paperUploadId)
+      if (error) throw error
+      return true
+    } catch (err) {
+      console.error('saveExtractedQuestions error:', err)
+      return false
+    }
+  },
+
+  // Institution has reviewed/edited candidates - this is the ONLY path that writes to
+  // the real question_bank, so nothing unreviewed can ever reach a live exam.
+  publishReviewedQuestions: async (paperUploadId, testId, reviewedQuestions) => {
+    try {
+      const rows = reviewedQuestions.map(q => ({
+        test_id: testId, question_text: q.question_text, options: q.options,
+        correct_answer: q.correct_answer, marks: q.marks || 1, question_type: 'mcq',
+      }))
+      const { error } = await supabase.from('question_bank').insert(rows)
+      if (error) throw error
+      await supabase.from('paper_uploads').update({ extraction_status: 'published' }).eq('id', paperUploadId)
+      return true
+    } catch (err) {
+      console.error('publishReviewedQuestions error:', err)
+      return false
+    }
+  },
+
+  getPaperUploads: async (testId) => {
+    try {
+      const { data, error } = await supabase.from('paper_uploads').select('*').eq('test_id', testId).order('created_at', { ascending: false })
+      if (error) throw error
+      return data || []
+    } catch (err) {
+      console.error('getPaperUploads error:', err)
+      return []
+    }
+  },
+
+  // ---- DESCRIPTIVE ANSWERS (student submits, institution/mentor grades) ----
+
+  submitDescriptiveAnswer: async (enrollmentId, questionId, { answerText, answerFileUrl }) => {
+    try {
+      const { data, error } = await supabase.from('descriptive_answers').insert({
+        enrollment_id: enrollmentId, question_id: questionId,
+        answer_text: answerText || null, answer_file_url: answerFileUrl || null,
+      }).select().single()
+      if (error) throw error
+      return data
+    } catch (err) {
+      console.error('submitDescriptiveAnswer error:', err)
+      return null
+    }
+  },
+
+  getUngradedAnswers: async (testId) => {
+    try {
+      const { data, error } = await supabase
+        .from('descriptive_answers')
+        .select('*, question:question_id(question_text, marks, grading_rubric, test_id), enrollment:enrollment_id(student_id, student:student_id(name))')
+        .is('marks_awarded', null)
+      if (error) throw error
+      return (data || []).filter(a => a.question?.test_id === testId)
+    } catch (err) {
+      console.error('getUngradedAnswers error:', err)
+      return []
+    }
+  },
+
+  gradeAnswer: async (answerId, marksAwarded, graderId, notes = '') => {
+    try {
+      const { error } = await supabase.from('descriptive_answers').update({
+        marks_awarded: marksAwarded, graded_by: graderId, graded_at: new Date().toISOString(), grader_notes: notes,
+      }).eq('id', answerId)
+      if (error) throw error
+      return true
+    } catch (err) {
+      console.error('gradeAnswer error:', err)
+      return false
+    }
+  },
+
+  // ---- PUBLISH RESULTS (adds descriptive marks to the auto-scored MCQ total, notifies everyone) ----
+
+  publishResults: async (testId) => {
+    try {
+      const { data: enrollments } = await supabase
+        .from('test_enrollments').select('id, student_id, score').eq('test_id', testId).eq('status', 'submitted')
+
+      for (const enr of enrollments || []) {
+        const { data: descAnswers } = await supabase
+          .from('descriptive_answers').select('marks_awarded, question_id!inner(test_id)')
+          .eq('enrollment_id', enr.id)
+        const descTotal = (descAnswers || []).reduce((s, a) => s + (a.marks_awarded || 0), 0)
+        const finalScore = (enr.score || 0) + descTotal
+        await supabase.from('test_enrollments').update({ score: finalScore }).eq('id', enr.id)
+
+        await supabase.from('notifications').insert({
+          user_id: enr.student_id, type: 'test_result',
+          title: 'Your test result is published!',
+          body: `You scored ${finalScore} marks.`,
+          link: `/student/exam/${enr.id}`,
+        }).catch(() => {})
+      }
+
+      const { data: ranked } = await supabase
+        .from('test_enrollments').select('id, score').eq('test_id', testId).eq('status', 'submitted')
+        .order('score', { ascending: false })
+      for (let i = 0; i < (ranked || []).length; i++) {
+        await supabase.from('test_enrollments').update({ institution_rank: i + 1 }).eq('id', ranked[i].id)
+      }
+
+      await supabase.from('institution_tests').update({
+        results_published: true, results_published_at: new Date().toISOString(),
+      }).eq('id', testId)
+
+      return true
+    } catch (err) {
+      console.error('publishResults error:', err)
+      return false
+    }
   },
 }

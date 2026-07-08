@@ -40,7 +40,11 @@ const StudentConceptLearning = lazy(() => import('./pages/student/StudentConcept
 const StudentFoundation      = lazy(() => import('./pages/student/StudentFoundation'))
 const BrowseLiveTests        = lazy(() => import('./pages/student/BrowseLiveTests'))
 const StudentExamRoom        = lazy(() => import('./pages/student/StudentExamRoom'))
+const StudentReview          = lazy(() => import('./pages/student/StudentReview'))
+const DiagramGameEditor      = lazy(() => import('./pages/institution/DiagramGameEditor'))
+const DiagramGame            = lazy(() => import('./pages/games/DiagramGame'))
 const InstitutionTests       = lazy(() => import('./pages/institution/InstitutionTests'))
+const PaperUpload            = lazy(() => import('./pages/institution/PaperUpload'))
 const StudentAnalytics     = lazy(() => import('./pages/student/StudentAnalytics'))
 const StudentCommunity     = lazy(() => import('./pages/student/StudentCommunity'))
 const StudentNotifications = lazy(() => import('./pages/student/StudentNotifications'))
@@ -333,6 +337,7 @@ function ThemedApp() {
                 <Route path="/institution/students" element={<RoleGuard allowedRoles={['institution']}><InstitutionStudents/></RoleGuard>} />
                 <Route path="/institution/revenue" element={<RoleGuard allowedRoles={['institution']}><InstitutionRevenue/></RoleGuard>} />
                 <Route path="/institution/tests" element={<RoleGuard allowedRoles={['institution']}><InstitutionTests/></RoleGuard>} />
+                <Route path="/institution/tests/:testId/upload-paper" element={<RoleGuard allowedRoles={['institution']}><PaperUpload/></RoleGuard>} />
                 <Route path="/institution/settings" element={<RoleGuard allowedRoles={['institution']}><InstitutionSettings/></RoleGuard>} />
                 <Route path="/centre/consent" element={<RoleGuard allowedRoles={['institution']}><InstitutionConsent/></RoleGuard>} />
 
@@ -393,6 +398,9 @@ function ThemedApp() {
                 <Route path="/student/foundation"      element={<StudentFoundation/>} />
                 <Route path="/student/live-tests"      element={<BrowseLiveTests/>} />
                 <Route path="/student/exam/:enrollmentId" element={<StudentExamRoom/>} />
+                <Route path="/student/review"           element={<StudentReview/>} />
+                <Route path="/games/diagram/:gameId"    element={<DiagramGame/>} />
+                <Route path="/institution/diagram-editor" element={<RoleGuard allowedRoles={['institution']}><DiagramGameEditor/></RoleGuard>} />
                 <Route path="/student/settings"       element={<StudentSettings/>} />
                 <Route path="/student/mentor"         element={<StudentMentor/>} />
                 <Route path="/student/community"      element={<StudentCommunity/>} />

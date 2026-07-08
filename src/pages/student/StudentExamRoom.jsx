@@ -41,6 +41,7 @@ export default function StudentExamRoom() {
   const [examData, setExamData] = useState(null)
   const [questions, setQuestions] = useState([])
   const [answers, setAnswers] = useState({})
+  const [descAnswers, setDescAnswers] = useState({}) // {question_id: text} for descriptive questions
   const [currentIdx, setCurrentIdx] = useState(0)
   const [now, setNow] = useState(Date.now())
   const [result, setResult] = useState(null)
@@ -54,7 +55,7 @@ export default function StudentExamRoom() {
   const loadQuestionsForExam = async (testId, questionOrder) => {
     const { data } = await supabase
       .from('question_bank')
-      .select('id, question_text, question_image_url, options, marks, topic')
+      .select('id, question_text, question_image_url, options, marks, topic, question_type')
       .eq('test_id', testId)
     const byId = new Map((data || []).map(q => [q.id, q]))
     setQuestions((questionOrder || []).map(id => byId.get(id)).filter(Boolean))
@@ -108,6 +109,12 @@ export default function StudentExamRoom() {
     if (submittingRef.current) return
     submittingRef.current = true
     try {
+      // Save any descriptive answers first (separate table, manually graded later)
+      for (const [questionId, text] of Object.entries(descAnswers)) {
+        if (text?.trim()) {
+          await testEnrollment.submitDescriptiveAnswer(enrollmentId, questionId, { answerText: text.trim() })
+        }
+      }
       const data = await testEnrollment.submitExam(enrollmentId, user.id, examData.token, answers)
       setResult(data)
       setPhase('submitted')
@@ -115,7 +122,7 @@ export default function StudentExamRoom() {
       setError(e.message || 'Could not submit - please try again.')
       submittingRef.current = false
     }
-  }, [enrollmentId, user, examData, answers])
+  }, [enrollmentId, user, examData, answers, descAnswers])
 
   useEffect(() => {
     if (phase !== 'active' || !examData) return
@@ -225,20 +232,35 @@ export default function StudentExamRoom() {
               <img src={q.question_image_url} alt="" style={{maxWidth:'100%',borderRadius:10,marginBottom:14,border:`1px solid ${b}`}}/>
             )}
             <div style={{display:'flex',flexDirection:'column',gap:8}}>
-              {(q.options || []).map(opt => (
-                <button key={opt.label} onClick={()=>selectAnswer(q.id, opt.label)}
-                  style={{textAlign:'left',padding:'12px 16px',borderRadius:12,
-                    border:`1.5px solid ${answers[q.id]===opt.label?p:b}`,
-                    background:answers[q.id]===opt.label?`${p}10`:'transparent',
-                    color:t,fontSize:13,cursor:'pointer',display:'flex',gap:10,alignItems:'center'}}>
-                  <span style={{width:22,height:22,borderRadius:'50%',border:`1.5px solid ${answers[q.id]===opt.label?p:b}`,
-                    background:answers[q.id]===opt.label?p:'transparent',color:answers[q.id]===opt.label?'#fff':m,
-                    fontSize:11,fontWeight:700,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
-                    {opt.label}
-                  </span>
-                  {opt.text}
-                </button>
-              ))}
+              {q.question_type === 'mcq' || !q.question_type ? (
+                (q.options || []).map(opt => (
+                  <button key={opt.label} onClick={()=>selectAnswer(q.id, opt.label)}
+                    style={{textAlign:'left',padding:'12px 16px',borderRadius:12,
+                      border:`1.5px solid ${answers[q.id]===opt.label?p:b}`,
+                      background:answers[q.id]===opt.label?`${p}10`:'transparent',
+                      color:t,fontSize:13,cursor:'pointer',display:'flex',gap:10,alignItems:'center'}}>
+                    <span style={{width:22,height:22,borderRadius:'50%',border:`1.5px solid ${answers[q.id]===opt.label?p:b}`,
+                      background:answers[q.id]===opt.label?p:'transparent',color:answers[q.id]===opt.label?'#fff':m,
+                      fontSize:11,fontWeight:700,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}}>
+                      {opt.label}
+                    </span>
+                    {opt.text}
+                  </button>
+                ))
+              ) : (
+                <div>
+                  <textarea
+                    value={descAnswers[q.id] || ''}
+                    onChange={e=>setDescAnswers(prev => ({...prev, [q.id]: e.target.value}))}
+                    placeholder="Type your answer here..."
+                    rows={8}
+                    style={{width:'100%',padding:'14px',borderRadius:12,border:`1.5px solid ${b}`,
+                      fontSize:13,fontFamily:'Poppins,sans-serif',resize:'vertical',boxSizing:'border-box',lineHeight:1.6}}/>
+                  <p style={{fontSize:11,color:m,marginTop:6}}>
+                    This answer will be graded manually by your institution - not scored instantly.
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         )}

@@ -333,6 +333,8 @@ export default function StudentGames() {
 
       <div style={{ maxWidth:900, margin:'0 auto', padding:'20px' }}>
 
+        <DiagramGamesRow />
+
         {/* -- FILTER TABS ------------------------------------------ */}
         <div style={{ display:'flex', gap:8, marginBottom:20,
           overflowX:'auto', scrollbarWidth:'none', paddingBottom:4 }}>
@@ -581,6 +583,43 @@ export default function StudentGames() {
 
         {/* Bottom padding */}
         <div style={{ height:40 }}/>
+      </div>
+    </div>
+  )
+}
+
+function DiagramGamesRow() {
+  const navigate = useNavigate()
+  const { theme } = useTheme()
+  const [games, setGames] = useState([])
+  const [loading, setLoading] = useState(true)
+  const t = theme?.text||'#1E293B', m = theme?.textLight||'#64748B'
+  const c = theme?.surface||'#FFFFFF', b = theme?.border||'#E2E8F0'
+  const a = theme?.accent||'#C9A84C'
+
+  useEffect(() => {
+    import('../../lib/diagramGames').then(({ diagramGames }) => {
+      diagramGames.getAll().then(data => { setGames(data); setLoading(false) })
+    })
+  }, [])
+
+  if (loading || games.length === 0) return null
+
+  return (
+    <div style={{marginBottom:24}}>
+      <p style={{color:t,fontWeight:700,fontSize:14,marginBottom:10}}>🗺️ Diagram & Map Challenges</p>
+      <div style={{display:'flex',gap:12,overflowX:'auto',paddingBottom:4}}>
+        {games.map(g => (
+          <button key={g.id} onClick={()=>navigate(`/games/diagram/${g.id}`)}
+            style={{flexShrink:0,width:150,background:c,border:`1px solid ${b}`,borderRadius:14,
+              padding:0,cursor:'pointer',textAlign:'left',overflow:'hidden'}}>
+            <img src={g.image_url} alt="" style={{width:'100%',height:90,objectFit:'cover'}}/>
+            <div style={{padding:10}}>
+              <p style={{color:t,fontWeight:700,fontSize:12,margin:'0 0 2px'}}>{g.title}</p>
+              <p style={{color:a,fontSize:10,margin:0}}>{g.subject} · {g.hotspots?.length||0} labels</p>
+            </div>
+          </button>
+        ))}
       </div>
     </div>
   )

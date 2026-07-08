@@ -5,6 +5,10 @@ import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
 import { supabase } from '../../lib/supabase'
 import { ParticleBurst, ComboFire, ScorePopup, TimerRing, AnswerOption, XPBar, GameHeader } from '../../lib/gameUI.jsx'
+import { gameQuestionPool } from '../../lib/gameQuestionPool'
+
+// Fallback only - used if the real question pool has nothing yet for this student's
+// exam(s), so the game never shows a blank screen while that content grows.
 
 const QUESTIONS = [
   {q:"What is 15% of 200?", opts:["25","30","35","40"], ans:1, fact:"15% of 200 = 30. Divide by 100 then multiply: 200 x 0.15 = 30."},
@@ -30,6 +34,28 @@ export default function MathBlitz() {
   const isDark = theme?.isDark ?? false
 
   const [phase, setPhase] = useState('intro')
+  const [poolQuestions, setPoolQuestions] = useState(null) // null = not loaded yet
+
+  useEffect(() => {
+    (async () => {
+      const uid = authUser?.id || authUser?.userId
+      let studentExams = []
+      if (uid) {
+        const { data: profile } = await supabase.from('profiles').select('exams').eq('id', uid).single()
+        studentExams = (profile?.exams || []).map(e => e.name).filter(Boolean)
+      }
+      const real = await gameQuestionPool.getQuestions({ subject: 'Maths', studentExams, limit: 10 })
+      if (real.length > 0) {
+        setPoolQuestions(real.map(q => {
+          const correctIdx = q.options.findIndex(o => o.label === q.correct_answer)
+          return { q: q.question_text, opts: q.options.map(o => o.text), ans: correctIdx, fact: '' }
+        }))
+      } else {
+        setPoolQuestions(QUESTIONS) // fallback - no real content tagged for this exam yet
+      }
+    })()
+  }, [])
+
   const [qIdx, setQIdx] = useState(0)
   const [selected, setSelected] = useState(null)
   const [revealed, setRevealed] = useState(false)
@@ -43,7 +69,7 @@ export default function MathBlitz() {
   const timerRef = useRef()
 
   const seed = (authUser?.id?.charCodeAt(0) || 42) + new Date().getDate()
-  const questions = [...QUESTIONS].sort(() => Math.sin(seed * Math.random()) - 0.5)
+  const questions = poolQuestions ? [...poolQuestions].sort(() => Math.sin(seed * Math.random()) - 0.5) : []
   const q = questions[qIdx]
 
   useEffect(() => {
@@ -129,7 +155,11 @@ export default function MathBlitz() {
             </div>
           ))}
         </div>
-        <button onClick={() => setPhase('playing')} style={{ width:'100%',padding:'16px',background:`linear-gradient(135deg,${C1},${C2})`,border:'none',borderRadius:16,cursor:'pointer',color:'#fff',fontFamily:'Poppins,sans-serif',fontWeight:900,fontSize:18,boxShadow:`0 8px 32px ${C1}55` }}>▶ Start Game</button>
+        <button onClick={() => poolQuestions && setPhase('playing')} disabled={!poolQuestions}
+          style={{ width:'100%',padding:'16px',background:`linear-gradient(135deg,${C1},${C2})`,border:'none',borderRadius:16,
+            cursor:poolQuestions?'pointer':'wait',opacity:poolQuestions?1:0.6,color:'#fff',fontFamily:'Poppins,sans-serif',fontWeight:900,fontSize:18,boxShadow:`0 8px 32px ${C1}55` }}>
+          {poolQuestions ? '▶ Start Game' : 'Loading questions...'}
+        </button>
         <button onClick={() => navigate('/student/games')} style={{ marginTop:12,background:'transparent',border:'none',color:'rgba(255,255,255,0.35)',fontSize:12,cursor:'pointer' }}>← Back to Games</button>
       </div>
     </div>

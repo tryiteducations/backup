@@ -31,6 +31,8 @@ export default function MentorDoubts() {
   const [answer, setAnswer] = useState('')
   const [filter, setFilter] = useState('pending')
   const [busyId, setBusyId] = useState(null)
+  const [answerFile, setAnswerFile] = useState(null)
+  const [uploadingAnswer, setUploadingAnswer] = useState(false)
 
   const loadDoubts = async () => {
     if (!user?.id) return
@@ -63,9 +65,21 @@ export default function MentorDoubts() {
       if (doubt && !doubt.assigned_mentor_id) {
         await doubtSystem.assignDoubt(id, user.id)
       }
-      await doubtSystem.resolveDoubt(id, answer.trim())
+      let attachmentUrl = null
+      if (answerFile) {
+        setUploadingAnswer(true)
+        const path = `doubt-answers/${user.id}/${Date.now()}_${answerFile.name}`
+        const { error: upErr } = await supabase.storage.from('user-content').upload(path, answerFile)
+        if (!upErr) {
+          const { data } = supabase.storage.from('user-content').getPublicUrl(path)
+          attachmentUrl = data.publicUrl
+        }
+        setUploadingAnswer(false)
+      }
+      await doubtSystem.resolveDoubt(id, answer.trim(), attachmentUrl)
       setSelected(null)
       setAnswer('')
+      setAnswerFile(null)
       await loadDoubts()
     } finally {
       setBusyId(null)
@@ -161,6 +175,12 @@ export default function MentorDoubts() {
                 <p style={{color:t,fontSize:13,margin:0,lineHeight:1.6}}>
                   {d.solution}
                 </p>
+                {d.video_url && (
+                  <a href={d.video_url} target="_blank" rel="noreferrer"
+                    style={{display:'inline-block',marginTop:8,color:p,fontSize:12,fontWeight:600}}>
+                    📎 View attached file
+                  </a>
+                )}
               </div>
             )}
 
@@ -175,6 +195,12 @@ export default function MentorDoubts() {
                       fontSize:13,outline:'none',resize:'vertical',
                       fontFamily:'Poppins,sans-serif',boxSizing:'border-box',
                       lineHeight:1.6,marginBottom:10}}/>
+                  <label style={{display:'inline-flex',alignItems:'center',gap:6,
+                    padding:'7px 12px',borderRadius:10,border:'1px solid '+b,
+                    cursor:'pointer',fontSize:11,fontWeight:600,color:m,marginBottom:10}}>
+                    📎 {answerFile ? answerFile.name : 'Attach a diagram or worked solution (optional)'}
+                    <input type="file" accept="image/*,.pdf" hidden onChange={e=>setAnswerFile(e.target.files?.[0]||null)}/>
+                  </label>
                   <div style={{display:'flex',gap:8}}>
                     <button onClick={()=>submitAnswer(d.id)}
                       disabled={!answer.trim()||busyId===d.id}
@@ -183,7 +209,7 @@ export default function MentorDoubts() {
                         border:'none',borderRadius:12,padding:'10px',
                         color:answer.trim()?'#fff':m,fontWeight:700,
                         fontSize:13,cursor:busyId===d.id?'wait':'pointer'}}>
-                      {busyId===d.id ? 'Saving...' : '✅ Submit Answer'}
+                      {busyId===d.id ? (uploadingAnswer ? 'Uploading...' : 'Saving...') : '✅ Submit Answer'}
                     </button>
                     <button onClick={()=>{setSelected(null);setAnswer('')}}
                       style={{background:'transparent',border:'1px solid '+b,
