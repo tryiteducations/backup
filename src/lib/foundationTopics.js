@@ -29,6 +29,33 @@ export const LEVEL_LABELS = {
   5: 'Speed & Mastery',
 }
 
+// What a student sees when they pick their class - directly caps which levels show up.
+// A Class 6 student sees Level 1-2 content only; a competitive-exam aspirant sees all 5.
+export const CLASS_OPTIONS = [
+  { id: 'c1_5',  label: 'Class 1-5',  maxLevel: 1 },
+  { id: 'c6',    label: 'Class 6',    maxLevel: 2 },
+  { id: 'c7',    label: 'Class 7',    maxLevel: 2 },
+  { id: 'c8',    label: 'Class 8',    maxLevel: 2 },
+  { id: 'c9',    label: 'Class 9',    maxLevel: 3 },
+  { id: 'c10',   label: 'Class 10',   maxLevel: 3 },
+  { id: 'c11',   label: 'Class 11',   maxLevel: 4 },
+  { id: 'c12',   label: 'Class 12',   maxLevel: 4 },
+  { id: 'competitive', label: 'Competitive Exam / UG Prep', maxLevel: 5 },
+  { id: 'pg_prof', label: 'PG / Professional', maxLevel: 5 },
+]
+
+export function getMaxLevelForClass(classId) {
+  return CLASS_OPTIONS.find(c => c.id === classId)?.maxLevel ?? 5
+}
+
+// Relevance tags - the "why does this topic matter" clarity: which school boards
+// examine it, and which scholarship/entrance/competitive exams test it. Filled in
+// for topics with real authored content; left blank for others until authored.
+const PERCENTAGE_RELEVANCE = {
+  boards: ['CBSE', 'ICSE', 'Tamil Nadu State Board', 'Maharashtra State Board', 'Rashtriya Military School', 'Sainik School'],
+  exams: ['NTSE', 'Olympiads (IMO/NSO)', 'SSC CGL', 'IBPS PO/Clerk', 'CAT', 'UPSC CSAT'],
+}
+
 // Helper - most arithmetic/foundational topics span the full ladder; topics that
 // don't exist at younger grades declare a later startLevel explicitly below.
 const FULL_RANGE = { startLevel: 1, endLevel: 5 }
@@ -37,7 +64,7 @@ export const SUBJECTS = [
   {
     id: 'maths', label: 'Mathematics', emoji: '📐', color: '#2563EB',
     topics: [
-      { id: 'arith_percentage', label: 'Percentage', ...FULL_RANGE, authoredLevels: [1,2,3,4,5] },
+      { id: 'arith_percentage', label: 'Percentage', ...FULL_RANGE, authoredLevels: [1,2,3,4,5], relevance: PERCENTAGE_RELEVANCE },
       { id: 'arith_profit_loss', label: 'Profit & Loss', ...FULL_RANGE, authoredLevels: [1] },
       { id: 'arith_ratio_proportion', label: 'Ratio & Proportion', ...FULL_RANGE, authoredLevels: [] },
       { id: 'arith_simple_compound_interest', label: 'Simple & Compound Interest', startLevel: 2, endLevel: 5, authoredLevels: [] },
