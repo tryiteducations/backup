@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
 import { supabase } from '../../lib/supabase'
-import { SUBJECTS, LEVEL_LABELS, isLevelAuthored, getTopicAuthoredCount } from '../../lib/foundationTopics'
+import { SUBJECTS, LEVEL_LABELS, isLevelAuthored, isLevelApplicable, getTopicAuthoredCount } from '../../lib/foundationTopics'
 
 export default function StudentFoundation() {
   const nav = useNavigate()
@@ -62,7 +62,8 @@ export default function StudentFoundation() {
     return (
       <div style={{ display: 'flex', gap: 6, marginTop: 8 }}>
         {[1, 2, 3, 4, 5].map(lvl => {
-          const authored = isLevelAuthored(topic, lvl)
+          const applicable = isLevelApplicable(topic, lvl)
+          const authored = applicable && isLevelAuthored(topic, lvl)
           const status = progress[`${topic.id}_${lvl}`]
           const completed = status === 'completed'
           return (
@@ -70,18 +71,19 @@ export default function StudentFoundation() {
               key={lvl}
               disabled={!authored}
               onClick={() => authored && nav(`/concept/${topic.id}/${lvl}`)}
-              title={authored ? `${LEVEL_LABELS[lvl]}` : 'Coming soon'}
+              title={!applicable ? 'Not part of this topic\'s curriculum' : authored ? LEVEL_LABELS[lvl] : 'Coming soon'}
               style={{
-                flex: 1, height: 34, borderRadius: 8, border: `1px solid ${completed ? accent : border}`,
+                flex: 1, height: 34, borderRadius: 8,
+                border: `1px solid ${completed ? accent : applicable ? border : 'transparent'}`,
                 background: completed ? `${accent}22` : authored ? `${primary}12` : 'transparent',
-                color: authored ? (completed ? accent : text) : muted,
+                color: !applicable ? `${muted}55` : authored ? (completed ? accent : text) : muted,
                 fontSize: 11, fontWeight: completed ? 800 : 600,
                 cursor: authored ? 'pointer' : 'not-allowed',
-                opacity: authored ? 1 : 0.5,
+                opacity: applicable ? (authored ? 1 : 0.5) : 0.3,
                 display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 3,
                 transition: 'all 0.15s',
               }}>
-              {completed ? '✓' : lvl}
+              {!applicable ? '—' : completed ? '✓' : lvl}
             </button>
           )
         })}
