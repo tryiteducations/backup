@@ -1,4 +1,4 @@
-﻿import { CoinProvider } from './context/CoinContext.jsx'
+import { CoinProvider } from './context/CoinContext.jsx'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
@@ -21,4 +21,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   </React.StrictMode>
 )
 
-// cache bust 152144
+// Hide the native splash screen only once the real app has mounted and painted -
+// avoids a jarring blank gap between the branded splash and first content, and
+// is a no-op with zero cost when running as the regular website.
+import('@capacitor/core').then(({ Capacitor }) => {
+  if (!Capacitor.isNativePlatform()) return
+  import('@capacitor/splash-screen').then(({ SplashScreen }) => {
+    requestAnimationFrame(() => {
+      setTimeout(() => SplashScreen.hide().catch(() => {}), 150)
+    })
+  }).catch(() => {})
+}).catch(() => {})

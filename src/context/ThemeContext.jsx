@@ -118,6 +118,16 @@ function isDarkColor(hex) {
 
     const meta = document.querySelector("meta[name='theme-color']")
     if (meta) meta.setAttribute('content', t.primary)
+
+    // Native status bar - only runs inside the Capacitor app shell. Dynamically
+    // imported so this has zero effect (and zero bundle cost) on the regular website.
+    import('@capacitor/core').then(({ Capacitor }) => {
+      if (!Capacitor.isNativePlatform()) return
+      import('@capacitor/status-bar').then(({ StatusBar, Style }) => {
+        StatusBar.setBackgroundColor({ color: bg }).catch(() => {})
+        StatusBar.setStyle({ style: t.isDark ? Style.Dark : Style.Light }).catch(() => {})
+      }).catch(() => {})
+    }).catch(() => {})
   }
 
   const ThemeContext = createContext({})
