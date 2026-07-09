@@ -305,14 +305,14 @@ function Hero({nav}) {
     <section style={{
       minHeight:'100vh',background:B.white,
       display:'flex',alignItems:'center',
-      paddingTop:80,paddingBottom:80,
+      paddingTop:80,paddingBottom:80,overflowX:'hidden',
     }}>
-      <div style={{maxWidth:1200,margin:'0 auto',padding:'0 24px',
-        display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(min(100%,420px),1fr))',gap:80,
+      <div className="hero-grid" style={{maxWidth:1200,margin:'0 auto',padding:'0 24px',
+        display:'flex',flexWrap:'wrap',gap:80,
         alignItems:'center'}}>
 
         {/* Left - Text */}
-        <div>
+        <div style={{flex:'1 1 420px',minWidth:0,maxWidth:'100%',boxSizing:'border-box'}}>
           {/* Badge */}
           <div style={{display:'inline-flex',alignItems:'center',gap:6,
             background:B.light,border:'1px solid rgba(45,27,105,0.15)',
@@ -374,7 +374,7 @@ function Hero({nav}) {
         </div>
 
         {/* Right - Visual */}
-        <div style={{position:'relative'}}>
+        <div style={{position:'relative',flex:'1 1 380px',minWidth:0,maxWidth:'100%',boxSizing:'border-box'}}>
           {/* Main card */}
           <div style={{background:B.primary,borderRadius:24,padding:28,
             boxShadow:'0 32px 80px rgba(45,27,105,0.3)',
