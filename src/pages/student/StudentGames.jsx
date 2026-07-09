@@ -408,13 +408,16 @@ export default function StudentGames() {
                     }}/>
                   )}
 
-                  {/* Emoji with float animation */}
-                  <span style={{
-                    fontSize:52,
-                    animation: hovered ? 'float 2s ease-in-out infinite' : 'none',
-                    filter:`drop-shadow(0 4px 12px ${game.glow}88)`,
-                    position:'relative', zIndex:1,
-                  }}>{game.emoji}</span>
+                  {/* Emoji with float animation - hidden when locked so it can't
+                      collide with the lock icon/text sitting on top of it */}
+                  {unlocked && (
+                    <span style={{
+                      fontSize:52,
+                      animation: hovered ? 'float 2s ease-in-out infinite' : 'none',
+                      filter:`drop-shadow(0 4px 12px ${game.glow}88)`,
+                      position:'relative', zIndex:1,
+                    }}>{game.emoji}</span>
+                  )}
 
                   {/* Tier badge */}
                   <div style={{
@@ -435,7 +438,7 @@ export default function StudentGames() {
                       display:'flex', flexDirection:'column',
                       alignItems:'center', justifyContent:'center', gap:4,
                     }}>
-                      <span style={{ fontSize:24 }}>??</span>
+                      <span style={{ fontSize:28 }}>🔒</span>
                       <p style={{ color:'#fff', fontSize:9,
                         fontWeight:700, margin:0, textTransform:'uppercase' }}>
                         {game.tier} only
