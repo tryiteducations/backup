@@ -26,6 +26,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 // is a no-op with zero cost when running as the regular website.
 import('@capacitor/core').then(({ Capacitor }) => {
   if (!Capacitor.isNativePlatform()) return
+  import('@capacitor/status-bar').then(({ StatusBar }) => {
+    StatusBar.setOverlaysWebView({ overlay: false }).catch(() => {})
+  }).catch(() => {})
   import('@capacitor/splash-screen').then(({ SplashScreen }) => {
     requestAnimationFrame(() => {
       setTimeout(() => SplashScreen.hide().catch(() => {}), 150)

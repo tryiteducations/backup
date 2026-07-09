@@ -124,6 +124,7 @@ function isDarkColor(hex) {
     import('@capacitor/core').then(({ Capacitor }) => {
       if (!Capacitor.isNativePlatform()) return
       import('@capacitor/status-bar').then(({ StatusBar, Style }) => {
+        StatusBar.setOverlaysWebView({ overlay: false }).catch(() => {})
         StatusBar.setBackgroundColor({ color: bg }).catch(() => {})
         StatusBar.setStyle({ style: t.isDark ? Style.Dark : Style.Light }).catch(() => {})
       }).catch(() => {})
