@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth, onboardingKey } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
-import { realAuth, generateRegistrationCode } from '../lib/realAuth'
+import { realAuth } from '../lib/realAuth'
 import Logo from '../components/Logo'
 
 export default function Login() {
@@ -21,10 +21,10 @@ export default function Login() {
 
   const [step, setStep] = useState('phone') // phone | verify | done
   const [phone, setPhone] = useState('')
-  const [code] = useState(() => generateRegistrationCode())
+  const [otp, setOtp] = useState('')
   const [loading, setLoading] = useState(false)
+  const [sendingOtp, setSendingOtp] = useState(false)
   const [error, setError] = useState('')
-  const [copied, setCopied] = useState(false)
 
   const redirectTo = location.state?.from || '/role-select'
 
@@ -36,24 +36,39 @@ export default function Login() {
     }
   }, [user, navigate])
 
-  const submitPhone = () => {
+  const submitPhone = async () => {
     const clean = phone.replace(/\D/g, '').slice(-10)
     if (!/^\d{10}$/.test(clean)) { setError('Enter a valid 10-digit phone number.'); return }
     setError('')
-    setStep('verify')
+    setSendingOtp(true)
+    try {
+      await realAuth.sendOtp(clean)
+      setStep('verify')
+    } catch (err) {
+      setError(err.message || 'Could not send OTP - please try again.')
+    } finally {
+      setSendingOtp(false)
+    }
   }
 
-  const copyCode = () => {
-    navigator.clipboard.writeText(`REG-${code}`)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+  const resendOtp = async () => {
+    setError('')
+    setSendingOtp(true)
+    try {
+      await realAuth.sendOtp(phone)
+    } catch (err) {
+      setError(err.message || 'Could not resend OTP.')
+    } finally {
+      setSendingOtp(false)
+    }
   }
 
-  const confirmSent = async () => {
+  const submitOtp = async () => {
+    if (otp.length !== 6) { setError('Enter the 6-digit code.'); return }
     setLoading(true)
     setError('')
     try {
-      const result = await login(phone, code, 'sms')
+      const result = await login(phone, otp, 'sms')
       if (result.error) { setError(result.error); setLoading(false); return }
       // useEffect above handles the redirect once `user` updates
     } catch (err) {
@@ -77,10 +92,10 @@ export default function Login() {
               style={{width:'100%',padding:'14px 16px',borderRadius:12,border:`1.5px solid ${b}`,
                 fontSize:15,boxSizing:'border-box',marginBottom:12,textAlign:'center',letterSpacing:'1px'}}/>
             {error && <p style={{color:'#DC2626',fontSize:12,marginBottom:12,textAlign:'center'}}>{error}</p>}
-            <button onClick={submitPhone}
+            <button onClick={submitPhone} disabled={sendingOtp}
               style={{width:'100%',background:`linear-gradient(135deg,${p},${a})`,border:'none',borderRadius:12,
-                padding:'14px',color:'#fff',fontWeight:700,fontSize:14,cursor:'pointer'}}>
-              Continue →
+                padding:'14px',color:'#fff',fontWeight:700,fontSize:14,cursor:sendingOtp?'wait':'pointer'}}>
+              {sendingOtp ? 'Sending code...' : 'Send OTP →'}
             </button>
           </>
         )}
@@ -89,33 +104,29 @@ export default function Login() {
           <>
             <p style={{color:t,fontWeight:800,fontSize:16,margin:'0 0 6px',textAlign:'center'}}>Verify it's you</p>
             <p style={{color:m,fontSize:12,margin:'0 0 18px',textAlign:'center',lineHeight:1.6}}>
-              Using your phone's own messaging app, send this exact text to the number below:
+              We've sent a 6-digit code to +91 {phone}
             </p>
-            <div style={{background:`${p}0a`,border:`1.5px dashed ${p}40`,borderRadius:14,padding:16,marginBottom:14,textAlign:'center'}}>
-              <p style={{color:m,fontSize:10,margin:'0 0 4px'}}>SEND THIS MESSAGE</p>
-              <p style={{fontFamily:'monospace',fontWeight:800,fontSize:18,color:p,letterSpacing:'1px',margin:'0 0 10px'}}>
-                REG-{code}
-              </p>
-              <p style={{color:m,fontSize:10,margin:'0 0 4px'}}>TO THIS NUMBER</p>
-              <p style={{fontFamily:'monospace',fontWeight:800,fontSize:16,color:t}}>
-                {realAuth.verificationNumber || 'Not configured yet'}
-              </p>
-            </div>
-            <button onClick={copyCode}
-              style={{width:'100%',background:'transparent',border:`1px solid ${b}`,borderRadius:10,
-                padding:'9px',color:m,fontWeight:600,fontSize:12,cursor:'pointer',marginBottom:12}}>
-              {copied ? '✓ Copied' : '📋 Copy message text'}
-            </button>
+            <input value={otp} onChange={e=>setOtp(e.target.value.replace(/\D/g,'').slice(0,6))}
+              onKeyDown={e=>e.key==='Enter' && submitOtp()}
+              placeholder="6-digit code" inputMode="numeric"
+              style={{width:'100%',padding:'14px 16px',borderRadius:12,border:`1.5px solid ${b}`,
+                fontSize:20,boxSizing:'border-box',marginBottom:14,textAlign:'center',letterSpacing:'6px',fontFamily:'monospace'}}/>
             {error && <p style={{color:'#DC2626',fontSize:12,marginBottom:12,textAlign:'center'}}>{error}</p>}
-            <button onClick={confirmSent} disabled={loading}
+            <button onClick={submitOtp} disabled={loading}
               style={{width:'100%',background:`linear-gradient(135deg,${p},${a})`,border:'none',borderRadius:12,
                 padding:'14px',color:'#fff',fontWeight:700,fontSize:14,cursor:loading?'wait':'pointer',marginBottom:10}}>
-              {loading ? 'Verifying...' : "I've sent it - Verify →"}
+              {loading ? 'Verifying...' : 'Verify & Continue →'}
             </button>
-            <button onClick={()=>setStep('phone')}
-              style={{width:'100%',background:'transparent',border:'none',color:m,fontSize:12,cursor:'pointer'}}>
-              ← Use a different number
-            </button>
+            <div style={{display:'flex',justifyContent:'space-between'}}>
+              <button onClick={()=>setStep('phone')}
+                style={{background:'transparent',border:'none',color:m,fontSize:12,cursor:'pointer'}}>
+                ← Change number
+              </button>
+              <button onClick={resendOtp} disabled={sendingOtp}
+                style={{background:'transparent',border:'none',color:p,fontSize:12,fontWeight:600,cursor:'pointer'}}>
+                {sendingOtp ? 'Sending...' : 'Resend code'}
+              </button>
+            </div>
           </>
         )}
       </div>

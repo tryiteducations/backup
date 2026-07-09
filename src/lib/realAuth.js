@@ -40,6 +40,19 @@ export const realAuth = {
   // you've signed up at exotel.com and configured the inbound webhook.
   verificationNumber: import.meta.env.VITE_EXOTEL_VMN || null,
 
+  // Sends a real OTP via Fast2SMS to the given phone number.
+  async sendOtp(phone) {
+    const cleanPhone = phone.replace(/\D/g, '').slice(-10)
+    if (!/^\d{10}$/.test(cleanPhone)) throw new Error('Enter a valid 10-digit phone number.')
+
+    const { data, error } = await supabase.functions.invoke('send-otp', {
+      body: { phone: cleanPhone },
+    })
+    if (error) throw new Error(data?.error || error.message || 'Could not send OTP.')
+    if (data?.error) throw new Error(data.error)
+    return true
+  },
+
   // Call this after the user has sent "REG-XXXXXXXX" to your Exotel number.
   // Returns { success, jwt, userId } on success, throws with a message on failure.
   async verifyAndLogin(phone, code, method = 'sms', state = null) {
