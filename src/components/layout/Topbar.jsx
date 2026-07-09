@@ -13,7 +13,7 @@ export default function Topbar({ onMenuClick, title = 'Dashboard' }) {
     { label: '👤 My Profile',   action: () => navigate('/profile')  },
     { label: '⚙️ Settings',     action: () => navigate('/settings') },
     { label: '💳 Pro Member',   action: () => navigate('/pro')      },
-    { label: '🚪 Sign Out',     action: () => { logout(); navigate('/landing') }, red: true },
+    { label: '🚪 Sign Out',     action: () => { logout(); navigate('/login') }, red: true },
   ]
 
   return (

@@ -1,7 +1,10 @@
 // FILE: src/context/AuthContext.jsx
-// TryIT - Fully local/dummy auth (no Supabase dependency)
+// TryIT - Real phone-based authentication via Edge Functions (auth-register,
+// auth-verify-session) - was previously a fully local/fake mock, fixed to use
+// the actual backend auth system that already existed but was never wired in.
 import { createContext, useContext, useState, useEffect } from 'react'
 import localDb from '../lib/localDb'
+import { realAuth } from '../lib/realAuth'
 
 // -- PLAN RULES (Free / Pro / Ultra feature gates) -------------------------
 const PLAN_RULES = {
@@ -148,61 +151,64 @@ export function AuthProvider({ children }) {
 
   async function initSession() {
     setLoading(true)
-    // Fully local/dummy auth - no Supabase dependency
-    localStorage.setItem('tryit_is_admin', 'true')
-    const email = localStorage.getItem('tryit_email')
-    if (email) {
-      let saved = null
-      try { saved = localDb.getProfile?.(email) } catch {}
+    try {
+      const session = await realAuth.getValidSession()
+      if (!session) {
+        setUser(null)
+        setLoading(false)
+        return
+      }
 
-      let u = saved
-        ? { ...MOCK_USER, ...saved }
-        : { ...MOCK_USER, email, role: localStorage.getItem('tryit_role') || 'student' }
+      const userId = realAuth.getUserIdFromJwt(session.jwt)
+      if (!userId) {
+        realAuth.logout()
+        setUser(null)
+        setLoading(false)
+        return
+      }
 
-      if (!u.name) u.name = email.split('@')[0]
-      u.initials = makeInitials(u.name, email)
-
-      u = applyAdminGrant(u, email)
-      u = grantSignupBonusIfNeeded(u, email)
+      const profile = await realAuth.fetchProfile(userId)
+      let u = { ...MOCK_USER, ...profile, id: userId }
+      if (!u.name) u.name = u.phone || 'Student'
+      u.initials = makeInitials(u.name, u.email || u.phone)
 
       const tier = normalizePlan(u.plan)
       u = { ...u, isPro: tier !== 'free' }
 
       setUser(u)
-      localDb.saveProfile?.(u)
-      localDb.saveSession?.({ userId: u.id, email })
-    } else {
+    } catch (err) {
+      console.error('Session restore failed:', err)
+      realAuth.logout()
       setUser(null)
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
-  // -- AUTH ACTIONS (fully local) -------------------------------------------
-  const login = async (email, role = 'student') => {
-    const e = (email || '').trim().toLowerCase()
-    if (!e) return { error: 'Email required' }
+  // -- AUTH ACTIONS ----------------------------------------------------------
+  // Real phone verification (reverse-SMS/WhatsApp/Truecaller) - see realAuth.js.
+  // `code` is the registration code the user sent to your Exotel number.
+  const login = async (phone, code, method = 'sms') => {
+    try {
+      const result = await realAuth.verifyAndLogin(phone, code, method)
+      const profile = await realAuth.fetchProfile(result.userId)
 
-    localStorage.setItem('tryit_email', e)
-    localStorage.setItem('tryit_role', role)
-    localStorage.setItem('tryit_is_admin', 'true')
+      let u = { ...MOCK_USER, ...profile, id: result.userId }
+      if (!u.name) u.name = u.phone || 'Student'
+      u.initials = makeInitials(u.name, u.email || u.phone)
 
-    let u = { ...MOCK_USER, email: e, role }
-    u.name = e.split('@')[0]
-    u.initials = makeInitials(u.name, e)
-    u = applyAdminGrant(u, e)
-    u = grantSignupBonusIfNeeded(u, e)
-    const tier = normalizePlan(u.plan)
-    u = { ...u, isPro: tier !== 'free' }
-    setUser(u)
-    localDb.saveProfile?.(u)
-    localDb.saveSession?.({ userId: u.id, email: e })
-    return { error: null }
+      const tier = normalizePlan(u.plan)
+      u = { ...u, isPro: tier !== 'free' }
+
+      setUser(u)
+      return { success: true, user: u }
+    } catch (err) {
+      return { error: err.message || 'Login failed - please try again.' }
+    }
   }
 
   const logout = () => {
-    localStorage.removeItem('tryit_email')
-    localStorage.removeItem('tryit_role')
-    localStorage.removeItem('tryit_admin_impersonating')
+    realAuth.logout()
     setUser(null)
   }
 

@@ -158,13 +158,13 @@ export default function StudentSettings() {
 
   const handleLogout = () => {
     logout()
-    navigate('/landing', { replace: true })
+    navigate('/login', { replace: true })
   }
 
   const handleLogoutAll = async () => {
     await supabase.auth.signOut({ scope: 'global' }).catch(() => {})
     logout()
-    navigate('/landing', { replace: true })
+    navigate('/login', { replace: true })
   }
 
   const TABS = [

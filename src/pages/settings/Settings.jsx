@@ -125,9 +125,10 @@ export default function Settings() {
   const handleDeleteAccount = () => {
     if (!confirm('Are you sure? This permanently deletes your account, progress, and coins. This cannot be undone.')) return
     if (!confirm('This is your final confirmation. Tap OK to delete your TryIT account permanently.')) return
-    // TODO: call delete account edge function
+    // TODO: call delete account edge function - this currently does NOT actually delete anything
     alert('Account deletion request submitted. Your data will be removed within 48 hours.')
     logout()
+    navigate('/login', { replace: true })
   }
 
   const selectedLang = LANGUAGES.find(l => l.code === lang) || LANGUAGES[0]
