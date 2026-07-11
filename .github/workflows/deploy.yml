@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare Workers
+﻿name: Deploy to Cloudflare Workers
 
 on:
   push:
@@ -22,6 +22,15 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: TEMP DEBUG - check secret lengths (never prints actual values)
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: |
+          echo "VITE_SUPABASE_URL length: ${#VITE_SUPABASE_URL}"
+          echo "VITE_SUPABASE_ANON_KEY length: ${#VITE_SUPABASE_ANON_KEY}"
+          echo "(Expected: URL around 40 chars, ANON_KEY around 200+ chars. A 0 here means the secret is genuinely empty in GitHub's store.)"
+
       - name: Build
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
@@ -29,6 +38,14 @@ jobs:
           VITE_RAZORPAY_KEY: ${{ secrets.VITE_RAZORPAY_KEY }}
           VITE_RAZORPAY_KEY_ID: ${{ secrets.VITE_RAZORPAY_KEY_ID }}
         run: npm run build
+
+      - name: TEMP DEBUG - check built bundle for placeholder
+        run: |
+          if grep -r "placeholder.supabase.co" dist/ 2>/dev/null; then
+            echo "FOUND PLACEHOLDER IN BUILT BUNDLE - env var did not reach Vite build"
+          else
+            echo "No placeholder found in built bundle - env var reached the build correctly"
+          fi
 
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
