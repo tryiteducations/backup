@@ -30,6 +30,7 @@ const EXPLANATION_LAYERS = [
 export default function Showcase() {
   const [questions, setQuestions] = useState([])
   const [loading, setLoading] = useState(true)
+  const [fetchError, setFetchError] = useState(null)
   const [topic, setTopic] = useState(null)
   const [selectedId, setSelectedId] = useState(null)
 
@@ -37,11 +38,17 @@ export default function Showcase() {
 
   async function load() {
     setLoading(true)
-    const { data } = await supabase
+    setFetchError(null)
+    const { data, error } = await supabase
       .from('questions')
       .select('*')
       .order('level', { ascending: true })
       .limit(200)
+    if (error) {
+      setFetchError(error.message)
+      setLoading(false)
+      return
+    }
     const list = data || []
     setQuestions(list)
     if (list.length) {
@@ -74,7 +81,14 @@ export default function Showcase() {
 
         {loading && <p style={{ textAlign: 'center', color: '#64748B' }}>Loading real questions…</p>}
 
-        {!loading && topics.length === 0 && (
+        {fetchError && (
+          <div style={{ textAlign: 'center', background: 'rgba(239,68,68,0.1)', border: '1px solid #EF4444', borderRadius: 12, padding: 20, color: '#FCA5A5', maxWidth: 600, margin: '0 auto' }}>
+            <p style={{ fontWeight: 700, marginBottom: 6 }}>Could not load questions</p>
+            <p style={{ fontSize: 13, fontFamily: 'monospace' }}>{fetchError}</p>
+          </div>
+        )}
+
+        {!loading && !fetchError && topics.length === 0 && (
           <p style={{ textAlign: 'center', color: '#64748B' }}>No questions generated yet.</p>
         )}
 
