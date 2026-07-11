@@ -153,7 +153,7 @@ function QuestionCard({ q }) {
           />
         )}
         {q.has_visual && q.visual_type === 'chart_data' && (
-          <div className="mt-4 bg-gray-50 rounded-xl p-4 text-xs text-gray-500">
+          <div className="question-diagram mt-4 flex justify-center bg-gray-50 rounded-xl p-4">
             chart_data present (not rendered in this preview — needs the
             real charting component): {JSON.stringify(q.visual_data)}
           </div>

@@ -394,3 +394,17 @@ img.twemoji {
   vertical-align: -0.1em;
   display: inline-block;
 }
+/* ── Generated question diagrams ──────────────────────────────
+   Question-bank SVGs come back as raw <svg viewBox="0 0 300 300">
+   strings with no explicit width/height attributes. Without this
+   rule, browsers fall back to the SVG spec default intrinsic size
+   (300x150), ignoring the viewBox aspect ratio entirely — this is
+   what caused diagrams to render as mostly-empty oversized boxes
+   with labels clipped near the edges. Forcing width/height here
+   makes the browser properly scale to the viewBox instead. */
+.question-diagram svg {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  display: block;
+}

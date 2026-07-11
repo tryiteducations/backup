@@ -156,6 +156,7 @@ export default function Showcase() {
 
                 {selected.has_visual && selected.visual_type === 'geometry_svg' && selected.visual_data?.svg && (
                   <div
+                    className="question-diagram"
                     style={{ background: '#0F172A', borderRadius: 12, padding: 16, marginBottom: 20, display: 'flex', justifyContent: 'center' }}
                     dangerouslySetInnerHTML={{ __html: selected.visual_data.svg }}
                   />
