@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
+import { isAdminAuthenticated } from '../../lib/adminAuth'
 
 const NAVY = '#1E3A5F'
 const GOLD = '#C9A84C'
@@ -52,8 +53,7 @@ export default function CurrentAffairsManager() {
 
   // Check admin
   useEffect(() => {
-    if (localStorage.getItem('tryit_admin') !== 'true' &&
-        localStorage.getItem('tryit_admin') !== '1') {
+    if (!isAdminAuthenticated()) {
       navigate('/admin/login')
     }
   }, [navigate])

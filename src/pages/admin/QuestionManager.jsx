@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
+import { isAdminAuthenticated } from '../../lib/adminAuth'
 
 /**
  * Real-data preview of the question bank — pulls directly from the live
@@ -23,8 +24,7 @@ export default function QuestionManager() {
   const [filterTopic, setFilterTopic] = useState('all')
 
   useEffect(() => {
-    const flag = localStorage.getItem('tryit_admin')
-    if (!flag) {
+    if (!isAdminAuthenticated()) {
       navigate('/admin/login')
       return
     }

@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
+import { isAdminAuthenticated } from '../../lib/adminAuth'
 
 const CATEGORIES = ['govt_central','govt_state','banking','railways','defence','medical','engineering','engineering_pg','teaching','school_competitive','scholarship','professional_cert','foreign_language']
 
@@ -15,7 +16,13 @@ export default function ExamManager() {
   const [search, setSearch] = useState('')
   const [source, setSource] = useState('local') // 'local' | 'supabase'
 
-  useEffect(() => { load() }, [])
+  useEffect(() => {
+    if (!isAdminAuthenticated()) {
+      navigate('/admin/login')
+      return
+    }
+    load()
+  }, [])
 
   async function load() {
     setLoading(true)

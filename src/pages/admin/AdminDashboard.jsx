@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabase'
 import { useAuth } from '../../context/AuthContext'
+import { isAdminAuthenticated, clearAdminSession } from '../../lib/adminAuth'
 
 const TABS = [
   { id:'overview',      label:'📊 Overview'       },
@@ -44,15 +45,14 @@ export default function AdminDashboard() {
   const [authed, setAuthed] = useState(false)
 
   useEffect(() => {
-    const flag = localStorage.getItem('tryit_admin')
-    if (flag === 'true' || flag === '1') setAuthed(true)
+    if (isAdminAuthenticated()) setAuthed(true)
     else navigate('/admin/login')
   }, [navigate])
 
   if (!authed) return null
 
   const logout = () => {
-    localStorage.removeItem('tryit_admin')
+    clearAdminSession()
     navigate('/admin/login')
   }
 
