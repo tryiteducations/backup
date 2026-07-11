@@ -1,47 +1,41 @@
 // src/lib/adminAuth.js
-// Shared admin-session check, used by every /admin/* page. Replaces the
-// old localStorage.getItem('tryit_admin') flag, which was set by dead
-// code (AdminLogin.jsx's real path never set it) and checked
-// inconsistently — some admin pages (ExamManager, UserManager) had no
-// check at all.
+// Shared admin-session check, used by every /admin/* page.
 //
-// The JWT is issued by the admin-login Edge Function only after a real
-// server-side credential check (see supabase/functions/admin-login).
-// This client-side decode is a signature-backed expiry/identity check
-// for session persistence between page loads, not a replacement for
-// the server-side check that happens at login time.
+// Deliberately simple right now: the token is a base64 JSON blob with
+// an expiry, NOT cryptographically signed — appropriate while this
+// gates only internal tooling and there are zero real users on the
+// platform. See supabase/functions/admin-login/index.ts for the note
+// on upgrading this to a signed session before real launch.
 
-const ADMIN_JWT_KEY = 'tryit_admin_jwt'
+const ADMIN_TOKEN_KEY = 'tryit_admin_token'
 
-function decodeJwtPayload(jwt) {
+function decodeToken(token) {
   try {
-    const payload = jwt.split('.')[1]
-    const decoded = atob(payload.replace(/-/g, '+').replace(/_/g, '/'))
-    return JSON.parse(decoded)
+    return JSON.parse(atob(token))
   } catch {
     return null
   }
 }
 
-export function setAdminSession(jwt) {
-  localStorage.setItem(ADMIN_JWT_KEY, jwt)
+export function setAdminSession(token) {
+  localStorage.setItem(ADMIN_TOKEN_KEY, token)
 }
 
 export function clearAdminSession() {
-  localStorage.removeItem(ADMIN_JWT_KEY)
-  // Clean up the old flag too, in case it's still set from before this fix
+  localStorage.removeItem(ADMIN_TOKEN_KEY)
+  // Clean up old flags from before this fix, in case they're still set
   localStorage.removeItem('tryit_admin')
+  localStorage.removeItem('tryit_admin_jwt')
 }
 
 export function isAdminAuthenticated() {
-  const jwt = localStorage.getItem(ADMIN_JWT_KEY)
-  if (!jwt) return false
+  const token = localStorage.getItem(ADMIN_TOKEN_KEY)
+  if (!token) return false
 
-  const payload = decodeJwtPayload(jwt)
-  if (!payload || payload.userId !== 'admin') return false
+  const payload = decodeToken(token)
+  if (!payload || payload.marker !== 'admin') return false
 
-  // exp is in seconds since epoch (standard JWT claim)
-  if (payload.exp && payload.exp * 1000 < Date.now()) {
+  if (payload.exp && payload.exp < Date.now()) {
     clearAdminSession()
     return false
   }

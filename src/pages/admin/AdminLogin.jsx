@@ -1,15 +1,6 @@
 // FILE: src/pages/admin/AdminLogin.jsx
-// TryIT - Admin Login Panel
+// TryIT - Admin Login (simple PIN, checked server-side)
 // Route: /admin/login (Restricted - authorized personnel only)
-//
-// FIXED: previously called the student phone/OTP login() function with
-// an email in the phone slot and the literal string 'admin' as the OTP
-// code — that always failed silently (login() never throws, it returns
-// {error}), but the code navigated to /admin/dashboard regardless of
-// the result. It also had a "Dev Backup" fallback with a hardcoded
-// email/password printed directly in the UI. Both are gone now — this
-// calls a real server-side admin-login Edge Function, and the actual
-// credentials live only in Supabase secrets, never in shipped code.
 
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -19,14 +10,13 @@ import { setAdminSession } from '../../lib/adminAuth'
 export default function AdminLogin() {
   const navigate = useNavigate()
 
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [pin, setPin] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
   const handleSubmit = async () => {
-    if (!email.trim() || !password.trim()) {
-      setError('Enter both email and password.')
+    if (!pin.trim()) {
+      setError('Enter your admin PIN.')
       return
     }
 
@@ -35,16 +25,16 @@ export default function AdminLogin() {
 
     try {
       const { data, error: fnError } = await supabase.functions.invoke('admin-login', {
-        body: { email: email.trim(), password },
+        body: { pin: pin.trim() },
       })
 
       if (fnError || data?.error) {
-        setError(data?.error || 'Invalid admin credentials supplied.')
+        setError(data?.error || 'Incorrect PIN.')
         setLoading(false)
         return
       }
 
-      setAdminSession(data.jwt)
+      setAdminSession(data.token)
       navigate('/admin/dashboard')
     } catch (err) {
       setError('Admin login failed - please try again.')
@@ -70,7 +60,7 @@ export default function AdminLogin() {
           borderRadius: 24,
           padding: 36,
           width: '100%',
-          maxWidth: 380,
+          maxWidth: 340,
           boxShadow: '0 30px 70px rgba(0, 0, 0, 0.4)',
           border: '1px solid var(--color-border, #E2E8F0)'
         }}
@@ -83,50 +73,30 @@ export default function AdminLogin() {
           <p style={{ color: 'var(--color-error, #DC2626)', fontWeight: 700, fontSize: 13, marginTop: 6, textTransform: 'uppercase', letterSpacing: '1px' }}>
             🔐 Admin Access Only
           </p>
-          <p style={{ fontSize: 11, color: '#94A3B8', marginTop: 2 }}>Restricted - authorized personnel only</p>
-        </div>
-
-        <div style={{ marginBottom: 16 }}>
-          <label style={{ display: 'block', fontWeight: 600, color: 'var(--color-primary, #1E3A5F)', fontSize: 12, marginBottom: 6, textTransform: 'uppercase' }}>
-            Admin Email Address
-          </label>
-          <input
-            type="email"
-            placeholder="admin@tryiteducations.net"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && handleSubmit()}
-            style={{
-              width: '100%', padding: '12px 14px', borderRadius: 12, boxSizing: 'border-box', outline: 'none',
-              border: '1.5px solid var(--color-border, #E2E8F0)', fontSize: 14, color: 'var(--color-text, #1E3A5F)',
-              background: '#fff', transition: 'all 0.15s ease'
-            }}
-            onFocus={e => e.target.style.borderColor = 'var(--color-accent, #D4AF37)'}
-            onBlur={e => e.target.style.borderColor = 'var(--color-border, #E2E8F0)'}
-          />
         </div>
 
         <div style={{ marginBottom: 20 }}>
           <label style={{ display: 'block', fontWeight: 600, color: 'var(--color-primary, #1E3A5F)', fontSize: 12, marginBottom: 6, textTransform: 'uppercase' }}>
-            Password
+            Admin PIN
           </label>
           <input
             type="password"
-            placeholder="••••••••"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
+            inputMode="numeric"
+            placeholder="••••"
+            value={pin}
+            onChange={e => setPin(e.target.value.replace(/\D/g, '').slice(0, 4))}
             onKeyDown={e => e.key === 'Enter' && handleSubmit()}
             style={{
-              width: '100%', padding: '12px 14px', borderRadius: 12, boxSizing: 'border-box', outline: 'none',
-              border: '1.5px solid var(--color-border, #E2E8F0)', fontSize: 14, color: 'var(--color-text, #1E3A5F)',
-              background: '#fff', transition: 'all 0.15s ease'
+              width: '100%', padding: '14px 16px', borderRadius: 12, boxSizing: 'border-box', outline: 'none',
+              border: '1.5px solid var(--color-border, #E2E8F0)', fontSize: 22, color: 'var(--color-text, #1E3A5F)',
+              background: '#fff', textAlign: 'center', letterSpacing: '10px', fontFamily: 'monospace'
             }}
             onFocus={e => e.target.style.borderColor = 'var(--color-accent, #D4AF37)'}
             onBlur={e => e.target.style.borderColor = 'var(--color-border, #E2E8F0)'}
           />
         </div>
 
-        {error && <p style={{ color: 'var(--color-error, #EF4444)', fontSize: 13, marginBottom: 14, fontWeight: 500 }}>⚠️ {error}</p>}
+        {error && <p style={{ color: 'var(--color-error, #EF4444)', fontSize: 13, marginBottom: 14, fontWeight: 500, textAlign: 'center' }}>⚠️ {error}</p>}
 
         <button
           onClick={handleSubmit}
@@ -139,7 +109,7 @@ export default function AdminLogin() {
             boxShadow: '0 4px 12px rgba(30, 58, 95, 0.2)', transition: 'all 0.15s ease'
           }}
         >
-          {loading ? 'Verifying Credentials...' : 'Sign In To Dashboard →'}
+          {loading ? 'Checking...' : 'Sign In →'}
         </button>
       </div>
     </div>
