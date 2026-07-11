@@ -15,6 +15,7 @@ function TwemojiEnhancer() {
 
 const Splash          = lazy(() => import('./pages/Splash'))
 const Landing         = lazy(() => import('./pages/Landing'))
+const Showcase        = lazy(() => import('./pages/Showcase'))
 const Login           = lazy(() => import('./pages/Login'))
 const Register        = lazy(() => import('./pages/Register'))
 const Onboarding      = lazy(() => import('./pages/Onboarding'))
@@ -218,6 +219,7 @@ function ThemedApp() {
               <Routes>
                 {/* AUTH */}
                 <Route path="/"            element={<Landing />} />
+                <Route path="/showcase"    element={<Showcase />} />
                 <Route path="/landing"     element={<Navigate to="/" replace/>} />
                 <Route path="/login"       element={<Login />} />
                 <Route path="/register"    element={<Register />} />
